@@ -4,8 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+Troy Rosenberg began working with Ruby on Rails in 2012 as an intern for [ROI Revolution, Inc.](http://www.roirevolution.com/) and fell in love.
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+He now works full time with Ruby on Rails as a Software Developer working on internal applications that help make his coworkers the best at what they do.
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+His interests include software design, refactoring, optimization and the software development process.
