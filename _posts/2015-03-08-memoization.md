@@ -157,7 +157,7 @@ The results are pretty obvious. Since, for the effect of having a long running p
 
 ### Potential Pitfalls
 
-You want to make sure when you are working with memoized values you use non-destructive methods (in Ruby these generally have end with a bang `!`), that is, do you not want to change the memozied value.
+You want to make sure when you are working with memoized values that you use non-destructive methods (in Ruby these generally have end with a bang `!`), that is, you do not want to use methods that change the memozied value.
 
 Let's take a look at the following example.
 
@@ -223,23 +223,38 @@ We end up only seeing the featured cats in both places.
 Let's take a look at why this happens.
 
 When we first create our `CatSeller` it seems to have all of its cats
+
 ```ruby
 >> cat_seller.cats
-=> [#<struct Cat type="Lion", sex="Male", featured=false>, #<struct Cat type="Leopard", sex="Female", featured=false>, #<struct Cat type="Snow Leopard", sex="Male", featured=true>, #<struct Cat type="Mountain Lion", sex="Male", featured=true>, #<struct Cat type="Tiger", sex="Female", featured=false>]
+=> [
+  #<struct Cat type="Lion", sex="Male", featured=false>,
+  #<struct Cat type="Leopard", sex="Female", featured=false>,
+  #<struct Cat type="Snow Leopard", sex="Male", featured=true>,
+  #<struct Cat type="Mountain Lion", sex="Male", featured=true>,
+  #<struct Cat type="Tiger", sex="Female", featured=false>
+]
 ```
 
-And the `featured_cats` method seems to work
+When we send out `CatSellert` the `featured_cats` message
 
 ```ruby
 >> cat_seller.featured_cats
-=> [#<struct Cat type="Snow Leopard", sex="Male", featured=true>, #<struct Cat type="Mountain Lion", sex="Male", featured=true>]
+=> [
+  #<struct Cat type="Snow Leopard", sex="Male", featured=true>,
+  #<struct Cat type="Mountain Lion", sex="Male", featured=true>
+]
 ```
 
-but now when we check on our cats again only the featured ones are left
+we receive an array of only featured cats, so this method it working correctly.
+
+However, if we check on our `cats` again only the featured ones are there
 
 ```ruby
 >> cat_seller.cats
-=> [#<struct Cat type="Snow Leopard", sex="Male", featured=true>, #<struct Cat type="Mountain Lion", sex="Male", featured=true>]
+=> [
+  #<struct Cat type="Snow Leopard", sex="Male", featured=true>,
+  #<struct Cat type="Mountain Lion", sex="Male", featured=true>
+]
 ```
 
 when we look in our `featured_cats` method
@@ -282,17 +297,13 @@ Male, Mountain Lion
 
 Generally when you see reference to [Connascence of Position](http://en.wikipedia.org/wiki/Connascence_%28computer_programming%29#Connascence_of_Position_.28CoP.29) it references the position of arguments in a function or method. Memoization can also reduce the requirements for methods to be called in a certain position. There is probably a properly named concept for this but since I do not know the name we will consider it an example of Connascence of Position.
 
-Without memoization we will either have to call the same method that is either computationally or temporally expensive multiple times
+Without memoization we will either have to call the same method that is either computationally or temporally expensive multiple times:
 
 ```ruby
 class TwitterFeed
   def display
     display_posts
     display_top_posters
-  end
-
-  def recent_posts
-    # fetch recent posts from the API
   end
 
   def display_posts
@@ -304,10 +315,17 @@ class TwitterFeed
     posts = recent_posts
     # use post info to find most prolific posters
   end
+
+  def recent_posts
+    # fetch recent posts from the API
+  end
 end
 ```
 
- which, like shown in the earlier example will hurt performance, or we will have to make sure we call the method early enough to pass the value around where we need it.
+ which, like shown in the earlier example, will hurt performance.
+
+
+ Alternatively we will have to make sure we call the method early enough to pass the value around where we need it (and remember to pass the value around):
 
 ```ruby
 class TwitterFeed
@@ -317,10 +335,6 @@ class TwitterFeed
     display_top_posters(posts)
   end
 
-  def recent_posts
-    # fetch recent posts from the API
-  end
-
   def display_posts(posts)
     # logic to display posts
   end
@@ -328,10 +342,14 @@ class TwitterFeed
   def display_top_posters(posts)
     # use post info to find most prolific posters
   end
+
+  def recent_posts
+    # fetch recent posts from the API
+  end
 end
 ```
 
-The requirement to call a method at a particular time makes the class difficult to use due to lack of flexibility. In the above example if you just wanted to display the posts or the list of top posters you would somehow have to have tweets to pass in which would require to to call and store `recent_posts` and pass in the return value to future calls. The class is set to run in a procedural manner that does not allow for the flexibility of an Object Oriented design.
+The requirement to call a method at a particular time makes the class difficult to use due to lack of flexibility. In the above example if you just wanted to display the posts or the list of top posters, say, from the command line, you would somehow have to have tweets to pass in which would require you to call and store `recent_posts` and pass in the return value to future calls. The class is set to run in a procedural manner that does not allow for the flexibility of an Object Oriented design.
 
 If you have the same example using memoization
 
