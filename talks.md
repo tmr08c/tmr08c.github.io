@@ -16,7 +16,7 @@ Here are some talks that I have given
 
 **<a href="https://drive.google.com/file/d/0B3NCXf-saz3pcF9PcVJCRDh6aFE/view?usp=sharing" target='_blank'>Creating a Ruby on Rails Application - A Brief Introduction to Magic</a>** (10/2014)
 
-*This talk was given during a UCF ACM meeting. It starts with a quick introduction to the syntax of Ruby but the bulk of the talk was walking through creating a demo Rails application. The walkthrough for the demo Rails application can be found [here<a href="https://gist.github.com/tmr08c/102cacf255d09e2122ce). The application is an attendance app that allows meetings to be created and users to sign in as having attended a meeting.*
+*This talk was given during a UCF ACM meeting. It starts with a quick introduction to the syntax of Ruby but the bulk of the talk was walking through creating a demo Rails application. The walkthrough for the demo Rails application can be found <a href="https://gist.github.com/tmr08c/102cacf255d09e2122ce">here</a>. The application is an attendance app that allows meetings to be created and users to sign in as having attended a meeting.*
 
 **<a href="http://prezi.com/-tkwopbxt9rm/?utm_campaign=share&utm_medium=copy&rc=ex0share" target='_blank'>How the Rise of Web Based Technologies Applications is Creating Demand for Top Engineers to Work "in the Cloud" (Updated)</a>** (2/14)
 
