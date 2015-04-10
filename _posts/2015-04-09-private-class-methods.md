@@ -7,11 +7,13 @@ categories: classes
 
 While no methods in Ruby are really safe, even when private, it's possible the class methods you think are *safer* as private aren't actually private.
 
-# Private Instance Methods
+## Private Instance Methods
 
-To make an instance method private you call the `[private](http://ruby-doc.org/core-2.0.0/Module.html#method-i-private)` method. This can be done in two way.
+To make an instance method private you call the [`private`](http://ruby-doc.org/core-2.0.0/Module.html#method-i-private) method. This can be done in two way.
 
-1. You can put the `private` method on its own line. When you do this everything after it will be private
+### On it's own line
+
+You can put the `private` method on its own line. When you do this everything after it will be private
 
 ```ruby
 class Pizza
@@ -39,7 +41,9 @@ In this case both `remaining_slices` and `hide` will be `private` since they fol
 ```
 
 
-2. You can also prefix specific method definition with the private method. This will make only that method private.
+### Prefix a Method Definition
+
+You can also prefix specific method definition with the private method. This will make only that method private.
 
 ```ruby
 class Pizza
@@ -74,7 +78,7 @@ but now our `hide` method is public, even though it comes after the private defi
 "These aren't the pizzas you're looking for."
 ```
 
-# Private Class Methods
+## Private Class Methods
 
 Now, it seems like defining a private class method should be the same.
 
@@ -99,7 +103,7 @@ Now when we try to call `Pizza.make_special_recipe` we should recieve a `NoMetho
 
 It looks like we are able to call the class method, even though we thought we made it private.
 
-If we dig around in the documentation we find that there is actually another orivate-like method that deals with classes, the not so subtley named,  `[private_class_method](http://ruby-doc.org/core-2.0.0/Module.html#method-i-private_class_method)` method.
+If we dig around in the documentation we find that there is actually another orivate-like method that deals with classes, the not so subtley named,  [`private_class_method`](http://ruby-doc.org/core-2.0.0/Module.html#method-i-private_class_method) method.
 
 
 We can now update our class definition to prefix our class method definition with our new found `private_class_method` method
@@ -120,7 +124,7 @@ and now when we try to call our class method we receive the expected `NoMethodEr
   NoMethodError: private method 'make_special_recipe' called for Pizza:Class
 ```
 
-## Multiple Methods
+### Multiple Methods
 
 So `private_class_method` works the same as `private`, just on class methods, right?
 
@@ -254,6 +258,6 @@ NoMethodError: private method 'another_private_method' called for Pizza:Class
 ```
 
 
-In a [previous post]({% post_url 2015-03-15-the-anatomy-of-a-ruby-class %}) I said I wasn't a big fan of this syntax. Since writing that post and better understanding the `class << self` syntax I have been more open to it and find the syntax preferable for this scenario. Shortly after discovering simply using `private` the way you do for instance methods doesn't work for class methods I discoered some code at work where I was incorrectly using `private` for my class methods. The were small classes that actually had all functionality defined via class methods. I found making use of the `class << self` syntax to be a wonderful solution. 
+In a [previous post]({% post_url 2015-03-15-the-anatomy-of-a-ruby-class %}) I said I wasn't a big fan of this syntax. Since writing that post and better understanding the `class << self` syntax I have been more open to it and find the syntax preferable for this scenario. Shortly after discovering simply using `private` the way you do for instance methods doesn't work for class methods I discoered some code at work where I was incorrectly using `private` for my class methods. The were small classes that actually had all functionality defined via class methods. I found making use of the `class << self` syntax to be a wonderful solution.
 
 Lately I have been listening to [some](http://bikeshed.fm) of the [podcasts](http://giantrobots.fm) produced by [Thoughtbot](https://thoughtbot.com). They bring up their [Trello](https://trello.com) board of ideas they want to test and decide if they should be used company wide. I was talking with a coworker about my recent work on a project I hadn't worked on recently and realzied I sort of do the same thing but officailly. I can look through various commits and pick out design patterns and recall what I read or watched that inspired me to try something differently. One of the best and worst parts of programming is that there usaually isn't just one solution to a problem. This can be frustrating when you want to just get something done and have it be considered "right" but can also be fun! I like that I can find a use case for a pattern I previosuly didn't use. I also like that in as soon as a week I can come back to the same code hate that pattern because I have some new insight. In order to excel at programing we need to be pushing ourselves, trying new thigns, and abandoning old things that don't work.
