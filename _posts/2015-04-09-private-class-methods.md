@@ -13,7 +13,7 @@ To make an instance method private you call the [`private`](http://ruby-doc.org/
 
 ### On it's own line
 
-You can put the `private` method on its own line. When you do this everything after it will be private.
+You can put the `private` method on its own line. When you do this, everything after it will be private.
 
 ```ruby
 class Pizza
@@ -30,7 +30,7 @@ class Pizza
 end
 ```
 
-In this case both `remaining_slices` and `hide` will be `private` since they follow the call to the `private` method.
+In this case both `remaining_slices` and `hide` will be private since they follow the call to the `private` method.
 
 ```ruby
 >> pizza = Pizza.new #=> #<Pizza:0x00000102988e58>
@@ -43,7 +43,7 @@ In this case both `remaining_slices` and `hide` will be `private` since they fol
 
 ### Prefix a Method Definition
 
-You can also prefix specific method definition with the `private` method. This will make only that method private.
+You can also prefix specific method definitions with the `private` method. This will make only that method private.
 
 ```ruby
 class Pizza
@@ -74,7 +74,7 @@ Our `remaining_slices` method will still be private
 but now our `hide` method is public, even though it comes after the private definition of `reamaining_slices`
 
 ```ruby
->> pizza.hide #=> nil
+>> pizza.hide 
 "These aren't the pizzas you're looking for."
 ```
 
@@ -128,7 +128,7 @@ and now when we try to call our class method we receive the expected `NoMethodEr
 
 So `private_class_method` works the same as `private`, just on class methods, right?
 
-Then we should be able to put it on its own line and everything below will be private.
+If so, we should be able to put it on its own line, and everything below will be private.
 
 ```ruby
 class Pizza
@@ -152,7 +152,7 @@ end
 
 Now neither method is private!
 
-The issue is `private_class_method` expects to take arguments - symbols, representing the names of methods it is to make private.
+The issue is `private_class_method` expects to take arguments, symbols, representing the names of methods it is to make private.
 
 This worked in our first example because, when defining a method, Ruby returns that method's name as a sybol
 
@@ -228,7 +228,7 @@ end
 
 ### Alternative Syntax
 
-There is another way we can define private class methods that actually **involves** the `private` method - by using the `class << self` syntax!
+There is another way we can define private class methods that actually **involves** the `private` method - by using the `class << self` syntax.
 
 ```ruby
 class Pizza
@@ -256,11 +256,10 @@ just like with our previous solutions, attempting to call these methods on our c
   NoMethodError: private method 'another_private_method' called for Pizza:Class
 ```
 
+Shortly after discovering that `private` doesn't work for class methods the same as it does for instance methods, I discovered some code at work where I was making this mistake. In this case I had a few small classes that had all of their functionality defined in class methods. I found making use of the `class << self` syntax to be a cleaner solution than using `private_class_method` to make them private.
 
-In a [previous post]({% post_url 2015-03-15-the-anatomy-of-a-ruby-class %}) I said I wasn't a big fan of this syntax. Since writing that post I have become more familiar with and gained a better understanding the `class << self` syntax. As a result I have been more interested in using this syntax rather than the `self.method_name` syntax. This is a perfect scenario where the syntax is preferable in my opinion.
+In a [previous post]({% post_url 2015-03-15-the-anatomy-of-a-ruby-class %}) I said I wasn't a big fan of this syntax. Since writing that post, I have become more comfortable with the `class << self` syntax and have been interested in trying to use it in production code. This scenario was definitely a win for the `class << self` syntax in my book.
+ 
+Lately I have been listening to [some](http://bikeshed.fm) of the [podcasts](http://giantrobots.fm) produced by [Thoughtbot](https://thoughtbot.com). They bring up their [Trello](https://trello.com) board of ideas they want to test. The ideas are vetted and then it is decided if they should be used company wide. I was speaking with a coworker about my recent work on a project I hadn't worked on in a while and realzied I sort of do the same thing but not as officailly. I can look through various commits and pick out design patterns and recall what I read or watched that inspired me to try something differently. I forsee the split use of `class << self` and `def self.method` syntaxes to be something I test internally until I settle on one or the other (or have rules for when to use which). 
 
-Shortly after discovering that `private` doesn't work for class methods the same as it does for instance methods, I discovered some code at work where I was making this mistake. In this case I had a few small classes that actually had all functionality defined via class methods. I found making use of the `class << self` syntax to be a cleaner solution than `private_class_method`.
-
-Lately I have been listening to [some](http://bikeshed.fm) of the [podcasts](http://giantrobots.fm) produced by [Thoughtbot](https://thoughtbot.com). They bring up their [Trello](https://trello.com) board of ideas they want to test. The ideas are vetted and then it is decided if they should be used company wide. I was speaking with a coworker about my recent work on a project I hadn't worked on in a while and realzied I sort of do the same thing but not as officailly. I can look through various commits and pick out design patterns and recall what I read or watched that inspired me to try something differently.
-
-One of the best and worst parts of programming is that there usaually isn't just one solution to a problem. This can be frustrating when you want to just get something done and have it be considered "right". This can also be a lot fun! I like that I can find a use case for a pattern I previosuly didn't use. I also like that in as soon as a week I can come back to the same code hate that pattern because I have some new insight. In order to excel at programing we need to be pushing ourselves, trying new thigns, and abandoning old things that don't work.
+One of the best and worst parts of programming is that there usaually isn't just one solution to a problem. This can be frustrating when you want to just get something done and have it be considered "right". This can also be a lot fun! I like that I can find a use case for a pattern I previosuly didn't use. I also like that in as soon as a week I can come back to the same code and hate that pattern because I have some new insight. In order to excel at programing we need to be pushing ourselves, trying new things, and abandoning old things that don't work. We need to always be evolving.
