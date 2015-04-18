@@ -8,6 +8,10 @@ Here are some talks that I have given
 
 #2015
 
+**<a href="https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing" onclick="trackOutboundlink('https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing'); return false" target="_blank">Couch To 5K Your Career</a>** (4/2015)
+
+*This talk was given during <a href="http://barcamporlando.org/" onclick="trackOutboundlink('http://barcamporlando.org/'); reutrn false" target="_blank">BarCamp Orlando</a>. Inspired by completing the <a href="http://www.c25k.com/" onclick="trackOutboundlink('http://www.c25k.com/'); return false" target="_blank">Couch To 5K Program</a> I explore following a similar model to excel in your career. Discusses creating achievable, incremental goals in a measurable manner and the effect that has on actually following through with them.*
+
 **<a href="https://docs.google.com/presentation/d/1_RjmWwWcQIodywIDzq92JhejtG7GGSyWCAfd1b-0rGw/edit?usp=sharing" onclick="trackOutboundlink('https://docs.google.com/presentation/d/1_RjmWwWcQIodywIDzq92JhejtG7GGSyWCAfd1b-0rGw/edit?usp=sharing'); return false" target='_blank'>An Introduction to Ruby...with a functional perspective</a>** (3/2015)
 
 *This talk was given as a guest lecture in a <a href="http://www.eecs.ucf.edu/~leavens/COP4020/" onclick="trackOutboundlink('http://www.eecs.ucf.edu/~leavens/COP4020/'); return false" target='_blank'>Programming Languages course at UCF</a>. This course has a large focus on the functional programming paradigm so it was asked to include some of these paradigms in my introduction to Ruby. This talk cover Ruby basics, functional programming with Ruby, object-oriented programming with Ruby, and metaprogramming.*
