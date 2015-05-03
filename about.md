@@ -6,7 +6,9 @@ permalink: /about/
 
 I began working with Ruby on Rails in 2012 as an intern for [ROI Revolution, Inc.](http://www.roirevolution.com/) and fell in love with developer happiness paradigm of the Ruby community.
 
-I now work full time with Ruby on Rails as a Software Developer working on internal applications that help make my coworkers the best at what they do.
+I now work full time with Ruby on Rails developing internal applications that help make my coworkers the best at what they do.
+
+When I am not coding I am probably climbing, walking my dog, or eating pizza.
 
 I am passionate about software design, refactoring, optimization and the software development process.
 
