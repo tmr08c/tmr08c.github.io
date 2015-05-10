@@ -5,26 +5,42 @@ date:   2015-05-09 19:29:02
 categories: personal
 ---
 
-*Disclaimer: While I know it is overused I for brevity I am going to use the term "cloud" a lot. By cloud I mean applications (generally web based or mobile) that interact with data stored remotely*
+*Disclaimer: While I know it is overused; for brevity, I am going to use the term "cloud" a lot. By cloud I mean data stored remotely that can be accessed via the web*
 
-I think I truly fell in love with the cloud as a graduate student. At this point in my schooling I spent the majority of my waking hours on campus but at different computers. I would be on my laptop in class, a desktop in the computer lap between classes, and a desktop I had in my on-campus office the rest of the time. I no longer just stuck to my laptop like I did the majority of my time as an undergraduate student.
+I think I truly fell in love with the cloud as a graduate student.
 
-I enjoyed having multiple options from which I could do my work, but I now had to make sure that my work was available in multiple places. This actually ends up being pretty easy. Even with just Dropbox I could access important files from anywhere with internet, even my phone. Dropbox was the start of my love of cloud storage. I simply `cp` some files to my special directory and I can review my homework assignments on my phone while I walked to class or pick up where I left off on my C++ project.
+At this point in my schooling I spent the majority of my waking hours on campus, but at different computers. I would be on my laptop in class, a desktop in the computer lap between classes, and a desktop I had in my on-campus office the rest of the time. I no longer just stuck to my laptop like I did as an undergraduate student.
 
-As I further embraced "living in the cloud" I added additional tools to my arsenal. I finally wised up and started really using version control which lead me to the path of Github.
+I enjoyed having multiple options from which I could do my work, but I now had to make sure that my work was available in multiple places. This actually ended up being pretty easy. Even with just Dropbox I could access important files from anywhere via the internet. Dropbox was the start of my love of the cloud. I simply `cp` some files to my special directory and I could then review my homework assignments on my phone while I walked to class or pick up where I left off on my C++ project from any computer in the lab.
 
-Before I move on I just want to say - **colleges should be teaching students to use version control**. This isn't me wishing that more Computer Science departments had a heavier focus on Software Engineering. Everyone that codes should be using version control. Honestly it shouldn't even be limited to coding. I use version control as I work on blog post drafts and Wikis and Google Docs allows you to look at change history just like a version control system would. The basics of version control are not very difficult to learn and can save new developers hours of headache by allowing them to checkpoint their code.
+As I further embraced "living in the cloud", I added additional tools to my arsenal. I finally wised up and started using version control which lead me to the path of Github.
 
-For papers I began using Google Drive (Google Docs at the time). This alleviated the need of even having a word processor for written assignments and allowed for real time collaboration for larger group projects.
+`<rant>`
+Before I move on I just want to say - **colleges should be teaching students to use version control**. Everyone that codes should be using version control. Honestly it shouldn't even be limited to coding, version control can be used while writing papers. The basics of version control are not very difficult to learn and can save new developers hours of headache by allowing them to checkpoint their code.
+`</rant>`
 
-I still use all of these tools to this day. I switch between computers slightly less than in school since I rarely need to do work-work at home but I still have my work repos cloned just in case and can easily access my work Drive account as well. I didn't decide to write this post to talk about tools everyone already knows about - I wrote it because I was recently reminded just how ubiquitous the cloud has become in my life and how thankful I am for that.
+For papers I began using Google Drive (Google Docs at the time). This alleviated the need of even having a word processor for written assignments and allowed for real time collaboration during larger group projects.
 
-My phone was stolen earlier this week. This is a huge pain. After holding out hope for 36 hours that my phone would be returned to me I accepted my fact and had my service switched back to my old phone. My stolen phone was an iPhone and my old phone is a Galaxy S3. While Google and Apple both want you to feel the pain of disconnect the pain of switching really isn't that bad. While it does help that I was reactivating an old phone and now starting from scratch as soon as I synced up with Google it was almost as if I had been using my old phone the whole time.
+I still use all of these tools to this day. I switch between computers slightly less than in school since I rarely need to do work-work at home, but I still have my work repos cloned just in case and can easily access my work Drive account as well.
 
-Again, the fact that I can sync my contact through Google and have them on my old **and** new phone isn't exactly groundbreaking news - but it's nice to have that convenience during such an inconvenient time.
+I didn't decide to write this post to talk about tools everyone already knows about - I wrote it because I was recently reminded just how ubiquitous the cloud has become in my life and how thankful I am for that.
 
-What inspired this post was [Strava](https://www.strava.com/) the application I use to track my running. I don't know why I was surprised but when I went to run for the first time using my old phone I thought, "this stinks, all my old runs are going to be gone". Thanks to the cloud, this wasn't the case. I signed in and there they were, all of the runs I had previously tracked. Even though it really doesn't matter that I have those runs stored it made me happy to see them in my feed. As someone that works on web based applications I should not be surprised when the internet has stored some of my data. As someone that just had something of value stolen from them it felt nice knowing my information wasn't stolen from me.
+My phone was stolen earlier this week. This is a huge pain. After holding out hope for 36 hours I accepted the facts and had my service switched back to my old phone.
 
-I do not want to get in the dangers of cloud storage or how my data is being stolen or sold or whatever. I just wanted to discuss that regardless of the technical details this functionality made me feel good. We make tools to help others, my favorite part of work is when my co-workers share how excited they are because one of our tools saved them a bunch of time or caught something they would have missed. As developers we are always looking for the negative - where's the bug, where are the slow points, what features don't we have yet. It's rewarding to be reminded of the positives - the features you do have, the pain points you are alleviating in someone else's day, how much has been changed since day 1.
+My stolen phone was an iPhone and my old phone is a Galaxy S3. While Google and Apple both want you to feel the pain of disconnect to dissuade traders, the pain of switching really isn't that bad. While it does help that I was reactivating an old phone and not starting from scratch, as soon as I synced up with Google it was almost as if I had been using my old phone the whole time.
+
+Again, the fact that I can sync my contacts through Google and have them on my old **and** new phone isn't exactly groundbreaking news - but it's nice to have that convenience during such an inconvenient time.
+
+What inspired this post was [Strava](https://www.strava.com/), the application I use to track my runs.
+
+I don't know why, but when I went to run for the first time using my old phone I thought, "this stinks, all my old runs are going to be gone".  However, when I signed in they were all there. Even though it really doesn't matter that I have those runs stored it made me happy to see them in my feed.
+
+As someone that works on web based applications I should not be surprised that the internet has stored some of my data. But as someone that just had something of value stolen from them it felt nice knowing my information wasn't stolen from me.
+
+I do not want to get in the dangers of cloud storage or how my data is being stolen or sold or whatever. I just wanted to discuss that regardless of the technical details, this functionality made me feel good.
+
+We make tools to help others. As developers I think we forget this since we are always looking for the negative - where's the bug, where are the slow points, what features don't we have yet.
+
+It's rewarding to be reminded of the positives - the features you do have, the pain points you are alleviating in someone else's day, how much has been changed since day 1. One of my favorite part of work is when my co-workers share how excited they are because one of our tools saved them a bunch of time or caught something they would have missed.
 
 I think what I am trying to do is thank the cloud, the internet, all of the companies, teams, open source contributors out there that make life easier, especially those that help me forget that I am using a three year old phone because they provide seamless transitions between devices.
