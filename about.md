@@ -38,7 +38,7 @@ computer issues.
 
 ## Other Projects
 
-### *[Swapd.io](swapd.io)*
+### *[Swapd.io](http://www.swapd.io/)*
 
 Side project with friend done in Ruby on Rails. A site for UCF students to buy and sell their text
 books.
