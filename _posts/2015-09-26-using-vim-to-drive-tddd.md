@@ -45,8 +45,46 @@ Luckily I already had the key to what I needed to do, `let g:rspec_command = "Di
 
 Now when I run my specs a new pane pops up as they run.
 
-For those interested in what `let g:rspec_command = "Dispatch bin/rspec {spec}"` it is a setting for vim-rspec. It tells the plugin how you want to run your specs and [can be customized](https://github.com/thoughtbot/vim-rspec#custom-command) to run any command. I would stumble upon this when I decided to take my next leap into making specs run faster.
+For those interested in where `let g:rspec_command = "Dispatch bin/rspec {spec}"` comes from - it is a setting for vim-rspec. It tells the plugin how you want to run your specs and [can be customized](https://github.com/thoughtbot/vim-rspec#custom-command) to run any command. I would stumble upon this when I decided to take my next leap into making specs run faster.
 
 ## Specs Should Run Fast
 
-I tend to be too accepting of things being slow and write it off as providing a mental break. Fortunately the Vim contagion has spread to other developers in my office, some of whom have been less accepting of slow specs.
+When driving your development by tests it becomes draining when you find yourself spending more time waiting for your tests to run than you are writing code. I tend to be too accepting of things being slow and write it off as providing a mental break. Fortunately the Vim contagion has spread to other developers in my office, some of whom have been less accepting of spec run times.
+
+One of my coworkers was sharing his distress over slow running specs and I mentioned he should look into [Zeus](https://github.com/burke/zeus). I had investigated Zeus in the past in the hopes that it would help speed up the workflow of our Quality Assurance engineer. When running the full suite I didn't notice a significant improvement in time and decided it wasn't worth the setup for QA. At that time I was not practicing TDD and the majority of my test runs for full suite runs as well so decided to stop pursuing Zeus for my own use as well.
+
+When my coworkers said he wanted faster running specs I remembered the hopes of Zeus and suggested he try it, adding in the caveat that I didn't have luck in the past. A short while later our  Hipchat developer chat had a beautiful gif - a near instant test run.
+
+![beautiful_spec_run](https://s3.amazonaws.com/uploads.hipchat.com/136875%2F992262%2FJdyA2zXyo3EnLjj%2Fzeus.gif)
+
+This was a welcome surprise!
+
+### Setting Up Zeus
+
+What I had overlooked was that Zeus preloads the environment, saving the initial time required to load the whole Rails app. The time where normally the spec seems to sort of just hang. The longer the test suite the more negligible this time saving is. With a single spec file, however, the time to boot up the Rails environment is actually the majority of the time so when running a spec with Zeus they run nearly instantly.
+
+On top of everything setting up Zeus is very easy, it's just a gem so `gem install zeus` is *almost* all you need.
+
+Zeus preloads your environment for you, in order to do this and keep it loaded you need to keep Zeus running with `zeus start` in your project's root directory. This can be done in a new terminal tab or, better yet, a new [tmux](https://tmux.github.io/) window.
+
+### Insert Zeus start up gif here
+
+Now, with Zeus running, you can run your specs with `zeus test path/to/spec` or the shortcut `zeus t`.
+
+### Running Zeus in Vim
+
+If we hop back into Vim and run our specs we'll see they aren't taking advantage of Zeus and will feel slow in comparison. This is where our friend `g:rspec_command` comes in to play again. As I mentioned before this is what tells vim-rspec how to run you specs. Earlier we told it to run using Dispatch, we now want it to use Dispatch **and** Zeus.
+
+This is actually common enough that the thoughtbot team has instructions on how to do this in the [README](https://github.com/thoughtbot/vim-rspec#custom-command) for vim-rspec:
+
+```
+let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
+```
+
+From [what I gather](https://github.com/tpope/vim-dispatch/issues/10) this tells Dispatch to run like it's using RSpec as its compiler, `compiler rspec`. It seems this helps to have proper output. You then tell it to actually run RSpec commands using Zeus, `set makeprg=zeus`. I could also be completely making this up and not grasp the wizardry of the great [tpope](https://github.com/tpope).
+
+Whatever the case with the above line in my vimrc and Zeus running in its own tmux window I now have test that run quickly, in their own small pane, and all with only a few keystrokes.
+
+## Conclusion
+
+There are numerous excuses for not following some practice and TDD is no exception. Generally when exploring anything new I try not to invest too much time "tricking it out" until I see how I like the base concept. I think for TDD this can be detrimental to sticking to it. If your specs are difficult to run and running them is noticeably slow it is hard to see why anyone would advocate TDD. If you are considering following the TDD workflow do yourself a favor and spend a little extra time up front to have an environment that is conducive to a successfully TDD workflow.
