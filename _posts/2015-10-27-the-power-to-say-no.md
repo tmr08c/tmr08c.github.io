@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "The Power to Say No"
-date:   2015-10-20 12:20:02
+date:   2015-10-27 12:20:02
 categories: management
 ---
 
