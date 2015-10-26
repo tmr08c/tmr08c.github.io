@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Spotify Run"
+title:  "Spotify Running"
 date:   2015-10-25 23:13:02
 categories: picks
 ---
