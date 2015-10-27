@@ -21,6 +21,8 @@ The ability to say no is actually quite powerful and is something that should be
 
 Saying yes all the time felt nice, but it was a cheap high. I knew I couldn't fulfill everyone's requests and often times knew I *shouldn't* fulfill requests. Saying no has been freeing. Saying no is like eating your vegetables. At first it's tough, and at first you just do it because you know it's the right thing to do, but eventually the benefits are so prominent that you wonder how you could have ever lived without them.
 
+The best part was, my coworkers have been completely understanding.
+
 I remember reading somewhere that you shouldn't write down feature requests. The idea is that the important ones will be impossible to forget. Changing your default answer to no provides a similar experience. If you say no, and the person doesn't argue their point, it's probably safe to forget about the request. If they do argue their point, then it may be an issue worth pursuing. As a bonus you now also have a better perspective on their request.
 
 My original intention of writing this was to share how I unlocked a superpower when I leveled up to lead developer, the ability to say no. I guess in some sense that is still true. The thing I forgot about leveling up though, is that it requires that you gain experience points first. I wanted to write about it like I simply [ate a rare candy](http://pokemon.wikia.com/wiki/Rare_Candy) and woke up the next day to to find I had gained this new talent. Unfortunately, that wasn't the case.
