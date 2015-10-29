@@ -5,20 +5,20 @@ date:   2015-09-26 09:43:02
 categories: vim
 ---
 
-A lot of recent developments in my programming career have been inspired by [thoughtbot](https://thoughtbot.com/). This began as the result of finding useful information on [their blog](https://robots.thoughtbot.com/) and has escalated to listening to their [various](http://bikeshed.fm/) [podcasts](http://giantrobots.fm/) and watching talks given by members of the team.
+A lot of recent developments in my programming career have been inspired by [thoughtbot](https://thoughtbot.com/). This began as the result of using their [gems](https://github.com/thoughtbot/) and finding useful information on [their blog](https://robots.thoughtbot.com/) and has escalated to listening to their [numerous](http://bikeshed.fm/) [podcasts](http://giantrobots.fm/) and striving to have thoughtbot-level standards within my development team.
 
 Two of the major changes I have been working on are, adopting Vim and testing driving my development. Fortunately these activities are not mutually exclusive and I am able to work on developing both skill sets at the same time.
 
 ## Specs Should Run in Vim
 
-To truly embrace the TDD lifestyle you should be running your tests constantly. In order to follow this practice it should be easy to run tests, preferably not even requiring you to leave your current environment. For me, this meant I needed to be able to run my tests from within Vim.
+To truly embrace the TDD lifestyle you should be running your tests constantly. In order to follow this practice it should be easy to run tests, preferably not requiring any sort of context switch. Bonus points if you can run them from where you are writing your code. For me, this meant I needed to be able to run my tests from within Vim.
 
 Thanks to the thoughtbot team and their Vim plugin, [vim-rspec](https://github.com/thoughtbot/vim-rspec), this was very simple to achieve.
 
-This plugin adds functionality to:
+This plugin adds functions that allows you to:
 
 * Run your entire test suite
-* Run all spec in the current file
+* Run all specs in the current file
 * Run the spec under your cursor (or nearest spec(s))
 * Rerun the last spec running command
 
@@ -28,19 +28,19 @@ These functions can all be [mapped to leader commands](https://github.com/though
   <img src='/images/run_spec_default.gif'></img>
 </center>
 
-As I further developed my TDD mindset I began running my constantly, even when I knew what the failure was going to be (being able to reliably predict the next error means you are on the right track).
+As I further developed my TDD prowess, I began running the tests even when I knew that it was still going to fail (being able to reliably predict the next error means you are on the right track).
 
-I began facing an issue of running my specs too often and actually impeding my workflow. This is because, by default, vim-rspec runs the specs in a new buffer.  I was no longer sitting in Normal mode thinking up solutions, instead I was staring at RSpec running, losing my train of thought.
+I was now facing the issue of running my specs so often that I was rarely getting to see me code. This is because, by default, vim-rspec runs the specs in a new buffer.  I was no longer sitting in Normal mode thinking up solutions, instead I was staring at RSpec running, losing my train of thought.
 
-What I needed to be able to do was run my specs **and** still browse my code. This brings me to my next level of Vim TDD - running specs in a new window within the current buffer.
+What I needed to be able to do was run my specs **and** still browse my code. This brings me to my next level of Vim TDDing - running specs in a new window within the current buffer.
 
 ## Specs Shouldn't Stop Development
 
-To be fair, the concept that I didn't have to lose focus on Vim while running specs was also inspired by thoughtbot. While watching a [talk](https://www.youtube.com/watch?v=PU3qIVAO9aM) by [Ben Orenstein](http://www.benorenstein.com/) he pointed out that when he ran specs the output came up in a little pop-up Vim window and if they all passed the window would disappear.
+To be fair, the concept that I didn't have to lose focus on Vim while running specs was also inspired by thoughtbot. While watching a [talk](https://www.youtube.com/watch?v=PU3qIVAO9aM) by [Ben Orenstein](http://www.benorenstein.com/), he pointed out that when he ran specs, the output came up in a little pop-up Vim window and if they all passed the window would disappear.
 
 I now knew what I wanted to do was possible, and simply had to figure out how to do it.
 
-Luckily Ben Orenstein [shares his dotfiles](https://github.com/r00k/dotfiles) and even has a [helpful comment](https://github.com/r00k/dotfiles/blob/master/vimrc#L280-L282) letting us know where the test running stuff is:
+Luckily, Ben Orenstein [shares his dotfiles](https://github.com/r00k/dotfiles) and even has a [helpful comment](https://github.com/r00k/dotfiles/blob/master/vimrc#L280-L282) letting us know where the test running stuff is:
 
 ```vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -58,13 +58,7 @@ From the README:
 
 > Leverage the power of Vim's compiler plugins without being bound by synchronicity. Kick off builds and test suites using one of several asynchronous adapters (including tmux, screen, iTerm, Windows, and a headless mode), and when the job completes, errors will be loaded and parsed automatically.
 
-Basically Dispatch can be used to run a lot of different things either in pop-up quick fix windows or in the background. The README provides various examples including building Java programs and my use case of running tests.
-
-Luckily I already had the key to what I needed to do
-
-`let g:rspec_command = "Dispatch bin/rspec {spec}"`
-
-and after installing Dispatch with Vundle all I had to do was add that line to my `vimrc` file.
+Basically, Dispatch can be used to run a lot of different things, either in a pop-up quickfix window or in the background. Luckily I already had the key to what I needed to do, `let g:rspec_command = "Dispatch bin/rspec {spec}"`, and, after installing Dispatch with Vundle, all I had to do was add that line to my `vimrc` file.
 
 Now when I run my specs a new window split is created.
 
@@ -72,7 +66,7 @@ Now when I run my specs a new window split is created.
   <img src='/images/run_spec_dispatch.gif'></img>
 </center>
 
-*Note: The behavior of the quick fix window is dependent upon your environment. Check the [README](https://github.com/tpope/vim-dispatch#foreground-builds) for how each environment works.*
+*Note: The behavior of the quickfix window is dependent upon your environment. Check the [README](https://github.com/tpope/vim-dispatch#foreground-builds) for how each environment works.*
 
 For those interested in where `let g:rspec_command = "Dispatch bin/rspec {spec}"` comes from - it is a setting for vim-rspec. It tells the plugin how you want to run your specs and [can be customized](https://github.com/thoughtbot/vim-rspec#custom-command) to run any command. We will explore this command and its flexibility further in the next section.
 
