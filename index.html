@@ -1,23 +1,23 @@
 ---
-layout: default
+layout: main_page
 ---
 
-<div class="home">
+<div class='content center'>
+  <div class='header'>Troy Rosenberg</div>
 
-  <h1 class="page-heading">Posts</h1>
+  <div class='about'>
+    Full Stack Rails Developer, Vim User, Rock Climer
+  </div>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <div class='selfie'>
+    <img class='round' src='/images/avatar.jpg' />
+  </div>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
+  <div class='social'>
+    <a class='fa fa-pencil-square' href='/blog' title='Blog' target='_blank'></a>
+    <a class='fa fa-github-square' href='https://github.com/tmr08c/' title='Github Profile' target='_blank'></a>
+    <a class='fa fa-twitter-square' href='https://twitter.com/some_troy' title='Blog'
+    target='_blank'></a>
+    <a class='fa fa-envelope' href='mailto:{{ site.email }}' title='Contact Me'></a>
+  </div>
 </div>

@@ -1,0 +1,52 @@
+html.main-page{
+  height: 100%;
+  font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+
+  background: url(/images/main_background.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  body{
+    height: 100%;
+    background-color: rgba(66,66,66,0.35);
+  }
+
+  .content{
+    margin-top: 15vh;
+    color: white;
+  }
+
+  .header{
+    font-size: 4.5em;
+    font-weight: bold;
+  }
+
+  .selfie{
+    margin-top: 1.5em;
+
+    img{
+      height: 12em;
+      width: 12em;
+    }
+  }
+
+  .social{
+    margin-top: 2em;
+
+    a.fa{
+      color: white;
+      font-size: 3em;
+      margin-right: 0.4em;
+
+      &:hover{
+        text-decoration: none;
+        color: black;
+      }
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+}
