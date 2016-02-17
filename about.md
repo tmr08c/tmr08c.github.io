@@ -14,10 +14,10 @@ I am passionate about software design, refactoring, optimization and the softwar
 
 See what I am up to on [GitHub](https://github.com/tmr08c) or send me an [email](mailto:tmr08@gmail.com).
 
-## Work Experience
+## Professional Experience
 
 ### May 2012 – Present
-#### *Software Developer, ROI Revolution, Inc., Orlando, Fl*
+#### *Lead Software Developer, ROI Revolution, Inc., Orlando, Fl*
 
 Lead development on internal Ruby on Rails applications, manage and train other developers, lead
 bi-weekly demos, lead training sessions, prepare for and attend priorities meetings with company’s
