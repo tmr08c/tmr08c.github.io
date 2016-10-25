@@ -15,7 +15,8 @@ With the announcement of my promotion, however, the outside world seemed to have
 
 Like Batman in *The Dark Knight Rises*, the lack of having a safety net caused me to do the unthinkable - I began freely answering their questions, and my answers were increasingly becoming "no".
 
-<center>![Batman!](https://wifofoo.files.wordpress.com/2014/03/20140314-000620.jpg)</center>
+{: .center}
+![Batman!](https://wifofoo.files.wordpress.com/2014/03/20140314-000620.jpg)
 
 The ability to say no is actually quite powerful and is something that should be used more often by development teams. We all have this desire to make others happy, we want people to like us. Since my clients are also my coworkers, I want to make them like me even more. This inevitably backfires when I tell everyone I will add every feature, from every request they make. It's okay though, by the time they start asking to see results we will already be best friends! Right?
 
