@@ -8,4 +8,4 @@ url: "http://tmr08c.github.io" # the base hostname & protocol for your site
 github_username:  tmr08c
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
