@@ -24,7 +24,7 @@ After jumping around search result pages I eventually found some issues for [rub
 
 I feel very fortunate to have a project that I can be proud to have contributed to. 
 
-Interested in what I ended up doing? [Check it out!](https://github.com/rubyforgood/partner/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Atmr08c).
+Interested in what I ended up doing? [Check out my PRs here](https://github.com/rubyforgood/partner/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Atmr08c).
 
 ## Next Year?
 
