@@ -4,7 +4,13 @@ title: Talks
 permalink: /talks/
 ---
 
-Here are some talks that I have given
+Here are some of the talks that I have given:
+
+# 2018
+
+**<a href="https://www.icloud.com/keynote/0NVf0OADqbNQtreCtb2Y4vC4A#Building_a_Function_as_a_Service_with_TypeScript" onclick="trackOutboundlink('https://www.icloud.com/keynote/0NVf0OADqbNQtreCtb2Y4vC4A#Building_a_Function_as_a_Service_with_TypeScript'); return false" target="_blank">Building a Function as a Service with TypeScript</a>** (4/2018)
+
+_This talk was given at a meeting for the [North Carolina State University's](https://www.ncsu.edu/) [ACM chapter](https://acm-ncsu.github.io/about/). The talk covers some of the history of DevOps at ROI Revolution and why we are excited about the idea serverless/Faas. You can also find sample code <a href="https://github.com/tmr08c/faas-with-typescript" onclick="trackOutboundlink('https://github.com/tmr08c/faas-with-typescript'); return false" target="_blank">here</a>._
 
 # 2015
 
