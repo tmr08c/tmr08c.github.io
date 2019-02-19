@@ -64,4 +64,35 @@ html.main-page{
       }
     }
   }
+
+  .section2{
+    background-color: rebeccapurple;
+    color: gold;
+    padding-bottom: 2em;
+
+    @media screen and (min-width: 900px){
+      .about-boxes{
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+
+    .about-boxes{
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+
+      .square-info{
+        padding: 30px 50px;
+        border: 1px solid white;
+        width: 250px;
+        margin-top: 25px;
+
+        ul{
+          list-style: none;
+          text-align: left;
+        }
+      }
+    }
+  }
 }
