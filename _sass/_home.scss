@@ -1,20 +1,33 @@
 html.main-page{
-  height: 100%;
   body{
-    height: 100%;
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: none;
+  }
 
+  .section1{
     background:
-     linear-gradient(rgba(66, 66, 66, 0.35), rgba(66, 66, 66, 0.35)),
-     url(/images/main_background.jpeg) no-repeat center center fixed;
+      linear-gradient(to bottom right, #3d10484a, #1d071d7d),
+      url(/images/subtle_rocks.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+
+    min-height: 100vh;
+
+    .header{
+      padding-top: 10vh;
+    }
+  }
+
+  // On small screens, at some padding to the bottom
+  @media screen and (max-height: 650px) {
+    .section1{
+      padding-bottom: 2em;
+    }
   }
 
   .content{
-    margin-top: 15vh;
     color: white;
   }
 
@@ -29,6 +42,8 @@ html.main-page{
     img{
       height: 12em;
       width: 12em;
+      box-shadow: #3c2f2fa6 0px 2px 2px 0px;
+      opacity: 0.9;
     }
   }
 
