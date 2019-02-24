@@ -1,12 +1,15 @@
-html.main-page{
-  body{
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+html.main-page {
+  body {
+    font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: none;
   }
 
-  .section1{
-    background:
-      linear-gradient(to bottom right, #3d10484a, #1d071d7d),
+  .section1 {
+    background: linear-gradient(
+        to bottom right,
+        rgba(0, 127, 159, 0.25),
+        rgba(22, 106, 127, 0.28)
+      ),
       url(/images/subtle_rocks.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -15,51 +18,53 @@ html.main-page{
 
     min-height: 100vh;
 
-    .header{
+    .header {
       padding-top: 10vh;
     }
   }
 
   // On small screens, at some padding to the bottom
   @media screen and (max-height: 650px) {
-    .section1{
+    .section1 {
       padding-bottom: 2em;
     }
   }
 
-  .content{
+  .content {
     color: white;
   }
 
-  .header{
+  .header {
     font-size: 4.5em;
     font-weight: bold;
   }
 
-  .selfie{
-    margin-top: 1.5em;
+  .selfie {
+    margin: 0.75em;
 
-    img{
-      height: 12em;
-      width: 12em;
+    img {
+      height: 20em;
+      width: 30em;
       box-shadow: #3c2f2fa6 0px 2px 2px 0px;
-      opacity: 0.9;
+      border-radius: 10%;
     }
   }
 
-  .social{
+  .social {
     margin-top: 2em;
 
-    a.fa, a.fab, a.fas{
+    a.fa,
+    a.fab,
+    a.fas {
       color: white;
       font-size: 3em;
       margin-right: 0.4em;
 
-      &:hover{
+      &:hover {
         text-decoration: none;
         color: black;
       }
-      &:last-child{
+      &:last-child {
         margin-right: 0;
       }
     }
