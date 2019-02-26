@@ -9,7 +9,7 @@ html.main-page {
   }
 
   .section1 {
-    background: linear-gradient(to bottom right, $purple, lighten($gold, 25%));
+    background: linear-gradient(lighten($teal, 5%), lighten($purple, 25%));
     min-height: 100vh;
 
     .header {
@@ -23,7 +23,7 @@ html.main-page {
     }
   }
 
-  // On small screens, at some padding to the bottom
+  // On small screens, add some padding to the bottom
   @media screen and (max-height: 650px) {
     .section1 {
       padding-bottom: 2em;
@@ -40,7 +40,6 @@ html.main-page {
     img {
       height: 15em;
       width: 22em;
-      box-shadow: #3c2f2fa6 0px 2px 2px 0px;
       border-radius: 10px;
     }
   }
@@ -57,9 +56,7 @@ html.main-page {
 
       &:hover {
         text-decoration: none;
-        color: $teal;
-        transition: all 0.25s ease-in-out;
-        transform: scale(1.2);
+        color: $gold;
       }
       &:last-child {
         margin-right: 0;
