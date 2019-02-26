@@ -2,9 +2,11 @@ $purple: rebeccapurple;
 $teal: rgb(58, 163, 189);
 $gold: rgb(255, 221, 0);
 
+$main-font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 html.main-page {
   body {
-    font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: $main-font-family;
     background: none;
   }
 
@@ -13,13 +15,9 @@ html.main-page {
     min-height: 100vh;
 
     .header {
+      font-family: "Chewy", $main-font-family;
       padding-top: 10vh;
       font-size: 5em;
-      font-weight: bold;
-    }
-
-    .about {
-      font-style: italic;
     }
   }
 
