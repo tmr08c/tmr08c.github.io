@@ -1,12 +1,16 @@
 {
-  "rulesDirectory": [
-    "tslint-plugin-prettier"
-  ],
-  "extends": [
-    "tslint-config-blvd/react",
-    "tslint-config-prettier"
-  ],
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "jsRules": {},
   "rules": {
-    "prettier": true
-  }
+    "interface-name": false,
+    "semicolon": [true, "never"],
+    "member-access": [false],
+    "ordered-imports": [true],
+    "no-console": [false],
+    "no-var-requires": true,
+    "jsx-no-lambda": false,
+    "quotemark": [true, "single", "jsx-double"]
+  },
+  "rulesDirectory": []
 }

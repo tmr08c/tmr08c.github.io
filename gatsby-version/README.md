@@ -1,50 +1,30 @@
-## Gatsby 2 Power blog starter with Typescript
-More features are coming, stay tuned! 
+# gatsby-typescript-starter-blog
 
-## Success Stories:
-- I am using this template for my website https://www.majidhajian.com
+> A starter blog for TypeScript-based Gatsby projects with minimal settings.
 
-### Description
-This is a standard starter with Typescript, TSLint, StyleLint, Prettier, Lint-Staged(Husky), Sass, StyleComponent, PWA
+![demo-image](https://user-images.githubusercontent.com/45202363/50053530-e8357980-0179-11e9-8fdd-2ff069038ad2.png)
 
-#### Desktop
-<img src="https://raw.githubusercontent.com/mhadaily/gatsby-starter-typescript-power-blog/master/desktop.png">
+## Features
 
-#### Mobile
-<img src="https://raw.githubusercontent.com/mhadaily/gatsby-starter-typescript-power-blog/master/mobile.png" width="300px">
+- TypeScript & TSLint
+- Minimal settings (No Styling)
 
-### new project
-```
-gatsby new my_blog https://github.com/mhadaily/gatsby-starter-typescript-power-blog
+## Geting started
+
+```bash
+gatsby new [project-name] https://github.com/frnki/gatsby-typescript-starter-blog
 ```
 
-### Keywords
-  - PWA
-  - Blog
-  - Personal website
-  - TypeScript
-  - TSLint
-  - Progressive web app
-  - StyleLint
-  - Prettier
-  - Lint-Staged
-  - Styling:SCSS
-  - Prisim.js
-  - Style Components
-  - Markdown
-  - Pagination
+## Development
 
-### Features
-  - Mobile-First approach in development.
-  - TSLint & Prettier
-  - Offline support
-  - Category and Tag for post
-  - Type Safe by TypeScript
-  - Format Safe by TSLint, StyleLint and Prettier with Lint-Staged(Husky)
-  - Blog page
-  - Syntax highlighting in code blocks.
-  - Pagination Ready
-  - Ready to deploy to Github pages
-  - Automatic RSS generation.
-  - Automatic Sitemap generation.
-  - Automatic support for Google Tag Manager
+```bash
+# develop 
+npm start
+
+# build
+npm run build
+```
+
+## Credits
+
+Built with [Gatsby](https://www.gatsbyjs.org/) - the blazing-fast static site generator for [React](https://facebook.github.io/react/).
