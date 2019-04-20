@@ -1,7 +1,6 @@
 import { graphql, Link } from 'gatsby'
 import * as React from 'react'
-import Image from '../components/image'
-import Layout from '../components/layout'
+import Selfie from '../components/Selfie'
 import SEO from '../components/seo'
 
 interface PostNode {
@@ -24,45 +23,32 @@ interface IndexPageProps {
         siteName: string
       }
     }
-    allMarkdownRemark: {
-      edges: PostNode[]
-    }
   }
 }
 
 class IndexPage extends React.Component<IndexPageProps, {}> {
   render() {
     const { data } = this.props
-    const posts = data.allMarkdownRemark.edges
 
     return (
-      <Layout>
+      <div
+        className="object-cover min-h-screen flex flex-col justify-center"
+        style={{
+          background: 'linear-gradient(green, purple)',
+        }}
+      >
         <SEO
           title="All posts"
           keywords={['blog', 'gatsby', 'javascript', 'react']}
         />
-        <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
-          <Image />
-        </div>
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
-          return (
-            <div key={node.fields.slug}>
-              <h3
-                style={{
-                  marginBottom: '0.25rem',
-                }}
-              >
-                <Link style={{ boxShadow: 'none' }} to={node.fields.slug}>
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-            </div>
-          )
-        })}
-      </Layout>
+        <h1 className="text-white text-5xl text-center p-10">
+          Hello, I'm Troy
+        </h1>
+        <Selfie />
+        <h2 className="text-white text-3xl text-center p-10">
+          I am a Software Developer &amp; Engineering Manager
+        </h2>
+      </div>
     )
   }
 }
@@ -74,20 +60,6 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-          }
-        }
       }
     }
   }

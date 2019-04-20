@@ -13,21 +13,28 @@ import * as React from 'react'
  * - `StaticQuery`: https://gatsby.app/staticquery
  */
 
-const Image = () => (
+const Selfie = () => (
   <StaticQuery
     query={graphql`
       query {
-        placeholderImage: file(relativePath: { eq: "gatsby-astronaut.png" }) {
+        placeholderImage: file(
+          relativePath: { eq: "RhiDesign Troy Avatar.png" }
+        ) {
           childImageSharp {
-            fluid(maxWidth: 300) {
+            fluid(maxWidth: 700) {
               ...GatsbyImageSharpFluid
             }
           }
         }
       }
     `}
-    render={data => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
+    render={data => (
+      <Img
+        className="rounded-lg w-1/2 max-w-sm mx-auto"
+        fluid={data.placeholderImage.childImageSharp.fluid}
+      />
+    )}
   />
 )
 
-export default Image
+export default Selfie
