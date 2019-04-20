@@ -38,6 +38,9 @@ module.exports = {
             },
           },
           `gatsby-remark-responsive-iframe`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+          },
         ],
       },
     },

@@ -34,17 +34,12 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
     return (
       <Layout>
         <SEO title={post.frontmatter.title} description={post.excerpt} />
-        <h1>{post.frontmatter.title}</h1>
-        <p
-          style={{
-            display: 'block',
-            marginBottom: '1rem',
-            marginTop: '-rem',
-          }}
-        >
-          {post.frontmatter.date}
-        </p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        <h1 className="text-4xl font-bold">{post.frontmatter.title}</h1>
+        <p className="text-gray-800 italic mb-7">{post.frontmatter.date}</p>
+        <div
+          className="blog-post-body"
+          dangerouslySetInnerHTML={{ __html: post.html }}
+        />
         <hr
           style={{
             marginBottom: '14px',

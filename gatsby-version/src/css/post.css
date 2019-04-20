@@ -1,0 +1,34 @@
+.blog-post-body h1,
+h2,
+h3,
+ul,
+p,
+.gatsby-highlight,
+.gatsby-resp-image-link {
+  @apply mb-4;
+}
+
+.blog-post-body a {
+  @apply underline;
+  @apply text-purple-400;
+}
+
+.blog-post-body ul {
+  @apply list-disc;
+  @apply pl-4;
+}
+
+.blog-post-body h1 {
+  @apply text-3xl;
+  @apply font-bold;
+}
+
+.blog-post-body h2 {
+  @apply text-2xl;
+  @apply font-semibold;
+}
+
+.blog-post-body h3 {
+  @apply text-xl;
+  @apply font-medium;
+}
