@@ -6,32 +6,29 @@ interface HeaderProps {
 }
 
 const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
-  <div
-    style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
-    }}
+  <nav
+    className={
+      'flex items-center justify-between flex-wrap bg-purple-800 p-6 shadow mb-5'
+    }
   >
-    <div
-      style={{
-        margin: '0 auto',
-        maxWidth: '40rem',
-        padding: '1.45rem 1.0875rem',
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
+    <div className={'flex flex-no-shrink'}>
+      <Link
+        to="/"
+        className={
+          'font-semibold text-2xl tracking-tighter text-yellow-400 border-b-4 border-transparent border-dashed hover:border-yellow-400'
+        }
+      >
+        {siteTitle}
+      </Link>
     </div>
-  </div>
+    <div className={'justify-end flex mr-4'}>
+      <div className={'text-md'}>
+        <Link to="/blog" className={'text-yellow-400 hover:text-white'}>
+          Blog
+        </Link>
+      </div>
+    </div>
+  </nav>
 )
 
 Header.defaultProps = {
