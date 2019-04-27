@@ -55,13 +55,16 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
         <Header />
 
         <div className="flex flex-col justify-center text-center text-white">
-          <h1 className="p-10 pb-4 text-8xl" style={{ fontFamily: 'Chewy' }}>
+          <h1
+            className="text-5xl lg:text-8xl p-10 pb-4 "
+            style={{ fontFamily: 'Chewy' }}
+          >
             Hello, I'm Troy!
           </h1>
 
           <Selfie />
 
-          <h2 className="lg:text-2xl sm:text-xl font-hairline p-6">
+          <h2 className="text-xl lg:text-2xl font-hairline p-6">
             I am a Software Developer &amp; Engineering Manager
           </h2>
         </div>
