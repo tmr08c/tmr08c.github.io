@@ -69,5 +69,15 @@ module.exports = {
     },
     'gatsby-plugin-offline',
     `gatsby-plugin-postcss`,
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Chewy`,
+          },
+        ],
+      },
+    },
   ],
 }

@@ -2,6 +2,7 @@ import { graphql, Link } from 'gatsby'
 import * as React from 'react'
 import Selfie from '../components/Selfie'
 import SEO from '../components/seo'
+import Header from '../components/Header'
 
 interface PostNode {
   node: {
@@ -31,23 +32,39 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
     const { data } = this.props
 
     return (
-      <div
-        className="object-cover min-h-screen flex flex-col justify-center"
-        style={{
-          background: 'linear-gradient(green, purple)',
-        }}
-      >
+      <div className="object-cover min-h-screen bg-purple-800 ">
         <SEO
-          title="All posts"
-          keywords={['blog', 'gatsby', 'javascript', 'react']}
+          title="Home"
+          keywords={[
+            'blog',
+            'gatsby',
+            'javascript',
+            'typescript',
+            'react',
+            'programming',
+            'ruby',
+            'rails',
+            'elixir',
+            'phoenix',
+            'software development',
+            'engineering manager',
+            'code',
+          ]}
         />
-        <h1 className="text-white text-5xl text-center p-10">
-          Hello, I'm Troy
-        </h1>
-        <Selfie />
-        <h2 className="text-white text-3xl text-center p-10">
-          I am a Software Developer &amp; Engineering Manager
-        </h2>
+
+        <Header />
+
+        <div className="flex flex-col justify-center text-center text-white">
+          <h1 className="p-10 pb-4 text-8xl" style={{ fontFamily: 'Chewy' }}>
+            Hello, I'm Troy!
+          </h1>
+
+          <Selfie />
+
+          <h2 className="lg:text-2xl sm:text-xl font-hairline p-6">
+            I am a Software Developer &amp; Engineering Manager
+          </h2>
+        </div>
       </div>
     )
   }
