@@ -32,3 +32,9 @@ p,
   @apply text-xl;
   @apply font-medium;
 }
+
+.blog-post-body blockquote {
+  @apply text-gray-600;
+  @apply font-serif;
+  @apply italic;
+}
