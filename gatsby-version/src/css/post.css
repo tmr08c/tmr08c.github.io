@@ -1,11 +1,15 @@
 .blog-post-body h1,
-h2,
-h3,
-ul,
-p,
-.gatsby-highlight,
-.gatsby-resp-image-link {
+.blog-post-body h2,
+.blog-post-body h3,
+.blog-post-body ul,
+.blog-post-body p,
+.blog-post-body .gatsby-highlight,
+.blog-post-body .gatsby-resp-image-link {
   @apply mb-4;
+}
+
+.blog-post-body {
+  @apply mt-5;
 }
 
 .blog-post-body a {
