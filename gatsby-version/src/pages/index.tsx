@@ -32,7 +32,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
     const { data } = this.props
 
     return (
-      <div className="object-cover min-h-screen bg-purple-800 ">
+      <div className="object-cover min-h-screen bg-living-coral-500">
         <SEO
           title="Home"
           keywords={[
@@ -54,7 +54,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
 
         <Header />
 
-        <div className="flex flex-col justify-center text-center text-white">
+        <div className="flex flex-col justify-center text-center text-black">
           <h1
             className="text-5xl lg:text-8xl p-10 pb-4 "
             style={{ fontFamily: 'Chewy' }}

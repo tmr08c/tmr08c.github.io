@@ -10,7 +10,7 @@ p,
 
 .blog-post-body a {
   @apply underline;
-  @apply text-purple-400;
+  @apply text-red-300;
 }
 
 .blog-post-body ul {

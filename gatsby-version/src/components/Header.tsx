@@ -6,31 +6,25 @@ interface HeaderProps {
 }
 
 const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
-  <nav
-    className={
-      'flex items-center justify-between flex-wrap bg-purple-800 p-6 mb-5'
-    }
-  >
-    <div className={'flex flex-no-shrink'}>
+  <nav className="flex items-center justify-between flex-wrap bg-living-coral-500 p-6 mb-5">
+    <div className="flex flex-no-shrink">
       <Link
         to="/"
-        className={
-          'font-semibold text-xl tracking-tighter text-yellow-400 hover:text-white'
-        }
+        className="font-semibold text-xl tracking-tighter text-black hover:text-white"
       >
         {siteTitle}
       </Link>
     </div>
-    <div className={'justify-end flex mr-4'}>
-      <div className={'text-xl'}>
+    <div className="justify-end flex mr-4">
+      <div className="text-xl">
         <a
           href="https://github.com/tmr08c/"
           target="blank"
-          className="text-yellow-400 hover:text-white mx-2"
+          className="text-black hover:text-white mx-2"
         >
           GitHub
         </a>
-        <Link to="/blog" className={'text-yellow-400 hover:text-white'}>
+        <Link to="/blog" className="text-black hover:text-white">
           Blog
         </Link>
       </div>
