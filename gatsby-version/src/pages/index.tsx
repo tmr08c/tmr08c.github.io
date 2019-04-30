@@ -3,6 +3,7 @@ import * as React from 'react'
 import Selfie from '../components/Selfie'
 import SEO from '../components/seo'
 import Header from '../components/Header'
+import Footer from '../components/Footer';
 
 interface PostNode {
   node: {
@@ -32,43 +33,47 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
     const { data } = this.props
 
     return (
-      <div className="object-cover min-h-screen bg-living-coral-500">
-        <SEO
-          title="Home"
-          keywords={[
-            'blog',
-            'gatsby',
-            'javascript',
-            'typescript',
-            'react',
-            'programming',
-            'ruby',
-            'rails',
-            'elixir',
-            'phoenix',
-            'software development',
-            'engineering manager',
-            'code',
-          ]}
-        />
+      <>
+        <div className="object-cover min-h-screen bg-living-coral-500">
+          <SEO
+            title="Home"
+            keywords={[
+              'blog',
+              'gatsby',
+              'javascript',
+              'typescript',
+              'react',
+              'programming',
+              'ruby',
+              'rails',
+              'elixir',
+              'phoenix',
+              'software development',
+              'engineering manager',
+              'code',
+            ]}
+          />
 
-        <Header />
+          <Header />
 
-        <div className="flex flex-col justify-center text-center text-black">
-          <h1
-            className="text-5xl lg:text-8xl p-10 pb-4 "
-            style={{ fontFamily: 'Chewy' }}
-          >
-            Hello, I'm Troy!
-          </h1>
+          <div className="flex flex-col justify-center text-center text-black">
+            <h1
+              className="text-5xl lg:text-8xl p-10 pb-4 "
+              style={{ fontFamily: 'Chewy' }}
+            >
+              Hello, I'm Troy!
+            </h1>
 
-          <Selfie />
+            <Selfie />
 
-          <h2 className="text-xl lg:text-2xl font-hairline p-6">
-            I am a Software Developer &amp; Engineering Manager
-          </h2>
+            <h2 className="text-xl lg:text-2xl font-hairline p-6">
+              I am a Software Developer &amp; Engineering Manager
+            </h2>
+          </div>
         </div>
-      </div>
+
+        <Footer />
+      </>
     )
   }
 }

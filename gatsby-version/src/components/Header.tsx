@@ -17,13 +17,6 @@ const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
     </div>
     <div className="justify-end flex mr-4">
       <div className="text-xl">
-        <a
-          href="https://github.com/tmr08c/"
-          target="blank"
-          className="text-black hover:text-white mx-2"
-        >
-          GitHub
-        </a>
         <Link to="/blog" className="text-black hover:text-white">
           Blog
         </Link>

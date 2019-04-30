@@ -1,6 +1,7 @@
 import { graphql, StaticQuery } from 'gatsby'
 import * as React from 'react'
 
+import Footer from './Footer'
 import Header from './Header'
 
 const Layout: React.SFC = ({ children }) => (
@@ -18,6 +19,7 @@ const Layout: React.SFC = ({ children }) => (
       <>
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
+          className="min-h-screen"
           style={{
             margin: '0 auto',
             maxWidth: '40rem',
@@ -27,6 +29,7 @@ const Layout: React.SFC = ({ children }) => (
         >
           {children}
         </div>
+        <Footer />
       </>
     )}
   />
