@@ -7,7 +7,7 @@ const Footer: React.SFC = () => (
   >
     <ul className="flex-grow pl-5 text-gray-800 my-auto">
       <li>
-        <Link to='/home' className="hover:text-white">Home</Link>
+        <Link to='/' className="hover:text-white">Home</Link>
       </li>
       <li>
         <Link to='/blog' className="hover:text-white">Blog</Link>
