@@ -1,8 +1,7 @@
 ---
-layout: post
 title:  "Why I Love the Cloud"
 date:   2015-05-09 19:29:02
-categories: personal
+categories: ['personal']
 ---
 
 *Disclaimer: While I know it is overused, I am going to use the term "cloud" a lot. By cloud I mean data stored remotely that can be accessed via the web*

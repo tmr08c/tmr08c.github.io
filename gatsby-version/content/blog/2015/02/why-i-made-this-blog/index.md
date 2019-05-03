@@ -1,8 +1,7 @@
 ---
-layout: post
 title:  "Why I made this blog"
 date:   2015-02-28 12:20:02
-categories: blogging
+categories: ['blogging']
 ---
 Like many developers I felt the need to create a blog. The dream is, it will provide some benefit to other software developers around the world.
 

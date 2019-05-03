@@ -1,8 +1,7 @@
 ---
-layout: post
 title:  "My First Open Source Contribution"
 date:   2015-05-03 19:29:02
-categories: opensource
+categories: ['opensource']
 ---
 
 In working towards my [original goals]({% post_url 2015-02-28-why-i-made-this-blog %}), I finally opened my [first pull request](https://github.com/bbatsov/rubocop/pull/1857) on an open source project.

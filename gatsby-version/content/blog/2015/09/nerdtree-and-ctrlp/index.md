@@ -1,8 +1,7 @@
 ---
-layout: post
 title:  "Making NERDTree and CtrlP Play Nice"
 date:   2015-09-19 09:43:02
-categories: vim
+categories: ['vim']
 ---
 
 I am a few months in to my switch to Vim and so far have been working to keep a fairly minimal vimrc and not use too many packages. There was, however, one package I needed immediately - [ctrlp](https://github.com/kien/ctrlp.vim), a package that allows you to quickly find files in your project.

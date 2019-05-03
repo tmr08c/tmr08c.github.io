@@ -1,8 +1,7 @@
 ---
-layout: post
 title:  "Spotify Running"
 date:   2015-10-25 23:13:02
-categories: picks
+categories: ['picks']
 ---
 
 Inspired by the [Ruby Rouge's](https://devchat.tv/ruby-rogues/) [picks section](https://devchat.tv/ruby-rogues/picks) and [Tim Ferriss'](http://fourhourworkweek.com/) [5-Bullet Fridays](http://www.fourhournewsletter.com/site/fourhourworkweeknewsletter/webform.html?wid=6&u=w&mg_param3=4) I have decided to start creating short, weekly posts highlighting a few things that have piqued my interest recently.
