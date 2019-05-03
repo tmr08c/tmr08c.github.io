@@ -45,9 +45,7 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
             marginBottom: '14px',
           }}
         />
-        <ul
-          className="flex flex-wrap justify-between"
-        >
+        <ul className="flex flex-wrap justify-between">
           <li>
             {previous && (
               <Link to={previous.fields.slug} rel="prev">

@@ -1,9 +1,9 @@
 import { graphql, Link } from 'gatsby'
 import * as React from 'react'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 import Selfie from '../components/Selfie'
 import SEO from '../components/seo'
-import Header from '../components/Header'
-import Footer from '../components/Footer';
 
 interface PostNode {
   node: {
