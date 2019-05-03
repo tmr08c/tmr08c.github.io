@@ -46,13 +46,7 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
           }}
         />
         <ul
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            listStyle: 'none',
-            padding: 0,
-          }}
+          className="flex flex-wrap justify-between"
         >
           <li>
             {previous && (
@@ -60,6 +54,9 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
                 ← {previous.frontmatter.title}
               </Link>
             )}
+          </li>
+          <li>
+            <Link to="/blog">- All Posts -</Link>
           </li>
           <li>
             {next && (
