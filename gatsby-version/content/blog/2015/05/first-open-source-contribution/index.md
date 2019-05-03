@@ -4,7 +4,7 @@ date:   2015-05-03 19:29:02
 categories: ['opensource']
 ---
 
-In working towards my [original goals]({% post_url 2015-02-28-why-i-made-this-blog %}), I finally opened my [first pull request](https://github.com/bbatsov/rubocop/pull/1857) on an open source project.
+In working towards my [original goals](/2015/02/why-i-made-this-blog/), I finally opened my [first pull request](https://github.com/bbatsov/rubocop/pull/1857) on an open source project.
 
 For my first project I chose [Rubocop](https://github.com/bbatsov/rubocop), a gem that analyzes Ruby code to check for compliance with the [Ruby style guide](https://github.com/bbatsov/ruby-style-guide). This is a tool that we use multiple times a day at work - no code gets merged in until Rubocop is happy with it.
 

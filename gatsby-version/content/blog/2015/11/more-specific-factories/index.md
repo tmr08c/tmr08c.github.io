@@ -4,7 +4,7 @@ date:   '2015-11-17T22:53:02.123Z'
 categories: ['testing', 'ruby']
 ---
 
-As I have discussed in [previous posts]({% post_url 2015-11-08-using-vim-to-drive-tdd %}) I have been working to adopt TDD into my workflow. One of the ways I have aimed to improve my testing skills is to better utilize the testing tools I am using. One common testing tools in the Rails space is [Factory Girl](https://github.com/thoughtbot/factory_girl). Factory Girl provides an easy way to create sample records of models from your application in your specs.
+As I have discussed in [previous posts](/2015/11/using-vim-to-drive-tdd/) I have been working to adopt TDD into my workflow. One of the ways I have aimed to improve my testing skills is to better utilize the testing tools I am using. One common testing tools in the Rails space is [Factory Girl](https://github.com/thoughtbot/factory_girl). Factory Girl provides an easy way to create sample records of models from your application in your specs.
 
 Factories are great because you can set them up with common base attributes and then you only have to specify the attributes you are worried about when you create the object. For example, we can have a `Person` factory that looks like:
 
