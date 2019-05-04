@@ -14,6 +14,7 @@ module.exports = {
   },
   variants: {
     // Some useful comment
+    textColor: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
   plugins: [
     // Some useful comment
