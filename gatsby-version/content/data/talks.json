@@ -18,7 +18,7 @@
         "presentationDate": { "year": 2014, "month": 2 }
       },
       {
-        "description": "This talk was given during a U?CF ACM meeting. It starts with a quick introduction to the syntax of Ruby but the bulk of the talk was walking through creating a demo Rails application. The walkthrough for the demo Rails application can be found <a href='https://gist.github.com/tmr08c/102cacf255d09e2122ce' class='border-solid border-red-200 border-b-2' target='_blank' rel='nofollow noopener noreferrer'>here</a>. The application is an attendance app that allows meetings to be created and users to sign in as having attended a meeting.",
+        "description": "This talk was given during a UCF ACM meeting. It starts with a quick introduction to the syntax of Ruby but the bulk of the talk was walking through creating a demo Rails application. The walkthrough for the demo Rails application can be found <a href='https://gist.github.com/tmr08c/102cacf255d09e2122ce' class='border-solid border-red-200 border-b-2' target='_blank' rel='nofollow noopener noreferrer'>here</a>. The application is an attendance app that allows meetings to be created and users to sign in as having attended a meeting.",
         "name": "Creating a Ruby on Rails Application - A Brief Introduction to Magic",
         "presentationDate": { "year": 2014, "month": 10 }
       }
