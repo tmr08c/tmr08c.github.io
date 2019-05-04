@@ -7,8 +7,8 @@ interface YearListProps {
 }
 
 const YearList: React.SFC<YearListProps> = ({ year, talks }) => (
-  <div key={year} className="mb-5">
-    <h2 className="text-3xl mb-3">{year}</h2>
+  <div key={year} className="mb-8">
+    <h2 className="tracking-tighter text-3xl mb-3 text-center">{year}</h2>
     {talks.map(talk => (
       <Talk key={talk.name} talk={talk} />
     ))}

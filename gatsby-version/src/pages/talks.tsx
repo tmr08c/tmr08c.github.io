@@ -30,7 +30,11 @@ class TalksPage extends React.Component<TalkPageProps, {}> {
     return (
       <Layout>
         <SEO title="Talks" keywords={['programming', 'conference talks']} />
-        <h1 className={'text-5xl text-center font-bold mb-5'}>Talks</h1>
+        <h1 className={'text-5xl  font-bold mb-5'}>Talks</h1>
+        <div className="text-md text-gray-600 italic mb-8">
+          Below are some talks that I have given over time. When possible, I
+          have provided links to slides and/or code.
+        </div>
         {talkListEdges.map(({ node: { year, talks } }) => {
           return <YearList key={year} year={year} talks={talks} />
         })}
