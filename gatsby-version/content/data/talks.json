@@ -1,0 +1,37 @@
+[
+  {
+    "year": "2013",
+    "talks": [
+      {
+        "description": "not much happened here, it was the first go of it",
+        "name": "First talk",
+        "presentationDate": { "year": 2013, "month": 3 }
+      }
+    ]
+  },
+  {
+    "year": "2014",
+    "talks": [
+      {
+        "description": "des2",
+        "name": "Some talking",
+        "presentationDate": { "year": 2014, "month": 3 }
+      },
+      {
+        "description": "des3",
+        "name": "A talk about some things",
+        "presentationDate": { "year": 2014, "month": 3 }
+      }
+    ]
+  },
+  {
+    "year": "2015",
+    "talks": [
+      {
+        "name": "2015 Talk Number 1",
+        "description": "a talk given in 2015",
+        "presentationDate": { "year": 2015, "month": 2 }
+      }
+    ]
+  }
+]

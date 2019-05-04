@@ -81,5 +81,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-catch-links`,
+    `gatsby-transformer-json`,
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/content/data/`,
+      },
+    },
   ],
 }
