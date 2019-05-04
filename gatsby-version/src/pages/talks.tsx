@@ -21,7 +21,11 @@ interface TalkPageProps {
 
 class TalksPage extends React.Component<TalkPageProps, {}> {
   render() {
-    const { data: { allTalksJson: { edges: talkListEdges }} } = this.props
+    const {
+      data: {
+        allTalksJson: { edges: talkListEdges },
+      },
+    } = this.props
 
     return (
       <Layout>
@@ -45,6 +49,7 @@ export const pageQuery = graphql`
           year
           talks {
             description
+            link
             name
             presentationDate {
               year
