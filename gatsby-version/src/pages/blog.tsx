@@ -18,11 +18,6 @@ interface PostNode {
 
 interface IndexPageProps {
   data: {
-    site: {
-      siteMetadata: {
-        siteName: string
-      }
-    }
     allMarkdownRemark: {
       edges: PostNode[]
     }
@@ -37,7 +32,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
     return (
       <Layout>
         <SEO
-          title="TroyProg Blog - All Posts"
+          title="Blog"
           keywords={['blog', 'gatsby', 'javascript', 'react']}
         />
 
@@ -68,11 +63,6 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {

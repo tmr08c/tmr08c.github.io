@@ -1,37 +1,11 @@
-import { graphql, Link } from 'gatsby'
 import * as React from 'react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import Selfie from '../components/Selfie'
 import SEO from '../components/seo'
 
-interface PostNode {
-  node: {
-    excerpt: string
-    frontmatter: {
-      date: string
-      title: string
-    }
-    fields: {
-      slug: string
-    }
-  }
-}
-
-interface IndexPageProps {
-  data: {
-    site: {
-      siteMetadata: {
-        siteName: string
-      }
-    }
-  }
-}
-
-class IndexPage extends React.Component<IndexPageProps, {}> {
+class IndexPage extends React.Component<{}, {}> {
   render() {
-    const { data } = this.props
-
     return (
       <>
         <div className="object-cover min-h-screen bg-living-coral-500">
@@ -79,13 +53,3 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
 }
 
 export default IndexPage
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
