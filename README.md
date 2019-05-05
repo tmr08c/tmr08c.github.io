@@ -1,15 +1,30 @@
-# TroyProg Blog
+# gatsby-typescript-starter-blog
 
-Personal site and blog using [Jekyll](https://jekyllrb.com/) and hosted using [GitHub Pages](https://pages.github.com/).
+> A starter blog for TypeScript-based Gatsby projects with minimal settings.
+
+![demo-image](https://user-images.githubusercontent.com/45202363/50053530-e8357980-0179-11e9-8fdd-2ff069038ad2.png)
+
+## Features
+
+- TypeScript & TSLint
+- Minimal settings (No Styling)
+
+## Geting started
+
+```bash
+gatsby new [project-name] https://github.com/frnki/gatsby-typescript-starter-blog
+```
 
 ## Development
 
-You can run the server locally, with live reloading, with the following:
-
 ```bash
-bundle exec jekyll serve --livereload
+# develop 
+npm start
+
+# build
+npm run build
 ```
 
-## Deployment
+## Credits
 
-GitHub Pages will automatically build and server the site when pushed to `master`.
+Built with [Gatsby](https://www.gatsbyjs.org/) - the blazing-fast static site generator for [React](https://facebook.github.io/react/).
