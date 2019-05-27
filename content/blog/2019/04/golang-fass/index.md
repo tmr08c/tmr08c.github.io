@@ -126,7 +126,7 @@ Transfer/sec:      1.35MB
 
 It seems to have scaled up to handle half a million requests with no non-200 response and no timeout issues (given a one-minute timeout).
 
-I'd be interested in seeing how different platforms and different languages compare, but, regardless, I was super easy to set up, and I got to see some fun graphs out of it:
+I'd be interested in seeing how different platforms and different languages compare, but, regardless, it was super easy to set up, and I got to see some fun graphs out of it:
 
 <img src="./google-cloud-function-scaling.png" />
 
@@ -134,7 +134,7 @@ I'd be interested in seeing how different platforms and different languages comp
 
 Also included in the `Makefile` is a `delete` task. I thought it would be good for me to run this since I have my function's URL pasted a bunch of times throughout this post 🙃.
 
-When I tried to run `make delete` initiall, I ran into errors about unknown arguments:
+When I tried to run `make delete` initially, I ran into errors about unknown arguments:
 
 ```bash
 ERROR: (gcloud.functions.delete) unrecognized arguments:
