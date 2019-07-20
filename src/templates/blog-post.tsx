@@ -1,41 +1,41 @@
-import { graphql, Link } from 'gatsby'
-import * as React from 'react'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import { graphql, Link } from "gatsby";
+import * as React from "react";
+import Layout from "../components/layout";
+import SEO from "../components/seo";
 
 interface BlogPostTemplateProps {
   data: {
     site: {
       siteMetadata: {
-        title: string
-      }
-    }
+        title: string;
+      };
+    };
     markdownRemark: {
-      id: string
-      excerpt: string
-      html: string
+      id: string;
+      excerpt: string;
+      html: string;
       frontmatter: {
-        title: string
-        date: string
-      }
-    }
-  }
+        title: string;
+        date: string;
+      };
+    };
+  };
   pageContext: {
-    previous: any
-    next: any
-  }
+    previous: any;
+    next: any;
+  };
 }
 
 class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
   render() {
-    const post = this.props.data.markdownRemark
-    const { previous, next } = this.props.pageContext
+    const post = this.props.data.markdownRemark;
+    const { previous, next } = this.props.pageContext;
 
     return (
       <Layout>
         <main>
-        <SEO title={post.frontmatter.title} description={post.excerpt} />
-        <h1 className="text-4xl font-bold">{post.frontmatter.title}</h1>
+          <SEO title={post.frontmatter.title} description={post.excerpt} />
+          <h1 className="text-4xl font-bold">{post.frontmatter.title}</h1>
           <div>
             <time
               dateTime={post.frontmatter.date}
@@ -44,14 +44,14 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
               {post.frontmatter.date}
             </time>
           </div>
-        <div
-          className="blog-post-body"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+          <div
+            className="blog-post-body"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
         </main>
         <hr
           style={{
-            marginBottom: '14px',
+            marginBottom: "14px"
           }}
         />
         <ul className="flex flex-wrap justify-between">
@@ -74,11 +74,11 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
           </li>
         </ul>
       </Layout>
-    )
+    );
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -98,4 +98,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
