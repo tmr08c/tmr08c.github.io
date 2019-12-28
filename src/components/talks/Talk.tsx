@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from "react";
 
 interface TalkProps {
-  talk: TroyProgBlog.Talk
+  talk: TroyProgBlog.Talk;
 }
 
 const Talk: React.SFC<TalkProps> = ({ talk }) => {
@@ -30,7 +30,7 @@ const Talk: React.SFC<TalkProps> = ({ talk }) => {
         dangerouslySetInnerHTML={{ __html: talk.description }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Talk
+export default Talk;

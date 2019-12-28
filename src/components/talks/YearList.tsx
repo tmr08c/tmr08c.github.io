@@ -1,9 +1,9 @@
-import * as React from 'react'
-import Talk from './Talk'
+import * as React from "react";
+import Talk from "./Talk";
 
 interface YearListProps {
-  year: string
-  talks: TroyProgBlog.Talk[]
+  year: string;
+  talks: TroyProgBlog.Talk[];
 }
 
 const YearList: React.SFC<YearListProps> = ({ year, talks }) => (
@@ -13,6 +13,6 @@ const YearList: React.SFC<YearListProps> = ({ year, talks }) => (
       <Talk key={talk.name} talk={talk} />
     ))}
   </div>
-)
+);
 
-export default YearList
+export default YearList;
