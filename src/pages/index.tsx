@@ -3,7 +3,7 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import HomePageLink from '../components/home/HomePageLink'
 import Selfie from '../components/Selfie'
-import SEO from '../components/seo'
+import SEO from '../components/SEO'
 import AboutBox from '../components/home/AboutBox'
 
 class IndexPage extends React.Component<{}, {}> {
