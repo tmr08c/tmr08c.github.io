@@ -1,11 +1,11 @@
 declare namespace TroyProgBlog {
   interface Talk {
-    description: string
-    link?: string
-    name: string
+    description: string;
+    link?: string;
+    name: string;
     presentationDate: {
-      month: number
-      year: number
-    }
+      month: number;
+      year: number;
+    };
   }
 }

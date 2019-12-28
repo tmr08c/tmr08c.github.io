@@ -1,13 +1,13 @@
-import * as React from 'react'
+import * as React from "react";
 
 interface HomePageLinkProps {
-  destination: string
-  displayText: string
+  destination: string;
+  displayText: string;
 }
 
 const HomePageLink: React.SFC<HomePageLinkProps> = ({
   destination,
-  displayText,
+  displayText
 }) => (
   <a
     href={destination}
@@ -17,6 +17,6 @@ const HomePageLink: React.SFC<HomePageLinkProps> = ({
   >
     {displayText}
   </a>
-)
+);
 
-export default HomePageLink
+export default HomePageLink;

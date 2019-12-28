@@ -1,8 +1,8 @@
-import { graphql, StaticQuery } from 'gatsby'
-import * as React from 'react'
+import { graphql, StaticQuery } from "gatsby";
+import * as React from "react";
 
-import Footer from './Footer'
-import Header from './Header'
+import Footer from "./Footer";
+import Header from "./Header";
 
 const Layout: React.SFC = ({ children }) => (
   <StaticQuery
@@ -21,10 +21,10 @@ const Layout: React.SFC = ({ children }) => (
         <div
           className="min-h-screen"
           style={{
-            margin: '0 auto',
-            maxWidth: '40rem',
-            padding: '0px 1.0875rem 1.45rem',
-            paddingTop: 0,
+            margin: "0 auto",
+            maxWidth: "40rem",
+            padding: "0px 1.0875rem 1.45rem",
+            paddingTop: 0
           }}
         >
           {children}
@@ -33,6 +33,6 @@ const Layout: React.SFC = ({ children }) => (
       </>
     )}
   />
-)
+);
 
-export default Layout
+export default Layout;

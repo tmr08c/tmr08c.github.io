@@ -1,14 +1,14 @@
-import * as React from 'react'
+import * as React from "react";
 
 interface AboutBoxProps {
-  customStyle: React.CSSProperties
-  sectionTitle: string
+  customStyle: React.CSSProperties;
+  sectionTitle: string;
 }
 
 const AboutBox: React.SFC<AboutBoxProps> = ({
   customStyle,
   sectionTitle,
-  children,
+  children
 }) => (
   <div
     style={customStyle}
@@ -23,6 +23,6 @@ const AboutBox: React.SFC<AboutBoxProps> = ({
     <h2 className="mb-4 text-4xl">{sectionTitle}</h2>
     {children}
   </div>
-)
+);
 
-export default AboutBox
+export default AboutBox;

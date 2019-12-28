@@ -1,5 +1,5 @@
-import { Link } from 'gatsby'
-import * as React from 'react'
+import { Link } from "gatsby";
+import * as React from "react";
 
 const Footer: React.SFC = () => (
   <div className="flex py-4 bg-living-coral-500 text-gray-800">
@@ -35,5 +35,5 @@ const Footer: React.SFC = () => (
       </li>
     </ul>
   </div>
-)
-export default Footer
+);
+export default Footer;
