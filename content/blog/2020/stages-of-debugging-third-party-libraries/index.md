@@ -4,11 +4,11 @@ date: "2020-03-22T04:21:33.616Z"
 categories: ["personal growth", "troubleshooting", "open source"]
 ---
 
-During my last Innovation Friday at work, I decided I wanted to set up the [annotate gem](https://github.com/ctran/annotate_models) on one of our Rails applications (not particularly _innovative_, but a nice quality of life improvement). I expected this to be a quick win to start my day with, but, unsurprisingly, I underestimated things. While exploring the gem, I ran into a [few](https://github.com/ctran/annotate_models/issues/778) [issues](https://github.com/ctran/annotate_models/issues/780).
+Recently at work, I decided I wanted to set up the [annotate gem](https://github.com/ctran/annotate_models) on one of our Rails applications. I expected this to be a quick win to start my day with, but, unsurprisingly, I [underestimated things](https://xkcd.com/1658/). While experimenting with some of the gem's [options](https://github.com/ctran/annotate_models/#options), I ran into a [few](https://github.com/ctran/annotate_models/issues/778) [issues](https://github.com/ctran/annotate_models/issues/780).
 
-For this post, the issues themselves aren't important, but rather how I approached understanding and troubleshooting them. When reflecting on my day, I realized I did something different than I normally do when troubleshooting issues - I added a new step to my process.
+For this post, the issues themselves aren't important, but rather how I approached understanding and troubleshooting them. When reflecting on my day, I realized I did something different than I normally do when troubleshooting issues - I added a new step to my dependency debugging process.
 
-In this post I will cover the steps I have traditionally taken when troubleshooting an issue with a third party library, the new process I have added to this workflow, and what else I think I can do to improve my process.
+In this post, I will cover the steps I have traditionally taken when troubleshooting an issue with a third-party library, the new process I have added to this workflow, and what else I think I can do to improve my process.
 
 --As I thought about it more, I realized this change in approach has happened before and that, like most processes, it is something that as evolved with time. I thought it could be interesting to write out the different stages I found myself in over time.
 
@@ -22,7 +22,7 @@ In this post I will cover the steps I have traditionally taken when troubleshoot
 
 In the early days, I would often copy/paste the error I was seeing and hope I would end up finding a [StackOverflow](https://stackoverflow.com/) post with a helpful answer.
 
-I would be lying if I said I didn't still do some [StackOverlow driven development](https://meta.stackoverflow.com/questions/361904/what-is-stack-overflow-driven-development). One major difference between now and then is that I if there isn't a StackOverlow answer, I have other methods of solving my issue.
+I would be lying if I said I didn't still do some [StackOverlow driven development](https://meta.stackoverflow.com/questions/361904/what-is-stack-overflow-driven-development). One major difference between now and then is that I if there isn't a StackOverflow answer, I have other methods of solving my issue.
 
 ### Side note on language popularity
 
@@ -30,33 +30,39 @@ One thing to note about the above strategy is that it works well for [popular te
 
 ## Stage two - GitHub
 
-I believe I have been fortunate to get to work with open source technologies throughout my career. Without access to open source communities, I'm not sure how I could resolve issues like this.
+I believe I have been fortunate to get to work with open source technologies throughout my career. Without access to open source communities, I imagine my process would look _very_ different.
 
-Since GitHub is "where open source communities live," working with open source tools means my early-stage Googling include GitHub in the results.
+Since GitHub is "where open source communities live," working with open source tools means my early-stage Googling often includes GitHub pages in the search results.
 
 <img src="./github-tagline.png" alt="github tagline - where open source communities live" />
 
-Learning to productively interact with GitHub was hugely beneficial and resulted in my continued evolution of interacting with and troubleshooting the tools I worked with.
+Learning to productively interact with GitHub has been hugely beneficial and resulted in my continued evolution of interacting with and troubleshooting the tools I worked with.
 
 ### README and Wiki
 
-As I became more comfortable with GitHub I moved beyond "😫 help me Google" and towards reading "the docs" a la [RTFM](http://www.readthefuckingmanual.com/). I put "docs" in quotes because, to start, reading the docs for me meant ~~reading~~ skimming a project's README. To be fair, most projects don't seem to have (or need) full-blown documentation; this is generally more useful for large projects (frameworks, languages, etc.).
+As I became more comfortable with GitHub I moved beyond "😫 help me Google" and towards reading "the docs" a la [RTFM](http://www.readthefuckingmanual.com/). I put "docs" in quotes because, to start, reading the docs for me meant ~~reading~~ skimming a project's README. 
+
+<!-- To be fair, most projects don't seem to have (or need) full-blown documentation; this is generally more useful for large projects (frameworks, languages, etc.). -->
 
 I was familiar with READMEs as a tool for vetting and setting up new dependencies, but there's more to it than that! In my experience, many libraries will cover both common and more advanced use cases in the README. Some will even include sections withing warnings or common gotchas. Since so many issues are small, end-user (see: me) problems, seeing expected usage and examples is often all that is needed to resolve them.
 
 <!-- this section is a bit disjointed -->
 
-Sometimes, I will venture beyond the README and see if a project has a set up a [wiki on GitHub](https://help.github.com/en/github/building-a-strong-community/about-wikis). In practice, it seems most projects don't. Even for projects that have wiki pages, they can sometimes be difficult to navigate. Some projects will maintain a well-curated wiki, but it can be difficult to keep up the manual maintenance, so this isn't the common case. Despite the rarity, wikis are still worth checking out since some projects do use them as a source of documentation.
+If a README doesn't have enough information to solve your problem, see if the project has a set up a [wiki on GitHub](https://help.github.com/en/github/building-a-strong-community/about-wikis). It seems that in practice most projects haven't, but it is always worth checking during a debugging session.
 
 #### Growth Opportunity
 
-I would like to develop the habit of reading a project's entire README when adding it to a project or working with it for the first time. It's usually really easy for me to read an overview or see the basic example and move on. I think this gives my brain a dopamine hit of quickly learning something and moving on makes me feel like I am being efficient. I believe this is one of those mental traps that can be easy to fall into. However, by spending a few more minutes to read the whole document I can save a lot more time down the road by knowing how the tool works more fully. One great way to speed up troubleshooting is to not get yourself into trouble in the first place.
+I would like to develop the habit of reading a project's entire README when adding it to a project or working with it for the first time. It's all too common for me to simply read an overview and stop there. I believe I am falling into some sort of mental trap - my brain receives a dopamine hit from quickly learning something and by moving on I tell myself I am being efficient. However, by spending a few more minutes reading the whole document I expect I can save a lot more time long-term by having a better understanding of how the tool works. One great way to speed up troubleshooting is to not get yourself into trouble in the first place 🤯.
 
 ### Issues
 
 As I became more comfortable looking to GitHub to troubleshoot my issues, I learned to search through the project's [Issues](https://help.github.com/en/github/managing-your-work-on-github/about-issues) and [Pull Requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
-Issues are similar to StackOverflow questions in that they reveal problems others have had. With Pull Requests, you can see more than the answer, and see the code the resolves the Issue.
+Issues are similar to StackOverflow questions in that they reveal problems others have had. If you're lucky, these Issues may include a resolution. Resolutions may come in a few forms:
+
+1. Comments on the thread describing how to resolve the issue
+1. Pull Requests within the project that involve code changes to resolve the Issue.
+1. Issues or Pull Requests on _other_ projects that had the same issue. This may take some detective work 🕵️‍♂️, but if someone makes an Issue within their own repository linking to an Issue or Pull Request within the library's repository, you may be able to see see what they did in their project to solve.
 
 #### Growth Opportunity
 
@@ -68,7 +74,7 @@ I think I would be better off going straight to the general search bar in GitHub
 
 ### Code
 
-As alluded to above, the next stage of debugging for me is code hunting on GitHub. It took me a while to get comfortable doing this, and I wish I started this sooner. I think my hesitation to hunt through code was a form of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) - I wasn't "good enough" to understand the code written by the "real" developers that make packages.
+As alluded to above, the next stage of debugging for me is code hunting on GitHub. It took me a while to get comfortable doing this, and I wish I started this sooner. I think my hesitation to hunt through code was a form of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) - I wasn't "good enough" to understand the code written by the "real" developers that make these libraries I am using.
 
 As I've worked to incorporate looking at code on GitHub into my toolbelt, I've found I usually can understand what's going on in the code. Sure, there are projects with codebases that can be tricky to get my head around, but more often than not I can answer my troubleshooting question by hunting down the functionality I am trying to work with.
 
@@ -102,7 +108,7 @@ I think I will continue to start my code searching on GitHub - not having to con
 
 <!-- Above I mentioned that when I would hit a wall after using GitHub to search through code I would generally start looking for alternatives. Realistically, that's can't always happen (plus, I should work on my [grit](https://angeladuckworth.com/grit-book/), right?).
 
-When working on it, having my local tools that I'm used to working with my own code
+When working on it, having my local tools that I'm used to working with my code
 
 -->
 
@@ -117,7 +123,7 @@ Asking for help can be hard. Personally, this is something I wish I was more com
 
 ## Where to next?
 
-I am looking forward to seeing how this new workflow improves not only my ability to resolve issues, but to also [write better code](http://bloggytoons.com/code-club).
+I am looking forward to seeing how this new workflow improves not only my ability to resolve issues but also [write better code](http://bloggytoons.com/code-club).
 
 One great part about these strategies is that I continue to use all of them - they aren't mutually exclusive, they build on each other for working with more and more difficult troubleshooting sessions.
 
@@ -128,5 +134,6 @@ Going through the process of writing up my current workflow for this post has he
 
 
 - Leverage tools like `pry` to interact with the libraries and access documentation before context switching to GitHub
-- Reading more thorough docs and guides (take this from team)
+- Reading more thorough docs and guides (take this from the team)
   - Mentioned above doing this for README, go beyond
+
