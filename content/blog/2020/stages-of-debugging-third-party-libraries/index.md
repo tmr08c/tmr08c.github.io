@@ -28,11 +28,11 @@ Since GitHub is "where open source communities live," working with open source t
 
 <img src="./github-tagline.png" alt="github tagline - where open source communities live" />
 
-Learning to productively interact with GitHub has been hugely beneficial and resulted in my continued evolution of interacting with and troubleshooting the tools I worked with.
+Learning to productively interact with GitHub has been hugely beneficial in helping to troubleshoot the tools I work with.
 
 ### README and Wiki
 
-As I became more comfortable with GitHub I moved beyond "😫 help me Google" and towards reading "the docs" a la [RTFM](http://www.readthefuckingmanual.com/). I put "docs" in quotes because, to start, reading the docs for me meant ~~reading~~ skimming a project's README. I was familiar with READMEs as a tool for vetting and setting up new dependencies, but learned there's more to them than that.
+As I became more comfortable with GitHub I moved beyond "😫 help me Google" and towards reading "the docs" a la [RTFM](http://www.readthefuckingmanual.com/). I put "docs" in quotes because reading the docs for me usually means ~~reading~~ skimming a project's README. 
 
 In my experience, many libraries will cover both common and more advanced use cases in the README. Some will even include sections with warnings or common gotchas. Since so many issues are small, end-user (see: me) problems, seeing expected usage and examples is often all that is needed to resolve them.
 
@@ -56,7 +56,7 @@ Some Issues can be similar to StackOverflow questions in that they reveal proble
 
 #### Growth Opportunity
 
-As I write this, I realize my workflow around this is a bit inefficient. Often I go to the Issues tab to search for some keywords (sometimes remembering to turn off the default `is:open` filter, sometimes not). If I don't find anything, I will want to check for Pull Requests too, so I tweak the search again (dropping `is:issue` from the search or going to the Pull Request tab).
+While writing, I realize my workflow around this is a bit inefficient. Often, I go to the Issues tab to search for some keywords (sometimes remembering to turn off the default `is:open` filter, sometimes not). If I don't find anything I will want to check for Pull Requests too, so I tweak the search again (dropping `is:issue` from the search or going to the Pull Request tab).
 
 I think I would be better off going straight to the general search bar in GitHub as it has tabs for Issues, Commits (which should be a superset of pull requests), Wiki pages (above), **and** code (which is a spoiler for the next section):
 
@@ -68,16 +68,16 @@ As alluded to above, the next stage of debugging for me is code hunting on GitHu
 
 I think my hesitation to hunt through code was a form of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) - I wasn't "good enough" to understand the code written by the "real" developers that make these libraries I am using. As I've worked to incorporate looking at code on GitHub into my toolbelt, I've found I usually can understand what's going on in the code. Sure, there are projects with codebases that can be tricky to get my head around, but, more often than not, I can read enough code to continue troubleshooting.
 
-One great part of the "read code on GitHub" workflow is that GitHub strives to make this easy with functionality like [keyboard shortcuts](https://help.github.com/en/github/getting-started-with-github/keyboard-shortcuts) (one of my favorites being to invoke their fuzzy file finder) and are making this even easier as they [roll out code navigation](https://github.blog/changelog/2019-11-13-code-navigation-is-now-available-for-all-go-python-and-ruby-repositories/) functionality.
+One great part of the "read code on GitHub" workflow is that GitHub strives to make this easy with functionality like [keyboard shortcuts](https://help.github.com/en/github/getting-started-with-github/keyboard-shortcuts) (one of my favorites being to invoke their fuzzy file finder), and are making this even easier as they [roll out code navigation](https://github.blog/changelog/2019-11-13-code-navigation-is-now-available-for-all-go-python-and-ruby-repositories/) functionality.
 
 For a while, this was about as far as I would go with troubleshooting issues. I think I plateaued at this stage for two main reasons:
 
-1. It's pretty rare to need to get this far - a lot of problem-solving sessions come to an end from one of the earlier stages.
+1. It's pretty rare to need to get this far - a lot of problem-solving sessions come to an end during one of the earlier stages.
 1. I've found that if I am still hitting a wall at this point, I can start planing some evasive action (working on an alternative implementation or project to use) or pull in another set of eyes for help.
 
 ## Step Three - My Computer
 
-As I mentioned at the beginning of the post, I added another step to my troubleshooting during my most recent debugging session. This new step is less about a change in skill and more a change in mentality.
+As I mentioned at the beginning of the post, I added another step to my troubleshooting process during my most recent debugging session. This new step is less about a change in skill and more a change in mentality.
 
 Inspired by the idea of developing [identify-based habits](https://jamesclear.com/identity-based-habits) ("I'm the type of person that...") that align with the type of developer I would like to be, I am striving to develop habits that I imagine prolific open-source contributors would have. In this case, I imagine prolific open-source contributors would comfortably clone repositories they are troubleshooting and debug the code as if it was there own codebase.
 
@@ -97,9 +97,11 @@ Asking for help can be hard. Personally, this is something I wish I was more com
 
 ## Where to next
 
-While I presume I will continue to start my code searching on GitHub since not having to context switch out of my browser (assuming I'm still troubleshooting in the same order) can save me some time when paired with the GitHub's search functionality, this experience has changed the way I think of things. I am looking forward to seeing how this new workflow improves not only my ability to resolve issues but also to [write code](http://bloggytoons.com/code-club).
+While I presume I will continue to start my code searching on GitHub since not having to context switch out of my browser (assuming I'm still troubleshooting in the same order) can save me some time when paired with the GitHub's search functionality, this experience has changed the way I think of things. I am looking forward to seeing how this new workflow improves not only my ability to resolve issues, but also to [write code](http://bloggytoons.com/code-club).
 
-Going through the process of writing up my current workflow for this post has helped identify other practices that could be useful. I've attempted to highlight most of these ideas throughout the post but wanted to mention one other Ruby-specific practice I want to pick up: working with [`pry`](http://pry.github.io/). `pry` provides [source](https://github.com/pry/pry/wiki/Source-browsing) and [documentation](https://github.com/pry/pry/wiki/Documentation-browsing) browsing capabilities. This could help avoid the need to make the context switch to the browser to find documentation or do my initial GitHub code spelunking and keep me where I belong, in the terminal. 
+Going through the process of writing up my current workflow for this post has helped identify other practices that could be useful. I've attempted to highlight most of these ideas throughout the post but wanted to mention one other Ruby-specific practice I want to pick up: working with [`pry`](http://pry.github.io/).
+
+`pry` is an alternative REPL for Ruby that provides additional capabilities. Two of the capabilities that interest me for working with dependencies are [source](https://github.com/pry/pry/wiki/Source-browsing) and [documentation](https://github.com/pry/pry/wiki/Documentation-browsing) browsing capabilities. This could help avoid the need to make the context switch to the browser to find documentation or do my initial GitHub code spelunking and keep me where I belong, in the terminal. 
 
 Hopefully, `pry` makes its way into my workflow and a future post.
 
