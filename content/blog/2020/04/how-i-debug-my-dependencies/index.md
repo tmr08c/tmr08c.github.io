@@ -1,6 +1,6 @@
 ---
-title: "My Evolution of Troubleshooting Dependencies"
-date: "2020-03-22T04:21:33.616Z"
+title: "How I Debug My Dependencies"
+date: "2020-03-08T04:21:33.616Z"
 categories: ["personal growth", "troubleshooting", "open source"]
 ---
 
