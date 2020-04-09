@@ -60,7 +60,7 @@ Some Issues can be similar to StackOverflow questions in that they reveal proble
 
 While writing, I realize my workflow around this is a bit inefficient. Often, I go to the Issues tab to search for some keywords (sometimes remembering to turn off the default `is:open` filter, sometimes not). If I don't find anything, I will want to check for Pull Requests too, so I tweak the search again (dropping `is:issue` from the search or going to the Pull Request tab).
 
-I think I would be better off going straight to the general search bar in GitHub. The result of searching this way includes tabs for Issues (which includes Pull Requests), Commits (which should also be a superset of Pull Requests), Wiki pages, **and** code (which us to the next section):
+I think I would be better off going straight to the general search bar in GitHub. The result of searching this way includes tabs for Issues (which includes Pull Requests), Commits (which should also be a superset of Pull Requests), Wiki pages, **and** code (which will take us into the next section):
 
 <img src="./github-search.png" alt="GitHub search page example" />
 
@@ -99,7 +99,7 @@ Asking for help can be hard. Personally, this is something I wish I was more com
 
 ## Where to next
 
-While I presume I will continue to start my code searching on GitHub since not having to context switch out of my browser (assuming I'm still troubleshooting in the same order) can save me some time when paired with the GitHub's search functionality, this experience has me sold on pulling down projects onto my local machine when I'm having to really dig around to understand what's going on. I am looking forward to seeing how this new workflow improves not only my ability to resolve issues but also to [write code](http://bloggytoons.com/code-club).
+While I presume I will continue to start my code searching on GitHub since not having to context switch out of my browser (assuming I'm still troubleshooting in the same order) can save me some time when paired with GitHub's search functionality, this experience has me sold on pulling down projects onto my local machine when I'm having to really dig around to understand what's going on. I am looking forward to seeing how this new workflow improves not only my ability to resolve issues but also to [write code](http://bloggytoons.com/code-club).
 
 Going through the process of writing up my current workflow for this post has helped identify other practices that could be useful. I've attempted to highlight most of these ideas throughout the post but wanted to mention one other Ruby-specific practice I'd like to try picking up: working with [`pry`](http://pry.github.io/).
 
