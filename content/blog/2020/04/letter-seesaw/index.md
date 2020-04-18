@@ -26,7 +26,7 @@ I try to keep the idea of [perfect being the enemy of good](https://en.wikipedia
 
 This one is almost a most specific instance of pragmatic versus prudent, but I was so excited we had another pair of words that started with the same letter and represented two ends of a spectrum I have to make it a thing.
 
-We were talking about how to balance spending the time struggling with a problem and learning on your own with getting to a solution. In a [recent post](/2020/04/how-i-debug-my-dependencies) I mentioned how I can struggle asking for help, especially from open-source strangers, and this struggle versus solving discussion came out of that idea. However, asking for help isn't limited to reaching out to a library author, it can also be asking your co-workers for help.
+We were talking about how to balance spending the time struggling with a problem and learning on your own with getting to a solution. In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle asking for help, especially from open-source strangers, and this struggle versus solving discussion came out of that idea. However, asking for help isn't limited to reaching out to a library author, it can also be asking your co-workers for help.
 
 Personally, I tend to fall on the side of struggling. I think there is value in taking some time to sruggle with a problem to better understand. In addition to getting practice trying to learn something, I think it helps the lessons better stick with me. However, I _know_ I have some opportunity to better balance where I fall on this spectrum.
 
