@@ -36,7 +36,7 @@ class Hello
 end
 ```
 
-Starting out in the REPL I was able to make the following calls: 
+Starting out in `irb` I was able to make the following calls: 
 
 
 ```ruby
@@ -56,9 +56,11 @@ Simply returning a string is fast enough that I didn't notice a spped difference
 My time working with JavaScript has me assum this is similar enough to a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that I can continue to focus my learning on the `Async` module and come back to `IVar`s at a later time.
 
 
-At this point, things seem to be working since I am getting back `IVar`s, but it doesn't _seem_ different. Often times you would move work into another thread if it's slow and gets in the way of your main thread. To replicate this in my testing, I decided to add a [`sleep`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). I also figured out a way to avoid thinkning about `IVars` during my exploration; I could `puts` in the method. This gives me a visual indication my methods are being called without having to focus on the response. Now, my test class looks something like:
+At this point, things seem to be working since I am getting back `IVar`s, but it doesn't _perform_ different. Often times you would move work into another thread if it's slow and gets in the way of your main thread. To replicate this in my testing, I decided to add a [`sleep`](https://ruby-doc.org/core-2.7.0/Kernel.html#method-i-sleep). I also figured out a way to avoid thinkning about `IVars` during my exploration; I could `puts` in the method. This gives me a visual indication my methods are being called without having to focus on the response. Now, my test class looks something like:
 
 ```ruby
+require 'concurrent-ruby'
+
 class Hello
   include Concurrent::Async
 
@@ -68,6 +70,19 @@ class Hello
   end
 end
 ```
+
+After reloading this class into `irb`, I now have a visual indication when the method has run from the `puts` statement, and the `sleep` delays the method run. 
+
+For my call to `await` this `sleep` is blocking, so when I call the method, it's similar to calling it locally even though it's running in a separate thread. This means that I have to wait for the `sleep` to finish before I can do anything:
+
+<img src='./hello-await-with-sleep.gif' lazy />
+
+However, with `async`, the method returns right away and the thread continues to run on its own. This means I can continue to interact with the main `irb` thread while waiting for my result to print:
+
+<img src='./hello-async-with-sleep.gif' lazy />
+
+
+When loading this into `irb` again and calling our methods we can now see more of a pause:
 
   * Made CLI for interacting
   * Basics - call with `async` call with `await` 
