@@ -4,11 +4,11 @@ date: '2020-04-19T00:36:13.265Z'
 categories: ['ruby', 'concurrency']
 ---
 
-Over the last few years, I have been fiddling on-and-off with [Elixir](https://elixir-lang.org/) and have **loved** it. One of the reasons there is so much hype around Elixir is the [out-of-the-box support for writing highly concurrent code](https://elixir-lang.org/getting-started/processes.html). The concurrency model is a native part of the language that comes from the [Erlang](https://www.erlang.org/) VM on which Elixir runs. 
+Over the last few years, I have been fiddling on-and-off with [Elixir](https://elixir-lang.org/) and have **loved** it. One of the reasons there is so much hype around Elixir is the [out-of-the-box support for writing highly concurrent code](https://elixir-lang.org/getting-started/processes.html). The concurrency model is a native part of the language that comes from the [Erlang](https://www.erlang.org/) VM which Elixir runs on. 
 
-I have been getting back into writing code on a daily basis, and have been working in Ruby again. After so much focus on writing concurrent code, I want to see if I can avoid giving that up when I am in Ruby. I know I will not get near what is supported in Elixir, but that doesn't mean I should avoid concurrency altogether!
+Recently, I have found myself back to working in the Ruby on Rails ecosystem. After so much focus on writing concurrent code, I wanted to see if I could continue to gain some multi-core benefits when I am working in Ruby. While I know I will not get near what is supported in Elixir, I didn't think I should give up on concurrency altogether!
 
-One option I found, that happened to already be included in my project at work, is the [`concurrent-ruby` gem](https://github.com/ruby-concurrency/concurrent-ruby). From the gem's description:
+One option I found, that happened to already be included in my project at work, is the [`concurrent-ruby` gem](https:/github.com/ruby-concurrency/concurrent-ruby). From the gem's description:
 
 > Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more. Inspired by Erlang, Clojure, Scala, Go, Java, JavaScript, and classic concurrency patterns.
 
@@ -16,9 +16,9 @@ Having multiple concurrency options available seems like a great way to pick the
 
 ## Choosing where to start 
 
-Since there are so many concurrency models available through this gem, I thought a good place to start would be to pick a model and write some code. The first option [in the list](https://github.com/ruby-concurrency/concurrent-ruby#general-purpose-concurrency-abstractions), [`Async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) happens to also be inspired by Erlang's [`gen_server`](https://elixir-lang.org/getting-started/mix-otp/genserver.html), so I thought that would be the perfect place to start. 
+Since there are so many concurrency models available through this gem, I thought a good place to start would be to pick a model and write some code. The first option [listed in the README](https://github.com/ruby-concurrency/concurrent-ruby#general-purpose-concurrency-abstractions) is their [`Async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html)  module. This module happens to be inspired by Erlang's (and therefore Elixir's) [`gen_server`](https://elixir-lang.org/getting-started/mix-otp/genserver.html), so I thought that would be the perfect place to start. 
 
-In Elixir/Erlang, a `gen_server` would run in a new Erlang process. This allows it to run independently of the caller's process. `concurrent-ruby` provides similar functionality with Ruby's [`Thread`](https://ruby-doc.org/core-2.7.0/Thread.html). 
+In Elixir/Erlang, a `gen_server` would run in a new Erlang process (_insert disclaimer about Erlang's processes not being Operating System processes here_). This allows it to run independently of the caller's process. `concurrent-ruby` provides similar functionality with Ruby's [`Thread`](https://ruby-doc.org/core-2.7.0/Thread.html). 
 
 When `include`d in a class, `Async` adds two new methods to the class that can be used as proxies for method calls. When used, these codes will proxy the code in the method to be run in a separate thread. These new methods are (1) `async` which will immediately return to the caller while continuing the work in the new thread and (2) `await` which will also do the work in the other thread, but, when called, will block (or (a)wait in) the main thread until the method called finishes and returns. _Note: if you (and your team) are familiar with the Erlang terms, you can also use `cast` (`async`) and `call` (`await`)._
 
@@ -40,6 +40,11 @@ end
 
 Starting out in `irb` I was able to make the following calls.
 
+#### Await Version
+
+irb(main):010:0> puts Hello.new.async.hello("world")
+ #<Concurrent::IVar:0x00007f9fdb909048 @__Lock__=#<Thread::Mutex:0x00007f9fdb908dc8>, @__Condition__=#<Thread::ConditionVariable:0x00007f9fdb908d50>, @event=#<Concurrent::Event:0x00007f9fdb908c10 @__Lock__=#<Thread::Mutex:0x00007f9fdb908b70>, @__Condition__=#<Thread::ConditionVariable:0x00007f9fdb908b48>, @set=true, @iteration=0>, @reason=nil, @value="Hello, world!", @observers=#<Concurrent::Collection::CopyOnWriteObserverSet:0x00007f9fdb913bd8 @__Lock__=#<Thread::Mutex:0x00007f9fdb913ae8>, @__Condition__=#<Thread::ConditionVariable:0x00007f9fdb913a70>, @observers={}>, @dup_on_deref=nil, @freeze_on_deref=nil, @copy_on_deref=nil, @do_nothing_on_deref=true, @state=:fulfilled>
+
 #### Async Version
 
 ```ruby
@@ -47,20 +52,20 @@ irb(main):009:0> Hello.new.async.hello("world")
 => #<Concurrent::IVar:0x00007fe09b08b230 @__Lock__=#<Thread::Mutex:0x00007fe09b08b1b8>, @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b190>, @event=#<Concurrent::Event:0x00007fe09b08b118 @__Lock__=#<Thread::Mutex:0x00007fe09b08b0a0>, @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b078>, @set=false, @iteration=0>, @reason=nil, @value=nil, @observers=#<Concurrent::Collection::CopyOnWriteObserverSet:0x00007fe09b08b028 @__Lock__=#<Thread::Mutex:0x00007fe09b08afd8>, @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08afb0>, @observers={}>, @dup_on_deref=nil, @freeze_on_deref=nil, @copy_on_deref=nil, @do_nothing_on_deref=true, @state=:pending>
 ```
 
-#### Await Version
-irb(main):010:0> puts Hello.new.async.hello("world")
-#<Concurrent::IVar:0x00007fe0ac2762f0>
+
 ```
 
 Simply returning a string is fast enough that I didn't notice a speed difference between the two calls, but I do notice a difference in what is returned. Proxying through `async` and `await` result in method calls returning a [`Concurrent::IVar`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/IVar.html) instead of the original method's "raw" response. From the docs, an `IVar`  is described as:
 
 > An `IVar` is like a future that you can assign. As a future is a value that is being computed that you can wait on, an `IVar` is a value that is waiting to be assigned, that you can wait on. `IVars` are single assignment and deterministic.
 
-My time working with JavaScript has me assume this is similar enough to a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that I can continue to focus my learning on the `Async` module and come back to `IVar`s at a later time.
+Without digging too much into `IVar`s at this point, a few things stick out. In the `await` version the `IVar` has a `@state` of `:fulfilled`.  We also have a `@value` of `"Hello, world!"` (the method's return value). Intuitively, this makes sense - with `await` we wait for the method to finish before continuing, the work has been "fulfilled" and we have a return value. Contrast this with the result of the `async` version. The `async` call returns an `IVar` with a `@state` of `:pending` and a `@value` of `nil`. The `async` version returns without the method having necessarily been run yet. 
+
+My time working with JavaScript has me assume this is similar enough to a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that I can continue to focus my learning on the `Async` module and come back to `IVar`s at a later time. 
 
 ## Is anything happening? 
 
-At this point, things seem to be working since I am getting back `IVar`s, but it doesn't _seem_ like the methods are performing any different. Often times, you would move work into another thread if it's slow and gets in the way of your main thread. To replicate this in my testing, I decided to add a [`sleep`](https://ruby-doc.org/core-2.7.0/Kernel.html#method-i-sleep). I also figured out a way to avoid dealing with `IVars` during my exploration; I can focus on printing output instead of worrying about return values. This gives me a visual indication my methods are being called without having to focus on the actual response. Now, my test class looks something like:
+At this point, things seem to be working since I am getting back `IVar`s, but they the `await` version runs fast enough that it doesn't _seem_ like the methods are performing any different. Often times, you would move work into another thread if it's slow and gets in the way of your main thread. To replicate this in my testing, I decided to fake working hard by adding a call to [`sleep`](https://ruby-doc.org/core-2.7.0/Kernel.html#method-i-sleep). I also decided to print the "hello" string instead of returning a value, so I could avoid ~~dealing with~~ thinking about `IVars` during my initial exploration. Printing gives me a visual indication my methods are being called without having to focus on the actual response. Now, my test class looks something like:
 
 ```ruby
 require 'concurrent-ruby'
@@ -88,4 +93,4 @@ However, with `async`, the method returns right away and the thread continues to
 ## Conclusion
 
 This is not even scratching the surface of the `Async` module, let alone the `concurrent-ruby`. However, I now have some code that behaves obviously different than running the methods on their own. This is a great starting point for digging into this module even more.
-
+/
