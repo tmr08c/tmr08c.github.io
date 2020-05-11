@@ -5,6 +5,7 @@
 .blog-post-body ul,
 .blog-post-body ol,
 .blog-post-body p,
+.blog-post-body img,
 .blog-post-body .gatsby-highlight,
 .blog-post-body .gatsby-resp-image-link {
   @apply mb-4;
