@@ -1,26 +1,27 @@
-j---
+---
 title:  "Letter Seesaw"
 date:   "2020-04-18T20:02:34.781Z"
 categories: ["soft skills"]
 ---
 
-My friend and former co-worker [@C-Saunders](https://github.com/c-saunders) and I make a point to periodically catch up with each other. Because I am extremely fortunate and enjoy the industry I work in, one of my favorite parts of our conversations is discussing work. We share a similar professional background in that the bulk of our careers thus far have been with the same company (for very similar amounts of time) and we both recently began working at new companies. This shared background provides a solid starting point for comparing and contrasting how our new teams work and what practices we can pick up from one another. I've really appreciated these sessions and have found them to be a great way to keep up with a friend and also get more exposure to the software development world. 
 
-During our most recent conversation, we discussed two different spectrums that can impact decision making at work. One of these came from my co-worker's new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had words that began with the same letter. While not as extreme as other examples on Wikipedia, I _believe_ we can consider these both to be [tautograms](https://en.wikipedia.org/wiki/Tautogram). When we hit our seconds tautogram,  I felt the urge to write these words pairings down; I thought maybe they be a useful thought technology for self-evaluation.
+My friend and former co-worker [@C-Saunders](https://github.com/c-saunders) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
+
+During our most recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from my co-worker's new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that bein with the same letter). I thought they be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember. This increases the chances that I remember and use them. 
 
  The two spectrums we discussed were: 
 
 * Balancing being **pragmatic** and being **prudent**
 * Knowing when it's time to **struggle** and when it's time to **solve**
 
-These are both examples of spectrums on which I am regularly shifting my position; often without actively thinking about where I currently stand. There may be value in acknowledging where I fall on these spectrums as I believe they play a major role in **most** of the decisions I make at work. 
+Depending on the situation, my position on these spectrums will vary. Without acknowledging my shifting position, I can fall into common traps during the decision making process. Having the idea of these spectrums can help me take a step back and catch myself. 
 
 ## Pragmatic versus Prudent
 
 * [**Pragmatic**](https://www.lexico.com/en/definition/pragmatic) - dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations.
 * [**Prudent**](https://www.lexico.com/en/definition/prudent) - acting with or showing care and thought for the future.
 
-I believe most people in the software industry are familiar with trying to balance these two ends of the spectrum, especially in day-to-day feature development. We want to build solid, reliable systems that scale, but we also want to avoid [premature optimization](https://wiki.c2.com/?PrematureOptimization) and writing code for things [we aren't going to need](https://martinfowler.com/bliki/Yagni.html). 
+Everyone in the software industry has dealt with trying to balance these two ends of the spectrum. We want to build solid, reliable systems that scale, but we also want to avoid [premature optimization](https://wiki.c2.com/?PrematureOptimization) and writing code for things [we aren't going to need](https://martinfowler.com/bliki/Yagni.html). 
 
 When dealing with day-to-day work and planning I try to keep the idea of [perfect being the enemy of good](https://en.wikipedia.org/wiki/Perfect_is_the_enemy_of_good) in mind, but, in the moment, it's _so_ easy to forget. 
 
@@ -89,4 +90,5 @@ I believe this, "where should I focus my energy for the future?", thinking is wh
 ## Trust and honesty with co-workers
 
 This conversation kicked off because Charlie draft up a plan for a more complicated solution, a co-worker helped push to a "good enough." This same thing happened to me after I started writing this post.
+
 
