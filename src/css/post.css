@@ -54,4 +54,10 @@
   @apply text-gray-600;
   @apply font-serif;
   @apply italic;
+
+  /* add vertical line to left side of quote */
+  @apply pl-4;
+  @apply border-gray-300;
+  @apply border-solid;
+  @apply border-l-4;
 }
