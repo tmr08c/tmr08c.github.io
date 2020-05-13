@@ -72,7 +72,7 @@ module.exports = {
       options: {
         printRejected: true, // Print removed selectors and processed file names
         tailwind: true,
-        ignore: ["prismjs/"]
+        ignore: ["prismjs/", "post.css"]
       }
     },
     {
