@@ -6,7 +6,7 @@ categories: ['ruby', 'concurrency']
 
 Over the last few years, I have been fiddling on-and-off with [Elixir](https://elixir-lang.org/) and have **loved** it. One of the reasons there is so much hype around Elixir is the out-of-the-box support for writing highly concurrent code. The concurrency model is a native part of the language and comes from the [Erlang](https://www.erlang.org/) VM which Elixir runs on. 
 
-Despite working primarily in Ruby, I don't want to give up on the benefits of concurrency. While I don't expect to see an Erlang level of concurrency support, I believe Ruby has viable options.
+Even though I'm working primarily in Ruby, I don't want to give up on the benefits of concurrency I've seen in Elixir. While I don't expect to see an Elixir level of concurrency support, I believe Ruby has viable options.
 
 One option I found is the [`concurrent-ruby` gem](https:/github.com/ruby-concurrency/concurrent-ruby). From the gem's description:
 
@@ -22,7 +22,7 @@ In Elixir/Erlang, a `gen_server` would run in a new Erlang process (_insert disc
 
 When `include`d in a class, `Async` adds two new methods to the class that can be used as proxies. When used, these methods will "wrap" the method you are calling. By wrapping the method, the proxies will handle the setup for running in a separate thread. These new methods are (1) [`async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html#async-instance_method) which will immediately return to the caller while continuing the work in the new thread and (2) [`await`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html#await-instance_method) which will also do the work in the other thread, but, when called, will block (or (a)wait) the main thread until the method finishes and returns. 
 
-If you (and your team) are familiar with the Erlang terms, you can use `cast` (`async`) and `call` (`await`) instead.
+If you are familiar with the Erlang terms, you can also use `cast` (`async`) and `call` (`await`) instead.
 
 ## Starting with an example
 
@@ -45,7 +45,8 @@ Starting out in `irb` I was able to make the following calls.
 #### Await Version
 
 ```ruby
-> puts Hello.new.await.hello("world")
+> Hello.new.await.hello("world")
+
 => #<Concurrent::IVar:0x00007fb62e8d5ec8
  @__Condition__=#<Thread::ConditionVariable:0x00007fb62e8d5e28>,
  @__Lock__=#<Thread::Mutex:0x00007fb62e8d5e50>,
@@ -73,6 +74,7 @@ Starting out in `irb` I was able to make the following calls.
 
 ```ruby
 > Hello.new.async.hello("world")
+
 => #<Concurrent::IVar:0x00007fe09b08b230 
 @__Lock__=#<Thread::Mutex:0x00007fe09b08b1b8>, 
 @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b190>, 
@@ -83,7 +85,6 @@ Starting out in `irb` I was able to make the following calls.
   @set=false, 
   @iteration=0>, 
 @reason=nil, 
-@value=nil, 
 @observers=
  #<Concurrent::Collection::CopyOnWriteObserverSet:0x00007fe09b08b028 
    @__Lock__=#<Thread::Mutex:0x00007fe09b08afd8>, 
@@ -93,12 +94,13 @@ Starting out in `irb` I was able to make the following calls.
 @freeze_on_deref=nil, 
 @copy_on_deref=nil, 
 @do_nothing_on_deref=true, 
-@state=:pending>
+@state=:pending,
+@value=nil>
 ```
 
 ### Return Types
 
-Simply returning a string is fast enough that I didn't notice a speed difference between the two calls. I did, however, notice a difference in what is being returned. Proxying through `async` and `await` result in method calls returning a [`Concurrent::IVar`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/IVar.html) instead of the original method's "raw" response. 
+The `hello` method simply returns a string.  This is fast enough that I didn't notice a speed difference between the two calls. I did, however, notice a difference in what is being returned. Proxying through `async` and `await` result in method calls returning a [`Concurrent::IVar`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/IVar.html) instead of the original method's "raw" response. 
 
 From the docs:
 
@@ -110,7 +112,7 @@ In the `await` version, the `IVar` has a `@state` of `:fulfilled`.  We also have
 
 Contrast this with the result of the `async` version. The `async` call returns an `IVar` with a `@state` of `:pending` and a `@value` of `nil`. The `async` version returns without waiting for the method to run. This means we are still waiting for our results. 
 
-For now, I am going to assume this is similar enough to JavaScript's [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that I can continue to focus on the `Async` module and come back to `IVar`s at a later time. 
+For now, I am going to assume this is similar enough to JavaScript's [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that I can continue to focus on the `Async` module and learn more about `IVar`s at a later time. 
 
 ## Is anything happening? 
 
@@ -135,12 +137,12 @@ end
 
 After reloading this class into `irb`, I now have:
 
-* A visual indication from the `puts` statement of when the method has run.
-* Methods that take longer to run as a result of the call to `sleep`. 
+* A visual indication of when the method has run from the `puts` statement.
+* A method that takes longer to run as a result of the call to `sleep`. 
 
 #### Await Version
 
-When proxying through `await`, the call to `sleep` in `Hello#hello` is blocking. This means that, even though it's running in a separate thread, I have to wait for the `sleep` to finish before the main thread (the `irb` session in this case) will respond:
+When proxying through `await`, the call to `sleep` in the `hello` method is blocking. This means that, even though it's running in a separate thread, I have to wait for the `sleep` to finish before the main thread (the `irb` session in this case) will respond:
 
 <img src='./hello-await-with-sleep.gif' />
 
@@ -155,4 +157,5 @@ With `async`, the method returns right away and the main thread continues to run
 While we haven't done much,  we now have a class that provides us with `async` and `await` proxy methods.  We were also able to make the difference in behavior between these two proxy methods more obvious through the use of `puts` and `sleep`. 
 
 This is not even scratching the surface of the `Async` module, let alone the entire `concurrent-ruby` gem. What this does provide, however, is a great jumping-off point to explore the `Async` module further in the future.
+
 
