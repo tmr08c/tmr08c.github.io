@@ -16,11 +16,11 @@ Having multiple concurrency paradigms provides the opportunity to pick-and-choos
 
 ## Choosing where to start 
 
-Since there are so many concurrency models available through this gem, I thought a good place to start would be to simply pick a model and write some code. The first option [listed in the README](https://github.com/ruby-concurrency/concurrent-ruby#general-purpose-concurrency-abstractions) is their [`Async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html)  module. This concurrency model also happens to be inspired by Erlang's (and therefore Elixir's) [`gen_server`](https://elixir-lang.org/getting-started/mix-otp/genserver.html), so it was the perfect place to start. 
+I thought a good place to start would be to simply pick a concurrency model and write some code. The first option [listed in the README](https://github.com/ruby-concurrency/concurrent-ruby#general-purpose-concurrency-abstractions) is their [`Async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html)  module. This concurrency model also happens to be inspired by Erlang's (and therefore Elixir's) [`gen_server`](https://elixir-lang.org/getting-started/mix-otp/genserver.html), so it was the perfect place to start. 
 
 In Elixir/Erlang, a `gen_server` would run in a new Erlang process (_insert disclaimer about Erlang's processes not being Operating System processes here_). This allows it to run independently of the caller's process. `concurrent-ruby` provides similar functionality with Ruby's [`Thread`](https://ruby-doc.org/core-2.7.0/Thread.html). 
 
-When `include`d in a class, `Async` adds two new methods to the class that can be used as proxies. When used, these methods will "wrap" the method you are calling. By wrapping the method, the proxies will handle the setup for running in a separate thread. These new methods are (1) [`async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html#async-instance_method) which will immediately return to the caller while continuing the work in the new thread and (2) [`await`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html#await-instance_method) which will also do the work in the other thread, but, when called, will block (or (a)wait in) the main thread until the method called finishes and returns. 
+When `include`d in a class, `Async` adds two new methods to the class that can be used as proxies. When used, these methods will "wrap" the method you are calling. By wrapping the method, the proxies will handle the setup for running in a separate thread. These new methods are (1) [`async`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html#async-instance_method) which will immediately return to the caller while continuing the work in the new thread and (2) [`await`](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html#await-instance_method) which will also do the work in the other thread, but, when called, will block (or (a)wait) the main thread until the method finishes and returns. 
 
 If you (and your team) are familiar with the Erlang terms, you can use `cast` (`async`) and `call` (`await`) instead.
 
@@ -45,15 +45,55 @@ Starting out in `irb` I was able to make the following calls.
 #### Await Version
 
 ```ruby
-> puts Hello.new.async.hello("world")
- #<Concurrent::IVar:0x00007f9fdb909048 @__Lock__=#<Thread::Mutex:0x00007f9fdb908dc8>, @__Condition__=#<Thread::ConditionVariable:0x00007f9fdb908d50>, @event=#<Concurrent::Event:0x00007f9fdb908c10 @__Lock__=#<Thread::Mutex:0x00007f9fdb908b70>, @__Condition__=#<Thread::ConditionVariable:0x00007f9fdb908b48>, @set=true, @iteration=0>, @reason=nil, @value="Hello, world!", @observers=#<Concurrent::Collection::CopyOnWriteObserverSet:0x00007f9fdb913bd8 @__Lock__=#<Thread::Mutex:0x00007f9fdb913ae8>, @__Condition__=#<Thread::ConditionVariable:0x00007f9fdb913a70>, @observers={}>, @dup_on_deref=nil, @freeze_on_deref=nil, @copy_on_deref=nil, @do_nothing_on_deref=true, @state=:fulfilled>
-```
+> puts Hello.new.await.hello("world")
+=> #<Concurrent::IVar:0x00007fb62e8d5ec8
+ @__Condition__=#<Thread::ConditionVariable:0x00007fb62e8d5e28>,
+ @__Lock__=#<Thread::Mutex:0x00007fb62e8d5e50>,
+ @copy_on_deref=nil,
+ @do_nothing_on_deref=true,
+ @dup_on_deref=nil,
+ @event=
+  #<Concurrent::Event:0x00007fb62e8d5db0
+   @__Condition__=#<Thread::ConditionVariable:0x00007fb62e8d58d8>,
+   @__Lock__=#<Thread::Mutex:0x00007fb62e8d5d38>,
+   @iteration=0,
+   @set=true>,
+ @freeze_on_deref=nil,
+ @observers=
+  #<Concurrent::Collection::CopyOnWriteObserverSet:0x00007fb62e8d5888
+   @__Condition__=#<Thread::ConditionVariable:0x00007fb62e8d57c0>,
+   @__Lock__=#<Thread::Mutex:0x00007fb62e8d5838>,
+   @observers={}>,
+ @reason=nil,
+ @state=:fulfilled,
+ @value="Hello, world!">
+ ```
 
 #### Async Version
 
 ```ruby
 > Hello.new.async.hello("world")
-=> #<Concurrent::IVar:0x00007fe09b08b230 @__Lock__=#<Thread::Mutex:0x00007fe09b08b1b8>, @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b190>, @event=#<Concurrent::Event:0x00007fe09b08b118 @__Lock__=#<Thread::Mutex:0x00007fe09b08b0a0>, @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b078>, @set=false, @iteration=0>, @reason=nil, @value=nil, @observers=#<Concurrent::Collection::CopyOnWriteObserverSet:0x00007fe09b08b028 @__Lock__=#<Thread::Mutex:0x00007fe09b08afd8>, @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08afb0>, @observers={}>, @dup_on_deref=nil, @freeze_on_deref=nil, @copy_on_deref=nil, @do_nothing_on_deref=true, @state=:pending>
+=> #<Concurrent::IVar:0x00007fe09b08b230 
+@__Lock__=#<Thread::Mutex:0x00007fe09b08b1b8>, 
+@__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b190>, 
+@event=
+ #<Concurrent::Event:0x00007fe09b08b118 
+  @__Lock__=#<Thread::Mutex:0x00007fe09b08b0a0>, 
+  @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08b078>, 
+  @set=false, 
+  @iteration=0>, 
+@reason=nil, 
+@value=nil, 
+@observers=
+ #<Concurrent::Collection::CopyOnWriteObserverSet:0x00007fe09b08b028 
+   @__Lock__=#<Thread::Mutex:0x00007fe09b08afd8>, 
+   @__Condition__=#<Thread::ConditionVariable:0x00007fe09b08afb0>, 
+   @observers={}>, 
+@dup_on_deref=nil, 
+@freeze_on_deref=nil, 
+@copy_on_deref=nil, 
+@do_nothing_on_deref=true, 
+@state=:pending>
 ```
 
 ### Return Types
@@ -76,7 +116,7 @@ For now, I am going to assume this is similar enough to JavaScript's [`Promise`]
 
 At this point, things seem to be working. I am getting back `IVar`s instead of the string the `hello` method returns, so the `Async` module is doing _something_. However, the `await` version runs so fast that it doesn't _seem_ like the methods are performing any differently. 
 
-Often times, you would move work into another thread if it's slow and gets in the way of your main thread. To replicate this in my testing, I decided to fake working hard by [`sleep`](https://ruby-doc.org/core-2.7.0/Kernel.html#method-i-sleep)ing. I also decided to **print** the "hello" string instead of returning it. This allows me to avoid ~~dealing with~~ thinking about `IVars` during my initial exploration. Printing gives me a visual indication the methods are running without having to worry about what is being returned.
+Often times, you would move work into another thread if it's slow and gets in the way of your main thread. To replicate this in my testing, I decided to fake working hard by [`sleep`](https://ruby-doc.org/core-2.7.0/Kernel.html#method-i-sleep)ing. I also decided to print the "hello" string instead of returning it. This allows me to avoid ~~dealing with~~ thinking about `IVars` during my initial exploration. Printing gives me a visual indication the methods are running without having to worry about what is being returned.
 
 Now, my test class looks something like:
 
@@ -95,24 +135,24 @@ end
 
 After reloading this class into `irb`, I now have:
 
-* A visual indication when the method has run from the `puts` statement.
+* A visual indication from the `puts` statement of when the method has run.
 * Methods that take longer to run as a result of the call to `sleep`. 
 
 #### Await Version
 
 When proxying through `await`, the call to `sleep` in `Hello#hello` is blocking. This means that, even though it's running in a separate thread, I have to wait for the `sleep` to finish before the main thread (the `irb` session in this case) will respond:
 
-<img src='./hello-await-with-sleep.gif' loading="lazy" />
+<img src='./hello-await-with-sleep.gif' />
 
 #### Async Version
 
 With `async`, the method returns right away and the main thread continues to run on its own. This means I can continue to interact with the main `irb` thread while waiting for my result to print:
 
-<img src='./hello-async-with-sleep.gif' loading="lazy" />
+<img src='./hello-async-with-sleep.gif' />
 
 ## Conclusion
 
 While we haven't done much,  we now have a class that provides us with `async` and `await` proxy methods.  We were also able to make the difference in behavior between these two proxy methods more obvious through the use of `puts` and `sleep`. 
 
-This is not even scratching the surface of the `Async` module, let alone the entire `concurrent-ruby` gem. What this does provide is a great jumping-off point to explore the `Async` module further in the future.
+This is not even scratching the surface of the `Async` module, let alone the entire `concurrent-ruby` gem. What this does provide, however, is a great jumping-off point to explore the `Async` module further in the future.
 
