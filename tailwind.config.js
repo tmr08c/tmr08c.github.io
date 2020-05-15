@@ -19,5 +19,12 @@ module.exports = {
   },
   plugins: [
     // Some useful comment
+  ],
+  // Using the built-in support for purging CSS
+  // https://tailwindcss.com/docs/controlling-file-size/
+  purge: [
+    './src/**/*.html',
+    './src/**/*.tsx',
+    './src/**/*.jsx',
   ]
 };

@@ -68,14 +68,6 @@ module.exports = {
     "gatsby-plugin-offline",
     `gatsby-plugin-postcss`,
     {
-      resolve: `gatsby-plugin-purgecss`,
-      options: {
-        printRejected: true, // Print removed selectors and processed file names
-        tailwind: true,
-        ignore: ["prismjs/", "post.css"]
-      }
-    },
-    {
       resolve: `gatsby-plugin-prefetch-google-fonts`,
       options: {
         fonts: [
