@@ -1,6 +1,6 @@
 ---
 title: 'Concurrent Ruby - Hello, Async'
-date: '2020-04-19T00:36:13.265Z'
+date: '2020-05-14T20:43:34.885Z'
 categories: ['ruby', 'concurrency']
 ---
 
