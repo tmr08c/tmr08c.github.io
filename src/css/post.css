@@ -61,3 +61,12 @@
   @apply border-solid;
   @apply border-l-4;
 }
+
+.blog-post-body table {
+  @apply table-auto;
+
+}
+
+.blog-post-body table tr td {
+  @apply border;
+}
