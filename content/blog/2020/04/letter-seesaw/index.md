@@ -4,6 +4,7 @@ date:   "2020-04-18T20:02:34.781Z"
 categories: ["soft skills"]
 ---
 
+
 My friend and former co-worker [@C-Saunders](https://github.com/c-saunders) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
 
 During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that bein with the same letter). I thought they be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember. This increases the chances that I remember and use them. 
@@ -85,16 +86,33 @@ However, I think having these terms can provide a tool for observing your behavi
 
 On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic. As I saw in the section above, I had resigned myself to saying "yep, this is a problem...that's all I got." However, I do agree it would be nice to have some suggestions for how to help yourself avoid going too far to one end of either of the spectrums.
 
-### Time boxing 
+### Timeboxing 
 
-When sharing the feedback, Charlie mentioned the idea of setting time limits. [Time boxing](https://hbr.org/2018/12/how-timeboxing-works-and-why-it-will-make-you-more-productive) is a great strategy for an individual and a team. 
+When sharing the feedback, Charlie mentioned the idea of setting time limits. [Timeboxing](https://hbr.org/2018/12/how-timeboxing-works-and-why-it-will-make-you-more-productive) is a great strategy for an individual and a team. 
 
-At the team level, time-boxing can help reveal the ["appetite"](https://basecamp.com/shapeup/1.2-chapter-03#setting-the-appetite) the team has for some amount of work. How much time does the team think this is worth. If everyone estimates it will take two weeks to solve this problem, does that feel like too much to the team? And sure, [deadlines are evil](https://www.google.com/search?q=deadlines+are+eveil&rlz=1C5CHFA_enUS573US573&oq=deadlines+are+eveil&aqs=chrome..69i57j33.3687j0j7&sourceid=chrome&ie=UTF-8), but they can also help force prioritization. If you are timeboxing looking into a bug to two days, the amount of time you should struggle versus getting to a solution is a bit more clear. 
+At the team level, time-boxing can help reveal the ["appetite"](https://basecamp.com/shapeup/1.2-chapter-03#setting-the-appetite) the team has for some amount of work. How much time does the team think this is worth. If everyone estimates it will take two weeks to solve this problem, does that feel like too much to the team? 
+
+While there are a number of potential negative consequences of deadlines, one way I've seen them provide value is in helping to force prioritization. If your team has decided they want to [spike](http://www.extremeprogramming.org/rules/spike.html) on a few potential options for a new feature, they may also decide they want to timebox it to a few days, let's say three. Having three days can help force some pragmatism. Rather than 
+
+---
+Charlie suggested the idea of setting time-limits or breakpoints for yourself. This can be especially useful in the day-to-day balance of struggle versus solve. If you think a bug should take you two hours, may set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
+
+Do I know what the problem is now?
+Do I know how I can solve the problem?
+Do I know what I'm going to do next?
+What is my new estimate?
+Would someone else be able to help me get this done sooner?
+How long would it take to get someone else up to speed? 
+
+You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit that your co-workers are also stopping at the same time, so switching gears to help you after the meeting may be easier for them.
+
+
+If you are timeboxing looking into a bug to two days, the amount of time you should struggle versus getting to a solution is a bit more clear. 
 
 Other ideas
-* Pomodoro (time boxing)
-* Breaks? 
-* Questions mentioned in the post 
+Pomodoro (timeboxing)
+Breaks? 
+Questions mentioned in the post 
 
 
 
