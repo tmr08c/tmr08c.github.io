@@ -5,7 +5,7 @@ categories: ["soft skills"]
 ---
 
 
-My friend and former co-worker [@C-Saunders](https://github.com/c-saunders) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
+My friend and former co-worker Charlie ([@C-Saunders](https://github.com/c-saunders)) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
 
 During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that bein with the same letter). I thought they be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember. This increases the chances that I remember and use them. 
 
@@ -95,7 +95,7 @@ At the team level, time-boxing can help reveal the ["appetite"](https://basecamp
 While there are a number of potential negative consequences of deadlines, one way I've seen them provide value is in helping to force prioritization. If your team has decided they want to [spike](http://www.extremeprogramming.org/rules/spike.html) on a few potential options for a new feature, they may also decide they want to timebox it to a few days, let's say three. Having three days can help force some pragmatism. Rather than 
 
 ---
-Charlie suggested the idea of setting time-limits or breakpoints for yourself. This can be especially useful in the day-to-day balance of struggle versus solve. If you think a bug should take you two hours, may set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
+Charlie suggested the idea of setting time-limits or breakpoints for yourself. This can be especially useful in the day-to-day balance of struggle versus solve. If you think a bug should take you two hours, maybe set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
 
 Do I know what the problem is now?
 Do I know how I can solve the problem?
@@ -104,7 +104,25 @@ What is my new estimate?
 Would someone else be able to help me get this done sooner?
 How long would it take to get someone else up to speed? 
 
-You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit that your co-workers are also stopping at the same time, so switching gears to help you after the meeting may be easier for them.
+You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit -it's more likely your co-workers are also stopping at the same time, so switching gears to help you after the meeting may be easier for them.
+
+A technique that can help with timeboxing is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a set break. 
+
+### Breaks
+
+The Pomodoro Technique suggests breaks as a way to give your brain a chance to stop thinking about work for a few minutes. When coming back to the problem, you have another chance to ask yourself some of the questions from above and self-evaluate your pacing. You've also given you brain a chance to rest (or maybe [process thoughts in the background](https://github.com/matthiasn/talk-transcripts/blob/master/Hickey_Rich/HammockDrivenDev.md)). Coming back to the work, you have the opportunity to decide if you want to keep continuing down the current path you are taking, or if, with fresh eyes, you have a new idea for how to approach the problem. 
+
+### Stepping away 
+
+Sometimes for me, taking a break doesn't have to mean I stop working and do something else, but that I break away from the computer. Going for a walk is a perfect example of this. Cal Newport talks about this idea in _Deep Work_ and in [this blog post](https://www.calnewport.com/blog/2015/03/17/deep-habits-think-hard-outside-the-office/):
+
+> My strategy is to maintain, at all times, a single, clear problem primed and ready for cogitation. I then set aside specific times for this deep thinking in my schedule outside work. I use many (though not all) of my commutes for this purpose. I also leverage long weekend dog walks and the mental lull that accompanies time-consuming house work.
+
+This talks more about the benefits of more effectively using your time, but Ive found another huge benefit is the change in context.
+- can't do anything so have to think about other options
+- easier to think about starting fresh since it's only in my mind
+- easier to make changes than actually make them
+ 
 
 
 If you are timeboxing looking into a bug to two days, the amount of time you should struggle versus getting to a solution is a bit more clear. 
