@@ -114,14 +114,22 @@ The Pomodoro Technique suggests breaks as a way to give your brain a chance to s
 
 ### Stepping away 
 
-Sometimes for me, taking a break doesn't have to mean I stop working and do something else, but that I break away from the computer. Going for a walk is a perfect example of this. Cal Newport talks about this idea in _Deep Work_ and in [this blog post](https://www.calnewport.com/blog/2015/03/17/deep-habits-think-hard-outside-the-office/):
+Sometimes for me, taking a break doesn't have to mean I stop working and do something else, but that I break away from the computer, this can be going for a walk or [sitting in a hammock](https://github.com/matthiasn/talk-transcripts/blob/master/Hickey_Rich/HammockDrivenDev.md). From Rich Hickey's talk:
 
-> My strategy is to maintain, at all times, a single, clear problem primed and ready for cogitation. I then set aside specific times for this deep thinking in my schedule outside work. I use many (though not all) of my commutes for this purpose. I also leverage long weekend dog walks and the mental lull that accompanies time-consuming house work.
+> Computers are bad, bad sources of distraction. They are so bad especially for people like us. It's just like, uh... something else besides what I'm trying to think about. You desperately need to get away from the computer if you're trying to focus. It's almost impossible to focus sitting at a computer. 
 
-This talks more about the benefits of more effectively using your time, but Ive found another huge benefit is the change in context.
-- can't do anything so have to think about other options
-- easier to think about starting fresh since it's only in my mind
-- easier to make changes than actually make them
+In his talk, Rich shares why some of the advantages of the hammock for his deep, focused time:
+
+> And so there's some cool aspects to the hammock. One of the cool aspects to a hammock is that you can go on a hammock and you can close your eyes and no one knows that you're not sleeping but they won't bother you be cause they think you might be sleeping.
+
+In the talk, Rich discusses the idea of solving large, hard problems (like maybe [creating a language](https://en.wikipedia.org/wiki/Clojure#History_and_development_process)). I've found for most problems  that crop up on a day-to-day basis, I prefer to try taking a short walk to think about my problem.
+
+Regardless of what you do, breaking away from the computer can be a great tool. 
+
+Cal highlights a strategy for how efficently 
+can't do anything so have to think about other options
+easier to think about starting fresh since it's only in my mind
+easier to make changes than actually make them
  
 
 
