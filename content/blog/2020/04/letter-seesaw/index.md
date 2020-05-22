@@ -60,6 +60,24 @@ There is a _balance_ to things. This spectrum idea may start to break down when 
 
 Maybe our industry (or at least people that include the authors of a book titled [_The Pragmatic Programmer_](https://pragprog.com/book/tpp20/the-pragmatic-programmer-20th-anniversary-edition)) lean towards pragmatism, but it's important to acknowledge the balance and be mindful of where you are in comparison to where you want to be. 
 
+#### Suggestions
+
+With the idea of this spectrum in mind, it can still be difficult to know which end you should be more focused on. I think one of the biggest tools that can help here is communication. Having clearly communicated goals and expectations for a project can be immensely valuable. If leadership has made it clear something is intended to be "a cut all frills MVP," "polished and Apple-like," or "being sent into space and cannot be sent software updates" it can serve as a guideline on when to be more pragmatic and when to be prudent.
+
+One strategy of communicating how time/focus/energy is expected to be put on a project is the idea of ["appetite"](https://basecamp.com/shapeup/1.2-chapter-03) from [Basecamp](https://basecamp.com/)'s book, [_Shape Up_](https://basecamp.com/shapeup/):
+
+> The first step of shaping is setting boundaries on what we’re trying to do. The conversations we have are going to be entirely different if people think we’re talking about a small improvement or a major redesign.
+> (...)
+> Whether we’re chomping at the bit or reluctant to dive in, it helps to explicitly define how much of our time and attention the subject deserves.
+> (...)
+> We call this the appetite.
+
+While there is often pushback (and rightly so) on deadlines, there is some value to them. Again, from _Shape Up_: 
+
+> When you have a deadline, all of a sudden you have to make decision
+
+When a deadline is looming, you may shift into pragmatic mode. Discussions of cutting scope may start happening and hypothetical what-ifs may stop. However, as we said before, there's a balance to this, so be careful. You need to feel comfortable pushing back against deadlines when it makes sense to be prudent. 
+
 ## Struggling versus Solving
 
 This one is almost a more specific instance of pragmatic versus prudent, but I was so excited we had another tautogram that it inspired me to start writing. We were talking about how to balance spending the time struggling to solve a problem and learning on your own, and getting to a solution as quickly as possible. 
@@ -84,15 +102,17 @@ However, I think having these terms can provide a tool for observing your behavi
 
 ### Actionalable Suggestions
 
-On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic. As I saw in the section above, I had resigned myself to saying "yep, this is a problem...that's all I got." However, I do agree it would be nice to have some suggestions for how to help yourself avoid going too far to one end of either of the spectrums.
+On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic. As I wrote in the section above, I had resigned myself to saying "yep, this is a problem...that's all I got." However, I do agree it would be nice to have some suggestions for how to help yourself avoid going too far to one end of either of the spectrums.
 
 ### Timeboxing 
 
-When sharing the feedback, Charlie mentioned the idea of setting time limits. [Timeboxing](https://hbr.org/2018/12/how-timeboxing-works-and-why-it-will-make-you-more-productive) is a great strategy for an individual and a team. 
+When sharing the feedback, Charlie mentioned the idea of setting time limits. [Timeboxing](https://hbr.org/2018/12/how-timeboxing-works-and-why-it-will-make-you-more-productive) is a great strategy for individuals and teams. 
 
-At the team level, time-boxing can help reveal the ["appetite"](https://basecamp.com/shapeup/1.2-chapter-03#setting-the-appetite) the team has for some amount of work. How much time does the team think this is worth. If everyone estimates it will take two weeks to solve this problem, does that feel like too much to the team? 
+At the team level, time-boxing can help reveal the ["appetite"](https://basecamp.com/shapeup/1.2-chapter-03#setting-the-appetite) the team has for some amount of work. How much time does the team think this is worth. If everyone estimates it will take two months to add some feature, does that feel like too much to the team? The appetite can be potentially be used as a proxy for how prudent you should be when coming up with solutions. The approach for a problem that the team is willing to spend a week on is going to be different than one that the team is willing to spend months on. 
 
-While there are a number of potential negative consequences of deadlines, one way I've seen them provide value is in helping to force prioritization. If your team has decided they want to [spike](http://www.extremeprogramming.org/rules/spike.html) on a few potential options for a new feature, they may also decide they want to timebox it to a few days, let's say three. Having three days can help force some pragmatism. Rather than 
+While there are potentially negative consequences of deadlines, one way I've seen them provide value is in helping to force prioritization. This is also mentioned in the section about appetite in [_Shape Up_](https://basecamp.com/shapeup):
+
+> When you have a deadline, all of a sudden you have to make decision
 
 ---
 Charlie suggested the idea of setting time-limits or breakpoints for yourself. This can be especially useful in the day-to-day balance of struggle versus solve. If you think a bug should take you two hours, maybe set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
@@ -110,7 +130,7 @@ A technique that can help with timeboxing is the [Pomodoro Technique](https://fr
 
 ### Breaks
 
-The Pomodoro Technique suggests breaks as a way to give your brain a chance to stop thinking about work for a few minutes. When coming back to the problem, you have another chance to ask yourself some of the questions from above and self-evaluate your pacing. You've also given you brain a chance to rest (or maybe [process thoughts in the background](https://github.com/matthiasn/talk-transcripts/blob/master/Hickey_Rich/HammockDrivenDev.md)). Coming back to the work, you have the opportunity to decide if you want to keep continuing down the current path you are taking, or if, with fresh eyes, you have a new idea for how to approach the problem. 
+The Pomodoro Technique suggests breaks as a way to give your brain a chance to stop thinking about work for a few minutes. When coming back to the problem, you have another chance to ask yourself some of the questions from above and self-evaluate your pacing. You've also given you brain a chance to rest (or maybe [process thoughts in the background](https://github.com/matthiasn/talk-transcripts/blob/master/Hickey_Rich/HammockDrivenDev.md)). Coming back to the work, you have the opportunity to decide if you want to continue down the current path you are taking, or if, with fresh eyes, you have a new idea for how to approach the problem. 
 
 ### Stepping away 
 
@@ -120,13 +140,13 @@ Sometimes for me, taking a break doesn't have to mean I stop working and do some
 
 In his talk, Rich shares why some of the advantages of the hammock for his deep, focused time:
 
-> And so there's some cool aspects to the hammock. One of the cool aspects to a hammock is that you can go on a hammock and you can close your eyes and no one knows that you're not sleeping but they won't bother you be cause they think you might be sleeping.
+> And so there's some cool aspects to the hammock. One of the cool aspects to a hammock is that you can go on a hammock and you can close your eyes and no one knows that you're not sleeping but they won't bother you because they think you might be sleeping.
 
-In the talk, Rich discusses the idea of solving large, hard problems (like maybe [creating a language](https://en.wikipedia.org/wiki/Clojure#History_and_development_process)). I've found for most problems  that crop up on a day-to-day basis, I prefer to try taking a short walk to think about my problem.
+In the talk, Rich discusses the idea of solving large, hard problems (like maybe [creating a language](https://en.wikipedia.org/wiki/Clojure#History_and_development_process)). I've found for most problems that crop up on a day-to-day basis, I prefer to try taking a short walk to think about my problem.
 
 Regardless of what you do, breaking away from the computer can be a great tool. 
 
-Cal highlights a strategy for how efficently 
+Cal highlights a strategy for how efficiently 
 can't do anything so have to think about other options
 easier to think about starting fresh since it's only in my mind
 easier to make changes than actually make them
