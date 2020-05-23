@@ -72,11 +72,11 @@ One strategy of communicating how time/focus/energy is expected to be put on a p
 > (...)
 > We call this the appetite.
 
-While there is often pushback (and rightly so) on deadlines, there is some value to them. Again, from _Shape Up_: 
+While there is often pushback (and rightly so) against deadlines, there is some value to them. Again, from _Shape Up_: 
 
 > When you have a deadline, all of a sudden you have to make decision
 
-When a deadline is looming, you may shift into pragmatic mode. Discussions of cutting scope may start happening and hypothetical what-ifs may stop. However, as we said before, there's a balance to this, so be careful. You need to feel comfortable pushing back against deadlines when it makes sense to be prudent. 
+When a deadline is looming, you may shift into pragmatic mode. Discussions of cutting scope may start happening and long, hypothetical what-if discussions may stop. However, as we said before, there's a balance to this, so be careful. You need to feel comfortable pushing back against deadlines when it makes sense to be prudent. 
 
 ## Struggling versus Solving
 
@@ -90,15 +90,37 @@ Personally, I tend to fall on the side of struggling. I think there is [value in
 
 Being a new team member has put this balance to the test for me. Working on a new, large codebase has resulted in numerous "how do I..." and "where is..." moments. For many of these, I have silently struggled - grepping across multiple repositories or jumping between Confluence and GitHub. For many of these problems, I could have pinged someone and probably would have had an answer to my question almost immediately. Fortunately, most of these problems haven't taken up too much time, but it can be a slippery slope; especially when not asking for help _now_ makes it [harder for me to ask in the future](https://www.andymort.com/hard-asking-for-help/).
 
-If I am hitting a bug, do I try to get help after an hour? Four hours? A day?  At what point would it be irresponsible to myself and employer to get help and lose out on growing my skillset? At what am I being irresponsible to my employer for not getting assistance and just solving the problem? 
+### Suggestions 
 
-Maybe the question to keep in mind is: "have I struggled enough where if I get the answer given to me, it will stick?" This can help prevent you from spinning your wheels with no results while continuing to evolve your problem-solving skills. Another good question to keep in mind is one you should ask the person that helped you solve the problem: "how did you figure this out (so I can figure it out for myself next time)?"
+#### Checking in with yourself 
+
+If I am hitting a bug, do I try to get help after an hour? Four hours? A day?  At what point would it be irresponsible to get help and lose out on growing my skillset? At what would it be irresponsible to _not_ get assistance and get the problem solved? The question then becomes, how do I remember to ask myself these questions? For this, I would suggest leveraging some form of timeboxing or breaks.
+
+If you think a bug should take you two hours, maybe set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
+
+Do I know what the problem is now?
+Do I know how I can solve the problem?
+Do I know what I'm going to do next?
+What is my new estimate?
+Would someone else be able to help me get this done sooner?
+How long would it take to get someone else up to speed? 
+Have I struggled enough where if I get the answer given to me, it will stick?
+
+You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit -it's more likely your co-workers are also stopping at the same time. Since they aren't working on their own problems, it may be easier for them to make the mental switch to help you with your problem.
+
+One technique I find valuable (when I remember to use it) is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a set break. Rather than having to plan ahead when you want to assess your current situation, the Pomodoro Technique gives you numerous stopping and checking-in points throughout your day. 
+
+#### Learning from help 
+
+If you find you reach out for help with a problem, that's not the end of the line. Try to fully take advantage of this learning opportunity. Go beyond "getting the answer," and try to get insight into how the person approaches problem-solving. Ask them to share their thought process and how they work through solving the problem. This will often provide more insights than just figuring out how to solve your current problem. 
 
 ## Conclusion
 
-Unfortunately, this post isn't the kind that _solves_ the "problem" of being too extreme to one side or the other. I also don't expect it to reveal anything new to people; [life is about balance and moderation](https://xkcd.com/1592/) and software is full of ["it depends" answers](https://softwareengineering.meta.stackexchange.com/questions/766/how-to-answer-it-depends-questions). 
+I don't expect that this post reveals anything new to people; [life is about balance and moderation](https://xkcd.com/1592/) and software is full of ["it depends" answers](https://softwareengineering.meta.stackexchange.com/questions/766/how-to-answer-it-depends-questions). I do, however, hope that it provides some useful vocabulary for thinking about how you are approaching solving a problem.
 
-However, I think having these terms can provide a tool for observing your behavior or the behavior of those you work with. Maybe the next time you dealing with a difficult problem at work you can take a step back and assess where you fall on the struggle-solve spectrum, and decide what to do next. _Maybe_ you could even work with your manager to see where they think you fall on these spectrums and where they see opportunities for you to grow. 
+ On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic (and suggested some actions as well). While I don't think this is something that can be "solved" all the way, I do hope some of the suggestions can help manage the balancing act of being pragmatics and prudent, and help you think about when it makes sense to keep struggling and when to start solving.
+
+I think having these terms can provide a tool for observing your behavior or the behavior of those you work with. Maybe the next time you dealing with a difficult problem at work you can take a step back and assess where you fall on the struggle-solve spectrum, and decide what to do next. _Maybe_ you could even work with your manager to see where they think you fall on these spectrums and where they see opportunities for you to grow. 
 
 ### Actionalable Suggestions
 
