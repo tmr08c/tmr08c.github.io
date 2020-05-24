@@ -7,7 +7,7 @@ categories: ["soft skills"]
 
 My friend and former co-worker Charlie ([@C-Saunders](https://github.com/c-saunders)) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
 
-During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that bein with the same letter). I thought they be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember. This increases the chances that I remember and use them. 
+During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that bein with the same letter). I thought thinking about where one falls on these "spectrums" could be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember. This increases the chances that I remember to actually use them. 
 
  The two spectrums we discussed were: 
 
@@ -29,9 +29,9 @@ When dealing with day-to-day work and planning I try to keep the idea of [perfec
 
 I have found the planning part of my work to be where I most often fall into a mindset of being prudent over pragmatic. I'm not going as far as a [big upfront design](https://wiki.c2.com/?BigDesignUpFront), but I do try to think out how functionality should work now and _could_ need to work in the future. 
 
-This "could work like" thinking can be dangerous, because I cannot predict the future. In a recent example, I was tasked with collecting a few specifics metrics about a process someone completes (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information the team _could_ want to ask about our data. My previous experience of working with [Google Analytics](https://analytics.google.com/analytics/web/) biases me to think we would eventually want to track and report on "all the things," and I started thinking of how to model a generic "event" for reporting purposes. 
+This "could" thinking can be dangerous because I can't predict the future. In a recent example, I was tasked with collecting a few specifics metrics about a process someone completes (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information the team _could_ want to ask about our data. My previous experience of working with [Google Analytics](https://analytics.google.com/analytics/web/) biases me to think we would eventually want to track and report on "all the things," and I started thinking of how to model a generic "event" for reporting purposes. 
 
-Fortunately, I was able to leverage stand up the next day to signal to the team the rabbit hole I began finding myself digging down. This led to scheduling some time with a coworker to bring me into reality - we don't know _everything_, but we know _something_; we know what the business side already wants to report on. Getting started with the current request allows us to get to "good" and talk about "perfect" along the way. Maybe in a few months, we will wish we had a generic "event" model. Even if this is true, we will have delivered months of _some_ value in the interim, **and** will know more about what we really want and (more importantly) _need_ out of our reporting. 
+Fortunately, I was able to leverage standup the next day to signal to the team the rabbit hole I began finding myself digging down. This led to scheduling some time with a coworker to bring me into reality - we don't know _everything_, but we know _something_; we know what the business side already wants to report on. Getting started with the current request allows us to get to "good" and talk about "perfect" along the way. Maybe in a few months, we will wish we had a generic "event" model. Even if this is true, we will have delivered months of _some_ value in the interim, **and** will know more about what we really want and (more importantly) _need_ out of our reporting. 
 
 ### Performing 
 
@@ -45,7 +45,7 @@ I've also found that some industry practices lend themselves to guide me towards
 ### Being Agile
 
 Looking at the [Agile Manifesto](
-https://agilemanifesto.org/), I think it is a guide to pragmatism. For example, one of the points is to favor responding to change over following a plan. I believe this is in response to some of the upfront requirements and design work that came out of the [waterfall method](https://en.wikipedia.org/wiki/Waterfall_model). It feels _prudent_ to spend a bunch of time before you write any code trying to map out the whole project. However, in practice, you can't see the future and you can't plan for everything, sp projects inevitably go off-plan. In practice, it is more _sensible_ to expect change and be ready to respond to. 
+https://agilemanifesto.org/), I think it is a guide to pragmatism. For example, one of the points is to favor responding to change over following a plan. I believe this is in response to some of the upfront requirements and design work that came out of the [waterfall method](https://en.wikipedia.org/wiki/Waterfall_model). It feels _prudent_ to spend a bunch of time before you write any code trying to map out the whole project. However, in practice, you can't see the future and you can't plan for everything, so projects inevitably go off-plan. In practice, it is more _sensible_ to expect change and be ready to respond to. 
 
 While I think the agile manifesto falls on the side of pragmatism, there is a meta-level of pragmatism that I think people don't always acknowledge:
 
@@ -62,7 +62,7 @@ Maybe our industry (or at least people that include the authors of a book titled
 
 #### Suggestions
 
-With the idea of this spectrum in mind, it can still be difficult to know which end you should be more focused on. I think one of the biggest tools that can help here is communication. Having clearly communicated goals and expectations for a project can be immensely valuable. If leadership has made it clear something is intended to be "a cut all frills MVP," "polished and Apple-like," or "being sent into space and cannot be sent software updates" it can serve as a guideline on when to be more pragmatic and when to be prudent.
+With the idea of this spectrum in mind, it can still be difficult to know which end you should be more focused on. I think one of the biggest tools that can help here is communication. Having clearly communicated goals and expectations for a project can be immensely valuable. If leadership has made it clear something is intended to be "a cut all frills MVP," "polished and Apple-like," or "sent into space and will not be sent software updates" it can serve as a guideline on when to be pragmatic and when to be prudent.
 
 One strategy of communicating how time/focus/energy is expected to be put on a project is the idea of ["appetite"](https://basecamp.com/shapeup/1.2-chapter-03) from [Basecamp](https://basecamp.com/)'s book, [_Shape Up_](https://basecamp.com/shapeup/):
 
@@ -80,13 +80,17 @@ When a deadline is looming, you may shift into pragmatic mode. Discussions of cu
 
 ## Struggling versus Solving
 
-This one is almost a more specific instance of pragmatic versus prudent, but I was so excited we had another tautogram that it inspired me to start writing. We were talking about how to balance spending the time struggling to solve a problem and learning on your own, and getting to a solution as quickly as possible. 
+This one is almost a more specific instance of pragmatic versus prudent, but I was so excited we had another tautogram that it inspired me to start writing. We were talking about how to balance spending the time struggling to solve a problem and learning on your own with getting to a solution as quickly as possible. 
 
 In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle with asking for help, especially from open-source strangers. This struggle versus solving discussion partially came out of me trying to self-reflect on how I could improve. How much time should I spend trying to debug an issue with a gem and learning how it works before I should ask for help solving my problem.
 
 While the above example uses asking a library author for help, that isn't the most common scenario. In fact, the more common example of this is asking your co-workers for help.
 
-Personally, I tend to fall on the side of struggling. I think there is [value in taking some time to struggle](https://news.stanford.edu/2019/09/30/embrace-struggle-education-professor-challenges-common-beliefs-teaching-learning/) with a problem to better understand the eventual solution. In addition to getting practice trying to learn something, I think it helps the lessons better stick with me. However, I _know_ I have some opportunity to better balance where I fall on this spectrum.
+Personally, I tend to fall on the side of struggling. I try to justify this with the idea that there is [value in taking some time to struggle](https://news.stanford.edu/2019/09/30/embrace-struggle-education-professor-challenges-common-beliefs-teaching-learning/) and that it helps to better understand the eventual solution. 
+
+Digging a little deeper, I think [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) is probably also at play. If I don't ask for help, no one will find out I'm a fraud. This type of thinking can slow me down and hold me back from growing. 
+
+If I get more comfortable knowing when I've struggled enough and should be getting help, I can spend less time spinning my wheels and more time learning, growing, and solving. 
 
 Being a new team member has put this balance to the test for me. Working on a new, large codebase has resulted in numerous "how do I..." and "where is..." moments. For many of these, I have silently struggled - grepping across multiple repositories or jumping between Confluence and GitHub. For many of these problems, I could have pinged someone and probably would have had an answer to my question almost immediately. Fortunately, most of these problems haven't taken up too much time, but it can be a slippery slope; especially when not asking for help _now_ makes it [harder for me to ask in the future](https://www.andymort.com/hard-asking-for-help/).
 
@@ -108,7 +112,7 @@ Have I struggled enough where if I get the answer given to me, it will stick?
 
 You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit -it's more likely your co-workers are also stopping at the same time. Since they aren't working on their own problems, it may be easier for them to make the mental switch to help you with your problem.
 
-One technique I find valuable (when I remember to use it) is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a set break. Rather than having to plan ahead when you want to assess your current situation, the Pomodoro Technique gives you numerous stopping and checking-in points throughout your day. 
+One technique I find valuable (when I remember to use it) is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a few minutes of break time. Rather than having to plan ahead when you want to assess your current situation, the Pomodoro Technique gives you numerous stopping and checking-in points throughout your day. 
 
 #### Learning from help 
 
