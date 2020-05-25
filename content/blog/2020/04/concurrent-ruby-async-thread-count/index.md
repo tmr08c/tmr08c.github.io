@@ -67,23 +67,45 @@ This script creates a super simple REPL that can handle a small set of commands.
 |-|-|
 |<kbd>q</kbd>, <kbd>x</kbd>| **Quit**. Break out of the REPL and stop the script|
 |<kbd>l</kbd>, <kbd>list</kbd>| **List** the count of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
+|<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an already created instance of the `HelloAsync` class.|
+|<kbd>new-async</kbd>| Instantiated a new instance of the `HelloAsync` class and run the `hello` method through the `async` proxy  on it.|
+|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an already created instance of the `HelloAwait` class.|
+|<kbd>new-await</kbd>| Instantiated a new instance of the `HelloAsync` class and run the `hello` method through the `await` proxy  on it.|
 
-#### Quitting
+These options enabled me to better understand how the `concurrent-ruby` library managed threads for the `Async` modules. From a single session I am able to track the thread count while testting the `async` und `await` proxies on existing and new instances of a class that includes the `Async` module. 
 
-We check for <kbd>q</kbd> or <kbd>x</kbd> as a way to exit the script.
+## Baseline
 
-#### List
+When strating the REPL and printing out the thread I see the following:
 
-We accept <kbd>l</kbd> or <kbd>list</kbd> as a way to print the count of Threads the Ruby process knows about. From the docs for [`Thread,list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list):
+```bash
+> list
+Currently have 2 threads.
+```
 
-> Returns an array of Thread objects for all threads that are either runnable or stopped.
+I didn't _expect_ two threads, but maybe Ruby leverages multiple threads more than I thought. Let's compare this when an `irb` session:
 
-Initially, I printed the list, but found I was mostly interested in seeing if the count changed during this exercise.
+```ruby
+irb(main)> Thread.list
+=> [#<Thread:0x00007fbef585ffa0 run>]
+```
+
+Hm, okay, it looks like we have one "run" thread. In the `irb` session I used `Thread.list` and dropped the `count`. I am going to temporairily drop the `count` in my script as well. 
+
+```bash
+> list
+Currently have [
+  #<Thread:0x00007fdacc064010 run>,
+  #<Thread:0x00007fdacc100438@/Users/troyrosenberg/.asdf/installs/ruby/2.6.5/lib/ruby/gems/2.6.0/gems/concurrent-ruby-1.1.6/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>] threads.
+```
+
+So we have the same "run" thread, but we also have a thread that looks like it's realted to the `concurrent-ruby` gem. 
 
 
-* follow up to previous post
-* Made CLI for interacting
-    * link to file
+
+
+
+* What is going on in `ruby_thread_local_var:38`
 * When are threads made
   * adding thread counter to CLI
   * trying with `.new`
@@ -98,4 +120,4 @@ Initially, I printed the list, but found I was mostly interested in seeing if th
 TODO
 
 - [ ] Fix style for table
-- [ ] Add style for `kbd` tag
+- [x] Add style for `kbd` tag
