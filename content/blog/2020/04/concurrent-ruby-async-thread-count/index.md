@@ -99,7 +99,17 @@ Currently have [
   #<Thread:0x00007fdacc100438@/Users/troyrosenberg/.asdf/installs/ruby/2.6.5/lib/ruby/gems/2.6.0/gems/concurrent-ruby-1.1.6/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>] threads.
 ```
 
-So we have the same "run" thread, but we also have a thread that looks like it's realted to the `concurrent-ruby` gem. 
+So we have the same "run" thread, but we also have a thread that looks like it's realted to the `concurrent-ruby` gem. This other thread is created during the require process of the `concurrent-ruby` gem (it looks like there is [discussion](https://github.com/ruby-concurrency/concurrent-ruby/issues/868) of whether that is the right time to do this) as a part managing `ThreadLocalVar` (my instance is a `RubyThreadLocalVar` as opposed to the `JavaThreadLocalVar` implementation they have for jRuby. 
+
+From [the docs](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html):
+
+> A ThreadLocalVar is a variable where the value is different for each thread. Each variable may have a default value, but when you modify the variable only the current thread will ever see that change.
+
+
+The implementation manages this as a [long-running thread](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#L38-L39) that tracks and manages `ThreadLocalVar`s that have been allocated.
+
+
+
 
 
 
