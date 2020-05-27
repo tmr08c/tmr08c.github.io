@@ -99,23 +99,143 @@ Currently have [
   #<Thread:0x00007fdacc100438@/Users/troyrosenberg/.asdf/installs/ruby/2.6.5/lib/ruby/gems/2.6.0/gems/concurrent-ruby-1.1.6/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>] threads.
 ```
 
-So we have the same "run" thread, but we also have a thread that looks like it's realted to the `concurrent-ruby` gem. This other thread is created during the require process of the `concurrent-ruby` gem (it looks like there is [discussion](https://github.com/ruby-concurrency/concurrent-ruby/issues/868) of whether that is the right time to do this) as a part managing `ThreadLocalVar` (my instance is a `RubyThreadLocalVar` as opposed to the `JavaThreadLocalVar` implementation they have for jRuby. 
+So we have the same "run" thread, but we also have a thread that looks like it's realted to the `concurrent-ruby` gem. This other thread is created during the `require` process of the `concurrent-ruby` gem (it looks like there is [discussion](https://github.com/ruby-concurrency/concurrent-ruby/issues/868) of whether that is the right time to do this) as a part managing [`ThreadLocalVar`](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html)s. This means that the additonal thread is crated prior to creating a new instance of our `HelloAsync` class - it's created as soon as we `require 'concurrent-ruby'`.
+
+You may note that the file referenced in the thread is "ruby_thread_local_var.rb" and not just "thread_local_var.rb". `ThreadLocalVar` has [implementations for Ruby and jRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/thread_local_var.rb#L60-L65). Since I am using MRI, I am seeing `RubyThreadLocalVar` and not `JavaThreadLocalVar`. 
 
 From [the docs](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html):
 
 > A ThreadLocalVar is a variable where the value is different for each thread. Each variable may have a default value, but when you modify the variable only the current thread will ever see that change.
 
-
-The implementation manages this as a [long-running thread](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#L38-L39) that tracks and manages `ThreadLocalVar`s that have been allocated.
-
+The implementation tracks and manages `ThreadLocalVar`a in a [long-running thread](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#L38-L39). We haven't yet begun digging into the [thread-save objects the library provides](https://github.com/ruby-concurrency/concurrent-ruby#thread-safe-value-objects-structures-and-collections) yet, so we shouldn't need to worry too much about this additional thread. The important thing to note is that our baselines thread count is two and that does not include any threads we create with out `HelloAsync` class.
 
 
+## Our first (or third) thread
+
+In our [previous post](/2020/05/concurrent-ruby-hello-async/) we learned that the `await` method would create a new thread, run the method in the new thread, and return to the main thead; blocking our main thread the whole time. Does the thread stick around when the method is done? 
+
+```bash
+> await
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> l
+Currently have 3 threads.
+```
+
+It seems it does. Does this mean that every time we use one of our proxy methods we are creating new threads? 
+
+```
+> await
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> l
+Currently have 3 threads.
+> await
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> l
+Currently have 3 threads.
+```
+
+No, I did not accidentally paste something twice. When running the `await` command again a few seconds later, we are seeing the same object and thread IDs. The object ID  makes sense since in our [CLI](#cli) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This shows us that we are reusing our thread. This is great as it helps save on the cost of starting up a new thread.
 
 
+* same async class uses same thread
+* running asyn multiple times still same thread (gen_stage and queues)
+* new-async, new threads
+
+```
+› ruby 01-hello-async.rb 
+> await
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> l
+Currently have 3 threads.
+> await
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> l
+Currently have 3 threads.
+> new-await
+Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
+> new-await
+Hello! My object id is '70161462087480' and I'm running in thread '70161462091140'.
+> async
+> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+     
+Received unknown input: 
+> async
+> l
+Currently have 3 threads.
+> async
+> l
+Currently have 3 threads.
+> asHello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+ync
+> l
+Currently have 3 threads.
+> async
+> l
+Currently have 3 threads.
+> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+l
+Currently have 3 threads.
+> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+l
+Currently have 3 threads.
+> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+new-async
+> l
+Currently have 3 threads.
+> new-async
+> l
+Currently have 4 threads.
+> neHello! My object id is '70161458746800' and I'm running in thread '70161462091140'.
+w-async
+> l
+Currently have 4 threads.
+> Hello! My object id is '70161458745720' and I'm running in thread '70161458745000'.
+new-async
+> Hello! My object id is '70161458744080' and I'm running in thread '70161462091140'.
+l
+Currently have 4 threads.
+> new-async
+> l
+Currently have 4 threads.
+> newHello! My object id is '70161458742780' and I'm running in thread '70161458745000'.
+-async
+> l
+Currently have 4 threads.
+> Hello! My object id is '70161458741480' and I'm running in thread '70161462091140'.
+new-async
+> l
+Currently have 4 threads.
+> nHello! My object id is '70161189804980' and I'm running in thread '70161458745000'.
+ew-async
+> l
+Currently have 4 threads.
+> newHello! My object id is '70161189803680' and I'm running in thread '70161462091140'.
+-async
+> l
+Currently have 4 threads.
+> Hello! My object id is '70161189802380' and I'm running in thread '70161458745000'.
+Hello! My object id is '70161189801080' and I'm running in thread '70161462091140'.
+
+Received unknown input: 
+> new-async
+> new-async
+> new-async
+> new-async
+> new-async
+> new-async
+> new-async
+> l
+Currently have 9 threads.
+> Hello! My object id is '70161189799440' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161189798560' and I'm running in thread '70161458745000'.
+Hello! My object id is '70161458781960' and I'm running in thread '70161458781240'.
+Hello! My object id is '70161458780740' and I'm running in thread '70161458780020'.
+Hello! My object id is '70161458779520' and I'm running in thread '70161458778800'.
+Hello! My object id is '70161458778300' and I'm running in thread '70161458777580'.
+Hello! My object id is '70161458777080' and I'm running in thread '70161458776360'.
+```
 
 
-
-* What is going on in `ruby_thread_local_var:38`
 * When are threads made
   * adding thread counter to CLI
   * trying with `.new`
