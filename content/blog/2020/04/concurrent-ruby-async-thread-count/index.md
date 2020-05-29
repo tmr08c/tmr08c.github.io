@@ -137,6 +137,73 @@ Currently have 3 threads.
 No, I did not accidentally paste something twice. When running the `await` command again a few seconds later, we are seeing the same object and thread IDs. The object ID  makes sense since in our [CLI](#cli) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This shows us that we are reusing our thread. This is great as it helps save on the cost of starting up a new thread.
 
 
+- [ ] (maybe) Inclue some links or code examples showing where in the library thread re-use is happening 
+
+## Fancy another? 
+
+So far, we've learned that `concurrent-ruby` we re-use our a thread when calling `await` on the same instance of a class. What happens if we instantiate a new instance of our `HelloAsync` class? This is where our `new-await` options from our [CLI](#cli) comes into play.
+
+```bash
+> await
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> list
+Currently have 3 threads.
+> new-await
+Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
+```
+
+On closer inspectin, we _are_ seeing a new object ID, but the same thread:
+
+```diff
+- Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
++ Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
+```
+
+Again, this indicates that `concurrent-ruby` will reuse threads, evenv across new instances of our `Async`-inheriting clases.
+
+## What are you (a)waiting for!?
+
+At this point, all of our tests have currently only used the `await` proxy method. Since this method will block our main thread until it's complete, we aren't sending multiple requests to multiple objects at a time. This does seems like it would make it easier to re-use threads. Do we see the same behavior with `async`?
+
+Let's start our with our `async` action. This will run the `hello` method through the `async` proxy on our _existing_ instance of `HelloAsync`.
+
+``` bash
+> async
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+```
+
+Since we are using our existing instance, it makes sense to see our same object ID. After what we've learned so far about thread re-use, it makes sense to see the same thead ID again as well.
+
+As we mentioned above, since `async` doesn't block our main thread, we can call it multiple times. If we can get multiple calls to `async` queued up, should things be running concurrently and therefor in multiple threads?
+
+```bash
+> async
+> list
+Currently have 3 threads.
+> async
+> list
+Currently have 3 threads.
+> async
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> list
+Currently have 3 threads.
+> async
+> list
+Currently have 3 threads.
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> list
+Currently have 3 threads.
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+> list
+Currently have 3 threads.
+Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+```
+
+Above, we have multiple calls to `async` and `list`. The goal was to see if calling async multiple times before the method is completed (and we see our print statment) could increase our thread count. We seem to still be using our same object ID and thread ID and never go above three threads. What's the deal? How are we going to do things concurrently if we don't spawn more threads? 
+
+- [ ] Find an article describing `gen_stage`/`Actor` and message queues
+- [ ] Find link to code in `concurrent-ruby` where the queueing happens
+
 * same async class uses same thread
 * running asyn multiple times still same thread (gen_stage and queues)
 * new-async, new threads
@@ -249,5 +316,7 @@ Hello! My object id is '70161458777080' and I'm running in thread '7016145877636
 
 TODO
 
+- [ ] (maybe) try calling a different method on the same class and see if things are the same
 - [ ] Fix style for table
 - [x] Add style for `kbd` tag
+
