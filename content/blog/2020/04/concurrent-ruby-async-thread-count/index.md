@@ -201,6 +201,63 @@ Hello! My object id is '70161458709520' and I'm running in thread '7016146209114
 
 Above, we have multiple calls to `async` and `list`. The goal was to see if calling async multiple times before the method is completed (and we see our print statment) could increase our thread count. We seem to still be using our same object ID and thread ID and never go above three threads. What's the deal? How are we going to do things concurrently if we don't spawn more threads? 
 
+### Actors and Mailboxes
+
+Because the `Async` module is modeling itself off of [`gen_server`](https://erlang.org/doc/man/gen_server.html), it uses the [message-passing semantics](https://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics) of the Actor model. This means when a method is called, rathern than running right away, the method is put into the "mailbox" to be processed by the object. Messages are processed one at a time in the order they are received. 
+
+[This StackOverflow answer](https://stackoverflow.com/a/10746181/2475008) does a good job explaining it:
+
+> The gen_server runs in a separate process from your client process so when
+> you do a call/cast to it you are actually sending messages to server process.
+> All messages are placed in a processes message queue and processes handle
+> their message one-by-one. 
+
+[Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334) is the relevant code in the gem:
+
+```ruby
+# This is in the `AsyncDelegator` class defined within the `Async` module
+def method_missing(method, *args, &block)
+  super unless @delegate.respond_to?(method)
+  Async::validate_argc(@delegate, method, *args)
+
+  ivar = Concurrent::IVar.new
+  synchronize do
+    @queue.push [ivar, method, args, block]
+    @executor.post { perform } if @queue.length == 1
+  end
+
+  ivar
+end
+```
+
+Let's try to break this down. Before we get into this `method_missing`, we have to learn a little bit about how things are set up.
+
+The `Async` module defines `await` and `async` methods. Let's take a look at the `async` method:
+
+```ruby
+def async
+  @__async_delegator__
+end
+```
+
+This returns an instance variable, `@__async_delegator__`. This instance variable is set up as a part initialization and is a new `AsyncDelegator` (a class defined within this modle):
+
+```ruby
+def init_synchronization
+  return self if defined?(@__async_initialized__) && @__async_initialized__
+  @__async_initialized__ = true
+* @__async_delegator__ = AsyncDelegator.new(self)
+  @__await_delegator__ = AwaitDelegator.new(@__async_delegator__)
+  self
+end
+```
+
+```ruby
+def method_missing(method, *args, &block)
+```
+
+
+
 - [ ] Find an article describing `gen_stage`/`Actor` and message queues
 - [ ] Find link to code in `concurrent-ruby` where the queueing happens
 
@@ -317,6 +374,7 @@ Hello! My object id is '70161458777080' and I'm running in thread '7016145877636
 TODO
 
 - [ ] (maybe) try calling a different method on the same class and see if things are the same
+- [ ] (maybe) set up ling highlighting for prism (https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/#line-highlighting)
 - [ ] Fix style for table
 - [x] Add style for `kbd` tag
 
