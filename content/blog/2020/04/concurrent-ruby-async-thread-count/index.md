@@ -252,14 +252,57 @@ def init_synchronization
 end
 ```
 
+The `AsyncDelegator` class is defined within the `Async` module. This brings us to our `method_missing` method above. Here's a reminder of what's happening when type `async` into our REPL:
+
+```ruby
+# HelloAsync has the Async module included
+hello = HelloAsync.new
+
+# ...
+when /^async/ then hello.async.hello
+```
+
+We call `async` on `hello`. We now know this is giving us an `AsyncDelegator` that has reference to our `hello` object. We then call the method `hello`. However, we aren't calling it on our `hello` class, but instead on our instance of `AsyncDelegator` (`@__async_delegator__`). While we haven't looked at the [whole `AsyncDelegator` class](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L301-L364), you can probably trust me that it doesn't define a `hello` method. _This_ is where the `method_missing` from above comes into play. If you are unfamiliar with [`method_missing`](https://apidock.com/ruby/BasicObject/method_missing) it is invoked when a method is called on an object, but that object doesn't have a definition for that method. It is a powerful tool for metaprgrogramming and is enabling our `AsyncDelegator` to accept method calls without having to explicitly define them. 
+
 ```ruby
 def method_missing(method, *args, &block)
 ```
 
+So when we call `hello.async.hello`, our `AsyncDelegator`, which doesn't define a `hello` method, will invoke `method_missing` and pass `hello` as the `method` argument. It will also pass any other aguments or block.
 
 
-- [ ] Find an article describing `gen_stage`/`Actor` and message queues
-- [ ] Find link to code in `concurrent-ruby` where the queueing happens
+After invoking `method_missing`, the library will do some validations. First, it will check if the "delegate" object (`hello` in our case) defines the method we are calling. It will then check if the right number of arugments were passed in. 
+
+```ruby
+super unless @delegate.respond_to?(method)
+Async::validate_argc(@delegate, method, *args)
+```
+
+After that we create our `IVar`. In our [previous post](/2020/05/concurrent-ruby-hello-async/) we took a surface-level look at `IVar`s and decided to not dig into them yet. We will do the same thing here, but note that the `ivar` is created some stuff happens (which we will cover next), and then returned; lining up with what we saw in our initial experimentation.  
+
+
+```ruby
+  ivar = Concurrent::IVar.new
+
+  # Hiding the good stuff for now
+
+  ivar
+end
+```
+
+Next, comes the main functionality. 
+
+```ruby
+synchronize do
+  @queue.push [ivar, method, args, block]
+  @executor.post { perform } if @queue.length == 1
+end
+```
+
+
+
+- [ ] Try to understand what `synchronize` does
+- [ ] Try to figure out `executor` and `perform` stuff
 
 * same async class uses same thread
 * running asyn multiple times still same thread (gen_stage and queues)
