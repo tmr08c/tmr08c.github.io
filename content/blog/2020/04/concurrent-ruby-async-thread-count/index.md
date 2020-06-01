@@ -299,10 +299,14 @@ synchronize do
 end
 ```
 
+The implementation of `synchronize` will vary by which type and version of Ruby you are running, but is a meacanism for working with locks. It will check if the Thread has access to the lock before `yield`ing and running whatever is in the bock. It's not clear to me why we need a lock here. My guess is that since `AsyncDelegator` can run any arbitrary method, it's possible it could be accessing something like variable shared acroess threads. Since `concurrent-ruby` provides thread-safe variables, it needs to assume anytime a thread is running it could be attempting to work with one of these types of variables, and, therefore, needs to work with some for of locking mechanism to ensure it is safe to interact with these variables.
+
+Once we have syncronized, we add an array of information to `@queue`. `@queue` is an arry that is created in our initialization process. We are adding the `ivar`, `method`, and the method's arguments and block to the queue. This is everything that iis needed to run our method and put the results in an `IVar` to be consumed later.
 
 
-- [ ] Try to understand what `synchronize` does
+
 - [ ] Try to figure out `executor` and `perform` stuff
+- [ ] Guess that queue variable will grow within executor but will lose reference when empty, so need to rebost when 0 --> 1
 
 * same async class uses same thread
 * running asyn multiple times still same thread (gen_stage and queues)
