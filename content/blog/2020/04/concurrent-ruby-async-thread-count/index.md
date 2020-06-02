@@ -299,11 +299,38 @@ synchronize do
 end
 ```
 
-The implementation of `synchronize` will vary by which type and version of Ruby you are running, but is a meacanism for working with locks. It will check if the Thread has access to the lock before `yield`ing and running whatever is in the bock. It's not clear to me why we need a lock here. My guess is that since `AsyncDelegator` can run any arbitrary method, it's possible it could be accessing something like variable shared acroess threads. Since `concurrent-ruby` provides thread-safe variables, it needs to assume anytime a thread is running it could be attempting to work with one of these types of variables, and, therefore, needs to work with some for of locking mechanism to ensure it is safe to interact with these variables.
+The implementation of `synchronize` will vary by which type and version of Ruby you are running, but is a meacanism for working with locks. It will check if the Thread has access to the lock before `yield`ing and running whatever is in the bock. It's not clear to me why we need a lock here. My guess is that since `AsyncDelegator` can run any arbitrary method, it's possible it could be accessing something like a variable shared acroess threads. Since `concurrent-ruby` provides thread-safe variables, it needs to assume anytime a thread is running it could be attempting to work with one of these types of variables, and, therefore, needs to work with some for of locking mechanism to ensure it is safe to interact with these variables. I found as I start looking at more of the thread-related code, there were more instances of `synchronize` being used.
 
-Once we have syncronized, we add an array of information to `@queue`. `@queue` is an arry that is created in our initialization process. We are adding the `ivar`, `method`, and the method's arguments and block to the queue. This is everything that iis needed to run our method and put the results in an `IVar` to be consumed later.
+Once we have syncronized, we add an array of information to `@queue`. `@queue` is an arry that is created in our initialization process. We are adding the `ivar`, `method`, and the method's arguments and block to the queue. This is everything that is needed to run our method and put the results in an `IVar` to be consumed later. We will then `post` a block to our `@executor`. 
 
+Finding the `@executor` is another chaing of branching inheritance, but for my version of MRI Ruby, I eventually got to [`RubyExecutorService#post`](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#L17-L25). Along the chain to the `RubyExecutorService`, one of the parent classes was [`CachedThreadPool`](https://www.rubydoc.info/gems/concurrent-ruby/Concurrent/CachedThreadPool). _This_ class is key for many of the observations we have seen so far. From the docs:
 
+> A thread pool that dynamically grows and shrinks to fit the current workload.
+> New threads are created as needed, existing threads are reused, and threads
+> that remain idle for too long are killed and removed from the pool. 
+
+While this `CachedThreadPool` pool explains _some_ of wht we've seen, it doesn't fully explain why we aren't seeing the thread pool grow dynamically when we proxy through `async` multiple times. For that, we will need to look at the `perform` metod. This method will also explain the `if @queue.length == 1` check.
+
+```ruby
+# Async::AsyncDelegator
+def perform
+  loop do
+    ivar, method, args, block = synchronize { @queue.first }
+    break unless ivar # queue is empty
+
+    begin
+      ivar.set(@delegate.send(method, *args, &block))
+    rescue => error
+      ivar.fail(error)
+    end
+
+    synchronize do
+      @queue.shift
+      return if @queue.empty?
+    end
+  end
+end
+```
 
 - [ ] Try to figure out `executor` and `perform` stuff
 - [ ] Guess that queue variable will grow within executor but will lose reference when empty, so need to rebost when 0 --> 1
