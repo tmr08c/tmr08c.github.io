@@ -278,7 +278,7 @@ super unless @delegate.respond_to?(method)
 Async::validate_argc(@delegate, method, *args)
 ```
 
-After that we create our `IVar`. In our [previous post](/2020/05/concurrent-ruby-hello-async/) we took a surface-level look at `IVar`s and decided to not dig into them yet. We will do the same thing here, but note that the `ivar` is created some stuff happens (which we will cover next), and then returned; lining up with what we saw in our initial experimentation.  
+fter that we create our `IVar`. In our [previous post](/2020/05/concurrent-ruby-hello-async/) we took a surface-level look at `IVar`s and decided to not dig into them yet. We will do the same thing here, but note that the `ivar` is created some stuff happens (which we will cover next), and then returned; lining up with what we saw in our initial experimentation.  
 
 
 ```ruby
@@ -332,8 +332,31 @@ def perform
 end
 ```
 
-- [ ] Try to figure out `executor` and `perform` stuff
-- [ ] Guess that queue variable will grow within executor but will lose reference when empty, so need to rebost when 0 --> 1
+`perform` is passed into the `@executor` and, when invoked, will loop until the `@queue` is empty. Each iteration of the loop will run the method originally called and update the `ivar`.
+
+So, why do we need the `if` on the following line?
+
+```ruby
+@executor.post { perform } if @queue.length == 1
+```
+
+If `@queue` isn't empty, the `executor` would still be in the `loop` in `perform`. When we mutate the `@queue` by calling the `push` method it is updated everywhere, so our `loop` will have access to the new elemenet pushed onto the queue. This explain the need to `synchronize` - when mutating the state of `@queue`, we need to lock first because we could be updating it in our main thread (when we call the method through the proxy) or in our `@executor` thread (in the `perform` loop). 
+
+This shows how the `gen_server`-style FIFO message queue is implmented in the `Async` module. An `AsyncDelegator` instance has an intance variable, `@queue`, that is an array and stores everything needed to run the method called. This array is passed in via a `perform` method through a thread pool to a thread that will will run the `perform` method. In `perform` the thread will loop, executing the next method in the queue, until there is nothing left in the queue. 
+
+## I came here to see multiple threads
+
+So far, we've seen the efficiency of `CachedThreadPool` and the message queue implementation style of `gen_stage` and how this has resulted in no additonal threads being created.
+
+### Can we spawn one, now?
+
+
+- [ ] CachedThreadPool and creating new classes with async, but slowly calling
+
+### Okay, how about now?
+
+- [ ] making new threads
+
 
 * same async class uses same thread
 * running asyn multiple times still same thread (gen_stage and queues)
