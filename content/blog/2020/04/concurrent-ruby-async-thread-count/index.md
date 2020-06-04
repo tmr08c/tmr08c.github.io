@@ -350,17 +350,49 @@ So far, we've seen the efficiency of `CachedThreadPool` and the message queue im
 
 ### Can we spawn one, now?
 
+We've alrady seen `CachedThreadPool` pool in action when working with new instances of the `HelloAsync` class through our `new-await` command [above](#wait-for-more) (UPDATED LINK). It may not be surprising to find that `new-async` behaves similarly:
 
-- [ ] CachedThreadPool and creating new classes with async, but slowly calling
+```bash
+> new-async
+> list
+Currently have 3 threads.
+Hello! My object id is '70161458746800' and I'm running in thread '70161462091140'.
+```
 
 ### Okay, how about now?
 
-- [ ] making new threads
+So, again, `CachedThreadPool` is able to re-use threads across instances of our `AsyncHello` class. But if we re-read the class's description, we know that threads are crated "as needed."
 
+> New threads are created as needed, existing threads are reused, and threads
 
-* same async class uses same thread
-* running asyn multiple times still same thread (gen_stage and queues)
-* new-async, new threads
+We've found we don't need threads with `await` because we are blocked from doing more work in our CLI and cannot spawn more. We also found that `async` follows the `gen_stage` patten and processes multiple requests one at time via a queue. We also saw that a single call to a new `async` class reused the thread. Since we weren't doing any other work that makes sense, the thread was running unused. What if we run _multiple_ new `async` instances? Since it's `async` we should be able to request them multiple times view our CLI and since each request goes to a new instance, their queue should all be one and immediately want to work. 
+
+```bash
+> new-async
+> new-async
+> new-async
+> new-async
+> new-async
+> new-async
+> new-async
+> list
+Currently have 9 threads.
+Hello! My object id is '70161189799440' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161189798560' and I'm running in thread '70161458745000'.
+Hello! My object id is '70161458781960' and I'm running in thread '70161458781240'.
+Hello! My object id is '70161458780740' and I'm running in thread '70161458780020'.
+Hello! My object id is '70161458779520' and I'm running in thread '70161458778800'.
+Hello! My object id is '70161458778300' and I'm running in thread '70161458777580'.
+Hello! My object id is '70161458777080' and I'm running in thread '70161458776360'.
+```
+
+At least! We've found a way to spawn more threads. 
+
+## Conclusion
+
+I initially set out expecting to see a lot of thread creation. Instead, I learned that, thanks to `concurrent-ruby`, threads are lazy (in the best way!). 
+
+---
 
 ```
 › ruby 01-hello-async.rb 
