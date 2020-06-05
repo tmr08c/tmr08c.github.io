@@ -390,116 +390,15 @@ At least! We've found a way to spawn more threads.
 
 ## Conclusion
 
-I initially set out expecting to see a lot of thread creation. Instead, I learned that, thanks to `concurrent-ruby`, threads are lazy (in the best way!). 
+I initially set out expecting to see a lot of thread creation. Instead, I learned that, thanks to `concurrent-ruby`, threads can be lazy (in the best way!). While the message procesing aspects of `gen_stage` (and therefore the `Async` module) played a role in the lack of needing to spawn as many threads, it was the abstractions provided by `concurrent-ruby` that really helped make things seamless. Since I imagine most people reach for a gem like `concurrent-ruby` for performance reasons, it's great to know that it has your back.
 
----
+If you're interested in trying out different ways to create threads with the `Async` module, the code for the REPL is [on GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
 
-```
-› ruby 01-hello-async.rb 
-> await
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-> l
-Currently have 3 threads.
-> await
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-> l
-Currently have 3 threads.
-> new-await
-Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
-> new-await
-Hello! My object id is '70161462087480' and I'm running in thread '70161462091140'.
-> async
-> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-     
-Received unknown input: 
-> async
-> l
-Currently have 3 threads.
-> async
-> l
-Currently have 3 threads.
-> asHello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-ync
-> l
-Currently have 3 threads.
-> async
-> l
-Currently have 3 threads.
-> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-l
-Currently have 3 threads.
-> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-l
-Currently have 3 threads.
-> Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-new-async
-> l
-Currently have 3 threads.
-> new-async
-> l
-Currently have 4 threads.
-> neHello! My object id is '70161458746800' and I'm running in thread '70161462091140'.
-w-async
-> l
-Currently have 4 threads.
-> Hello! My object id is '70161458745720' and I'm running in thread '70161458745000'.
-new-async
-> Hello! My object id is '70161458744080' and I'm running in thread '70161462091140'.
-l
-Currently have 4 threads.
-> new-async
-> l
-Currently have 4 threads.
-> newHello! My object id is '70161458742780' and I'm running in thread '70161458745000'.
--async
-> l
-Currently have 4 threads.
-> Hello! My object id is '70161458741480' and I'm running in thread '70161462091140'.
-new-async
-> l
-Currently have 4 threads.
-> nHello! My object id is '70161189804980' and I'm running in thread '70161458745000'.
-ew-async
-> l
-Currently have 4 threads.
-> newHello! My object id is '70161189803680' and I'm running in thread '70161462091140'.
--async
-> l
-Currently have 4 threads.
-> Hello! My object id is '70161189802380' and I'm running in thread '70161458745000'.
-Hello! My object id is '70161189801080' and I'm running in thread '70161462091140'.
-
-Received unknown input: 
-> new-async
-> new-async
-> new-async
-> new-async
-> new-async
-> new-async
-> new-async
-> l
-Currently have 9 threads.
-> Hello! My object id is '70161189799440' and I'm running in thread '70161462091140'.
-Hello! My object id is '70161189798560' and I'm running in thread '70161458745000'.
-Hello! My object id is '70161458781960' and I'm running in thread '70161458781240'.
-Hello! My object id is '70161458780740' and I'm running in thread '70161458780020'.
-Hello! My object id is '70161458779520' and I'm running in thread '70161458778800'.
-Hello! My object id is '70161458778300' and I'm running in thread '70161458777580'.
-Hello! My object id is '70161458777080' and I'm running in thread '70161458776360'.
-```
+While we haven't _used_ the `Async` module in any meaningful way yet, these simple thread count checks have begun to lead us through implementation details of the `concurrent-ruby` gem. This is providing us with a better understanding and appreciation of the gem.
 
 
-* When are threads made
-  * adding thread counter to CLI
-  * trying with `.new`
-  * `.new` and calling method (works), uses same thread for same variable because it's copying the actor model and queue 
-      * to show this, maybe we should update `#hello` to have a print statement at the top like "I received this message"
-  * can make new instances and call method everytime to make it work
-  * lazy thread creation - eventually get to https://github.com/ruby-concurrency/concurrent-ruby/blob/7dc6eb04142f008ffa79a59c125669c6fcbb85a8/lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#L17-L25
-* conclusion
-  * not sure how other parts work
-  * next time - using async module (copy key/value store in elixir docs?)?
 
+--- 
 TODO
 
 - [ ] (maybe) try calling a different method on the same class and see if things are the same
