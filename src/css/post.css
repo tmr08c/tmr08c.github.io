@@ -69,4 +69,7 @@
 
 .blog-post-body table tr td {
   @apply border;
+  @apply px-6;
+  @apply py-4;
 }
+
