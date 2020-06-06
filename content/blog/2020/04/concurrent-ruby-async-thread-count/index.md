@@ -4,11 +4,96 @@ date: '2020-04-25T00:36:13.265Z'
 categories: ['ruby', 'concurrency']
 ---
 
-In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began my process of learning about the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem. In that post, I started with the "hello, world" example provided in the [documentation of the `Async` module](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html). I made a small tweak on the example to `sleep` and `puts` the string to make the affects of `async` versus `await` more obvious. In this post, I try to understand the usage of `Thread`s within the `Async` module. 
+In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began my process of learning about the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem. In that post, I started with the "hello, world" example provided in the [documentation of the `Async` module](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html). I made a small tweak on the example to `sleep` and `puts` the string to make the effects of `async` versus `await` more obvious.
 
-## CLI
+In this post, I try to understand the usage of `Thread`s within the `Async` module. 
 
-For my exploration into thread usage, I am able to continue my use of the example`Hello` class. I have updated the `puts` statement slightly to add additional details that we will cover later.  I also wrote up a small CLI around it. Thanks to [`bundler/inline`](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) I was able to work within a single file during testing. The end result is the following:
+For my earlier exploration into thread usage, I am able to continue my use of the example `Hello` class from the documentation with a few additional tweaks (which we will cover more in depth). I also wrote a small [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) that allows me to quickly experiment with different variations of working with the `Async` module. 
+
+## Our Test Setup
+
+Before we get into how `Thread`s are used in the `Async` module, let's take a look at the code we will be using for testing. 
+
+### Dependencies
+
+Thanks to [`bundler/inline`](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) I was able to work within a single file during testing.
+
+```ruby
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'concurrent-ruby'
+end
+
+require 'concurrent'
+```
+
+By using `bundler/inline`, you can define your `gemfile` in a block within the file you are working with. When running the script, if the gem isn't installed on your system, bundler will download it before proceeding.
+
+
+### `HelloAsync` Class
+
+As mentioned previously, this class remained similar to what we created in a [previous post](/2020/05/concurrent-ruby-hello-async/). You may want to check out that post for some additional context. 
+
+```ruby
+class HelloAsync
+  include Concurrent::Async
+
+  def hello
+    sleep(3)
+    puts "Hello! My object id is '#{object_id}' " \
+         "and I'm running in thread " \
+         "'#{Thread.current.object_id}'."
+  end
+end
+```
+
+There were a few additional changes made:
+
+* The class has been renamed to `HelloAsync` to more easily differentiate between the class and method.
+* The`puts` statement has been updated to add some additional, useful information for our experimentation. 
+  * The `object_id` for the current instance of the `Hello` class. Since we have functionality for creating new objects, this helps us track when we are in a new objects versus an existing one.
+  * The id of the `Thread` that the code is being run in. The helps us to identify whether we are in a new or previously seen thread. 
+
+### Command Options
+
+This script creates a basic REPL that can handle a small set of commands:
+
+```ruby
+while (input = gets)
+  case input
+  when /^[qQxX]/
+    puts 'Quitting...'
+    exit(0)
+  when /^l(ist)?/ 
+    puts "Currently have #{Thread.list.count} threads."
+  when /^async/ then hello.async.hello
+  when /^await/ then hello.await.hello
+  when /^new-async/ then HelloAsync.new.async.hello
+  when /^new-await/ then HelloAsync.new.await.hello
+  else puts "Received unknown input: #{input}"
+  end
+end
+```
+
+Let's cover these in more details:
+
+|Command|Description|
+|-|-|
+|<kbd>q</kbd>, <kbd>x</kbd>| Quit. Break out of the REPL and stop the script.|
+|<kbd>l</kbd>, <kbd>list</kbd>| Print the number of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
+|<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an already created instance of the `HelloAsync` class.|
+|<kbd>new-async</kbd>| Instantiates a new instance of the `HelloAsync` class and run the `hello` method through the `async` proxy  on it.|
+|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an already created instance of the `HelloAwait` class.|
+|<kbd>new-await</kbd>| Instantiates a new instance of the `HelloAsync` class and run the `hello` method through the `await` proxy  on it.|
+
+These options enabled me to better understand how the `concurrent-ruby` library manages threads for the `Async` modules. From a single session, I am able to track the thread count while testting the `async` und `await` proxies on existing and new instances of a class that includes the `Async` module. 
+
+### Full File
+
+When pieced together, the end result is the following:
 
 ```ruby
 require 'bundler/inline'
@@ -26,7 +111,9 @@ class HelloAsync
 
   def hello
     sleep(3)
-    puts "Hello! My object id is '#{object_id}' and I'm running in thread '#{Thread.current.object_id}'."
+    puts "Hello! My object id is '#{object_id}' " \
+         "and I'm running in thread " \
+         "'#{Thread.current.object_id}'."
   end
 end
 
@@ -38,7 +125,8 @@ while (input = gets)
   when /^[qQxX]/
     puts 'Quitting...'
     exit(0)
-  when /^l(ist)?/ then puts "Currently have #{Thread.list.count} threads."
+  when /^l(ist)?/ 
+    puts "Currently have #{Thread.list.count} threads."
   when /^async/ then hello.async.hello
   when /^await/ then hello.await.hello
   when /^new-async/ then HelloAsync.new.async.hello
@@ -50,29 +138,9 @@ while (input = gets)
 end
 ```
 
-If you are interested in trying this out for yourself, I have a copy [on GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
-
-### `HelloAsync` Class
-
-As mentioned previously, this class remained similar to what we created in a [previous post](/2020/05/concurrent-ruby-hello-async/). You may want to check out that post for some additional context. 
+If you are interested in trying this out for yourself, it's also available [on GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
 
 
-As mentioned above, the `puts` statement in `Hello#hello` has been updated to include additional information. The `puts` statement will now print the `object_id` for the current instance of the `Hello` class as well as the `Thread` that the code is being in. This will help us see the impact of creating new instances of the `Hello` class and understand how `concurrent-ruby` works with `Thread`s.
-
-### Command Options
-
-This script creates a super simple REPL that can handle a small set of commands.
-
-|Command|Description|
-|-|-|
-|<kbd>q</kbd>, <kbd>x</kbd>| **Quit**. Break out of the REPL and stop the script|
-|<kbd>l</kbd>, <kbd>list</kbd>| **List** the count of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
-|<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an already created instance of the `HelloAsync` class.|
-|<kbd>new-async</kbd>| Instantiated a new instance of the `HelloAsync` class and run the `hello` method through the `async` proxy  on it.|
-|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an already created instance of the `HelloAwait` class.|
-|<kbd>new-await</kbd>| Instantiated a new instance of the `HelloAsync` class and run the `hello` method through the `await` proxy  on it.|
-
-These options enabled me to better understand how the `concurrent-ruby` library managed threads for the `Async` modules. From a single session I am able to track the thread count while testting the `async` und `await` proxies on existing and new instances of a class that includes the `Async` module. 
 
 ## Baseline
 
@@ -101,7 +169,7 @@ Currently have [
 
 So we have the same "run" thread, but we also have a thread that looks like it's realted to the `concurrent-ruby` gem. This other thread is created during the `require` process of the `concurrent-ruby` gem (it looks like there is [discussion](https://github.com/ruby-concurrency/concurrent-ruby/issues/868) of whether that is the right time to do this) as a part managing [`ThreadLocalVar`](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html)s. This means that the additonal thread is crated prior to creating a new instance of our `HelloAsync` class - it's created as soon as we `require 'concurrent-ruby'`.
 
-You may note that the file referenced in the thread is "ruby_thread_local_var.rb" and not just "thread_local_var.rb". `ThreadLocalVar` has [implementations for Ruby and jRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/thread_local_var.rb#L60-L65). Since I am using MRI, I am seeing `RubyThreadLocalVar` and not `JavaThreadLocalVar`. 
+You may note that the file referenced in the thread is `ruby_thread_local_var.rb` and not just `thread_local_var.rb`. `ThreadLocalVar` has [implementations for Ruby and jRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/thread_local_var.rb#L60-L65). Since I am using MRI, I am seeing `RubyThreadLocalVar` and not `JavaThreadLocalVar`. 
 
 From [the docs](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html):
 
