@@ -7,12 +7,14 @@ categories: ["soft skills"]
 
 My friend and former co-worker Charlie ([@C-Saunders](https://github.com/c-saunders)) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
 
-During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that bein with the same letter). I thought thinking about where one falls on these "spectrums" could be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember. This increases the chances that I remember to actually use them. 
+During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that begin with the same letter). 
 
  The two spectrums we discussed were: 
 
 * Balancing being **pragmatic** and being **prudent**
 * Knowing when it's time to **struggle** and when it's time to **solve**
+
+Thinking about where one falls on these "spectrums" could be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember and, therefore, use.
 
 Depending on the situation, my position on these spectrums will vary. Without acknowledging my shifting position, I can fall into common traps during the decision making process. Having the idea of these spectrums can help me take a step back and catch myself. 
 
@@ -29,7 +31,7 @@ When dealing with day-to-day work and planning I try to keep the idea of [perfec
 
 I have found the planning part of my work to be where I most often fall into a mindset of being prudent over pragmatic. I'm not going as far as a [big upfront design](https://wiki.c2.com/?BigDesignUpFront), but I do try to think out how functionality should work now and _could_ need to work in the future. 
 
-This "could" thinking can be dangerous because I can't predict the future. In a recent example, I was tasked with collecting a few specifics metrics about a process someone completes (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information the team _could_ want to ask about our data. My previous experience of working with [Google Analytics](https://analytics.google.com/analytics/web/) biases me to think we would eventually want to track and report on "all the things," and I started thinking of how to model a generic "event" for reporting purposes. 
+This "could" thinking can be dangerous because I can't predict the future. In a recent example, I was tasked with collecting a few specifics metrics about a process an end-user goes through (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information that we _could_ could be asked for. My previous experience of working at a digital marketing agency biases me to think we would eventually want to track and report on "all the things," and I started thinking of how to model a generic "event" for reporting purposes. 
 
 Fortunately, I was able to leverage standup the next day to signal to the team the rabbit hole I began finding myself digging down. This led to scheduling some time with a coworker to bring me into reality - we don't know _everything_, but we know _something_; we know what the business side already wants to report on. Getting started with the current request allows us to get to "good" and talk about "perfect" along the way. Maybe in a few months, we will wish we had a generic "event" model. Even if this is true, we will have delivered months of _some_ value in the interim, **and** will know more about what we really want and (more importantly) _need_ out of our reporting. 
 
@@ -45,7 +47,7 @@ I've also found that some industry practices lend themselves to guide me towards
 ### Being Agile
 
 Looking at the [Agile Manifesto](
-https://agilemanifesto.org/), I think it is a guide to pragmatism. For example, one of the points is to favor responding to change over following a plan. I believe this is in response to some of the upfront requirements and design work that came out of the [waterfall method](https://en.wikipedia.org/wiki/Waterfall_model). It feels _prudent_ to spend a bunch of time before you write any code trying to map out the whole project. However, in practice, you can't see the future and you can't plan for everything, so projects inevitably go off-plan. In practice, it is more _sensible_ to expect change and be ready to respond to. 
+https://agilemanifesto.org/), I think it is a guide to pragmatism. For example, one of the points is to favor responding to change over following a plan. I believe this is in response to some of the upfront requirements and design work that came out of the [waterfall method](https://en.wikipedia.org/wiki/Waterfall_model). It feels _prudent_ to spend a bunch of time before you write any code trying to map out the whole project. However, in practice, you can't see the future and you can't plan for everything, so projects inevitably go off-plan. In practice, it is more _sensible_ to expect change and be ready to respond. 
 
 While I think the agile manifesto falls on the side of pragmatism, there is a meta-level of pragmatism that I think people don't always acknowledge:
 
@@ -80,9 +82,9 @@ When a deadline is looming, you may shift into pragmatic mode. Discussions of cu
 
 ## Struggling versus Solving
 
-This one is almost a more specific instance of pragmatic versus prudent, but I was so excited we had another tautogram that it inspired me to start writing. We were talking about how to balance spending the time struggling to solve a problem and learning on your own with getting to a solution as quickly as possible. 
+Our other tautogram came up when we were talking about how to balance spending the time **struggling** to solve a problem and learning on your own with getting to a **solution** as quickly as possible. 
 
-In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle with asking for help, especially from open-source strangers. This struggle versus solving discussion partially came out of me trying to self-reflect on how I could improve. How much time should I spend trying to debug an issue with a gem and learning how it works before I should ask for help solving my problem.
+In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle with asking for help, especially from open-source strangers. This struggle versus solving discussion partially came out of me trying to self-reflect on how I could improve. How much time should I spend trying to debug an issue with a third-party library and learning how it works before I should ask for help solving my problem.
 
 While the above example uses asking a library author for help, that isn't the most common scenario. In fact, the more common example of this is asking your co-workers for help.
 
@@ -92,7 +94,7 @@ Digging a little deeper, I think [imposter syndrome](https://en.wikipedia.org/wi
 
 If I get more comfortable knowing when I've struggled enough and should be getting help, I can spend less time spinning my wheels and more time learning, growing, and solving. 
 
-Being a new team member has put this balance to the test for me. Working on a new, large codebase has resulted in numerous "how do I..." and "where is..." moments. For many of these, I have silently struggled - grepping across multiple repositories or jumping between Confluence and GitHub. For many of these problems, I could have pinged someone and probably would have had an answer to my question almost immediately. Fortunately, most of these problems haven't taken up too much time, but it can be a slippery slope; especially when not asking for help _now_ makes it [harder for me to ask in the future](https://www.andymort.com/hard-asking-for-help/).
+Being a new member of my team has put this balance to the test for me. Working on a new (for me), large codebase has resulted in numerous "how do I..." and "where is..." moments. For many of these, I have silently struggled - grepping across multiple repositories or jumping between Confluence and GitHub. For many of these problems, I could have pinged someone and probably would have had an answer to my question almost immediately. Fortunately, most of these problems haven't taken up too much time, but it can be a slippery slope; especially when not asking for help _now_ makes it [harder for me to ask in the future](https://www.andymort.com/hard-asking-for-help/).
 
 ### Suggestions 
 
@@ -100,15 +102,15 @@ Being a new team member has put this balance to the test for me. Working on a ne
 
 If I am hitting a bug, do I try to get help after an hour? Four hours? A day?  At what point would it be irresponsible to get help and lose out on growing my skillset? At what would it be irresponsible to _not_ get assistance and get the problem solved? The question then becomes, how do I remember to ask myself these questions? For this, I would suggest leveraging some form of timeboxing or breaks.
 
-If you think a bug should take you two hours, maybe set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
+If you think a bug should take you two hours, consider setting a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
 
-Do I know what the problem is now?
-Do I know how I can solve the problem?
-Do I know what I'm going to do next?
-What is my new estimate?
-Would someone else be able to help me get this done sooner?
-How long would it take to get someone else up to speed? 
-Have I struggled enough where if I get the answer given to me, it will stick?
+* Do I know what the problem is now?
+* Do I know how I can solve the problem?
+* Do I know what I'm going to do next?
+* What is my new estimate?
+* Would someone else be able to help me get this done sooner?
+* How long would it take to get someone else up to speed? 
+* Have I struggled enough where if I get the answer given to me, it will stick?
 
 You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit -it's more likely your co-workers are also stopping at the same time. Since they aren't working on their own problems, it may be easier for them to make the mental switch to help you with your problem.
 
@@ -122,9 +124,9 @@ If you find you reach out for help with a problem, that's not the end of the lin
 
 I don't expect that this post reveals anything new to people; [life is about balance and moderation](https://xkcd.com/1592/) and software is full of ["it depends" answers](https://softwareengineering.meta.stackexchange.com/questions/766/how-to-answer-it-depends-questions). I do, however, hope that it provides some useful vocabulary for thinking about how you are approaching solving a problem.
 
- On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic (and suggested some actions as well). While I don't think this is something that can be "solved" all the way, I do hope some of the suggestions can help manage the balancing act of being pragmatics and prudent, and help you think about when it makes sense to keep struggling and when to start solving.
+ On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic (providing some helpful suggestions of his own). While I don't think this is something that can be "solved" all the way, I do hope some of the suggestions can help manage the balancing act of being pragmatics and prudent, and help you think about when it makes sense to keep struggling and when to start solving.
 
-I think having these terms can provide a tool for observing your behavior or the behavior of those you work with. Maybe the next time you dealing with a difficult problem at work you can take a step back and assess where you fall on the struggle-solve spectrum, and decide what to do next. _Maybe_ you could even work with your manager to see where they think you fall on these spectrums and where they see opportunities for you to grow. 
+I think having these terms can provide a tool for observing your behavior or the behavior of those you work with. Maybe the next time you are dealing with a difficult problem at work you can take a step back and assess where you fall on the struggle-solve spectrum, and decide what to do next. Maybe you could even work with your manager to see where they think you fall on these spectrums and where they see opportunities for you to grow. 
 
 ### Actionalable Suggestions
 
