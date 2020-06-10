@@ -7,16 +7,14 @@ categories: ["soft skills"]
 
 My friend and former co-worker Charlie ([@C-Saunders](https://github.com/c-saunders)) and I make a point to periodically catch up with each other. Because I am lucky and enjoy the industry I work in, our discussions about work are a personal highlight. 
 
-During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his new boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that begin with the same letter). 
+During a recent conversation, we discussed decision making at work. We ended up discussing two different "spectrums" that could impact your decision making. One of these came from his boss and the other is something he came up with during our conversation. These ideas stuck out to me because, for both of these spectrums, we had [tautograms](https://en.wikipedia.org/wiki/Tautogram) (word groups that begin with the same letter). 
 
  The two spectrums we discussed were: 
 
 * Balancing being **pragmatic** and being **prudent**
 * Knowing when it's time to **struggle** and when it's time to **solve**
 
-Thinking about where one falls on these "spectrums" could be a useful thought technology for self-evaluation. As a bonus, by starting with the same letters, these word pairings are easier to remember and, therefore, use.
-
-Depending on the situation, my position on these spectrums will vary. Without acknowledging my shifting position, I can fall into common traps during the decision making process. Having the idea of these spectrums can help me take a step back and catch myself. 
+Your position on these spectrums will vary by situation. Without acknowledging these shifts, you can fall into common traps during the decision making process. Thinking about where you fall on these spectrums can be a useful thought technology for self-evaluation and help you catch yourself before you fall into one of these traps. 
 
 ## Pragmatic versus Prudent
 
@@ -31,15 +29,15 @@ When dealing with day-to-day work and planning I try to keep the idea of [perfec
 
 I have found the planning part of my work to be where I most often fall into a mindset of being prudent over pragmatic. I'm not going as far as a [big upfront design](https://wiki.c2.com/?BigDesignUpFront), but I do try to think out how functionality should work now and _could_ need to work in the future. 
 
-This "could" thinking can be dangerous because I can't predict the future. In a recent example, I was tasked with collecting a few specifics metrics about a process an end-user goes through (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information that we _could_ could be asked for. My previous experience of working at a digital marketing agency biases me to think we would eventually want to track and report on "all the things," and I started thinking of how to model a generic "event" for reporting purposes. 
+This "could" thinking can be dangerous because I can't predict the future. In a recent example, I was tasked with collecting a few specifics metrics about a process an end-user goes through (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information that we _could_ be asked for. My previous experience of working at a digital marketing agency biases me to think we would eventually want to track and report on "all the things," and I started thinking of how to model a generic "event" for reporting purposes. 
 
 Fortunately, I was able to leverage standup the next day to signal to the team the rabbit hole I began finding myself digging down. This led to scheduling some time with a coworker to bring me into reality - we don't know _everything_, but we know _something_; we know what the business side already wants to report on. Getting started with the current request allows us to get to "good" and talk about "perfect" along the way. Maybe in a few months, we will wish we had a generic "event" model. Even if this is true, we will have delivered months of _some_ value in the interim, **and** will know more about what we really want and (more importantly) _need_ out of our reporting. 
 
-### Performing 
+### Performing
 
 I have found that when it comes to hands-on-keyboard, code-writing time, it can be easier to be more pragmatic. 
 
-I think some of my pragmatism with coding comes out of laziness. Asking "do we _really_ needs?" this seems to come up a lot more naturally when I have to actually _do_ something. Fortunately, [some consider this to be a  virtue](http://threevirtues.com/).
+I think some of my pragmatism with coding comes out of laziness. Asking "do we _really_ need this?" seems to come up a lot more naturally when I have to actually _do_ something. Fortunately, [some consider this to be a  virtue](http://threevirtues.com/).
 
 I've also found that some industry practices lend themselves to guide me towards making pragmatic decisions during the coding phase. One great example of this is the idea of [red-green-refactor](https://www.jamesshore.com/Blog/Red-Green-Refactor.html). When disciplined in this approach, you will maintain a focus on doing "just enough." You write just enough test to fail, and then just enough logic to make that test pass. Every once in a while, you change things just enough to make the codebase easier to work with. 
 
