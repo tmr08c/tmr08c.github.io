@@ -76,13 +76,13 @@ While there is often pushback (and rightly so) against deadlines, there is some 
 
 > When you have a deadline, all of a sudden you have to make decision
 
-When a deadline is looming, you may shift into pragmatic mode. Discussions of cutting scope may start happening and long, hypothetical what-if discussions may stop. However, as we said before, there's a balance to this, so be careful. You need to feel comfortable pushing back against deadlines when it makes sense to be prudent. 
+When a deadline is looming, you may shift into pragmatic mode. Discussions of cutting scope may start happening and, long, hypothetical what-if discussions may stop. However, as was said before, there's a balance to this, so be careful. You need to feel comfortable pushing back against deadlines when it makes sense to be prudent. 
 
 ## Struggling versus Solving
 
-Our other tautogram came up when we were talking about how to balance spending the time **struggling** to solve a problem and learning on your own with getting to a **solution** as quickly as possible. 
+The other tautogram that Charlie came up when we were talking was about how to balance spending the time **struggling** to solve a problem and learning on your own with getting to a **solution** as quickly as possible. 
 
-In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle with asking for help, especially from open-source strangers. This struggle versus solving discussion partially came out of me trying to self-reflect on how I could improve. How much time should I spend trying to debug an issue with a third-party library and learning how it works before I should ask for help solving my problem.
+In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle with asking for help, especially from open-source strangers. This struggle versus solving discussion partially came out of me trying to self-reflect on how I could improve. How much time should I spend trying to debug an issue with a third-party library and learning how it works before I should ask for help solving my problem?
 
 While the above example uses asking a library author for help, that isn't the most common scenario. In fact, the more common example of this is asking your co-workers for help.
 
@@ -98,7 +98,7 @@ Being a new member of my team has put this balance to the test for me. Working o
 
 #### Checking in with yourself 
 
-If I am hitting a bug, do I try to get help after an hour? Four hours? A day?  At what point would it be irresponsible to get help and lose out on growing my skillset? At what would it be irresponsible to _not_ get assistance and get the problem solved? The question then becomes, how do I remember to ask myself these questions? For this, I would suggest leveraging some form of timeboxing or breaks.
+If I am hitting a bug, do I try to get help after an hour? Four hours? A day?  At what point would it be irresponsible to get help and lose out on growing my skillset? At what point would it be irresponsible to _not_ get assistance and get the problem solved? The question then becomes, how do I remember to ask myself these questions? For this, I would suggest leveraging some form of timeboxing or breaks.
 
 If you think a bug should take you two hours, consider setting a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
 
@@ -110,7 +110,7 @@ If you think a bug should take you two hours, consider setting a timer or calend
 * How long would it take to get someone else up to speed? 
 * Have I struggled enough where if I get the answer given to me, it will stick?
 
-You can even use existing breaks in work such as lunch or a meeting as a chance to check-in with yourself. Using these stopping points provides an additional benefit -it's more likely your co-workers are also stopping at the same time. Since they aren't working on their own problems, it may be easier for them to make the mental switch to help you with your problem.
+You can even use existing breaks in work such as lunch or meetings as a chance to check-in with yourself. Using these stopping points provides an additional benefit -it's more likely your co-workers are also stopping at the same time. Since they aren't working on their own problems, it may be easier for them to make the [mental switch](https://heeris.id.au/2013/this-is-why-you-shouldnt-interrupt-a-programmer/) to help you with your problem.
 
 One technique I find valuable (when I remember to use it) is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a few minutes of break time. Rather than having to plan ahead when you want to assess your current situation, the Pomodoro Technique gives you numerous stopping and checking-in points throughout your day. 
 
@@ -126,6 +126,8 @@ I don't expect that this post reveals anything new to people; [life is about bal
 
 I think having these terms can provide a tool for observing your behavior or the behavior of those you work with. Maybe the next time you are dealing with a difficult problem at work you can take a step back and assess where you fall on the struggle-solve spectrum, and decide what to do next. Maybe you could even work with your manager to see where they think you fall on these spectrums and where they see opportunities for you to grow. 
 
+---
+
 ### Actionalable Suggestions
 
 On top of inspiring this post [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic. As I wrote in the section above, I had resigned myself to saying "yep, this is a problem...that's all I got." However, I do agree it would be nice to have some suggestions for how to help yourself avoid going too far to one end of either of the spectrums.
@@ -140,7 +142,6 @@ While there are potentially negative consequences of deadlines, one way I've see
 
 > When you have a deadline, all of a sudden you have to make decision
 
----
 Charlie suggested the idea of setting time-limits or breakpoints for yourself. This can be especially useful in the day-to-day balance of struggle versus solve. If you think a bug should take you two hours, maybe set a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
 
 Do I know what the problem is now?
