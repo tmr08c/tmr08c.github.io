@@ -10,8 +10,9 @@ of learning about the
 In that post, I started with the "hello, world" example provided in the
 [documentation of the `Async`
 module](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html).
-I made a small tweak to the example to `sleep` and `puts` the string to make
-the effects of `async` versus `await` more obvious.
+I made some small tweaks to the example and added a `sleep` and printed the
+value instead of returning it. This helped to make the effects of `async`
+versus `await` more obvious.
 
 In this post, I try to understand the usage of `Thread`s within the `Async`
 module.
@@ -20,6 +21,53 @@ module.
 
 Before we get into how `Thread`s are used in the `Async` module, let's take a
 look at the code we will be using for testing.
+
+Here is the file we will be working with:
+
+```ruby
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'concurrent-ruby'
+end
+
+require 'concurrent'
+
+class HelloAsync
+  include Concurrent::Async
+
+  def hello
+    sleep(3)
+    puts "Hello! My object id is '#{object_id}' " \
+         "and I'm running in thread " \
+         "'#{Thread.current.object_id}'."
+  end
+end
+
+hello = HelloAsync.new
+
+print '> '
+while (input = gets)
+  case input
+  when /^[qQxX]/
+    puts 'Quitting...'
+    exit(0)
+  when /^l(ist)?/
+    puts "Currently have #{Thread.list.count} threads."
+  when /^async/ then hello.async.hello
+  when /^await/ then hello.await.hello
+  when /^new-async/ then HelloAsync.new.async.hello
+  when /^new-await/ then HelloAsync.new.await.hello
+  else puts "Received unknown input: #{input}"
+  end
+
+  print '> '
+end
+```
+
+Let's break down what's going on: 
 
 ### Dependencies
 
@@ -46,8 +94,9 @@ will download it before proceeding.
 ### `HelloAsync` Class
 
 This class is similar to what we created in the [previous
-post](/2020/05/concurrent-ruby-hello-async/). You may want to check out that
-post for some additional context.
+post](/2020/05/concurrent-ruby-hello-async/). If this post doesn't make sense,
+consider reading the last post for an introduction to the `Concurrent::Async`
+module.
 
 ```ruby
 class HelloAsync
@@ -68,7 +117,7 @@ There were a few additional changes made:
   between the class and method when writing about it.
 * The `puts` statement has been updated to add some additional, useful
   information for our experimentation.
-  * The `object_id` for the current instance of the `Hello` class. Since we
+  * The `object_id` for the current instance of the class. Since we
   have functionality for creating new objects, this helps us confirm when we
   are in a new objects versus an existing one.
   * The id of the `Thread` that the code is being run in. The helps us to
@@ -109,16 +158,16 @@ Let's cover these in more details:
 |<kbd>q</kbd>, <kbd>x</kbd>| Quit. Break out of the REPL and stop the script.|
 |<kbd>l</kbd>, <kbd>list</kbd>| Print the number of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
 |<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an already created instance of the `HelloAsync` class.|
-|<kbd>new-async</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy on it.|
+|<kbd>new-async</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy.|
 |<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an already created instance of the `HelloAwait` class.|
-|<kbd>new-await</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy on it.|
+|<kbd>new-await</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy.|
 
 These options enable tracking a program's thread count, while using various
 combinations of the `async` and `await` proxy methods. 
 
 ### Full File
 
-When pieced together, the end result is the following:
+Pulling it all together again (and adding few other small pieces) we have the following:
 
 ```ruby
 require 'bundler/inline'
@@ -190,7 +239,8 @@ Hm, okay, it looks like we have one "run" thread. In the `irb` session I used
 > list
 Currently have [
   #<Thread:0x00007fdacc064010 run>,
-  #<Thread:0x00007fdacc100438@/Users/troyrosenberg/.ads/installs/ruby/2.6.5/lib/ruby/gems/2.6.0/gems/concurrent-ruby-1.1.6/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>] threads.
+  #<Thread:0x00007fdacc100438@.../concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>
+] threads.
 ```
 
 So we have the same "run" thread, but we also have a thread that looks like
@@ -214,7 +264,7 @@ irb(main)> require 'concurrent-ruby'
 => true
 irb(main)> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>,
-    #<Thread:0x00007f91299453b0@/Users/troyrosenberg/.asdf/installs/ruby/2.6.5/lib/ruby/gems/2.6.0/gems/concurrent-ruby-1.1.6/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>
+    #<Thread:0x00007f91299453b0@.../concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>
 ]
 ```
 
@@ -226,11 +276,14 @@ From [the docs](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurr
 
 The implementation tracks and manages `ThreadLocalVar`a in a [long-running
 thread](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#L38-L39).
-We haven't yet begun digging into the [thread-save objects the library
+We haven't yet begun digging into the [thread-safe objects the library
 provides](https://github.com/ruby-concurrency/concurrent-ruby#thread-safe-value-objects-structures-and-collections)
-yet, so we shouldn't need to worry too much about this additional thread. The
-important thing to note is that our baselines thread count is two and that does
-not include any threads we create with out `HelloAsync` class.
+yet, so we shouldn't need to worry too much about this additional thread.
+
+The important things to note are:
+
+1. The baselines thread count is two
+1. The baseline does **not** include any threads created by the `HelloAsync` class
 
 ### Multiple Rubies Support
 
@@ -254,21 +307,23 @@ thread stick around when the method is done?
 ```markup
 > await
 Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-> l
+> list
 Currently have 3 threads.
 ```
 
-It seems it does. Does this mean that every time we use one of our proxy
+It seems it does!
+
+Does this mean that every time we use one of our proxy
 methods we are creating new threads?
 
 ```markup
 > await
 Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-> l
+> list
 Currently have 3 threads.
 > await
 Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-> l
+> list
 Currently have 3 threads.
 ```
 
@@ -277,7 +332,7 @@ command again a few seconds later, we are seeing the same object and thread
 IDs. The object ID  makes sense since in our [CLI](#cli) we had the `await`
 command use the same object. However, the same thread ID wasn't something we
 intentionally set up. This shows us that we are reusing our thread. This is
-great as it helps save on the cost of starting up a new thread.
+great as it helps save on the cost of starting up and maintaining a new thread.
 
 ## Fancy another
 
