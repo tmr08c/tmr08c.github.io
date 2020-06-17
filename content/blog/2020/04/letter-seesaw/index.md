@@ -1,4 +1,3 @@
-
 ---
 title:  "Letter Seesaw"
 date:   "2020-04-18T20:02:34.781Z"
@@ -29,9 +28,9 @@ When dealing with day-to-day work and planning, I try to keep the idea of [perfe
 
 I have found the planning part of my work to be where I most often fall into a mindset of being prudent over pragmatic. I'm not going as far as a [big upfront design](https://wiki.c2.com/?BigDesignUpFront), but I do try to think out how functionality should work now and _could_ need to work in the future. This "could" thinking can be dangerous because I can't predict the future.
 
-In a recent example, I was tasked with collecting a few specifics metrics about a process an end-user goes through (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information that we _could_ be asked for. My previous experience of working at a digital marketing agency also biased me to think we would eventually want to track and report on "all the things." This led me to start thinking of how to model a generic "event" for reporting purposes.
+In a recent example, I was tasked with collecting a few specific metrics about a process an end-user goes through (e.g., who submitted this request, when they submitted it, etc.). We had a list of specific asks from the business, so things should have been straightforward. However, when I began sketching out what I wanted my schema to look like, I started thinking of other information that we _could_ be asked for. My previous experience of working at a digital marketing agency also biased me to think we would eventually want to track and report on [all the things.](https://memegenerator.net/instance/67578839/x-all-the-things-track-all-the-things) This led me to start thinking of how to model a generic "event" for reporting purposes.
 
-Fortunately, I was able to leverage standup the next day to signal to the team the rabbit hole I began finding myself digging down. This led to scheduling some time with a teammate to bring me into reality - we don't know _everything_, but we know _something_; we know what the business side already wants to report on. Getting started with the current request allows us to get to "good" and talk about "perfect" along the way. Maybe in a few months, we will wish we had a generic "event" model. Even if this is true, we will have delivered months of _some_ value in the interim, **and** will know more about what we really want and (more importantly) _need_ out of our reporting.
+Fortunately, I was able to leverage stand-up the next day to signal to the team the rabbit hole I began finding myself digging down. This led to scheduling some time with a teammate to bring me into reality - we don't know _everything_, but we know _something_; we know what the business side already wants to report on. Getting started with the current request allows us to get to "good" and talk about "perfect" along the way. Maybe in a few months, we will wish we had a generic "event" model. Even if this is true, we will have delivered months of _some_ value in the interim, **and** will know more about what we really want and (more importantly) _need_ out of our reporting.
 
 ### Performing
 
@@ -74,13 +73,13 @@ One strategy of communicating how time/focus/energy is expected to be put on a p
 
 While there is often pushback (and rightly so) against deadlines, there is some value to them. Again, from _Shape Up_:
 
-> When you have a deadline, all of a sudden you have to make decision
+> When you have a deadline, all of a sudden you have to make decisions
 
 When a deadline is looming, you may shift into pragmatic mode. Long, hypothetical discussions may stop happening and discussions of cutting scope may start. However, as was said before, there's a balance to this, so be careful. You need to feel comfortable pushing back against deadlines when it's prudent to do so.
 
 ## Struggling versus Solving
 
-The other tautogram that Charlie came up when we were talking was about how to balance spending the time **struggling** to solve a problem and learning on your own with getting to a **solution** as quickly as possible.
+The other tautogram that Charlie came up with when we were talking was about how to balance spending the time **struggling** to solve a problem and learning on your own with getting to a **solution** as quickly as possible.
 
 In a [recent post](/2020/04/how-i-debug-my-dependencies#asking-for-help) I mentioned how I can struggle with asking for help, especially from open-source strangers. This struggle versus solving discussion partially came out of me trying to self-reflect on how I could improve. How much time should I spend trying to debug an issue with a third-party library and learning how it works before I should ask for help solving my problem?
 
@@ -98,9 +97,9 @@ Being a new member of my team has put this balance to the test for me. Working o
 
 #### Checking in with yourself
 
-If I am hitting a bug, do I try to get help after an hour? Four hours? A day?  At what point would it be irresponsible to get help and lose out on growing my skillset? At what point would it be irresponsible to _not_ get assistance and get the problem solved? The question then becomes, how do I remember to ask myself these questions? For this, I would suggest leveraging some form of timeboxing or breaks.
+If I am hitting a bug, do I try to get help after an hour? A day? A week?  At what point would it be irresponsible to get help and lose out on growing my skillset? At what point would it be irresponsible to _not_ get assistance and get the problem solved? The question then becomes, how do I remember to ask myself these questions? For this, I would suggest leveraging some form of timeboxing or breaks.
 
-If you think a bug should take you two hours, consider setting a timer or calendar appointment. If you are still working after your estimated time, ask your self some questions:
+If you think a bug should take you two hours, consider setting a timer or calendar appointment to check-in with yourself halfway through. Use this check-in point to ask yourself the following:
 
 * Do I know how I can solve the problem?
 * What is my new estimate?
@@ -110,7 +109,7 @@ If you think a bug should take you two hours, consider setting a timer or calend
 
 You can even use existing breaks in work such as lunch or meetings as a chance to check-in with yourself. Using these stopping points provides an additional benefit - it's more likely your co-workers are also stopping at the same time. Since they aren't working on their own problems, it may be easier for them to make the [mental switch](https://heeris.id.au/2013/this-is-why-you-shouldnt-interrupt-a-programmer/) to help you with your problem.
 
-One technique I find valuable (when I remember to use it) is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a few minutes of break time. Rather than having to plan ahead when you want to assess your current situation, the Pomodoro Technique gives you numerous stopping and checking-in points throughout your day.
+The best times to check-in will vary - both by what you're working on and how you like to work. One technique I find valuable (when I remember to use it) is the [Pomodoro Technique](https://francescocirillo.com/pages/pomodoro-technique). This technique uses set intervals of work time (25 minutes) followed by a few minutes of break time. Rather than having to plan ahead when you want to assess your current situation, the Pomodoro Technique gives you numerous stopping and checking-in points throughout your day.
 
 #### Learning from help
 
@@ -122,7 +121,7 @@ Go beyond "getting the answer," and try to get insight into how the person appro
 
 I don't expect that this post reveals anything new to people; [life is about balance and moderation](https://xkcd.com/1592/) and software is full of ["it depends" answers](https://softwareengineering.meta.stackexchange.com/questions/766/how-to-answer-it-depends-questions). I do, however, hope that it provides some useful vocabulary for thinking about how you are approaching solving a problem.
 
- On top of inspiring this post, [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic (providing some helpful suggestions of his own). While I don't think this is something that can be "solved" all the way, I do hope some of the suggestions can help manage the balancing act of being pragmatics and prudent, and help you think about when it makes sense to keep struggling and when to start solving.
+ On top of inspiring this post, [@C-Saunders](https://github.com/c-saunders) read an early draft and suggested including some actionable suggestions around this topic (providing some helpful suggestions of his own). While I don't think this is something that can be "solved" all the way, I do hope some of the suggestions can help manage the balancing act of being pragmatic and prudent, and help you think about when it makes sense to keep struggling and when to start solving.
 
 I think having these terms can provide a tool for observing your behavior or the behavior of those you work with. Maybe the next time you are dealing with a difficult problem at work you can take a step back and assess where you fall on the struggle-solve spectrum, and decide what to do next.
 
