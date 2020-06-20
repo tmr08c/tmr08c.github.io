@@ -7,9 +7,9 @@ categories: ['ruby', 'concurrency']
 In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began my process
 of learning about the
 [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem.
-In that post, I started with the "hello, world" example provided in the
-[documentation of the `Async`
-module](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html).
+In that post, I started with the "hello, world" example provided in the `Async`
+module's
+[documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html).
 I made some small tweaks to the example and added a `sleep` and printed the
 value instead of returning it. This helped to make the effects of `async`
 versus `await` more obvious.
@@ -56,10 +56,14 @@ while (input = gets)
     exit(0)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
-  when /^async/ then hello.async.hello
-  when /^await/ then hello.await.hello
-  when /^new-async/ then HelloAsync.new.async.hello
-  when /^new-await/ then HelloAsync.new.await.hello
+  when /^async/
+    hello.async.hello
+  when /^await/
+    hello.await.hello
+  when /^new-async/
+    HelloAsync.new.async.hello
+  when /^new-await/
+    HelloAsync.new.await.hello
   else puts "Received unknown input: #{input}"
   end
 
@@ -67,9 +71,8 @@ while (input = gets)
 end
 ```
 
-Let's break down what's going on: 
-
-### Dependencies
+If this makes sense to you can [skip ahead](#baseline) to the next section.
+Otherwise, read on for a breakdown of what's going on.
 
 Thanks to
 [`bundler/inline`](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html)
@@ -94,9 +97,8 @@ will download it before proceeding.
 ### `HelloAsync` Class
 
 This class is similar to what we created in the [previous
-post](/2020/05/concurrent-ruby-hello-async/). If this post doesn't make sense,
-consider reading the last post for an introduction to the `Concurrent::Async`
-module.
+post](/2020/05/concurrent-ruby-hello-async/). For more details on setting up a
+class to work with the `Concurrent::Async` module, please check out that post.
 
 ```ruby
 class HelloAsync
@@ -116,10 +118,10 @@ There were a few additional changes made:
 * The class has been renamed to `HelloAsync` to more easily differentiate
   between the class and method when writing about it.
 * The `puts` statement has been updated to add some additional, useful
-  information for our experimentation.
-  * The `object_id` for the current instance of the class. Since we
-  have functionality for creating new objects, this helps us confirm when we
-  are in a new objects versus an existing one.
+  information for our experimentation, including:
+  * The `object_id` for the current instance of the class. Since our REPL has
+      an option for creating new objects (more on this below), this makes it
+      easy to differentiate output between new and existing objects.
   * The id of the `Thread` that the code is being run in. The helps us to
   identify whether we are in a new or existing thread.
 
@@ -137,21 +139,23 @@ while (input = gets)
     exit(0)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
-  when /^async/ 
+  when /^async/
     hello.async.hello
-  when /^await/ 
+  when /^await/
     hello.await.hello
-  when /^new-async/ 
+  when /^new-async/
     HelloAsync.new.async.hello
-  when /^new-await/ 
+  when /^new-await/
     HelloAsync.new.await.hello
-  else 
+  else
     puts "Received unknown input: #{input}"
   end
 end
 ```
 
-Let's cover these in more details:
+These options enable tracking a program's thread count, while using various
+combinations of the `async` and `await` proxy methods. Let's cover them in more
+detail:
 
 |Command|Description|
 |-|-|
@@ -161,9 +165,6 @@ Let's cover these in more details:
 |<kbd>new-async</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy.|
 |<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an already created instance of the `HelloAwait` class.|
 |<kbd>new-await</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy.|
-
-These options enable tracking a program's thread count, while using various
-combinations of the `async` and `await` proxy methods. 
 
 ### Full File
 
@@ -201,10 +202,14 @@ while (input = gets)
     exit(0)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
-  when /^async/ then hello.async.hello
-  when /^await/ then hello.await.hello
-  when /^new-async/ then HelloAsync.new.async.hello
-  when /^new-await/ then HelloAsync.new.await.hello
+  when /^async/ 
+    hello.async.hello
+  when /^await/ 
+    hello.await.hello
+  when /^new-async/ 
+    HelloAsync.new.async.hello
+  when /^new-await/ 
+    HelloAsync.new.await.hello
   else puts "Received unknown input: #{input}"
   end
 
@@ -216,15 +221,15 @@ If you are interested in trying this out for yourself, it's also available [on G
 
 ## Baseline
 
-When starting the REPL and printing out the thread I see the following:
+When starting the REPL and printing out the thread count I see the following:
 
 ```markup
 > list
 Currently have 2 threads.
 ```
 
-I didn't _expect_ two threads, but maybe Ruby leverages multiple threads more
-than I thought. Let's compare this when an `irb` session:
+I didn't _expect_ two threads, but maybe Ruby leverages threads more
+than I thought. Let's compare this with an `irb` session:
 
 ```ruby
 irb(main)> Thread.list
@@ -253,14 +258,14 @@ whether that is the right time to do this) as a part managing
 [`ThreadLocalVar`](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html)s.
 This means that the additional thread is created _prior_ to creating a new
 instance of our `HelloAsync` class - it's created as soon as we `require
-'concurrent-ruby'`.
+'concurrent'`.
 
 We can reproduce this in `irb` as well:
 
 ```ruby
 irb(main)> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>]
-irb(main)> require 'concurrent-ruby'
+irb(main)> require 'concurrent'
 => true
 irb(main)> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>,
@@ -329,17 +334,17 @@ Currently have 3 threads.
 
 No, I did not accidentally paste something twice. When running the `await`
 command again a few seconds later, we are seeing the same object and thread
-IDs. The object ID  makes sense since in our [CLI](#cli) we had the `await`
+IDs. The object ID  makes sense since in our [REPL](#command-options) we had the `await`
 command use the same object. However, the same thread ID wasn't something we
 intentionally set up. This shows us that we are reusing our thread. This is
 great as it helps save on the cost of starting up and maintaining a new thread.
 
 ## Fancy another
 
-So far, we've learned that `concurrent-ruby` we re-use our a thread when
+So far, we've learned that `concurrent-ruby` will re-use our a thread when
 calling `await` on the same instance of a class. What happens if we instantiate
-a new instance of our `HelloAsync` class? This is where our `new-await` options
-from our [CLI](#cli) comes into play.
+a new instance of our `HelloAsync` class? This is where our `new-await` option
+from our [REPL](#command-options) comes into play.
 
 ```markup
 > await
@@ -410,7 +415,7 @@ Hello! My object id is '70161458709520' and I'm running in thread '7016146209114
 Above, we have multiple calls to `async` and `list`. The goal was to see if
 calling async multiple times before the method is completed (and we see our
 print statement) could increase our thread count. We seem to still be using our
-same object ID and thread ID and never go above three threads. What's the deal?
+same object ID and thread ID, and never go above three threads. What's the deal?
 How are we going to do things concurrently if we don't spawn more threads?
 
 ### Actors and Mailboxes
@@ -489,15 +494,18 @@ when /^async/ then hello.async.hello
 ```
 
 We call `async` on `hello`. We now know this is giving us an `AsyncDelegator`
-that has reference to our `hello` object. We then call the method `hello`.
-However, we aren't calling it on our `hello` class, but instead on our instance
-of `AsyncDelegator` (`@__async_delegator__`). While we haven't looked at the
-[whole `AsyncDelegator`
+that has a reference to our `hello` object. We then call the method `hello`.
+However, we aren't calling it on `hello`, our instance of the `HelloAsync`
+class, but instead on our instance of `AsyncDelegator`
+(`@__async_delegator__`). While we haven't looked at the [whole
+`AsyncDelegator`
 class](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L301-L364),
-you can probably trust me that it doesn't define a `hello` method. _This_ is
-where the `method_missing` from above comes into play. If you are unfamiliar
-with [`method_missing`](https://apidock.com/ruby/BasicObject/method_missing) it
-is invoked when a method is called on an object, but that object doesn't have a
+you can probably trust me that it doesn't define a `hello` method.
+
+_This_ is where the `method_missing` from above comes into play. If you are
+unfamiliar with
+[`method_missing`](https://apidock.com/ruby/BasicObject/method_missing) it is
+invoked when a method is called on an object, but that object doesn't have a
 definition for that method. It is a powerful tool for metaprogramming and is
 enabling our `AsyncDelegator` to accept method calls without having to
 explicitly define them.
@@ -508,7 +516,7 @@ def method_missing(method, *args, &block)
 
 So when we call `hello.async.hello`, our `AsyncDelegator`, which doesn't define
 a `hello` method, will invoke `method_missing` and pass `hello` as the `method`
-argument. It will also pass any other argument or block.
+argument. It will also pass any other arguments and a block if one is included.
 
 After invoking `method_missing`, the library will do some validations. First,
 it will check if the "delegate" object (`hello` in our case) defines the method
@@ -520,12 +528,15 @@ super unless @delegate.respond_to?(method)
 Async::validate_argc(@delegate, method, *args)
 ```
 
-After that we create our `IVar`. In our [previous
+After that, we create our `IVar`. In our [previous
 post](/2020/05/concurrent-ruby-hello-async/) we took a surface-level look at
 `IVar`s and decided to not dig into them yet. We will do the same thing here,
-but note that the `ivar` is created some stuff happens (which we will cover
-next), and then returned; lining up with what we saw in our initial
-experimentation.
+but note that the `ivar` is created, some stuff happens (which we will cover
+next), and then the it is returned. This lines up with what we saw in our
+initial experimentation - we
+[found](/2020/05/concurrent-ruby-hello-async/#return-types) that when using our
+proxy methods the return value would be an `IVar` instead of what the actual
+method was returning.
 
 ```ruby
   ivar = Concurrent::IVar.new
@@ -716,4 +727,3 @@ TODO
 - [ ] (maybe) set up ling highlighting for prism (<https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/#line-highlighting)>
 - [ ] Fix style for table
 - [x] Add style for `kbd` tag
-
