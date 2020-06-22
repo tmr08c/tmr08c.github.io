@@ -334,17 +334,17 @@ Currently have 3 threads.
 
 No, I did not accidentally paste something twice. When running the `await`
 command again a few seconds later, we are seeing the same object and thread
-IDs. The object ID  makes sense since in our [REPL](#command-options) we had the `await`
+IDs. The object ID makes sense since in our [REPL](#command-options) we had the `await`
 command use the same object. However, the same thread ID wasn't something we
 intentionally set up. This shows us that we are reusing our thread. This is
-great as it helps save on the cost of starting up and maintaining a new thread.
+great, as it helps save on the cost of starting up and maintaining a new thread.
 
 ## Fancy another
 
-So far, we've learned that `concurrent-ruby` will re-use our a thread when
+So far, we've learned that `concurrent-ruby` will re-use our thread when
 calling `await` on the same instance of a class. What happens if we instantiate
-a new instance of our `HelloAsync` class? This is where our `new-await` option
-from our [REPL](#command-options) comes into play.
+a new instance of our `HelloAsync` class? This is where the [`new-await`
+command](#command-options) in our REPL comes into play.
 
 ```markup
 > await
@@ -362,16 +362,16 @@ On closer inspecting, we _are_ seeing a new object ID, but the same thread:
 + Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
 ```
 
-Again, this indicates that `concurrent-ruby` will reuse threads, even across
+This indicates that `concurrent-ruby` will reuse threads, even across
 new instances of our `Async`-inheriting classes.
 
 ## What are you (a)waiting for
 
-At this point, all of our tests have currently only used the `await` proxy
-method. Since this method will block our main thread until it's complete, we
-aren't sending multiple requests to multiple objects at a time. This does seems
-like it would make it easier to re-use threads. Do we see the same behavior
-with `async`?
+At this point, all of our tests have only used the `await` proxy method. Since
+this method will block our main thread until it's complete, we aren't sending
+multiple requests to multiple objects at a time. This does seems like it would
+make it easier to re-use the same thread. Do we see the same behavior with
+`async`?
 
 Let's start our with our `async` action. This will run the `hello` method
 through the `async` proxy on our _existing_ instance of `HelloAsync`.
@@ -382,12 +382,13 @@ Hello! My object id is '70161458709520' and I'm running in thread '7016146209114
 ```
 
 Since we are using our existing instance, it makes sense to see our same object
-ID. After what we've learned so far about thread re-use, it makes sense to see
-the same thead ID again as well.
+ID. After what we've learned so far about thread re-use, it's not a complete
+surprise to see the same thead ID again as well (despite a different proxy
+method being used).
 
 As we mentioned above, since `async` doesn't block our main thread, we can call
 it multiple times. If we can get multiple calls to `async` queued up, should
-things be running concurrently and therefor in multiple threads?
+things be running concurrently and therefore in multiple threads?
 
 ```markup
 > async
@@ -424,9 +425,9 @@ Because the `Async` module is modeling itself off of
 [`gen_server`](https://erlang.org/doc/man/gen_server.html), it uses the
 [message-passing
 semantics](https://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics)
-of the Actor model. This means when a method is called, rather than running
-right away, the method is put into the "mailbox" to be processed by the object.
-Messages are processed one at a time in the order they are received.
+of the Actor model. This means that when a method is called, rather than
+running right away, the method is put into the "mailbox" to be processed by the
+object. Messages are processed one at a time in the order they are received.
 
 [This StackOverflow answer](https://stackoverflow.com/a/10746181/2475008) does
 a good job explaining it:
@@ -436,11 +437,14 @@ a good job explaining it:
 > All messages are placed in a processes message queue and processes handle
 > their message one-by-one.
 
+Staying true to their inspiration, `concurrent-ruby` follows a simlar idea of
+queuing up method calls to be processed one at a time.
 [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334)
 is the relevant code in the gem:
 
 ```ruby
 # This is in the `AsyncDelegator` class defined within the `Async` module
+# https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334
 def method_missing(method, *args, &block)
   super unless @delegate.respond_to?(method)
   Async::validate_argc(@delegate, method, *args)
@@ -468,8 +472,7 @@ end
 ```
 
 This returns an instance variable, `@__async_delegator__`. This instance
-variable is set up as a part initialization and is a new `AsyncDelegator` (a
-class defined within this module):
+variable is set up as a part initialization and is a new `AsyncDelegator`:
 
 ```ruby
 def init_synchronization
@@ -481,9 +484,10 @@ def init_synchronization
 end
 ```
 
-The `AsyncDelegator` class is defined within the `Async` module. This brings us
-to our `method_missing` method above. Here's a reminder of what's happening
-when type `async` into our REPL:
+The `AsyncDelegator` class is defined within the `Async` module. This
+`AsyncDelegator` includes the `method_missing` method above we showed above.
+
+Here's a reminder of what's happening when we type `async` into our REPL:
 
 ```ruby
 # HelloAsync has the Async module included
@@ -495,8 +499,8 @@ when /^async/ then hello.async.hello
 
 We call `async` on `hello`. We now know this is giving us an `AsyncDelegator`
 that has a reference to our `hello` object. We then call the method `hello`.
-However, we aren't calling it on `hello`, our instance of the `HelloAsync`
-class, but instead on our instance of `AsyncDelegator`
+However, we aren't calling it on `hello` (our instance of the `HelloAsync`
+class) but instead on our instance of `AsyncDelegator`
 (`@__async_delegator__`). While we haven't looked at the [whole
 `AsyncDelegator`
 class](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L301-L364),
@@ -531,7 +535,7 @@ Async::validate_argc(@delegate, method, *args)
 After that, we create our `IVar`. In our [previous
 post](/2020/05/concurrent-ruby-hello-async/) we took a surface-level look at
 `IVar`s and decided to not dig into them yet. We will do the same thing here,
-but note that the `ivar` is created, some stuff happens (which we will cover
+but note that the `IVar` is created, some stuff happens (which we will cover
 next), and then the it is returned. This lines up with what we saw in our
 initial experimentation - we
 [found](/2020/05/concurrent-ruby-hello-async/#return-types) that when using our
@@ -539,8 +543,8 @@ proxy methods the return value would be an `IVar` instead of what the actual
 method was returning.
 
 ```ruby
+  # ...stuff from above
   ivar = Concurrent::IVar.new
-
   # Hiding the good stuff for now
 
   ivar
@@ -556,18 +560,20 @@ synchronize do
 end
 ```
 
+- [ ] Should updating this to reflect that later  say need synchronize for mutating @queue
+
 The implementation of `synchronize` will vary by which type and version of Ruby
 you are running, but is a mechanism for working with locks. It will check if
 the Thread has access to the lock before `yield`ing and running whatever is in
-the bock. It's not clear to me why we need a lock here. My guess is that since
-`AsyncDelegator` can run any arbitrary method, it's possible it could be
-accessing something like a variable shared across threads. Since
+the bock. It's not completely clear to me why we need a lock here. My guess is
+that since `AsyncDelegator` can run any arbitrary method, it's possible it
+could be accessing something like a variable shared across threads. Since
 `concurrent-ruby` provides thread-safe variables, it needs to assume anytime a
 thread is running it could be attempting to work with one of these types of
-variables, and, therefore, needs to work with some for of locking mechanism to
-ensure it is safe to interact with these variables. I found as I start looking
-at more of the thread-related code, there were more instances of `synchronize`
-being used.
+variables, and, therefore, needs to work with some form of locking mechanism to
+ensure it is safe to interact with these variables. I found as I started
+looking at more of the thread-related code, there were more instances of
+`synchronize` being used.
 
 Once we have synchronized, we add an array of information to `@queue`. `@queue`
 is an array that is created in our initialization process. We are adding the
@@ -575,7 +581,7 @@ is an array that is created in our initialization process. We are adding the
 everything that is needed to run our method and put the results in an `IVar` to
 be consumed later. We will then `post` a block to our `@executor`.
 
-Finding the `@executor` is another chain of branching inheritance, but for my
+Finding the `@executor` is another chain of branching inheritance. For my
 version of MRI Ruby, I eventually got to
 [`RubyExecutorService#post`](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#L17-L25).
 Along the chain to the `RubyExecutorService`, one of the parent classes was
@@ -587,7 +593,7 @@ docs:
 > New threads are created as needed, existing threads are reused, and threads
 > that remain idle for too long are killed and removed from the pool.
 
-While this `CachedThreadPool` pool explains _some_ of wht we've seen, it
+While this `CachedThreadPool` pool explains _some_ of what we've seen, it
 doesn't fully explain why we aren't seeing the thread pool grow dynamically
 when we proxy through `async` multiple times. For that, we will need to look at
 the `perform` method. This method will also explain the `if @queue.length == 1`
