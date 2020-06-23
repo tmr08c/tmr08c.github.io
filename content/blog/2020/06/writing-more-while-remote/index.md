@@ -8,7 +8,16 @@ At the time of writing, many people across the world are forced to work from hom
 
 There are a number of common lessons out there such as making sure to still change clothes for work and making a point to share your video on calls with co-workers. One of the topics that I've been thinking about a lot is the idea of communication and interruptions. Even when in an office I would sometimes worry about the [cost of interruptions and context switching](https://blog.rescuetime.com/context-switching/), but it seemed more natural to turn around and ask a co-worker than to message or email them. It seems that since remote workforces have an additional barrier to the impromptu in-person interruptions, they think about the idea of _how_ to communicate and the impact that could have.
 
-A lot of this thinking was spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the Rework pocast (from the team at Basecamp). 
+A lot of this thinking was spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the Rework pocast (from the team at Basecamp). At Basecamp, they seem to have a bias towards asynronous communication:
+
+> At Basecamp our perfect-world rule of thumb is “real-time sometimes, asynchronous most of the time”.
+
+[This blog post](https://m.signalvnoise.com/is-group-chat-making-you-sweat/) covers some of their thinking around the pros and cons of leveraging real-time communication tools like group chat programs. 
+
+These discussions around the benefits of leveraging asynchronous communication have me trying to leverage it more when possible. One way I am trying to improve my written communication is by writing more blog posts.
+
+One common for of writing at work is trying to expresss my thoughts and explan a concept - this could be to try suggest a certain way to do things or to explain my implementation of a feature. This aligns nicely with the types of blog posts I try to write. I generally choose topics that try to explain something technical or, like this one, share my current thoughts.
+
 
 
 - [ ] want to favpr async communication
