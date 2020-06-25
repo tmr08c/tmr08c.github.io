@@ -14,9 +14,13 @@ A lot of this thinking was spurred from this [two](https://rework.fm/remote-work
 
 [This blog post](https://m.signalvnoise.com/is-group-chat-making-you-sweat/) covers some of their thinking around the pros and cons of leveraging real-time communication tools like group chat programs. 
 
-These discussions around the benefits of leveraging asynchronous communication have me trying to leverage it more when possible. One way I am trying to improve my written communication is by writing more blog posts.
+These discussions around the benefits of leveraging asynchronous communication have me trying to leverage it more when possible. One way I am trying to improve my written communication is through practice; specifically, by writing more blog posts.
 
-One common for of writing at work is trying to expresss my thoughts and explan a concept - this could be to try suggest a certain way to do things or to explain my implementation of a feature. This aligns nicely with the types of blog posts I try to write. I generally choose topics that try to explain something technical or, like this one, share my current thoughts.
+As it goes with everything, it takes practice to get better. With writing, it seems common to hear a suggested form of practce being to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). For professional writers, this goes beyond practice and moves into job productivity territory, but I think it still shows the value of practice and routine in becoming a better writer.
+
+As a developer, there are a lot of places where writing is important (e.g., creating tickets/issues, code comments, pull request descriptions, code reviews, etc.). This increases with remote work where more communication becomes text-based. In many of these situations there is value in being accurate, including context and relevant details, and at the same time succinct (you don't want a three-hundred word comment for each method in your application).
+
+When writing for work I find I commonly need express my thoughts or preferences, or explain a concept. Examples of this could be suggesting a certain implemention for a feature, or explaing how a concept within out domain works. This aligns nicely with the types of blog posts I try to write; I generally choose topics that try to explain something technical or, like this one, share my current thoughts.
 
 
 
