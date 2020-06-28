@@ -23,6 +23,17 @@ As a developer, there are a lot of places where writing is important (e.g., crea
 When writing for work I find I commonly need express my thoughts or preferences, or explain a concept. Examples of this could be suggesting a certain implemention for a feature, or explaing how a concept within out domain works. This aligns nicely with the types of blog posts I try to write; I generally choose topics that try to explain something technical or, like this one, share my current thoughts.
 
 
+<!-- missing stuff here --> 
+
+In a recent [podcast episode](https://podcasts.apple.com/us/podcast/m105-open-source-developers-inevitably-have-better/id1150826721?i=1000479280612) [Yegor Bugayenko](https://www.yegor256.com/about-me.html) posited that developers that do open source work have stronger technical and "soft" skills.
+
+Yegor's idea is that in open source, almost everyone is working with people they don't know. This means their work is judged more on the work itself and doesn't include the benefits one would receive from their friends and co-workers. In addition to judegement of the work, open source developers need the ability to run the project and communicate with the world. This includes tasks like: discussing ideas for new functionality, explaining to a contributor why their change will not be accepted, and triaging issues users create.
+
+I believe that leveraging blogging can provide similar training to open source work.
+
+Similar to open source work, your potential audience is the world (or at least people in the world that would benefit from your open source project or be interested in the topics you blog about). This wide audience comes with some challenges. You aren't going to get the benefit of writing for you co-workers where they know your voice and tone and how that is reflected in your writing. You are also writing to an aduience of varying skills levels. Learning to express your thoughts succinctly, clearly, and thoroughly is hard. However, learning to write for an unfamilar audience should make writing for an audience that you know and knows you even easier. By working on developing your skills in a more difficult environment, you should find writing for your co-workers easier. 
+
+Writing to the wider audience means you cannot lean on some of the help you may be able to with normal coversations with your team - if someone doesn't understand your post, you probably aren't going to be able to hop on a video call with them to work it out. Even if your blog supports comments, it's unlikely confused readers will start a fruitful conversation in the comment section to help flesh our your concepts.
 
 - [ ] want to favpr async communication
 - [ ] want to write more to practice getting my ideas out
