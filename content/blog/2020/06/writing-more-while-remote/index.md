@@ -14,24 +14,34 @@ A lot of this thinking was spurred from this [two](https://rework.fm/remote-work
 
 [This blog post](https://m.signalvnoise.com/is-group-chat-making-you-sweat/) covers some of their thinking around the pros and cons of leveraging real-time communication tools like group chat programs.
 
-From what I've gathered so far, the major benefits of preferring written communication come out of improving the quality of the conversation and avoiding decreasing the quality of other work (by avoiding interruptions).
+From what I've gathered so far, the major benefits of preferring written communication come out of improving the quality of the conversation and avoiding decreasing the quality of other work. These benefits come from:
 
-* Giving the author more time to flesh out and express their ideas. 
-* Avoding disrupting the work of others. It's often not necessary to immediately interrupt someone to discuss an idea. Ideally, they should be able to consume your content at a time that works best for them.
-* Giving consumers more time to digest the idea. ust like it's often not necessary to intterrupt someone to share an idea, it'usually not necessary to give an immediate response. With chat communication it can feel that way, though. Give readers some time to think about your points and form thoughtful responses. If you're letting them do this on their own time (see above), then they are even more likely to provide better feedback.
+* Giving the author more time to flesh out and express their ideas. By taking the time to write and review their thoughts, the person sharing the idea has a more fleshed out idea they are sharing with the group.
+* Avowing disrupting the work of others. It's often not necessary to immediately interrupt someone to discuss an idea. Ideally, everyone should be able to consume content at a time that works best for them.
+* Giving consumers more time to digest the idea. Just like it's often not necessary to interrupt someone to share an idea, it's usually not necessary to give an immediate response. With chat communication it can feel that way, though. Give readers some time to think about your points and form thoughtful responses. If you're letting them do this on their own time (see above), then they are even more likely to provide better feedback.
 
-These discussions around the benefits of leveraging asynchronous communication have me trying to leverage it more when possible. One way I am trying to improve my written communication is through practice; specifically, by writing more blog posts.
+Another benefit is having an "artifact" to document a discussion and decision. At work, we have started leveraging longer-form, asynchronous communication in the form of [SBARs](https://en.wikipedia.org/wiki/SBAR). We are using the Situation, Background, Assessment, Recommendation format as the output of some of our more exploratory tickets on a new project. I believe these have resulted in more thoughtful exploration than may have otherwise happened and have definitely seen feedback from reviewers that changed the recommendation. On top of all of that, we have it all written down to revisit in the future. We can revisit the decision making process to understand why we chose to go a certain way. I am optimistic this will be like `git blame`, but for larger decisions.
+
+Hearing all of the suggestions, and seeing some initial benefit of preferring written communication have me on board. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asyncronous, written communication.
+
+With the idea of moving towards longer-form, asyncronous, written communication in mind, I want to get better at it. For me better means faster:
+
+* Faster - part of the benefit of this style of communication is taking the time to flesh out your thoughts, but I believe I have some opportunity around translating thoughts to words on a page more quickly.
+* Clear - with synrounous communication, if you don't make sense at first you can keep trying and iterating with the other person in real time. You lose out on this quick iteration with asyncronous communication. Ideally, taking the upfront time to flesh out the writing can help avoid these issues.
+
+
+One way I am trying to improve my written communication is through practice; specifically, by writing more blog posts.
 
 As it goes with everything, it takes practice to get better. With writing, it seems common to hear a suggested form of practice being to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). For professional writers, this goes beyond practice and moves into job productivity territory, but I think it still shows the value of practice and routine in becoming a better writer.
 
 As a developer, there are a lot of places where writing is important (e.g., creating tickets/issues, code comments, pull request descriptions, code reviews, etc.). This increases with remote work where more communication becomes text-based. In many of these situations there is value in being accurate, including context and relevant details, and at the same time succinct (you don't want a three-hundred word comment for each method in your application).
 
-When writing for work I find I commonly need express my thoughts or preferences, or explain a concept. Examples of this could be suggesting a certain implementing for a feature, or explaing how a concept within out domain works. This aligns nicely with the types of blog posts I try to write; I generally choose topics that try to explain something technical or, like this one, share my current thoughts.
+When writing for work I find I commonly need express my thoughts or preferences, or explain a concept. Examples of this could be suggesting a certain implementing for a feature, or explains how a concept within out domain works. This aligns nicely with the types of blog posts I try to write; I generally choose topics that try to explain something technical or, like this one, share my current thoughts.
 
 
 <!-- missing stuff here --> 
 
-In a recent [podcast episode](https://podcasts.apple.com/us/podcast/m105-open-source-developers-inevitably-have-better/id1150826721?i=1000479280612) [Yegor Bugayenko](https://www.yegor256.com/about-me.html) posited that developers that do open source work have stronger technical and "soft" skills.
+In a recent [podcast episode](https://podcasts.apple.com/us/podcast/m105-open-source-developers-inevitably-have-better/id1150826721?i=1000479280612) [Regor Bugayenko](https://www.yegor256.com/about-me.html) posited that developers that do open source work have stronger technical and "soft" skills.
 
 Yegor's idea is that in open source, almost everyone is working with people they don't know. This means their work is judged more on the work itself and doesn't include the benefits one would receive from their friends and co-workers. In addition to judegement of the work, open source developers need the ability to run the project and communicate with the world. This includes tasks like: discussing ideas for new functionality, explaining to a contributor why their change will not be accepted, and triaging issues users create.
 
