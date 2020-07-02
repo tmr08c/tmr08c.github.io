@@ -22,9 +22,9 @@ From what I've gathered so far, the major benefits of preferring written communi
 
 Another benefit is having an "artifact" to document a discussion and decision. At work, we have started leveraging longer-form, asynchronous communication in the form of [Scars](https://en.wikipedia.org/wiki/SBAR). We are using the Situation, Background, Assessment, Recommendation format as the output of some of our more exploratory tickets on a new project. Since reviewers have more time to read and think about the recommendation, we have seen feedback from reviewers that changed the recommendation and saved us time from going down a potentially wrong path. On top of that, we have it all written down to review in the future. We can revisit the decision making process to understand why we chose to go a certain way. I am optimistic this will be like `git blame`, but for larger decisions.
 
-Hearing all of the suggestions, and seeing some initial benefit of preferring written communication has me working to move towards it being my default form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asyncronous, written communication.
+Hearing all of the suggestions, and seeing some initial benefit of preferring written communication has me working to move towards it being my default form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asynchronous, written communication.
 
-With the idea of moving towards longer-form, asyncronous, written communication in mind, I want to get better at it. For me better means:
+With the idea of moving towards longer-form, asynchronous, written communication in mind, I want to get better at it. For me better means:
 
 * Faster - part of the benefit of this style of communication is taking the time to flesh out your thoughts, but I believe I have some opportunity around translating thoughts to words on a page more quickly.
 * Clearer - with synrounous communication, if you don't make sense at first you can keep trying and iterating with the other person in real time. You lose out on this quick iteration with asyncronous communication. Ideally, taking the upfront time to flesh out the writing can help avoid these issues.
@@ -32,9 +32,26 @@ With the idea of moving towards longer-form, asyncronous, written communication 
 
 One way I am trying to improve my written communication is through practice; specifically, by writing more blog posts.
 
+## (Deliberate) Practice
+
 As it goes with everything, it takes practice to get better. With writing, it seems common to hear a suggested form of practice being to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). For professional writers, this seems goes beyond practice and moves into job productivity territory, but I think it still shows the value of practice and routine in becoming a better writer.
 
-While I probably have to do some non-code writing every day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing." I am loosely trying to develop something around the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/), but know this doesn't quite fit the bill. Some of the ideas around deliberate practice (from the article) are repetrition, feedback, mentally demanding, hard to do, and driven by good goals. 
+While I probably have to do some non-code writing every day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. I am loosely trying to develop something around the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). The six traits of deliberate practice from the article are:
+
+1. Designed to improve performance - you should be stretching beyond your abilities during practice.
+1. Repetition - similar to the writers' suggestion to write everyday; practicing a lot take you beyond just doing the activity normally.
+1. Feedback - when practicing you should have external feedback readily and continously available.
+1. Mentally demanding - the article compares the "mindless" acts of practicing scales with deliberate practices which should require you to be mindful and focused.
+1. Hard to do - this sort of seems redundant with number one and four, but it's sort of the end result. By doing things that stretch you to your limits and beyond and that you must focus on, you are likely going to be doing something that is difficult for you. The articly specifically calls out deliberate practice is not doing something you do well and enjoy doing.
+1. Driven by good goals - goals should focus on the _process_ of getting to the outcome and not just the outcome alone.
+
+How does my current attempts at writing more through blog posts stack up against the traits of good deliberate practice? 
+
+1. Designed to improve performance - I think writing in a longer form medium, in a way that is clear and succinct to a wider audience is currentl pushing beyond my limits. 
+1. Repetition - I am currently working to spend about one Pomodoro of time (25 minutes) each day writing.
+1. Feedback - I think this is the biggest hole I have in deliberate practice.  It seems like the ideal would be to have people review my work after reach writing session. I imagine a more realistic approach would be to get some reviews on various drafts. I would start by asking people I know, but I think having an editor review my work and provide feedback would move me in the right direction. I do not currently have any plans around this, but it may be something I should consider if I really want to improve.
+1. Mentally demanding - I do find find I need to be focused to write. There are some tasks like editing where I try to lean on tools like [Grammarly](https://www.grammarly.com/) to do some of the mental heavy-lifting. There may be opportunity to stay more engaged in the suggested edits and why to reduce my errors in the future.
+1. Hard to do - I do find writing and editing these posts difficult. I think maybe PICK UP FROM HERE
 
 As a developer, there are a lot of places where writing is important (e.g., creating tickets/issues, code comments, pull request descriptions, code reviews, etc.). This increases with remote work where more communication becomes text-based. In many of these situations there is value in being accurate, including context and relevant details, and at the same time succinct (you don't want a three-hundred word comment for each method in your application).
 
