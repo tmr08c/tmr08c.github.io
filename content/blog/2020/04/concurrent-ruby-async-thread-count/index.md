@@ -10,9 +10,9 @@ of learning about the
 In that post, I started with the "hello, world" example provided in the `Async`
 module's
 [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html).
-I made some small tweaks to the example and added a `sleep` and printed the
-value instead of returning it. This helped to make the effects of `async`
-versus `await` more obvious.
+I made some small tweaks to the example, including adding a `sleep` and
+printing the string "hello, world" instead of returning it. This helped to make
+the effects of `async` versus `await` more obvious.
 
 In this post, I try to understand the usage of `Thread`s within the `Async`
 module.
@@ -74,9 +74,11 @@ end
 If this makes sense to you can [skip ahead](#baseline) to the next section.
 Otherwise, read on for a breakdown of what's going on.
 
-Thanks to
-[`bundler/inline`](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html)
-I was able to work within a single file during testing.
+### Dependencies
+
+While we only have one gem we need for our script (the gem we are testing,
+`concurrent-ruby`), we also rely on [Bundler](https://bundler.io/) for fetching
+this gem.
 
 ```ruby
 require 'bundler/inline'
@@ -90,15 +92,17 @@ end
 require 'concurrent'
 ```
 
-With `bundler/inline`, you define your `gemfile` in a block within you file.
-When running the script, if the gem isn't installed on your system, bundler
-will download it before proceeding.
+With
+[`bundler/inline`](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html),
+we define our `gemfile` in a block within the file. When running the script, if
+the gem isn't installed, Bundler will download it before proceeding.
 
 ### `HelloAsync` Class
 
-This class is similar to what we created in the [previous
-post](/2020/05/concurrent-ruby-hello-async/). For more details on setting up a
-class to work with the `Concurrent::Async` module, please check out that post.
+This class is similar to what we created
+[previously](/2020/05/concurrent-ruby-hello-async/). For more details on
+setting up a class to work with the `Concurrent::Async` module, please check
+out that post.
 
 ```ruby
 class HelloAsync
@@ -113,17 +117,19 @@ class HelloAsync
 end
 ```
 
-There were a few additional changes made:
+There are a few changes from our original implementation:
 
 * The class has been renamed to `HelloAsync` to more easily differentiate
   between the class and method when writing about it.
-* The `puts` statement has been updated to add some additional, useful
+* The `puts` statement has been updated to add some additional
   information for our experimentation, including:
   * The `object_id` for the current instance of the class. Since our REPL has
       an option for creating new objects (more on this below), this makes it
       easy to differentiate output between new and existing objects.
-  * The id of the `Thread` that the code is being run in. The helps us to
-  identify whether we are in a new or existing thread.
+  * The `object_id` of the
+    [`Thread`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current)
+    that the code is being run in. This helps us to
+    identify whether we are in a new or existing Thread.
 
 ### Command Options
 
@@ -161,10 +167,10 @@ detail:
 |-|-|
 |<kbd>q</kbd>, <kbd>x</kbd>| Quit. Break out of the REPL and stop the script.|
 |<kbd>l</kbd>, <kbd>list</kbd>| Print the number of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
-|<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an already created instance of the `HelloAsync` class.|
-|<kbd>new-async</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy.|
-|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an already created instance of the `HelloAwait` class.|
-|<kbd>new-await</kbd>| Instantiates a new instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy.|
+|<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an **existing** instance of the `HelloAsync` class.|
+|<kbd>new-async</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy.|
+|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an **existing** instance of the `HelloAwait` class.|
+|<kbd>new-await</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy.|
 
 ### Full File
 
@@ -236,7 +242,7 @@ irb(main)> Thread.list
 => [#<Thread:0x00007fbef585ffa0 run>]
 ```
 
-Hm, okay, it looks like we have one "run" thread. In the `irb` session I used
+Hmm, okay, it looks like we only have one thread. In the `irb` session I used
 `Thread.list` and dropped the `count`. I am going to temporarily drop the
 `count` in my script as well.
 
@@ -250,6 +256,8 @@ Currently have [
 
 So we have the same "run" thread, but we also have a thread that looks like
 it's related to the `concurrent-ruby` gem.
+
+### concurrent-ruby Initialize Thread
 
 This other thread is created during the `require` process of the
 `concurrent-ruby` gem (it looks like there is
@@ -287,8 +295,8 @@ yet, so we shouldn't need to worry too much about this additional thread.
 
 The important things to note are:
 
-1. The baselines thread count is two
-1. The baseline does **not** include any threads created by the `HelloAsync` class
+1. The baselines thread count is two.
+1. The baseline does **not** include any threads created by the `HelloAsync` class.
 
 ### Multiple Rubies Support
 
@@ -299,8 +307,8 @@ jRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7
 Since I am using MRI, I am seeing `RubyThreadLocalVar` and not
 `JavaThreadLocalVar`.
 
-I mention this because there are a few times where I will be referencing the
-gem's MRI implementation.
+I mention this because there may be other instances where references are for
+the gem's MRI implementation.
 
 ## Our first (or third) thread
 
