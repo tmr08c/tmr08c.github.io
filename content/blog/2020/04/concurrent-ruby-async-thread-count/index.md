@@ -341,7 +341,7 @@ Currently have 3 threads.
 ```
 
 No, I did not accidentally paste something twice. When running the `await`
-command again a few seconds later, we are seeing the same object and thread
+command multiple times, we are seeing the same object and thread
 IDs. The object ID makes sense since in our [REPL](#command-options) we had the `await`
 command use the same object. However, the same thread ID wasn't something we
 intentionally set up. This shows us that we are reusing our thread. This is
@@ -493,7 +493,17 @@ end
 ```
 
 The `AsyncDelegator` class is defined within the `Async` module. This
-`AsyncDelegator` includes the `method_missing` method above we showed above.
+`AsyncDelegator` class includes the `method_missing` method we saw above.
+
+We can confirm this behavior in an `irb` session:
+
+```ruby
+HelloAsync.new.async
+=> #<Concurrent::Async::AsyncDelegator ...>
+```
+
+We see that calling `async` on its own returns an instance of an
+`AsyncDelegator` class.
 
 Here's a reminder of what's happening when we type `async` into our REPL:
 
@@ -568,20 +578,10 @@ synchronize do
 end
 ```
 
-- [ ] Should updating this to reflect that later  say need synchronize for mutating @queue
-
 The implementation of `synchronize` will vary by which type and version of Ruby
 you are running, but is a mechanism for working with locks. It will check if
-the Thread has access to the lock before `yield`ing and running whatever is in
-the bock. It's not completely clear to me why we need a lock here. My guess is
-that since `AsyncDelegator` can run any arbitrary method, it's possible it
-could be accessing something like a variable shared across threads. Since
-`concurrent-ruby` provides thread-safe variables, it needs to assume anytime a
-thread is running it could be attempting to work with one of these types of
-variables, and, therefore, needs to work with some form of locking mechanism to
-ensure it is safe to interact with these variables. I found as I started
-looking at more of the thread-related code, there were more instances of
-`synchronize` being used.
+the thread has access to the lock before `yield`ing and running whatever is in
+the block. 
 
 Once we have synchronized, we add an array of information to `@queue`. `@queue`
 is an array that is created in our initialization process. We are adding the
@@ -649,7 +649,7 @@ thread (in the `perform` loop).
 This shows how the `gen_server`-style FIFO message queue is implemented in the
 `Async` module. An `AsyncDelegator` instance has an instance variable, `@queue`,
 that is an array and stores everything needed to run the method called. This
-array is passed in via a `perform` method through a thread pool to a thread
+array is passed in via the `perform` method, through a thread pool, to a thread
 that will will run the `perform` method. In `perform` the thread will loop,
 executing the next method in the queue, until there is nothing left in the
 queue.
@@ -657,15 +657,16 @@ queue.
 ## I came here to see multiple threads
 
 So far, we've seen the efficiency of `CachedThreadPool` and the message queue
-implementation style of `gen_stage` and how this has resulted in no additional
-threads being created.
+implementation style of `gen_stage`, and how this has resulted in no additional
+threads being created. What does it take to have a new thread spawn?
 
 ### Can we spawn one, now
 
 We've already seen `CachedThreadPool` pool in action when working with new
 instances of the `HelloAsync` class through our `new-await` command
-[above](#wait-for-more) (UPDATED LINK). It may not be surprising to find that
-`new-async` behaves similarly:
+[above](#fancy-another). It may not be surprising to find that
+`new-async` (when called when no other commands are running) behaves
+similarly:
 
 ```markup
 > new-async
@@ -680,15 +681,17 @@ So, again, `CachedThreadPool` is able to re-use threads across instances of our
 `AsyncHello` class. But if we re-read the class's description, we know that
 threads are crated "as needed."
 
-> New threads are created as needed, existing threads are reused, and threads
+> New threads are created as needed, existing threads are reused, (...)
 
 We've found we don't need threads with `await` because we are blocked from
-doing more work in our CLI and cannot spawn more. We also found that `async`
+doing more work in our REPL and cannot spawn more. We also found that `async`
 follows the `gen_stage` patten and processes multiple requests one at time via
-a queue. We also saw that a single call to a new `async` class reused the
+a queue (when working with the same instance).
+
+We've now seen that a single call to a new `async` class reused the
 thread. Since we weren't doing any other work that makes sense, the thread was
 running unused. What if we run _multiple_ new `async` instances? Since it's
-`async` we should be able to request them multiple times view our CLI and since
+`async` we should be able to request them multiple times view our REPL and since
 each request goes to a new instance, their queue should all be one and
 immediately want to work.
 
@@ -711,7 +714,7 @@ Hello! My object id is '70161458778300' and I'm running in thread '7016145877758
 Hello! My object id is '70161458777080' and I'm running in thread '70161458776360'.
 ```
 
-At least! We've found a way to spawn more threads.
+At last! We've found a way to spawn more threads.
 
 ## Conclusion
 
