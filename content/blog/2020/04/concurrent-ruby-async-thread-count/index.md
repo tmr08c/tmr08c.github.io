@@ -71,13 +71,12 @@ while (input = gets)
 end
 ```
 
-If this makes sense to you can [skip ahead](#baseline) to the next section.
+If this makes sense, feel free to [skip ahead](#baseline) to the next section.
 Otherwise, read on for a breakdown of what's going on.
 
 ### Dependencies
 
-While we only have one gem we need for our script (the gem we are testing,
-`concurrent-ruby`), we also rely on [Bundler](https://bundler.io/) for fetching
+While we only have one gem we need for our script (`concurrent-ruby`, the gem we are testing), we also rely on [Bundler](https://bundler.io/) for fetching
 this gem.
 
 ```ruby
@@ -100,7 +99,7 @@ the gem isn't installed, Bundler will download it before proceeding.
 ### `HelloAsync` Class
 
 This class is similar to what we created
-[previously](/2020/05/concurrent-ruby-hello-async/). For more details on
+in a [previous post](/2020/05/concurrent-ruby-hello-async/). For more details on
 setting up a class to work with the `Concurrent::Async` module, please check
 out that post.
 
@@ -125,7 +124,7 @@ There are a few changes from our original implementation:
   information for our experimentation, including:
   * The `object_id` for the current instance of the class. Since our REPL has
       an option for creating new objects (more on this below), this makes it
-      easy to differentiate output between new and existing objects.
+      possible to differentiate output between new and existing objects.
   * The `object_id` of the
     [`Thread`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current)
     that the code is being run in. This helps us to
@@ -159,7 +158,7 @@ while (input = gets)
 end
 ```
 
-These options enable tracking a program's thread count, while using various
+These options enable tracking a program's thread count while using various
 combinations of the `async` and `await` proxy methods. Let's cover them in more
 detail:
 
@@ -223,7 +222,8 @@ while (input = gets)
 end
 ```
 
-If you are interested in trying this out for yourself, it's also available [on GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
+If you are interested in trying this out for yourself, it's also available [on
+GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
 
 ## Baseline
 
@@ -287,7 +287,7 @@ From [the docs](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurr
 > Each variable may have a default value, but when you modify the variable only
 > the current thread will ever see that change.
 
-The implementation tracks and manages `ThreadLocalVar`a in a [long-running
+The implementation tracks and manages `ThreadLocalVar`s in a [long-running
 thread](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#L38-L39).
 We haven't yet begun digging into the [thread-safe objects the library
 provides](https://github.com/ruby-concurrency/concurrent-ruby#thread-safe-value-objects-structures-and-collections)
@@ -303,18 +303,18 @@ The important things to note are:
 You may note that the file referenced in the thread is
 `ruby_thread_local_var.rb` and not just `thread_local_var.rb`. `ThreadLocalVar`
 has [implementations for Ruby and
-jRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/thread_local_var.rb#L60-L65).
+JRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/thread_local_var.rb#L60-L65).
 Since I am using MRI, I am seeing `RubyThreadLocalVar` and not
 `JavaThreadLocalVar`.
 
-I mention this because there may be other instances where references are for
+I mention this because there may be other instances where I reference
 the gem's MRI implementation.
 
 ## Our first (or third) thread
 
 In our [previous post](/2020/05/concurrent-ruby-hello-async/) we learned that
 the `await` method would create a new thread, run the method in the new thread,
-and return to the main thead; blocking our main thread the whole time. Does the
+and return to the main thread; blocking our main thread the whole time. Does the
 thread stick around when the method is done?
 
 ```markup
@@ -377,11 +377,11 @@ new instances of our `Async`-inheriting classes.
 
 At this point, all of our tests have only used the `await` proxy method. Since
 this method will block our main thread until it's complete, we aren't sending
-multiple requests to multiple objects at a time. This does seems like it would
+multiple requests to multiple objects at a time. This does seem like it would
 make it easier to re-use the same thread. Do we see the same behavior with
 `async`?
 
-Let's start our with our `async` action. This will run the `hello` method
+Let's start with our `async` action. This will run the `hello` method
 through the `async` proxy on our _existing_ instance of `HelloAsync`.
 
 ``` markup
@@ -391,7 +391,7 @@ Hello! My object id is '70161458709520' and I'm running in thread '7016146209114
 
 Since we are using our existing instance, it makes sense to see our same object
 ID. After what we've learned so far about thread re-use, it's not a complete
-surprise to see the same thead ID again as well (despite a different proxy
+surprise to see the same thread ID again as well (despite a different proxy
 method being used).
 
 As we mentioned above, since `async` doesn't block our main thread, we can call
@@ -437,15 +437,15 @@ of the Actor model. This means that when a method is called, rather than
 running right away, the method is put into the "mailbox" to be processed by the
 object. Messages are processed one at a time in the order they are received.
 
-[This StackOverflow answer](https://stackoverflow.com/a/10746181/2475008) does
-a good job explaining it:
+[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from
+erlang co-creator Robert Virding) does a good job explaining it:
 
 > The gen_server runs in a separate process from your client process so when
 > you do a call/cast to it you are actually sending messages to server process.
-> All messages are placed in a processes message queue and processes handle
+> All messages are placed in a processes [Sic] message queue and processes handle
 > their message one-by-one.
 
-Staying true to their inspiration, `concurrent-ruby` follows a simlar idea of
+Staying true to their inspiration, `concurrent-ruby` follows a similar idea of
 queuing up method calls to be processed one at a time.
 [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334)
 is the relevant code in the gem:
@@ -744,3 +744,4 @@ TODO
 - [ ] (maybe) set up ling highlighting for prism (<https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/#line-highlighting)>
 - [ ] Fix style for table
 - [x] Add style for `kbd` tag
+
