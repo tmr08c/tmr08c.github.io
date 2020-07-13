@@ -76,7 +76,8 @@ Otherwise, read on for a breakdown of what's going on.
 
 ### Dependencies
 
-While we only have one gem we need for our script (`concurrent-ruby`, the gem we are testing), we also rely on [Bundler](https://bundler.io/) for fetching
+While we only have one gem we need for our script (`concurrent-ruby`, the gem
+we are testing), we also rely on [Bundler](https://bundler.io/) for fetching
 this gem.
 
 ```ruby
@@ -307,7 +308,7 @@ JRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7
 Since I am using MRI, I am seeing `RubyThreadLocalVar` and not
 `JavaThreadLocalVar`.
 
-I mention this because there may be other instances where I reference
+I mention this because there may be other instances where I reference 
 the gem's MRI implementation.
 
 ## Our first (or third) thread
@@ -437,8 +438,8 @@ of the Actor model. This means that when a method is called, rather than
 running right away, the method is put into the "mailbox" to be processed by the
 object. Messages are processed one at a time in the order they are received.
 
-[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from
-erlang co-creator Robert Virding) does a good job explaining it:
+[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from erlang co-creator Robert Virding) does
+a good job explaining it:
 
 > The gen_server runs in a separate process from your client process so when
 > you do a call/cast to it you are actually sending messages to server process.
@@ -480,7 +481,7 @@ end
 ```
 
 This returns an instance variable, `@__async_delegator__`. This instance
-variable is set up as a part initialization and is a new `AsyncDelegator`:
+variable is set up as a part  of initialization and is a new `AsyncDelegator`:
 
 ```ruby
 def init_synchronization
@@ -494,16 +495,6 @@ end
 
 The `AsyncDelegator` class is defined within the `Async` module. This
 `AsyncDelegator` class includes the `method_missing` method we saw above.
-
-We can confirm this behavior in an `irb` session:
-
-```ruby
-HelloAsync.new.async
-=> #<Concurrent::Async::AsyncDelegator ...>
-```
-
-We see that calling `async` on its own returns an instance of an
-`AsyncDelegator` class.
 
 Here's a reminder of what's happening when we type `async` into our REPL:
 
@@ -536,8 +527,8 @@ explicitly define them.
 def method_missing(method, *args, &block)
 ```
 
-So when we call `hello.async.hello`, our `AsyncDelegator`, which doesn't define
-a `hello` method, will invoke `method_missing` and pass `hello` as the `method`
+When we call `hello.async.hello`, our `AsyncDelegator` (which doesn't define
+a `hello` method) will invoke `method_missing` and pass `hello` as the `method`
 argument. It will also pass any other arguments and a block if one is included.
 
 After invoking `method_missing`, the library will do some validations. First,
@@ -554,7 +545,7 @@ After that, we create our `IVar`. In our [previous
 post](/2020/05/concurrent-ruby-hello-async/) we took a surface-level look at
 `IVar`s and decided to not dig into them yet. We will do the same thing here,
 but note that the `IVar` is created, some stuff happens (which we will cover
-next), and then the it is returned. This lines up with what we saw in our
+next), and then it is returned. This lines up with what we saw in our
 initial experimentation - we
 [found](/2020/05/concurrent-ruby-hello-async/#return-types) that when using our
 proxy methods the return value would be an `IVar` instead of what the actual
@@ -581,7 +572,7 @@ end
 The implementation of `synchronize` will vary by which type and version of Ruby
 you are running, but is a mechanism for working with locks. It will check if
 the thread has access to the lock before `yield`ing and running whatever is in
-the block. 
+the block.
 
 Once we have synchronized, we add an array of information to `@queue`. `@queue`
 is an array that is created in our initialization process. We are adding the
@@ -641,7 +632,7 @@ So, why do we need the `if` on the following line?
 If `@queue` isn't empty, the `executor` would still be in the `loop` in
 `perform`. When we mutate the `@queue` by calling the `push` method it is
 updated everywhere, so our `loop` will have access to the new element pushed
-onto the queue. This explain the need to `synchronize` - when mutating the
+onto the queue. This explains the need to `synchronize` - when mutating the
 state of `@queue`, we need to lock first because we could be updating it in our
 main thread (when we call the method through the proxy) or in our `@executor`
 thread (in the `perform` loop).
@@ -650,7 +641,7 @@ This shows how the `gen_server`-style FIFO message queue is implemented in the
 `Async` module. An `AsyncDelegator` instance has an instance variable, `@queue`,
 that is an array and stores everything needed to run the method called. This
 array is passed in via the `perform` method, through a thread pool, to a thread
-that will will run the `perform` method. In `perform` the thread will loop,
+that will run the `perform` method. In `perform`, the thread will loop,
 executing the next method in the queue, until there is nothing left in the
 queue.
 
@@ -677,23 +668,23 @@ Hello! My object id is '70161458746800' and I'm running in thread '7016146209114
 
 ### Okay, how about now
 
-So, again, `CachedThreadPool` is able to re-use threads across instances of our
+So, again, `CachedThreadPool` can re-use threads across instances of our
 `AsyncHello` class. But if we re-read the class's description, we know that
 threads are crated "as needed."
 
 > New threads are created as needed, existing threads are reused, (...)
 
-We've found we don't need threads with `await` because we are blocked from
+We've found we don't need multiple threads with `await` because we are blocked from
 doing more work in our REPL and cannot spawn more. We also found that `async`
-follows the `gen_stage` patten and processes multiple requests one at time via
+follows the `gen_stage` patten and processes multiple requests one at a time via
 a queue (when working with the same instance).
 
-We've now seen that a single call to a new `async` class reused the
-thread. Since we weren't doing any other work that makes sense, the thread was
-running unused. What if we run _multiple_ new `async` instances? Since it's
-`async` we should be able to request them multiple times view our REPL and since
-each request goes to a new instance, their queue should all be one and
-immediately want to work.
+We've now seen that a single call to a new `async` class can reuse the thread.
+Since we weren't doing any other work, that makes sense; the thread was running
+unused and was available for our `new-async` command. What if we run _multiple_
+`new-async` commands? Since it's `async` we should be able to request them
+multiple times view our REPL and since each request goes to a new instance,
+there is no waiting in the queue.
 
 ```markup
 > new-async
@@ -719,7 +710,7 @@ At last! We've found a way to spawn more threads.
 ## Conclusion
 
 I initially set out expecting to see a lot of thread creation. Instead, I
-learned that, thanks to `concurrent-ruby`, threads can be lazy (in the best
+learned that thanks to `concurrent-ruby`, threads can be lazy (in the best
 way!). While the message processing aspects of `gen_stage` (and therefore the
 `Async` module) played a role in the lack of needing to spawn as many threads,
 it was the abstractions provided by `concurrent-ruby` that really helped make
