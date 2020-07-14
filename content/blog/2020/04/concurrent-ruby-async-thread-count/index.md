@@ -9,10 +9,9 @@ of learning about the
 [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem.
 In that post, I started with the "hello, world" example provided in the `Async`
 module's
-[documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html).
-I made some small tweaks to the example, including adding a `sleep` and
-printing the string "hello, world" instead of returning it. This helped to make
-the effects of `async` versus `await` more obvious.
+[documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html)
+and made a few small tweaks to make the effects of `async` versus `await` more
+obvious.
 
 In this post, I try to understand the usage of `Thread`s within the `Async`
 module.
@@ -127,9 +126,9 @@ There are a few changes from our original implementation:
       an option for creating new objects (more on this below), this makes it
       possible to differentiate output between new and existing objects.
   * The `object_id` of the
-    [`Thread`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current)
-    that the code is being run in. This helps us to
-    identify whether we are in a new or existing Thread.
+    [`Thread` that the code is being run
+    in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This
+    helps us to identify whether we are in a new or existing Thread.
 
 ### Command Options
 
@@ -169,7 +168,7 @@ detail:
 |<kbd>l</kbd>, <kbd>list</kbd>| Print the number of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
 |<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an **existing** instance of the `HelloAsync` class.|
 |<kbd>new-async</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy.|
-|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an **existing** instance of the `HelloAwait` class.|
+|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an **existing** instance of the `HelloAsync` class.|
 |<kbd>new-await</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy.|
 
 ### Full File
@@ -208,13 +207,13 @@ while (input = gets)
     exit(0)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
-  when /^async/ 
+  when /^async/
     hello.async.hello
-  when /^await/ 
+  when /^await/
     hello.await.hello
-  when /^new-async/ 
+  when /^new-async/
     HelloAsync.new.async.hello
-  when /^new-await/ 
+  when /^new-await/
     HelloAsync.new.await.hello
   else puts "Received unknown input: #{input}"
   end
@@ -438,8 +437,8 @@ of the Actor model. This means that when a method is called, rather than
 running right away, the method is put into the "mailbox" to be processed by the
 object. Messages are processed one at a time in the order they are received.
 
-[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from erlang co-creator Robert Virding) does
-a good job explaining it:
+[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from
+erlang co-creator Robert Virding) does a good job explaining it:
 
 > The gen_server runs in a separate process from your client process so when
 > you do a call/cast to it you are actually sending messages to server process.
@@ -572,7 +571,7 @@ end
 The implementation of `synchronize` will vary by which type and version of Ruby
 you are running, but is a mechanism for working with locks. It will check if
 the thread has access to the lock before `yield`ing and running whatever is in
-the block.
+the block. 
 
 Once we have synchronized, we add an array of information to `@queue`. `@queue`
 is an array that is created in our initialization process. We are adding the
@@ -679,12 +678,11 @@ doing more work in our REPL and cannot spawn more. We also found that `async`
 follows the `gen_stage` patten and processes multiple requests one at a time via
 a queue (when working with the same instance).
 
-We've now seen that a single call to a new `async` class can reuse the thread.
-Since we weren't doing any other work, that makes sense; the thread was running
-unused and was available for our `new-async` command. What if we run _multiple_
-`new-async` commands? Since it's `async` we should be able to request them
-multiple times view our REPL and since each request goes to a new instance,
-there is no waiting in the queue.
+We've now seen that a single call to a new `async` class can reuse the
+thread. Since we weren't doing any other work, that makes sense; the thread was
+running unused and was available for our `new-async` command. What if we run _multiple_ `new-async` commands? Since it's
+`async` we should be able to request them multiple times view our REPL and since
+each request goes to a new instance, there is no waiting in the queue.
 
 ```markup
 > new-async
