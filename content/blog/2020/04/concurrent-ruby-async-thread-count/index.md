@@ -9,9 +9,8 @@ of learning about the
 [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem.
 In that post, I started with the "hello, world" example provided in the `Async`
 module's
-[documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html)
-and made a few small tweaks to make the effects of `async` versus `await` more
-obvious.
+[documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make
+the effects of `async` versus `await` more obvious.
 
 In this post, I try to understand the usage of `Thread`s within the `Async`
 module.
@@ -75,8 +74,7 @@ Otherwise, read on for a breakdown of what's going on.
 
 ### Dependencies
 
-While we only have one gem we need for our script (`concurrent-ruby`, the gem
-we are testing), we also rely on [Bundler](https://bundler.io/) for fetching
+While we only have one gem we need for our script (`concurrent-ruby`, the gem we are testing), we also rely on [Bundler](https://bundler.io/) for fetching
 this gem.
 
 ```ruby
@@ -126,9 +124,7 @@ There are a few changes from our original implementation:
       an option for creating new objects (more on this below), this makes it
       possible to differentiate output between new and existing objects.
   * The `object_id` of the
-    [`Thread` that the code is being run
-    in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This
-    helps us to identify whether we are in a new or existing Thread.
+    [`Thread` that the code is being run in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This helps us to identify whether we are in a new or existing Thread.
 
 ### Command Options
 
@@ -207,13 +203,13 @@ while (input = gets)
     exit(0)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
-  when /^async/
+  when /^async/ 
     hello.async.hello
-  when /^await/
+  when /^await/ 
     hello.await.hello
-  when /^new-async/
+  when /^new-async/ 
     HelloAsync.new.async.hello
-  when /^new-await/
+  when /^new-await/ 
     HelloAsync.new.await.hello
   else puts "Received unknown input: #{input}"
   end
@@ -222,8 +218,7 @@ while (input = gets)
 end
 ```
 
-If you are interested in trying this out for yourself, it's also available [on
-GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
+If you are interested in trying this out for yourself, it's also available [on GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
 
 ## Baseline
 
@@ -422,7 +417,7 @@ Hello! My object id is '70161458709520' and I'm running in thread '7016146209114
 ```
 
 Above, we have multiple calls to `async` and `list`. The goal was to see if
-calling async multiple times before the method is completed (and we see our
+calling `async` multiple times before the method is completed (and we see our
 print statement) could increase our thread count. We seem to still be using our
 same object ID and thread ID, and never go above three threads. What's the deal?
 How are we going to do things concurrently if we don't spawn more threads?
@@ -437,13 +432,10 @@ of the Actor model. This means that when a method is called, rather than
 running right away, the method is put into the "mailbox" to be processed by the
 object. Messages are processed one at a time in the order they are received.
 
-[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from
-erlang co-creator Robert Virding) does a good job explaining it:
+[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from erlang co-creator Robert Virding) does
+a good job explaining it:
 
-> The gen_server runs in a separate process from your client process so when
-> you do a call/cast to it you are actually sending messages to server process.
-> All messages are placed in a processes [Sic] message queue and processes handle
-> their message one-by-one.
+>All messages are placed in a process' message queue and processes handle their message one-by-one. If a message arrives while a process is busy then it is placed in the message queue. 
 
 Staying true to their inspiration, `concurrent-ruby` follows a similar idea of
 queuing up method calls to be processed one at a time.
@@ -517,7 +509,7 @@ you can probably trust me that it doesn't define a `hello` method.
 _This_ is where the `method_missing` from above comes into play. If you are
 unfamiliar with
 [`method_missing`](https://apidock.com/ruby/BasicObject/method_missing) it is
-invoked when a method is called on an object, but that object doesn't have a
+invoked when a method is called on an object and that object doesn't have a
 definition for that method. It is a powerful tool for metaprogramming and is
 enabling our `AsyncDelegator` to accept method calls without having to
 explicitly define them.
@@ -582,6 +574,10 @@ be consumed later. We will then `post` a block to our `@executor`.
 Finding the `@executor` is another chain of branching inheritance. For my
 version of MRI Ruby, I eventually got to
 [`RubyExecutorService#post`](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#L17-L25).
+The `ExecutorService` classes is the abstraction for running your code in new
+threads. These classes take in the arbitrary code to run and handle interacting
+with threads. 
+
 Along the chain to the `RubyExecutorService`, one of the parent classes was
 [`CachedThreadPool`](https://www.rubydoc.info/gems/concurrent-ruby/Concurrent/CachedThreadPool).
 _This_ class is key for many of the observations we have seen so far. From the
@@ -594,8 +590,9 @@ docs:
 While this `CachedThreadPool` pool explains _some_ of what we've seen, it
 doesn't fully explain why we aren't seeing the thread pool grow dynamically
 when we proxy through `async` multiple times. For that, we will need to look at
-the `perform` method. This method will also explain the `if @queue.length == 1`
-check.
+the `perform` method in `AsyncDelegator`. This method is what is passed into
+our `@executor` to be run in a separate thread. This method will also explain
+the `if @queue.length == 1` check.
 
 ```ruby
 # Async::AsyncDelegator
@@ -678,11 +675,12 @@ doing more work in our REPL and cannot spawn more. We also found that `async`
 follows the `gen_stage` patten and processes multiple requests one at a time via
 a queue (when working with the same instance).
 
-We've now seen that a single call to a new `async` class can reuse the
-thread. Since we weren't doing any other work, that makes sense; the thread was
-running unused and was available for our `new-async` command. What if we run _multiple_ `new-async` commands? Since it's
-`async` we should be able to request them multiple times view our REPL and since
-each request goes to a new instance, there is no waiting in the queue.
+We've now seen that a single call to a new `async` class can reuse the thread.
+Since we weren't doing any other work, that makes sense; the thread was running
+unused and was available for our `new-async` command. What if we run _multiple_
+`new-async` commands? Since it's `async` we should be able to request them
+multiple times view our REPL and since each request goes to a new instance,
+there is no waiting in the queue.
 
 ```markup
 > new-async
