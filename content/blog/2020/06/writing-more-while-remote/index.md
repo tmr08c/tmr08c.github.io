@@ -41,8 +41,8 @@ After hearing the suggestions and seeing some initial benefit of preferring writ
 
 Now that I am bought in to the idea of leveraging longer-form, asynchronous, written communication, I want to work to get better at it. For me better means:
 
-* Faster - part of the benefit of this style of communication is taking the time to flesh out your thoughts, but I believe I have some opportunity around translating thoughts to words on a page more quickly.
-* Clearer - with synchronous communication, if you don't make sense at first the person can immediately ask you to clarify. You lose out on this quick iteration with asynchronous communication. Ideally, taking the upfront time to flesh out the writing can help avoid these issues.
+* Faster - part of the benefit of this style of communication is taking the time to flesh out your thoughts, but I believe I have some opportunity around translating thoughts into words on a page more quickly.
+* Clearer - with synchronous communication, if you don't make sense at first, the person can immediately ask you to clarify. You lose out on this quick iteration with asynchronous communication. Ideally, taking the upfront time to flesh out the writing can help avoid these issues.
 * More varied - while I keep calling it "written" communication, it doesn't have to be all text on the screen. There are times when images, charts, diagrams, etc. could be included to better communicate a point. I want to be able to leverage these additional tools when they would improve the ability to deliver my message.
 
 One way I am trying to improve my written communication is through practice; specifically, by writing more blog posts.
@@ -53,20 +53,73 @@ As it goes with everything, it takes practice to get better. With writing, it se
 
 While I do some non-code writing every day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. I am loosely trying to develop something around the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). The six traits of deliberate practice from the article are:
 
-1. Designed to improve performance - you should be stretching beyond your abilities during practice.
-1. Repetition - similar to writers' suggestion to write everyday; deliberate practice means you are working on the task more than just when you are doing the real thing.
-1. Feedback - when practicing, you should have external feedback readily and continuously available.
-1. Mentally demanding - the article compares the "mindless" acts of practicing scales with deliberate practices which should require you to be mindful and focused.
-1. Hard to do - by doing things that stretch you to your limits and that you must focus on, you are likely going to be doing something that is difficult for you. The article specifically calls out deliberate practice  as not doing something you do well and enjoy doing.
-1. Driven by good goals - goals should focus on the _process_ of getting to the outcome and not just the outcome alone.
+##### Designed to improve performance 
+
+You should be stretching beyond your abilities during practice.
+
+##### Repetition 
+
+Similar to writers' suggestion to write everyday; deliberate practice means you are working on the task more than just when you are doing the real thing.
+
+##### Feedback
+
+When practicing, you should have external feedback readily and continuously available.
+
+##### Mentally demanding
+
+The article compares the "mindless" acts of practicing scales with deliberate practices which should require you to be mindful and focused.
+
+##### Hard to do
+
+By doing things that stretch you to your limits and that you must focus on, you are likely going to be doing something difficult for you. The article specifically calls out deliberate practice  as not doing something you do well and enjoy doing.
+
+##### Driven by good goals
+
+Goals should focus on the _process_ of getting to the outcome and not just the outcome alone.
+
+### How Am I Doing? 
 
 How does my current attempt at writing more through blog posts stack up against the traits of good deliberate practice?
 
-1. Designed to improve performance - clear and succinct, long-form writing to a wider audience is currently pushing beyond my limits.
-1. Repetition - I am currently working to spend about one Pomodoro of time (25 minutes) each day writing for non-work purposes (posts for this blog).
-1. Feedback - I think this is the biggest hole I have in deliberate practice.  It seems like the ideal would be to have people review my work after each writing session. I imagine a more realistic approach would be to get some reviews on various drafts. I could start by asking people I know, but I think to really push, I would want to have a professional editor review my work and provide feedback. I do not currently have any plans around this, but it may be something I should consider if I really want to improve.
-1. Mentally demanding - I do find find I need to be focused to write. Similar to not simply practicing scales, writing posts on different topics helps prevents the process from becoming rote.
-1. Hard to do - I have found writing and editing my posts to be difficult. I often find I go into a post thinking I know what I'm going to write, but when sitting down to write struggle to get idea out in a coherent manner. Instead, I have to spend a lot of time shaping and connecting my thoughts to get an idea fully formed.
-1. Driven by good goals - I currently don't have very clear or specific goals. I basically want to write more because I think it's a good skill to have (and I want to [build habits](https://jamesclear.com/identity-based-habits) that make me more like the person I think I want to be). I do aim to write for a small amount of time every day, so that may be considered focusing on the process more than the outcome.
+##### Designed to improve performance
 
-While there is room for improvement (especially around a very key component of feedback), I think this is a good start. An important part of deliberate practice is continuing to push and stretch yourself. This means that my current practice regimen of daily, small writing sessions will likely need to change - I may need to push myself to write for longer sessions, on topics I know nothing about, or find ways to incorporate visual aids into my writing.
+Clear and succinct, long-form writing to a wider audience is currently pushing beyond my limits.
+
+Hopefully, writing a blog post becomes easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine; I may need to push myself to write for longer sessions, on topics I know nothing about, or find ways to incorporate visual aids into my writing. I believe making changes like this is what could keep this routine **deliberate** practice, and not fall into rote routing territory. 
+
+##### Repetition
+
+I am currently working to spend about one Pomodoro of time (25 minutes) each day writing for non-work purposes (posts for this blog). This isn't a large amount of time, but there is consistency and it is in addition to my normal writing duties.
+
+##### Feedback
+
+I think this is the biggest hole I have in deliberate practice.  
+
+The ideal would be to have an editor review my work after each writing session. A more realistic approach may be to get reviews on drafts of my posts. 
+
+I could start by asking people I know. I think this level of feedback would help me grow beyond my current skillset. Depending on my goals, at some point having a professional editor review my work and provide feedback may be necessary to get to the next level. 
+
+I do not currently have any plans around this, but it may be something I should consider if I want next-level improvement.
+
+##### Mentally demanding
+
+I do find find I need to be focused to write. Similar to not simply practicing scales, writing posts on different topics helps prevents the process from becoming rote.
+
+There are aspect of the process that are more difficult than othres. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and gramar. Rather than accept suggestoins, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
+
+##### Hard to do
+
+I have found writing and editing my posts to be difficult. I often find I go into a post thinking I know what I'm going to write, but when sitting down to write struggle to get idea out in a coherent manner. Instead, I have to spend a lot of time shaping and connecting my thoughts to get an idea fully formed. 
+
+##### Driven by good goals
+
+I currently don't have very clear or specific goals. Essentially, I want to write more because I think it's a good skill to have (and I want to [build habits](https://jamesclear.com/identity-based-habits) that make me more like the person I think I want to be). 
+
+Since my current aim is to write for a small amount of time every day, that may be considered focusing on the process more than the outcome. 
+
+## Conclusion
+
+Please consider favoring asyncrounous communication at work for a few weks, and see what the results are. If, like me, you find value in them, work with your team to adopt practices that promote this style of communication. 
+
+You may also consider what practices you could adopt for yourself to improve your ability to write. While there is room for improvement (especially around a very key component of feedback), I am hopeful that my short, daily writing sessions move me in the right direction. If blogging doens't interest you, consider journaling, working on open source documentation, or creating tutorials (written or videos). 
+
