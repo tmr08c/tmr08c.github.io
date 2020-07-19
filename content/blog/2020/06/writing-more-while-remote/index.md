@@ -49,35 +49,31 @@ One way I am trying to improve my written communication is through practice; spe
 
 ## (Deliberate) Practice
 
-As it goes with everything, it takes practice to get better. With writing, it seems common to hear a suggested form of practice being to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.).
+> It takes practices to get better
+>
+> -- Everyone?
 
-While I do some non-code writing every day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. I am loosely trying to develop something around the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). The six traits of deliberate practice from the article are:
+In order to get better, I need to practice.
 
-##### Designed to improve performance 
+With writing, a common suggestion is to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). While I do some non-code writing every day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. This separation between practice and doing the real thing is inspired by the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/).
 
-You should be stretching beyond your abilities during practice.
+Deliberate practice is in the sphere of the 10,000 hour rule covered by Malcom Gladwell in [_Outliers_](https://en.wikipedia.org/wiki/Outliers_\(book\)). Proponents of deliberate practice believe that simply _doing_ the thing you want to get better at will **not** move you into mastery. Instead, you need to practice in ways that will continue to push you to grow your skills.
 
-##### Repetition 
+While I don't expect to become a world-class writer, I think there can be value in taking some cues from deliberate practice and developing my practice regimen around these ideas. To start, let's take a look at what the six traits of deliberate practice (as interpreted by the article's author, [Cal Newport](https://www.calnewport.com/about/)) are:
 
-Similar to writers' suggestion to write everyday; deliberate practice means you are working on the task more than just when you are doing the real thing.
+* **Designed to improve performance** - You should be stretching beyond your abilities during practice.
 
-##### Feedback
+* **Repetition** - Similar to writers' suggestion to write everyday; deliberate practice means you are working on the task more than just when you are doing the real thing.
 
-When practicing, you should have external feedback readily and continuously available.
+* **Feedback** - When practicing, you should have external feedback readily and continuously available.
 
-##### Mentally demanding
+* **Mentally demanding** - The article compares the "mindless" acts of practicing scales with deliberate practices which should require you to be mindful and focused.
 
-The article compares the "mindless" acts of practicing scales with deliberate practices which should require you to be mindful and focused.
+* **Hard to do** - By doing things that stretch you to your limits and that you must focus on, you are likely going to be doing something difficult for you. The article specifically calls out deliberate practice  as not doing something you do well and enjoy doing.
 
-##### Hard to do
+* **Driven by good goals** - Goals should focus on the _process_ of getting to the outcome and not just the outcome alone.
 
-By doing things that stretch you to your limits and that you must focus on, you are likely going to be doing something difficult for you. The article specifically calls out deliberate practice  as not doing something you do well and enjoy doing.
-
-##### Driven by good goals
-
-Goals should focus on the _process_ of getting to the outcome and not just the outcome alone.
-
-### How Am I Doing? 
+### How Am I Doing
 
 How does my current attempt at writing more through blog posts stack up against the traits of good deliberate practice?
 
