@@ -4,7 +4,7 @@ date: '2020-06-22T06:45:02.123Z'
 categories: ['writing', 'remote work']
 ---
 
-At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most people. There are, however, some people for which remote working is a part of their normal workflow. Fortunately for those of us that are experiencing this as new territory, those with experience are sharing their knowledge. One of the topics that I've seen advice given around is managing communication and interruptions.
+At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. There are, however, some people for which remote working is a part of their normal workflow. Fortunately for those of us that are experiencing this as new territory, those with experience are sharing their knowledge. One of the topics that I've seen advice given around is managing communication and interruptions.
 
 When in an office, I would sometimes worry about the [cost of interruptions and context switching](https://blog.rescuetime.com/context-switching/), but it was easy (and therefore common) to simply walk over to a co-worker and interrupt them with a question. Since remote workers have an additional barrier to the impromptu, in-person interruptions, many seem to use it to their advantage to develop less disruptive practices around communicating as a team.
 
@@ -55,7 +55,7 @@ One way I am trying to improve my written communication is through practice; spe
 
 In order to get better, I need to practice.
 
-With writing, a common suggestion is to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). While I do some non-code writing every day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. This separation between practice and doing the real thing is inspired by the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/).
+With writing, a common suggestion is to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). While I do some non-code writing each day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. This separation between practice and doing the real thing is inspired by the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/).
 
 Deliberate practice is in the sphere of the 10,000 hour rule covered by Malcom Gladwell in [_Outliers_](https://en.wikipedia.org/wiki/Outliers_\(book\)). Proponents of deliberate practice believe that simply _doing_ the thing you want to get better at will **not** move you into mastery. Instead, you need to practice in ways that will continue to push you to grow your skills.
 
@@ -81,7 +81,7 @@ How does my current attempt at writing more through blog posts stack up against 
 
 Clear and succinct, long-form writing to a wider audience is currently pushing beyond my limits.
 
-Hopefully, writing a blog post becomes easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine; I may need to push myself to write for longer sessions, on topics I know nothing about, or find ways to incorporate visual aids into my writing. I believe making changes like this is what could keep this routine **deliberate** practice, and not fall into rote routing territory. 
+Hopefully, writing a blog post becomes easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine; I may need to push myself to write for longer sessions, on topics I know nothing about, or find ways to incorporate visual aids into my writing. I believe making changes like this is what could keep this routine **deliberate** practice, and not fall into rote territory.
 
 ##### Repetition
 
@@ -99,19 +99,19 @@ I do not currently have any plans around this, but it may be something I should 
 
 ##### Mentally demanding
 
-I do find find I need to be focused to write. Similar to not simply practicing scales, writing posts on different topics helps prevents the process from becoming rote.
+I do find find I need to be focused to write. Since each post is on a different topic, I can hopefully avoid falling into the trap of "doing scales" and performing mindless repetitions.
 
-There are aspect of the process that are more difficult than othres. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and gramar. Rather than accept suggestoins, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
+There are aspect of the process that are more difficult than others. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and grammar. Rather than accept suggestions, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
 
 ##### Hard to do
 
-I have found writing and editing my posts to be difficult. I often find I go into a post thinking I know what I'm going to write, but when sitting down to write struggle to get idea out in a coherent manner. Instead, I have to spend a lot of time shaping and connecting my thoughts to get an idea fully formed. 
+I have found writing and editing my posts to be difficult. I often find I go into a post thinking I know what I'm going to write, but when sitting down to write struggle to get idea out in a coherent manner. Instead, I have to spend a lot of time shaping and connecting my thoughts to get an idea fully formed. Even when I have a draft in place there are numerous rounds of re-reading and editing to try to improve it.
 
 ##### Driven by good goals
 
 I currently don't have very clear or specific goals. Essentially, I want to write more because I think it's a good skill to have (and I want to [build habits](https://jamesclear.com/identity-based-habits) that make me more like the person I think I want to be). 
 
-Since my current aim is to write for a small amount of time every day, that may be considered focusing on the process more than the outcome. 
+Since my current aim is to write for a small amount of time every day, that may be considered focusing on the _process_ more than the _outcome_.
 
 ## Conclusion
 
