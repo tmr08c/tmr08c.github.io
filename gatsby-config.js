@@ -39,10 +39,14 @@ module.exports = {
           },
           `gatsby-remark-responsive-iframe`,
           {
-            resolve: `gatsby-remark-prismjs`
+            resolve: `gatsby-remark-vscode`,
+            options: {
+              theme: `Tomorrow`,
+              extensions: [`vscode-themes/tomorrow`]
+            },
           },
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`
+          `gatsby-remark-autolink-headers`,
         ]
       }
     },
