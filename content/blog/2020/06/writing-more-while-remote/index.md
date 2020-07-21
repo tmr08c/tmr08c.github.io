@@ -4,7 +4,7 @@ date: '2020-06-22T06:45:02.123Z'
 categories: ['writing', 'remote work']
 ---
 
-At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. There are, however, some people for which remote working is a part of their normal workflow. Fortunately for those of us that are experiencing this as new territory, those with experience are sharing their knowledge. One of the topics that I've seen advice given around is managing communication and interruptions.
+At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. For some (lucky) people, remote working has been the norm. Fortunately for those of us new to remote work, those with experience have been sharing their knowledge. One of the areas of advice that sticks out to me is around managing communication and interruptions.
 
 When in an office, I would sometimes worry about the [cost of interruptions and context switching](https://blog.rescuetime.com/context-switching/), but it was easy (and therefore common) to simply walk over to a co-worker and interrupt them with a question. Since remote workers have an additional barrier to the impromptu, in-person interruptions, many seem to use it to their advantage to develop less disruptive practices around communicating as a team.
 
@@ -33,13 +33,13 @@ From what I've gathered so far, the major benefits of preferring written communi
 
 At work, we have started leveraging longer-form, asynchronous communication in the form of [SBARs](https://en.wikipedia.org/wiki/SBAR). We are using the Situation, Background, Assessment, Recommendation format as the output of some of our more exploratory tickets on a new project. Since reviewers have more time to read and think about the recommendation, we have seen feedback that changed the recommendation and saved us from going down a potentially wrong path.
 
-Another benefit we have found is having an "artifact" that documents the discussion and decision. We can revisit the decision making process to understand why we chose to go a certain way. I am optimistic this will be like [`git praise`](https://github.com/ansman/git-praise), but for larger decisions.
+Another benefit we have found is having an "artifact" that documents the discussion and decision. We can revisit the decision-making process to understand why we chose to go a certain way. I am optimistic this will be like [`git praise`](https://github.com/ansman/git-praise), but for larger decisions.
 
 ## Wanting to get better
 
 After hearing the suggestions and seeing some initial benefit of preferring written communication, I want to make it my default form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asynchronous, written communication.
 
-Now that I am bought in to the idea of leveraging longer-form, asynchronous, written communication, I want to work to get better at it. For me better means:
+Now that I am bought into the idea of leveraging longer-form, asynchronous, written communication, I want to work to get better at it. For me better means:
 
 * Faster - part of the benefit of this style of communication is taking the time to flesh out your thoughts, but I believe I have some opportunity around translating thoughts into words on a page more quickly.
 * Clearer - with synchronous communication, if you don't make sense at first, the person can immediately ask you to clarify. You lose out on this quick iteration with asynchronous communication. Ideally, taking the upfront time to flesh out the writing can help avoid these issues.
@@ -57,31 +57,31 @@ In order to get better, I need to practice.
 
 With writing, a common suggestion is to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). While I do some non-code writing each day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work. This separation between practice and doing the real thing is inspired by the idea of [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/).
 
-Deliberate practice is in the sphere of the 10,000 hour rule covered by Malcom Gladwell in [_Outliers_](https://en.wikipedia.org/wiki/Outliers_\(book\)). Proponents of deliberate practice believe that simply _doing_ the thing you want to get better at will **not** move you into mastery. Instead, you need to practice in ways that will continue to push you to grow your skills.
+Deliberate practice is in the sphere of the 10,000-hour rule covered by Malcolm Gladwell in [_Outliers_](https://en.wikipedia.org/wiki/Outliers_\(book\)). Proponents of deliberate practice believe that simply _doing_ the thing you want to get better at will **not** move you into mastery. Instead, you need to practice in ways that will continue to push you to grow your skills.
 
 While I don't expect to become a world-class writer, I think there can be value in taking some cues from deliberate practice and developing my practice regimen around these ideas. To start, let's take a look at what the six traits of deliberate practice (as interpreted by the article's author, [Cal Newport](https://www.calnewport.com/about/)) are:
 
 * **Designed to improve performance** - You should be stretching beyond your abilities during practice.
 
-* **Repetition** - Similar to writers' suggestion to write everyday; deliberate practice means you are working on the task more than just when you are doing the real thing.
+* **Repetition** - Similar to writers' suggestion to write every day; deliberate practice means you are working on the task more than just when you are doing the real thing.
 
 * **Feedback** - When practicing, you should have external feedback readily and continuously available.
 
 * **Mentally demanding** - The article compares the "mindless" acts of practicing scales with deliberate practices which should require you to be mindful and focused.
 
-* **Hard to do** - By doing things that stretch you to your limits and that you must focus on, you are likely going to be doing something difficult for you. The article specifically calls out deliberate practice  as not doing something you do well and enjoy doing.
+* **Hard to do** - By doing things that stretch you to your limits and that you must focus on, you are likely going to be doing something difficult for you. The article specifically calls out deliberate practice as not doing something you do well and enjoy doing.
 
 * **Driven by good goals** - Goals should focus on the _process_ of getting to the outcome and not just the outcome alone.
 
 ### How Am I Doing
 
-How does my current attempt at writing more through blog posts stack up against the traits of good deliberate practice?
+How does my current attempt at writing more through blogging stack up against the traits of good deliberate practice?
 
 ##### Designed to improve performance
 
 Clear and succinct, long-form writing to a wider audience is currently pushing beyond my limits.
 
-Hopefully, writing a blog post becomes easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine; I may need to push myself to write for longer sessions, on topics I know nothing about, or find ways to incorporate visual aids into my writing. I believe making changes like this is what could keep this routine **deliberate** practice, and not fall into rote territory.
+Hopefully, writing a blog post becomes easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine. I may need to push myself to write for longer sessions, cover topics I know nothing about, or find ways to incorporate visual aids into my writing. I believe making changes like this is what could keep this routine **deliberate** practice, and not rote.
 
 ##### Repetition
 
@@ -93,19 +93,19 @@ I think this is the biggest hole I have in deliberate practice.
 
 The ideal would be to have an editor review my work after each writing session. A more realistic approach may be to get reviews on drafts of my posts. 
 
-I could start by asking people I know. I think this level of feedback would help me grow beyond my current skillset. Depending on my goals, at some point having a professional editor review my work and provide feedback may be necessary to get to the next level. 
+I could start by asking people I know. I think this level of feedback would help me grow beyond my current skill set. Depending on my goals, at some point having a professional editor review my work and provide feedback may be necessary to get to the next level. 
 
 I do not currently have any plans around this, but it may be something I should consider if I want next-level improvement.
 
 ##### Mentally demanding
 
-I do find find I need to be focused to write. Since each post is on a different topic, I can hopefully avoid falling into the trap of "doing scales" and performing mindless repetitions.
+I do find I need to be focused to write. Since each post is on a different topic, I can hopefully avoid falling into the trap of "doing scales" and performing mindless repetitions.
 
-There are aspect of the process that are more difficult than others. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and grammar. Rather than accept suggestions, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
+There are aspects of the process that are more difficult than others. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and grammar. Rather than accept suggestions, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
 
 ##### Hard to do
 
-I have found writing and editing my posts to be difficult. I often find I go into a post thinking I know what I'm going to write, but when sitting down to write struggle to get idea out in a coherent manner. Instead, I have to spend a lot of time shaping and connecting my thoughts to get an idea fully formed. Even when I have a draft in place there are numerous rounds of re-reading and editing to try to improve it.
+I have found writing and editing my posts to be difficult. I often find I go into a post thinking I know what I'm going to write, but when sitting down to write struggle to get the idea out in a coherent manner. Instead, I have to spend a lot of time shaping and connecting my thoughts to get an idea fully formed. Even when I have a draft in place there are numerous rounds of re-reading and editing to try to improve it.
 
 ##### Driven by good goals
 
@@ -115,7 +115,6 @@ Since my current aim is to write for a small amount of time every day, that may 
 
 ## Conclusion
 
-Please consider favoring asyncrounous communication at work for a few weks, and see what the results are. If, like me, you find value in them, work with your team to adopt practices that promote this style of communication. 
+Please consider favoring asynchronous communication at work for a few weeks, and see what the results are. If, like me, you find value in them, work with your team to adopt practices that promote this style of communication. 
 
-You may also consider what practices you could adopt for yourself to improve your ability to write. While there is room for improvement (especially around a very key component of feedback), I am hopeful that my short, daily writing sessions move me in the right direction. If blogging doens't interest you, consider journaling, working on open source documentation, or creating tutorials (written or videos). 
-
+You may also consider what practices you could adopt for yourself to improve your ability to write. While there is room for improvement (especially around a very key component of feedback), I am hopeful that my short, daily writing sessions move me in the right direction. If blogging doesn't interest you, consider journaling, working on open-source documentation, or creating tutorials (written or videos). 
