@@ -4,7 +4,7 @@ date: '2020-06-22T06:45:02.123Z'
 categories: ['writing', 'remote work']
 ---
 
-At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. For some (lucky) people, remote working has been the norm. Fortunately for those of us new to remote work, those with experience have been sharing their knowledge. One of the areas of advice that sticks out to me is around managing communication and interruptions.
+At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. Fortunately for those of us new to remote work, there is an experienced remote workforce willing to share their knowledge. One of the areas of advice that sticks out to me is around managing communication and interruptions.
 
 When in an office, I would sometimes worry about the [cost of interruptions and context switching](https://blog.rescuetime.com/context-switching/), but it was easy (and therefore common) to simply walk over to a co-worker and interrupt them with a question. Since remote workers have an additional barrier to the impromptu, in-person interruptions, many seem to use it to their advantage to develop less disruptive practices around communicating as a team.
 
@@ -20,16 +20,15 @@ From what I've gathered so far, the major benefits of preferring written communi
 
 * Giving the author more time to flesh out and express their ideas.
 
-    By taking the time to write and review their thoughts, the person sharing
-    the idea has a more fleshed out idea they are sharing with the group.
+This allows the author to cover the topic more comprehensively. 
 
 * Avoiding disrupting the work of others.
 
-    It's often not necessary to immediately interrupt someone to discuss an idea. By having something written they can read at a better time, you avoid disrupting their work (and potentially reducing the quality). 
+It's often not necessary to immediately interrupt someone to discuss an idea. Avoid disrupting others (potentially reducing their quality of work) by sharing ideas in a format that can be consumed on their time.
 
 * Giving consumers more time to think and respond.
 
-    Just like it's often not necessary to interrupt someone to share an idea, it's also usually not necessary to give an immediate response. Asking a question in-person or via chat can make it feel like an immediate response is necessary. Instead, we should be giving readers some time to think about the idea and form thoughtful responses. 
+Just like it's often not necessary to interrupt someone to share an idea, it's also usually not necessary to give an immediate response. Asking a question in-person or via chat can make it feel like an immediate response is necessary. Instead, we should be giving readers some time to think about the idea and form thoughtful responses. 
 
 At work, we have started leveraging longer-form, asynchronous communication in the form of [SBARs](https://en.wikipedia.org/wiki/SBAR). We are using the Situation, Background, Assessment, Recommendation format as the output of some of our more exploratory tickets on a new project. Since reviewers have more time to read and think about the recommendation, we have seen feedback that changed the recommendation and saved us from going down a potentially wrong path.
 
