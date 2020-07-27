@@ -12,41 +12,69 @@ In this post, I'll cover the different ways these operators can be use and how t
 
 ### Building up Array
 
-In both Ruby and JavaScript you can use splat/spread to build up new array for existing arrays. I see this more commonly used in JavaScript, especially in projects that try leverage functional paradigms. Because this build up a _new_ array, you are not mutating state and can define pure functions.
+In both Ruby and JavaScript you can use splat/spread to build up new array from existing arrays. I see this more commonly used in JavaScript, especially in projects that try leverage functional paradigms. Because this builds up a _new_ array, you are not mutating state and can define pure functions.
 
 #### Ruby
 
 ```ruby
-## create initial array
+# create initial array
 > arr1 = [1,2,3]
 => [1, 2, 3]
 
-## without the splat opartor
-> arr2 = [arr1, 4]
+# without the splat operator
+> [arr1, 4]
 => [[1, 2, 3], 4]
 
-## with the splat operator
-> arr2 = [*arr1, 4]
+# with the splat operator
+> [*arr1, 4]
 => [1, 2, 3, 4]
 
-## combining multiple array
+# combining multiple array
 [*[1,2,3], 4, 5, *[6,7,8]]
 => [1, 2, 3, 4, 5, 6, 7, 8]
 ```
+
+##### Idiomatic Ruby
+
+In Ruby, this approach does not seem very common. Instead, it seems more common to use the [`+`](https://ruby-doc.org/core-2.7.0/Array.html#method-i-2B) operator:
+
+```ruby
+# create initial arrays
+> a1 = [1,2,3]
+=> [1, 2, 3]
+> a2 = [3,4,5]
+=> [3, 4, 5]
+
+# create a new, combined array
+> a3 = a1 + a2
+=> [1, 2, 3, 3, 4, 5]
+
+# the original arrays are untouched
+> a1
+=> [1, 2, 3]
+> a2
+=> [3, 4, 5]
+
+# and we still have our new array
+> a3
+=> [1, 2, 3, 3, 4, 5]
+```
+
+It's probably even more common to see options that update the original array rather than returning a new one, but that is a different use case than what we are covering here.
 
 #### JavaScript
 
 ```javascript
 // create initial array
-> arr1 = [1,2,3]
+> let arr1 = [1,2,3]
 => (3) [1, 2, 3]
 
 // without the spread operator
-> arr2 = [arr1, 4]
+> [arr1, 4]
 => (2) [Array(3), 4]
 
 // with the spread operator
-arr2 = [...arr1, 4]
+> [...arr1, 4]
 (4) [1, 2, 3, 4]
 
 // combining multiple array
@@ -56,7 +84,7 @@ arr2 = [...arr1, 4]
 
 ### Passing into functions
 
-Take in an unknown number of arguments and put them all into the same array. This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose. 
+Take in an unknown number of arguments and put them all into the same array. This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose.
 
 #### Ruby
 
@@ -65,10 +93,10 @@ def greet_friends(*friends)
   "Hello, #{friends.join(', ')}"
 end
 
-> greet_friends("joey")
+> greet_friends "joey"
 => "Hello, joey"
 
-> greet_friends(%w(joey ross rachel chandler phoebe monica))
+> greet_friends %w(joey ross rachel chandler phoebe monica)
 => "Hello, joey, ross, rachel, chandler, phoebe, monica"
 ```
 
@@ -114,19 +142,73 @@ We will go throug the `**` operator as the behaves more similarly to the spread 
 ### Ruby
 
 ```ruby
-> {**{ name: "Bob", age: 46}, business: "Bob's Burgers"}
+# create our initial hash
+> bob = { name: "Bob", age: 46}
+
+# splat it to create a new hash with additional fields
+> {**bob, business: "Bob's Burgers"}
 => {:name=>"Bob", :age=>46, :business=>"Bob's Burgers"}
 ```
 
 #### JavaScript
 
 ```JavaScript
-> { ...{name: "Richard" , age: 31}, business: "Pied Piper"}
+// create our initial object
+> let richard = {name: "Richard" , age: 31}
+
+// spread it to create a new object with additional fields
+> { ...richard, business: "Pied Piper"}
 => {name: "Richard", age: 31, business: "Pied Piper"}
 ```
 
-#### Passing into functions
+### Passing into functions
 
-### Ruby
+#### Ruby
 
-Ruby will default to having the last argument of a method take in a Hash. 
+```ruby
+def greet(name, **options)
+  greeting = options[:greeting] || "Hello"
+
+  "#{greeting}, #{name}"
+end
+
+greet("teddy")
+=> "Hello, teddy"
+
+greet("mort", greeting: "Hiya")
+=> "Hiya, mort"
+```
+
+In Ruby, you can leave off the `**` and it will default to allowing your last argument to be a hash (or not):
+
+```ruby
+def greet_two(name, options)
+  greeting = options[:greeting] || "Hello"
+
+  "#{greeting}, #{name}"
+ end
+
+greet_two("jimmy", greeting: "get out of here")
+=> "get out of here, jimmy" 
+```
+
+you can also treat the last argument as _not_ a Hash
+
+```ruby
+def greet_three(name, greeting)
+  "#{greeting}, #{name}"
+end
+
+# pass in not a hash
+greet_three("Mr. Fischoeder", "We'll have the rent next week")
+=> "We'll have the rent next week, Mr. Fischoeder"
+
+# it can accept a hash, but we don't handle that very well
+> greet_three("Mr. Fischoeder", greeting: "We'll have the rent next week")
+=> "{:greeting=>\"We'll have the rent next week\"}, Mr. Fischoeder"
+```
+
+#### JavaScript
+
+```javascript
+```
