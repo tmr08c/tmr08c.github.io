@@ -103,11 +103,13 @@ end
 #### JavaScript
 
 ```javascript
-const greet_classmates = (...classmates) => (`Hello, ${classmates.join(", ")}` )
+const greetClassmates = (...classmates) => (`Hello, ${classmates.join(", ")}` )
 
-> greet_classmates("abed", "annie", "troy", "jeff", "britta", "pierce", "shirley", "señor chang")
+> greetClassmates("abed", "annie", "troy", "jeff", "britta", "pierce", "shirley", "señor chang")
 => "Hello, abed, annie, troy, jeff, britta, pierce, shirley, señor chang"
 ```
+
+You may also see this referred to as the [rest parameter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters) syntax.
 
 ## Hashes and Objects
 
@@ -210,5 +212,31 @@ greet_three("Mr. Fischoeder", "We'll have the rent next week")
 
 #### JavaScript
 
+JavaScript doesn't support the curly-bracket-less key-value pair syntax as a function argument.
+
 ```javascript
+const f = (...o) => { console.log(o) }
+
+> f(a: 1, b: 2)
+=> VM202:1 Uncaught SyntaxError: missing ) after argument list
 ```
+
+Instead, you could combine JavaScript's support for [object destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) with the splat operator. This let's you pull out certain parts of the object and keep a reference to everything else.
+
+```javascript
+const fullCast = { stars: ["Leading Lady", "Main Man"], supporting: ["Wacky Neighbor", "Funny Friend"] }
+
+// Destructure the object to access `stars`, but lose everything else
+const basicCredits = ({stars: stars}) => { console.log(`Starring: ${stars.join(", ")}!`) }
+
+> basicCredits(fullCast)
+=> "Starring: Leading Lady, Main Man!"
+
+// Destructure the object to access `stars`, and put the rest of the object in `rest`
+const inclusiveCredits = ({stars: stars, ...rest}) => { console.log(`Starring: ${stars.join(", ")}! Full cast includes...`, rest) }
+
+> inclusiveCredits(fullCast)
+=> "Starring: Leading Lady, Main Man! Full cast includes... {supporting: Array(2)}"
+
+```
+
