@@ -4,9 +4,9 @@ date:   "2020-06-24T17:23:34.781Z"
 categories: ["ruby", "javascript"]
 ---
 
-At work, we have been developing a mentorship and training program to help provider our more junior team members time for [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). Our team's primary applications are built using Ruby on Rails, but we increasing our usage of React as well. Since we have a polyglot stack, we will often discuss topics by comparing Ruby to JavaScript (Elixir often makes its way into discussions as well 💜). A recent Ruby discussion led to reviewing the Ruby ["splat"](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) (and also [here](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Hash+to+Keyword+Arguments+Conversion) for hashes) operator and comparing it to [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) in JavaScript.
+At work, we have been developing a mentorship and training program to help provider our more junior team members time for [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/).  A recent Ruby discussion led to reviewing the Ruby ["splat"](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) (and also [here](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Hash+to+Keyword+Arguments+Conversion) for hashes) operator and comparing it to [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) in JavaScript.
 
-In this post, I'll cover the different ways these operators can be use and how to use them in both Ruby and JavaScript.
+In this post, I'll cover the different ways these operators can be used in both Ruby and JavaScript.
 
 ## Arrays
 
@@ -60,7 +60,7 @@ In Ruby, this approach does not seem very common. Instead, it seems more common 
 => [1, 2, 3, 3, 4, 5]
 ```
 
-It's probably even more common to see options that update the original array rather than returning a new one, but that is a different use case than what we are covering here.
+It's probably _even more_ common to see options that update the original array rather than returning a new one, but that is a different use case than what we are covering here.
 
 #### JavaScript
 
@@ -84,7 +84,9 @@ It's probably even more common to see options that update the original array rat
 
 ### Passing into functions
 
-Take in an unknown number of arguments and put them all into the same array. This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose.
+These operators allow functions to take in an unknown number of arguments and will combine them into a single array argument.
+
+This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose.
 
 #### Ruby
 
@@ -103,7 +105,9 @@ end
 #### JavaScript
 
 ```javascript
-const greetClassmates = (...classmates) => (`Hello, ${classmates.join(", ")}` )
+const greetClassmates = (...classmates) => (
+  `Hello, ${classmates.join(", ")}` 
+)
 
 > greetClassmates("abed", "annie", "troy", "jeff", "britta", "pierce", "shirley", "señor chang")
 => "Hello, abed, annie, troy, jeff, britta, pierce, shirley, señor chang"
@@ -117,7 +121,7 @@ For our Ruby examples, we will be using a [`Hash`](https://ruby-doc.org/core-2.7
 
 ### Two options for Ruby
 
-In Ruby, you can use the Array version of the splat operator (`*`) for some operations, but there is also a Hash-specific operator as well (`**`). Here's how they both work:
+In Ruby, you can use the [Array version of the splat operator (`*`)](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) for some operations, but there is also a [Hash-specific operator as well (`**`)](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Hash+to+Keyword+Arguments+Conversion). Here's how they both work:
 
 ```ruby
 # create our initial hash
@@ -158,7 +162,8 @@ We will go throug the `**` operator as the behaves more similarly to the spread 
 // create our initial object
 > let richard = {name: "Richard" , age: 31}
 
-// spread it to create a new object with additional fields
+// spread it to create a new object
+// with additional fields
 > { ...richard, business: "Pied Piper"}
 => {name: "Richard", age: 31, business: "Pied Piper"}
 ```
@@ -202,11 +207,18 @@ def greet_three(name, greeting)
 end
 
 # pass in not a hash
-greet_three("Mr. Fischoeder", "We'll have the rent next week")
+greet_three(
+  "Mr. Fischoeder",
+  "We'll have the rent next week"
+)
 => "We'll have the rent next week, Mr. Fischoeder"
 
-# it can accept a hash, but we don't handle that very well
-> greet_three("Mr. Fischoeder", greeting: "We'll have the rent next week")
+# it can accept a hash,
+# but we didn't se it up to handle that very well
+> greet_three(
+  "Mr. Fischoeder",
+  greeting: "We'll have the rent next week"
+)
 => "{:greeting=>\"We'll have the rent next week\"}, Mr. Fischoeder"
 ```
 
@@ -224,19 +236,34 @@ const f = (...o) => { console.log(o) }
 Instead, you could combine JavaScript's support for [object destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) with the splat operator. This let's you pull out certain parts of the object and keep a reference to everything else.
 
 ```javascript
-const fullCast = { stars: ["Leading Lady", "Main Man"], supporting: ["Wacky Neighbor", "Funny Friend"] }
+const fullCast = {
+  stars: ["Leading Lady", "Main Man"], 
+  supporting: ["Wacky Neighbor", "Funny Friend"] 
+}
 
-// Destructure the object to access `stars`, but lose everything else
-const basicCredits = ({stars: stars}) => { console.log(`Starring: ${stars.join(", ")}!`) }
+// Destructure the object to access `stars`,
+// but don't get access anything else
+const basicCredits = ({stars: stars}) => {
+  console.log(`Starring: ${stars.join(", ")}!`) 
+}
 
 > basicCredits(fullCast)
 => "Starring: Leading Lady, Main Man!"
 
-// Destructure the object to access `stars`, and put the rest of the object in `rest`
-const inclusiveCredits = ({stars: stars, ...rest}) => { console.log(`Starring: ${stars.join(", ")}! Full cast includes...`, rest) }
+// Destructure the object to access `stars`,
+// and put the rest of the object in `rest`
+const inclusiveCredits = ({stars: stars, ...rest}) => {
+  console.log(`Starring: ${stars.join(", ")}!`)
+  console.log(`Full cast includes...`, rest)
+}
 
 > inclusiveCredits(fullCast)
-=> "Starring: Leading Lady, Main Man! Full cast includes... {supporting: Array(2)}"
-
+=> "Starring: Leading Lady, Main Man!"
+   "Full cast includes... {supporting: Array(2)}"
 ```
 
+## Conclusion
+
+We've covered how the `splat` and `spread` operators can be used in their respective languages for building up new instances of data structures as well as for function arguments.
+
+Hopefully, this post `spread` some knowledge, and can be useful as a quick reference for how to use these operators in different scenarios.
