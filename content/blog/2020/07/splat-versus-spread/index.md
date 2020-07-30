@@ -4,7 +4,7 @@ date:   "2020-06-24T17:23:34.781Z"
 categories: ["ruby", "javascript"]
 ---
 
-At work, we have been developing a mentorship and training program to help provider our more junior team members time for [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/).  A recent Ruby discussion led to reviewing the Ruby ["splat"](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) (and also [here](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Hash+to+Keyword+Arguments+Conversion) for hashes) operator and comparing it to [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) in JavaScript.
+At work, we have been developing a mentorship and training program to help provide our team members time for [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). A recent Ruby discussion led to reviewing the Ruby ["splat"](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) (and also [here](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Hash+to+Keyword+Arguments+Conversion) for hashes) operator and comparing it to [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) in JavaScript.
 
 In this post, I'll cover the different ways these operators can be used in both Ruby and JavaScript.
 
@@ -12,13 +12,13 @@ In this post, I'll cover the different ways these operators can be used in both 
 
 ### Building up Array
 
-In both Ruby and JavaScript you can use splat/spread to build up new array from existing arrays. I see this more commonly used in JavaScript, especially in projects that try leverage functional paradigms. Because this builds up a _new_ array, you are not mutating state and can define pure functions.
+In both Ruby and JavaScript, you can use splat/spread to build up a new array from existing arrays.
 
 #### Ruby
 
 ```ruby
 # create initial array
-> arr1 = [1,2,3]
+> arr1 = [1, 2, 3]
 => [1, 2, 3]
 
 # without the splat operator
@@ -30,7 +30,7 @@ In both Ruby and JavaScript you can use splat/spread to build up new array from 
 => [1, 2, 3, 4]
 
 # combining multiple array
-[*[1,2,3], 4, 5, *[6,7,8]]
+[*[1, 2, 3], 4, 5, *[6, 7, 8]]
 => [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
@@ -40,9 +40,9 @@ In Ruby, this approach does not seem very common. Instead, it seems more common 
 
 ```ruby
 # create initial arrays
-> a1 = [1,2,3]
+> a1 = [1, 2, 3]
 => [1, 2, 3]
-> a2 = [3,4,5]
+> a2 = [3, 4, 5]
 => [3, 4, 5]
 
 # create a new, combined array
@@ -64,9 +64,11 @@ It's probably _even more_ common to see options that update the original array r
 
 #### JavaScript
 
+I see this more commonly used in JavaScript, especially in projects that follow functional paradigms. Because this builds up a _new_ array, you are not mutating state and can define [pure functions](https://en.wikipedia.org/wiki/Pure_function).
+
 ```javascript
 // create initial array
-> let arr1 = [1,2,3]
+> let arr1 = [1, 2, 3]
 => (3) [1, 2, 3]
 
 // without the spread operator
@@ -78,7 +80,7 @@ It's probably _even more_ common to see options that update the original array r
 (4) [1, 2, 3, 4]
 
 // combining multiple array
-> [...[1,2,3], 4, 5, ...[6,7,8]]
+> [...[1, 2, 3], 4, 5, ...[6, 7, 8]]
 => (8) [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
@@ -86,9 +88,9 @@ It's probably _even more_ common to see options that update the original array r
 
 These operators allow functions to take in an unknown number of arguments and will combine them into a single array argument.
 
-This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose.
-
 #### Ruby
+
+This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose.
 
 ```ruby
 def greet_friends(*friends)
@@ -117,7 +119,7 @@ You may also see this referred to as the [rest parameter](https://developer.mozi
 
 ## Hashes and Objects
 
-For our Ruby examples, we will be using a [`Hash`](https://ruby-doc.org/core-2.7.1/Hash.html). For our JavaScript examples we will be using an [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object). Fortunately, the syntax for creating the structures is the same in both languages.
+For our Ruby examples, we will be using a [`Hash`](https://ruby-doc.org/core-2.7.1/Hash.html). For our JavaScript examples, we will be using an [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object). Fortunately, the syntax for creating the structures is the same in both languages.
 
 ### Two options for Ruby
 
@@ -136,7 +138,7 @@ In Ruby, you can use the [Array version of the splat operator (`*`)](https://doc
 => {:name=>"morty smith", :age=>14}
 ```
 
-We will go throug the `**` operator as the behaves more similarly to the spread operator in JavaScript. It's worth noting the behavior of the `*` version as it's similar to what you may encounter when working with the [`Enumberable`](https://ruby-doc.org/core-2.7.1/Enumerable.html) module.
+We will go through the `**` operator as it behaves more similarly to the spread operator in JavaScript. It's worth noting the behavior of the `*` version as it's similar to what you may encounter when working with the [`Enumberable`](https://ruby-doc.org/core-2.7.1/Enumerable.html) module.
 
 ```ruby
 > h.map { |element| element }
@@ -151,6 +153,11 @@ We will go throug the `**` operator as the behaves more similarly to the spread 
 # create our initial hash
 > bob = { name: "Bob", age: 46}
 
+# without the splat operator,
+# you will get a syntax error
+> {bob, business: "Bob's Burgers"}
+=> SyntaxError ((irb):3: syntax error, unexpected ',', expecting =>)
+
 # splat it to create a new hash with additional fields
 > {**bob, business: "Bob's Burgers"}
 => {:name=>"Bob", :age=>46, :business=>"Bob's Burgers"}
@@ -161,6 +168,12 @@ We will go throug the `**` operator as the behaves more similarly to the spread 
 ```JavaScript
 // create our initial object
 > let richard = {name: "Richard" , age: 31}
+
+// without the spread operator,
+// javascript will re-use the variable name as the key
+// with a value of the original object
+> {richard, business: "Pied Piper"}
+=> {richard:  {name: "Richard" , age: 31}, business: "Pied Piper"}
 
 // spread it to create a new object
 // with additional fields
@@ -193,7 +206,7 @@ def greet_two(name, options)
   greeting = options[:greeting] || "Hello"
 
   "#{greeting}, #{name}"
- end
+end
 
 greet_two("jimmy", greeting: "get out of here")
 => "get out of here, jimmy" 
@@ -214,7 +227,7 @@ greet_three(
 => "We'll have the rent next week, Mr. Fischoeder"
 
 # it can accept a hash,
-# but we didn't se it up to handle that very well
+# but we didn't set it up to handle that very well
 > greet_three(
   "Mr. Fischoeder",
   greeting: "We'll have the rent next week"
@@ -233,18 +246,18 @@ const f = (...o) => { console.log(o) }
 => VM202:1 Uncaught SyntaxError: missing ) after argument list
 ```
 
-Instead, you could combine JavaScript's support for [object destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) with the splat operator. This let's you pull out certain parts of the object and keep a reference to everything else.
+Instead, you could combine JavaScript's support for [object destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) with the splat operator. This lets you pull out certain parts of the object and keep a reference to everything else.
 
 ```javascript
 const fullCast = {
-  stars: ["Leading Lady", "Main Man"], 
-  supporting: ["Wacky Neighbor", "Funny Friend"] 
+  stars: ["Leading Lady", "Main Man"],
+  supporting: ["Nosy Neighbor", "Funny Friend"]
 }
 
 // Destructure the object to access `stars`,
 // but don't get access anything else
 const basicCredits = ({stars: stars}) => {
-  console.log(`Starring: ${stars.join(", ")}!`) 
+  console.log(`Starring: ${stars.join(", ")}!`)
 }
 
 > basicCredits(fullCast)
@@ -260,7 +273,7 @@ const inclusiveCredits = ({stars: stars, ...rest}) => {
 > inclusiveCredits(fullCast)
 => "Starring: Leading Lady, Main Man!"
    "Full cast includes... {supporting: Array(2)}"
-```
+  ```
 
 ## Conclusion
 
