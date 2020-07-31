@@ -1,10 +1,10 @@
 ---
 title:  "Comparing Ruby's Splat with JavaScript's Spread"
-date:   "2020-06-24T17:23:34.781Z"
+date:   "2020-07-31T06:59:34.781Z"
 categories: ["ruby", "javascript"]
 ---
 
-At work, we have been developing a mentorship and training program to help provide our team members time for [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). A recent Ruby discussion led to reviewing the Ruby ["splat"](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) (and also [here](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Hash+to+Keyword+Arguments+Conversion) for hashes) operator and comparing it to [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) in JavaScript.
+At work, we have been developing a mentorship and training program to help provide our team members time for [deliberate practice](https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/). A recent Ruby discussion led to reviewing the Ruby ["splat"](https://docs.ruby-lang.org/en/2.0.0/syntax/calling_methods_rdoc.html#label-Array+to+Arguments+Conversion) operator and comparing it to [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) in JavaScript.
 
 In this post, I'll cover the different ways these operators can be used in both Ruby and JavaScript.
 
@@ -46,25 +46,15 @@ In Ruby, this approach does not seem very common. Instead, it seems more common 
 => [3, 4, 5]
 
 # create a new, combined array
-> a3 = a1 + a2
-=> [1, 2, 3, 3, 4, 5]
-
-# the original arrays are untouched
-> a1
-=> [1, 2, 3]
-> a2
-=> [3, 4, 5]
-
-# and we still have our new array
-> a3
+a1 + a2
 => [1, 2, 3, 3, 4, 5]
 ```
 
-It's probably _even more_ common to see options that update the original array rather than returning a new one, but that is a different use case than what we are covering here.
+It's probably _even more_ common to see options that update (or mutate) the original array rather than returning a new one, but that is a different use case than what we are covering here.
 
 #### JavaScript
 
-I see this more commonly used in JavaScript, especially in projects that follow functional paradigms. Because this builds up a _new_ array, you are not mutating state and can define [pure functions](https://en.wikipedia.org/wiki/Pure_function).
+I see this more commonly used in JavaScript, especially in projects that follow functional paradigms. Because this builds up a _new_ array, you are not mutating state. This means you can use this strategy and still define [pure functions](https://en.wikipedia.org/wiki/Pure_function).
 
 ```javascript
 // create initial array
@@ -90,7 +80,7 @@ These operators allow functions to take in an unknown number of arguments and wi
 
 #### Ruby
 
-This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building DSLs that look more like written prose.
+This is how I most commonly see this operator used in Ruby-land. I think this is because it can lend itself well to building [DSLs](https://martinfowler.com/books/dsl.html) that look more like written prose.
 
 ```ruby
 def greet_friends(*friends)
@@ -133,6 +123,11 @@ In Ruby, you can use the [Array version of the splat operator (`*`)](https://doc
 > ar = *h
 => [[:name, "morty smith"], [:age, 14]]
 
+# turn this back into a Hash with 
+# https://www.rubydoc.info/stdlib/core/Kernel:Hash
+> Hash[[[:name, "morty smith"], [:age, 14]]]
+=> {:name=>"morty smith", :age=>14}
+
 # use the `**` operator, or hash-version of splat
 > h2 = {**h}
 => {:name=>"morty smith", :age=>14}
@@ -147,11 +142,13 @@ We will go through the `**` operator as it behaves more similarly to the spread 
 
 ### Building up new objects
 
+Just like we saw [above](#building-up-array), we can use these operators to build up new hashes/objects from existing ones.
+
 ### Ruby
 
 ```ruby
 # create our initial hash
-> bob = { name: "Bob", age: 46}
+> bob = {name: "Bob", age: 46}
 
 # without the splat operator,
 # you will get a syntax error
@@ -246,7 +243,7 @@ const f = (...o) => { console.log(o) }
 => VM202:1 Uncaught SyntaxError: missing ) after argument list
 ```
 
-Instead, you could combine JavaScript's support for [object destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) with the splat operator. This lets you pull out certain parts of the object and keep a reference to everything else.
+Instead, you can combine JavaScript's support for [object destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) with the splat operator. This lets you pull out certain parts of the object and keep a reference to everything else.
 
 ```javascript
 const fullCast = {
