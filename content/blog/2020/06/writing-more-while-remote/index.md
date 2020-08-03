@@ -4,9 +4,9 @@ date: '2020-06-22T06:45:02.123Z'
 categories: ['writing', 'remote work']
 ---
 
-At the time of writing, many people across the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. Fortunately for those of us new to remote work, there is an experienced remote workforce willing to share their knowledge.
+At the time of writing, many people around the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. Fortunately for those of us new to remote work, there is an experienced remote workforce willing to share their knowledge.
 
-One of the areas of advice that sticks out to me is around managing communication and interruptions. A lot of this thinking has been spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the [Rework podcast](https://rework.fm/) (from the team at Basecamp). At Basecamp, they have a bias towards asynchronous communication:
+One of the areas of advice that sticks out to me is around managing communication and interruptions. A lot of this thinking has been spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the [Rework podcast](https://rework.fm/). At [Basecamp](https://basecamp.com/), they have a bias towards asynchronous communication:
 
 
 > At Basecamp our perfect-world rule of thumb is 'real-time sometimes, asynchronous most of the time'.
@@ -23,11 +23,13 @@ The major benefits of preferring written communication are (1) improving the qua
 
 * Avoiding disrupting the work of others.
 
-  It's often not necessary to immediately interrupt someone to discuss an idea. Avoid disrupting others (potentially reducing their quality of work) by sharing ideas in a format that can be consumed on their time.
+  It's often unnecessary to immediately interrupt someone to discuss an idea. Avoid disrupting others (potentially reducing their quality of work) by sharing ideas in a format that can be consumed on their time.
 
 * Giving consumers more time to think and respond.
 
-  Just like it's often not necessary to interrupt someone to share an idea, it's also usually not necessary to give an immediate response. Asking a question in-person or via chat can make it feel like an immediate response is necessary. Instead, we should be giving readers some time to think about the idea and form thoughtful responses. 
+  Just like it's often not necessary to interrupt someone to share an idea, it's also usually not necessary to give an immediate response. 
+
+  Asking a question in-person or via chat can set a tone of expecting prompt replies. Instead, we should be giving readers some time to think about the idea and form thoughtful feedback. 
 
 At work, we have started leveraging longer-form, asynchronous communication in the form of [SBARs](https://en.wikipedia.org/wiki/SBAR). We are using the Situation, Background, Assessment, Recommendation format as the output of some of our more exploratory [spikes](http://www.extremeprogramming.org/rules/spike.html) on a new project. Since reviewers have more time to read and think about the recommendation, we have seen feedback that changed the recommendation and saved us from going down a potentially wrong path.
 
@@ -35,7 +37,7 @@ Another benefit we have found is having an "artifact" that documents the discuss
 
 ## Wanting to get better
 
-After hearing the suggestions and seeing some initial benefit of preferring written communication, I want to make it my default form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asynchronous, written communication.
+After hearing the suggestions and seeing some initial benefit of preferring written communication, I have decided to make it my preferred form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asynchronous, written communication.
 
 Now that I am bought into the idea of leveraging longer-form, asynchronous, written communication, I want to work to get better at it. For me better means:
 
@@ -51,7 +53,7 @@ One way I am trying to improve my written communication is through practice; spe
 >
 > -- Everyone?
 
-In order to get better, I need to practice.
+To get better, I need to practice.
 
 With writing, a common suggestion is to [write every day](https://medium.com/the-mission/the-daily-routine-of-20-famous-writers-and-how-you-can-use-them-to-succeed-1603f52fbb77#:~:text=Stephen%20King%20writes%206%20pages,it's%20just%20another%20day's%20work.). While I do some non-code writing each day at work (creating tickets, writing up code reviews, etc.), I want to find opportunities to "practice" outside of doing the "real thing" at work.
 
@@ -61,11 +63,11 @@ This separation between practice and doing the real thing is inspired by the ide
 
 Deliberate practice is in the sphere of the 10,000-hour rule covered by Malcolm Gladwell in [_Outliers_](https://en.wikipedia.org/wiki/Outliers_\(book\)). Proponents of deliberate practice believe that simply _doing_ the thing you want to get better at will **not** move you into mastery. Instead, you need to practice in ways that will continue to push you to grow your skills. While I don't expect to become a world-class writer, I think there can be value in taking some cues from deliberate practice and developing my practice regimen around these ideas.
 
-To start, let's take a look at what the six traits of deliberate practice (as interpreted by [the article's]((https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/)) author, [Cal Newport](https://www.calnewport.com/about/)) are:
+To start, let's take a look at what the six traits of deliberate practice (as interpreted by [this article]((https://www.calnewport.com/blog/2010/01/06/the-grandmaster-in-the-corner-office-what-the-study-of-chess-experts-teaches-us-about-building-a-remarkable-life/)) by [Cal Newport](https://www.calnewport.com/about/)) are:
 
 * **Designed to improve performance** - You should be stretching beyond your abilities during practice.
 
-* **Repetition** - Similar to writers' suggestion to write every day, you should regularly work on your skills. One key aspect of  deliberate practice is working on developing the skill more than just when you are using it for the "real" task.
+* **Repetition** - Similar to writers' suggestion to write every day, you should regularly work on your skills. One key aspect of deliberate practice is working on developing the skill more than just when you are using it for the "real" task.
 
 * **Feedback** - When practicing, you should have external feedback readily and continuously available.
 
@@ -103,7 +105,7 @@ I do not currently have any plans around this, but it may be something I should 
 
 I do find I need to be focused to write. Since each post is on a different topic, I can hopefully avoid falling into the trap of "doing scales" and performing mindless repetitions.
 
-There are aspects of the process that are more easier than others. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and grammar. Rather than accept suggestions, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
+There are aspects of the process that are easier than others. One example of an easier task is using a tool like [Grammarly](https://www.grammarly.com/) to check spelling and grammar. Rather than accept suggestions, there's an opportunity for me to better understand why something is grammatically incorrect or how a word is properly spelled.
 
 #### Hard to do
 
@@ -120,3 +122,4 @@ Since my current aim is to write for a small amount of time every day, that may 
 Please consider favoring asynchronous communication at work for a few weeks and see what the results are. If, like me, you find value in them, work with your team to adopt practices that promote this style of communication.
 
 You may also consider what practices you could adopt for yourself to improve your ability to write. While there is room for improvement (especially around a very key component of feedback), I am hopeful that my short, daily writing sessions move me in the right direction. If blogging doesn't interest you, consider journaling, working on open-source documentation, or creating tutorials (written or videos). 
+
