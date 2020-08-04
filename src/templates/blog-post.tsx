@@ -7,13 +7,13 @@ interface BlogPostTemplateProps {
   data: {
     site: {
       siteMetadata: {
-        title: string;
+        repsitory: string;
       };
     };
     markdownRemark: {
       id: string;
-      excerpt: string;
       html: string;
+      excerpt: string;
       frontmatter: {
         title: string;
         date: string;
@@ -23,13 +23,36 @@ interface BlogPostTemplateProps {
   pageContext: {
     previous: any;
     next: any;
+    slug: string;
   };
+}
+
+const EditOnGitHubLink = ({ repoLink, postSlug} : { repoLink: string, postSlug: string}) => {
+  const linkToPostInRepo = `${repoLink}/tree/develop/content/blog/${postSlug}index.md`
+  const linkToIssues = `${repoLink}/issues`
+
+  return (
+    <div className="text-center font-light text-sm text-gray-600 italic mb-3">
+      Notice something wrong? You can{' '}
+
+      <a href={linkToPostInRepo} target="_blank" rel="noopener noreferrer" className="underline hover:text-living-coral-500">
+        propose an edit
+      </a>
+
+      {' '}or{' '}
+
+      <a href={linkToIssues} target="_blank" rel="noopener noreferrer" className="underline hover:text-living-coral-500">
+        open an issue
+      </a>.
+    </div>
+  )
 }
 
 class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
   render() {
     const post = this.props.data.markdownRemark;
-    const { previous, next } = this.props.pageContext;
+    const { slug, previous, next } = this.props.pageContext;
+    const repoLink = this.props.data.site.siteMetadata.repsitory
 
     return (
       <Layout>
@@ -54,7 +77,10 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
             marginBottom: "14px"
           }}
         />
-        <ul className="flex flex-wrap justify-between">
+
+        <EditOnGitHubLink repoLink={repoLink} postSlug={slug} />
+
+        <ul className="text-gray-600 flex flex-wrap justify-between">
           <li>
             {previous && (
               <Link to={previous.fields.slug} rel="prev">
@@ -84,8 +110,7 @@ export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
     site {
       siteMetadata {
-        title
-        author
+        repsitory
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
