@@ -1,13 +1,12 @@
 ---
 title: 'Writing While Remote'
-date: '2020-06-22T06:45:02.123Z'
+date: '2020-08-04T06:44:02.123Z'
 categories: ['writing', 'remote work']
 ---
 
 At the time of writing, many people around the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. Fortunately for those of us new to remote work, there is an experienced remote workforce willing to share their knowledge.
 
 One of the areas of advice that sticks out to me is around managing communication and interruptions. A lot of this thinking has been spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the [Rework podcast](https://rework.fm/). At [Basecamp](https://basecamp.com/), they have a bias towards asynchronous communication:
-
 
 > At Basecamp our perfect-world rule of thumb is 'real-time sometimes, asynchronous most of the time'.
 >
@@ -19,7 +18,7 @@ The major benefits of preferring written communication are (1) improving the qua
 
 * Giving the author more time to flesh out and express their ideas.
 
-  This allows the author to cover the topic more comprehensively. 
+  This allows the author to cover the topic more comprehensively.
 
 * Avoiding disrupting the work of others.
 
@@ -27,9 +26,9 @@ The major benefits of preferring written communication are (1) improving the qua
 
 * Giving consumers more time to think and respond.
 
-  Just like it's often not necessary to interrupt someone to share an idea, it's also usually not necessary to give an immediate response. 
+  Just like it's often not necessary to interrupt someone to share an idea, it's also usually not necessary to give an immediate response.
 
-  Asking a question in-person or via chat can set a tone of expecting prompt replies. Instead, we should be giving readers some time to think about the idea and form thoughtful feedback. 
+  Asking a question in-person or via chat can set a tone of expecting prompt replies. Instead, we should be giving readers some time to think about the idea and form thoughtful feedback.
 
 At work, we have started leveraging longer-form, asynchronous communication in the form of [SBARs](https://en.wikipedia.org/wiki/SBAR). We are using the Situation, Background, Assessment, Recommendation format as the output of some of our more exploratory [spikes](http://www.extremeprogramming.org/rules/spike.html) on a new project. Since reviewers have more time to read and think about the recommendation, we have seen feedback that changed the recommendation and saved us from going down a potentially wrong path.
 
@@ -37,9 +36,9 @@ Another benefit we have found is having an "artifact" that documents the discuss
 
 ## Wanting to get better
 
-After hearing the suggestions and seeing some initial benefit of preferring written communication, I have decided to make it my preferred form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asynchronous, written communication.
+After hearing the suggestions and seeing some initial benefit of preferring written communication, I am striving to make it my preferred form of communication. Even when we are back in a more traditional office setting, I plan to maintain a bias towards asynchronous, written communication.
 
-Now that I am bought into the idea of leveraging longer-form, asynchronous, written communication, I want to work to get better at it. For me better means:
+Now that I am bought, I want to work to get better at it. For me better means:
 
 * Faster - part of the benefit of this style of communication is taking the time to flesh out your thoughts, but I believe I have some opportunity around translating thoughts into words on a page more quickly.
 * Clearer - with synchronous communication, if you don't make sense at first, the person can immediately ask you to clarify. You lose out on this quick iteration with asynchronous communication. Ideally, taking the upfront time to flesh out the writing can help avoid these issues.
@@ -85,21 +84,21 @@ How does my current attempt at writing more through blogging stack up against th
 
 Clear and succinct, long-form writing to a wider audience is currently pushing beyond my limits.
 
-Hopefully, through practices, this will become easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine. I may need to push myself to write for longer sessions, cover topics I know nothing about, or find ways to incorporate visual aids into my writing.
+Hopefully, through practice, this will become easier for me. As I approach that point, to keep the deliberate practice stretching me to my limits, I will need to change my routine. I may need to push myself to write for longer sessions, cover topics I know nothing about, or find ways to incorporate visual aids into my writing.
 
 #### Repetition
 
-I am currently working to spend about one Pomodoro of time (25 minutes) each day writing for non-work purposes (posts for this blog). This isn't a large amount of time, but there is consistency and it is in addition to my normal writing duties.
+I am currently working to spend about one Pomodoro of time (25 minutes) each day writing for non-work purposes (i.e., posts for this blog). This isn't a large amount of time, but there is consistency and it is in addition to my normal writing duties.
 
 #### Feedback
 
-I think this is the biggest hole I have in deliberate practice.  
+I think this is the biggest hole I have in deliberate practice.
 
-The ideal would be to have an editor review my work after each writing session. A more realistic approach may be to get reviews on drafts of my posts. 
+The ideal would be to have an editor review my work after each writing session. A more realistic approach may be to get reviews on drafts of my posts.
 
-I could start by asking people I know. I think this level of feedback would help me grow beyond my current skill set. Depending on my goals, at some point having a professional editor review my work and provide feedback may be necessary to get to the next level. 
+I could start by asking people I know. However, depending on my goals, at some point having a professional editor review my work and provide feedback may be necessary to get to the next level.
 
-I do not currently have any plans around this, but it may be something I should consider if I want next-level improvement.
+I do not currently have any plans around this, but it is something I will be considering as my practice regimen continues.
 
 #### Mentally demanding
 
@@ -113,7 +112,7 @@ I have found writing and editing my posts to be difficult. I often find I go int
 
 #### Driven by good goals
 
-I currently don't have very clear or specific goals. Essentially, I want to write more because I think it's a good skill to have (and I want to [build habits](https://jamesclear.com/identity-based-habits) that make me more like the person I think I want to be). 
+I currently don't have very clear or specific goals. Essentially, I want to write more because I think it's a good skill to have (and I want to [build habits](https://jamesclear.com/identity-based-habits) that make me more like the person I think I want to be).
 
 Since my current aim is to write for a small amount of time every day, that may be considered focusing on the _process_ more than the _outcome_.
 
@@ -121,5 +120,4 @@ Since my current aim is to write for a small amount of time every day, that may 
 
 Please consider favoring asynchronous communication at work for a few weeks and see what the results are. If, like me, you find value in them, work with your team to adopt practices that promote this style of communication.
 
-You may also consider what practices you could adopt for yourself to improve your ability to write. While there is room for improvement (especially around a very key component of feedback), I am hopeful that my short, daily writing sessions move me in the right direction. If blogging doesn't interest you, consider journaling, working on open-source documentation, or creating tutorials (written or videos). 
-
+You may also consider what practices you could adopt for yourself to improve your ability to write. While there is room for improvement (especially around a very key component of feedback), I am hopeful that my short, daily writing sessions move me in the right direction. If blogging doesn't interest you, consider journaling, working on open-source documentation, or creating tutorials (written or videos).
