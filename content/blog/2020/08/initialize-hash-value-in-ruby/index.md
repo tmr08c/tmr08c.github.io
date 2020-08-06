@@ -35,19 +35,85 @@ The second form of initializing a Hash with by passing in an object. This object
 > If obj is specified, this single object will be used for all default values.
 
 ```ruby
-# create a new hash, use 0 as the default
-> zero_hash = Hash.new(0)
+> hash_with_default = Hash.new(:default)
 => {}
 
-# look for a key that doesn't exist,
-# get back 0 instead of nil
-> zero_hash[:not_here]
-=> 0
+> hash_with_default[:set] = :not_default
+
+> hash_with_default[:set]
+=> :not_default
+> hash_with_default[:not_set]
+=> :default
 ```
 
-### Going Well
+### Use Case
 
 The most common way I reach for this is when I am using my hash as a counter.
+
+For example, let's say we want to count the number of each type of letter in a sentence. Without a default value you would have to do something lke:
+
+```ruby
+sentence =
+  "to be, or not to be"
+
+letter_counter = Hash.new
+
+sentence.each_char do |letter|
+  letter_counter[letter] ||= 0
+  letter_counter[letter] += 1
+end
+
+> letter_counter
+=> {"t"=>3, "o"=>4, " "=>5, "b"=>2, "e"=>2, ","=>1, "r"=>1, "n"=>1}
+```
+
+By setting a default value of `0`, you would no longer need to do `letter_counter[letter] ||= 0`, because if a key doesn't exist, we get a default value of `0`.
+
+```ruby
+sentence =
+  "to be, or not to be"
+
+letter_counter = Hash.new(0)
+
+sentence.each_char do |letter|
+  letter_counter[letter] += 1
+end
+
+> letter_counter
+=> {"t"=>3, "o"=>4, " "=>5, "b"=>2, "e"=>2, ","=>1, "r"=>1, "n"=>1}
+```
+
+While it's only a one line difference in this example, it helps remove some of the ceremony and enables more focus on what the code is actually trying to do.
+
+### Mutable Objects
+
+When using the argument version of `Hash.new` there is a phase in the documentation you need to keep in mind (emphasis mine):
+
+> If obj is specified, this **single object** will be used for all default values.
+
+The **single object** passed in will be (re)used for all defaults. In our example above we use an integer. These are not mutable, `0` will always be `0` when using it as the default. However, if you use something that can be mutated, you will see the impact of this single object re-use.
+
+```ruby
+company = Hash.new([])
+
+# If you haven't seen `<<=` it's a form of
+# abbreviate assignment (https://ruby-doc.org/core-2.7.1/doc/syntax/assignment_rdoc.html#label-Abbreviated+Assignment)
+# similar to `+=` above, but with the shovel operator
+company[:development] <<= "dev1"
+company[:marketing] <<= "marketer1"
+company[:development] <<= "dev2"
+company[:hr] <<= "hr-rep1"
+company[:hr] <<= "hr-rep2"
+
+company
+=> {
+  :development => ["dev1", "marketer1", "dev2", "hr-rep1", "hr-rep2"],
+  :marketing =>   ["dev1", "marketer1", "dev2", "hr-rep1", "hr-rep2"],
+  :hr =>          ["dev1", "marketer1", "dev2", "hr-rep1", "hr-rep2"]
+}
+```
+
+What's going on here? Every hash value looks the same!?
 
 
 # TODO
