@@ -97,7 +97,7 @@ The **single object** passed in will be (re)used for all defaults. In our exampl
 company = Hash.new([])
 
 # If you haven't seen `<<=` it's a form of
-# abbreviate assignment (https://ruby-doc.org/core-2.7.1/doc/syntax/assignment_rdoc.html#label-Abbreviated+Assignment)
+# [abbreviate assignment](https://ruby-doc.org/core-2.7.1/doc/syntax/assignment_rdoc.html#label-Abbreviated+Assignment)
 # similar to `+=` above, but with the shovel operator
 company[:development] <<= "dev1"
 company[:marketing] <<= "marketer1"
@@ -115,6 +115,27 @@ company
 
 What's going on here? Every hash value looks the same!?
 
+This is the result of using the **single object** for all default values. When we are setting an new key in the hash we set it to default to an array. However, rather than getting a new array each time, we get the **same** array. Another way to think about this could be something like: 
+
+```ruby
+default_value = []
+
+Hash.new(default_value)
+```
+
+With it written this way, the behavior may be less surprising. When you pass in a variable, it seems more intutive that the same variable would be used.
+
+You will see similar behavior with most other objects you use a default and should be aware of whether that is the behavior you wnt or not.
+
+So, is it possible to use something like an array as your default value? That brings us to our third and final option for setting defaults with `Hash.new`, the block syntax.
+
+## Using a block
+
+The third option for setting a default argument with `Hash.new` is to pass it a block.
+
+* Example of block being called (and not)
+* Returning just an array
+* The SO answer where you return the whole hash `hsh2 = Hash.new { |hash, key| hash[key] = [] }`
 
 # TODO
 
