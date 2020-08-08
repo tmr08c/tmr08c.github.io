@@ -131,9 +131,165 @@ So, is it possible to use something like an array as your default value? That br
 
 ## Using a block
 
-The third option for setting a default argument with `Hash.new` is to pass it a block.
+The third option for setting a default argument with `Hash.new` is to pass it a block. When you try to access a key that does not exist, this block will be executed and will return whatever is returned in the block. Let's see what this looks like:
 
-* Example of block being called (and not)
+```ruby
+h = Hash.new do
+  puts "it looks like you don't have this key yet. Let's set it to an empty array"
+  []
+end
+
+> h[:new]
+it looks like you don't have this key yet. Let's set it to an empty array
+=> []
+```
+
+One thing to notice is that our hash isn't actually updated: 
+Now that we are defaulting to an empty array, do we run into the same problems we had before?
+
+```ruby
+> h[:new]
+it looks like you don't have this key yet. Let's set it to an empty array
+=> []
+
+# should we have our `new` key now? 
+> h
+# ...it doesn't look like it...
+=> {}
+
+# maybe we need to set it to something? 
+> h[:new] << 1
+it looks like you don't have this key yet. Let's set it to an empty array
+=> [1]
+
+# ...still doesn't seem to stick around
+> h
+=> {}
+>
+```
+
+It looks like our block is being run and returning an empty array, but it isn't actually setting up the key/value pair in the hash. One way around this is the `<<=` operator we saw before.
+
+```ruby
+h[:new] <<= 1
+```
+
+This can be thought of as:
+
+```ruby
+h[:new] = h[:new] << 1
+```
+
+The right side version of `h[:new]` will be run first. This will run our block which will return our empty array.
+
+```ruby
+h[:new]
+# => []
+```
+
+We then add `1` onto our array.
+
+```ruby
+h[:new] << 1
+# => [1]
+```
+
+Our right side is now `[1]`.
+
+We will then set `h[:new]` equal to the right side, which is our array. 
+
+```ruby
+h[:new] = [1]
+
+> h
+=> {:new=>[1]}
+```
+
+Now that we are able to actually _set_ things in our hash, do we run into the same problem where all of our values look the same? 
+
+```ruby
+> h[:first] <<= 1
+it looks like you don't have this key yet. Let's set it to an empty array
+=> [1]
+> h[:second] <<= 2
+it looks like you don't have this key yet. Let's set it to an empty array
+=> [2]
+> h[:first] <<= 3
+=> [1, 3]
+
+> h
+=> {:first=>[1, 3], :second=>[2]}
+```
+
+We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block each time and creating a _new_ array everytime.
+
+Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to simply shovel in a new value and it update my hash without me having to go through the extra steps. 
+
+Fortunately, we can make this happen!
+
+
+```ruby
+> h
+=> {}
+```
+
+```ruby
+> j = Hash.new do |hash, key|
+irb(main):009:1* puts "Currently, your hash looks like #{h}. This does not include the key #{key}. We will set it to a default empty
+array"
+irb(main):010:1> []
+irb(main):011:1> end
+=> {}
+irb(main):012:0> j
+=> {}
+irb(main):013:0> j[:new]
+Currently, your hash looks like {}. This does not include the key new. We will set it to a default empty array
+=> []
+irb(main):014:0> j[:old] = :set
+=> :set
+irb(main):015:0> j
+=> {:old=>:set}
+irb(main):016:0> j[:new]
+Currently, your hash looks like {}. This does not include the key new. We will set it to a default empty array
+=> []
+irb(main):018:0> j
+=> {:old=>:set}
+irb(main):019:0> j[:new]
+Currently, your hash looks like {}. This does not include the key new. We will set it to a default empty array
+=> []
+irb(main):020:0> j = Hash.new do |hash, key|
+irb(main):021:1* puts "Currently, your hash looks like #{hash}. This does not include the key '#{key}'. We will set it to a default e
+mpty array"
+irb(main):022:1> end
+=> {}
+irb(main):023:0> j
+=> {}
+irb(main):024:0> j
+=> {}
+irb(main):025:0> j = Hash.new do |hash, key|
+irb(main):026:1* puts "Currently, your hash looks like #{hash}. This does not include the key '#{key}'. We will set it to a default e
+mpty array"
+irb(main):027:1> []
+irb(main):028:1> end
+=> {}
+irb(main):029:0> j
+=> {}
+irb(main):030:0> j[:new]
+Currently, your hash looks like {}. This does not include the key 'new'. We will set it to a default empty array
+=> []
+irb(main):031:0> j[:old] = :set
+=> :set
+irb(main):032:0> j
+=> {:old=>:set}
+irb(main):033:0> j[:new]
+Currently, your hash looks like {:old=>:set}. This does not include the key 'new'. We will set it to a default empty array
+=> []
+irb(main):034:0> j
+=> {:old=>:set}
+irb(main):035:0>
+```
+
+
 * Returning just an array
 * The SO answer where you return the whole hash `hsh2 = Hash.new { |hash, key| hash[key] = [] }`
 
