@@ -144,8 +144,9 @@ it looks like you don't have this key yet. Let's set it to an empty array
 => []
 ```
 
-One thing to notice is that our hash isn't actually updated: 
 Now that we are defaulting to an empty array, do we run into the same problems we had before?
+
+### Returning a value
 
 ```ruby
 > h[:new]
@@ -154,7 +155,7 @@ it looks like you don't have this key yet. Let's set it to an empty array
 
 # should we have our `new` key now? 
 > h
-# ...it doesn't look like it...
+# it doesn't look like it...
 => {}
 
 # maybe we need to set it to something? 
@@ -221,74 +222,79 @@ it looks like you don't have this key yet. Let's set it to an empty array
 => {:first=>[1, 3], :second=>[2]}
 ```
 
-We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block each time and creating a _new_ array everytime.
+We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block each time and creating a _new_ array every time.
 
 Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to simply shovel in a new value and it update my hash without me having to go through the extra steps. 
 
 Fortunately, we can make this happen!
 
+### Returning a hash
+
+In our previous example, our block was returning our default value, but not setting the key in our hash. Let's see if there's anything in the documentation that helps us:
+
+> If a block is specified, it will be called with the hash object and the key,
+> and should return the default value. It is the block's responsibility to
+> store the value in the hash if required.
+
+The documentation notes the block is responsible for storing the value in the hash. Since we weren't explicitly doing that in our previous block, it seems it's expect behavior that the values aren't set. But how do we set them? 
+
+Something else the documentation points out is the block will be passed the hash and they key requested. Previously, we weren't capturing the arguments passed into the hash. Below is an example where we capture the arugments and print out some information about them.
 
 ```ruby
-> h
-=> {}
+# in the block we receive `hash` and `key`
+h = Hash.new do |hash, key|
+  # print some information about our arguments
+  puts "Currently, your hash looks like #{hash}. " \
+       "This does not include the key '#{key}'. " \
+       "We will set it to a default empty array"
+
+  # do what we did before and simply retrun the array
+  []
+end
 ```
+
+Let's take a look at what this looks like when we try to set a access a key that doesn't exist:
 
 ```ruby
-> j = Hash.new do |hash, key|
-irb(main):009:1* puts "Currently, your hash looks like #{h}. This does not include the key #{key}. We will set it to a default empty
-array"
-irb(main):010:1> []
-irb(main):011:1> end
-=> {}
-irb(main):012:0> j
-=> {}
-irb(main):013:0> j[:new]
-Currently, your hash looks like {}. This does not include the key new. We will set it to a default empty array
-=> []
-irb(main):014:0> j[:old] = :set
+> h[:old] = :set
 => :set
-irb(main):015:0> j
-=> {:old=>:set}
-irb(main):016:0> j[:new]
-Currently, your hash looks like {}. This does not include the key new. We will set it to a default empty array
+
+> h[:new]
+  Currently, your hash looks like {:old=>:set}. \
+  This does not include the key 'new'. \
+  We will set it to a default empty array
 => []
-irb(main):018:0> j
+
+# we stil have the old key,
+# but didn't set te new one
+> j
 => {:old=>:set}
-irb(main):019:0> j[:new]
-Currently, your hash looks like {}. This does not include the key new. We will set it to a default empty array
-=> []
-irb(main):020:0> j = Hash.new do |hash, key|
-irb(main):021:1* puts "Currently, your hash looks like #{hash}. This does not include the key '#{key}'. We will set it to a default e
-mpty array"
-irb(main):022:1> end
-=> {}
-irb(main):023:0> j
-=> {}
-irb(main):024:0> j
-=> {}
-irb(main):025:0> j = Hash.new do |hash, key|
-irb(main):026:1* puts "Currently, your hash looks like #{hash}. This does not include the key '#{key}'. We will set it to a default e
-mpty array"
-irb(main):027:1> []
-irb(main):028:1> end
-=> {}
-irb(main):029:0> j
-=> {}
-irb(main):030:0> j[:new]
-Currently, your hash looks like {}. This does not include the key 'new'. We will set it to a default empty array
-=> []
-irb(main):031:0> j[:old] = :set
-=> :set
-irb(main):032:0> j
-=> {:old=>:set}
-irb(main):033:0> j[:new]
-Currently, your hash looks like {:old=>:set}. This does not include the key 'new'. We will set it to a default empty array
-=> []
-irb(main):034:0> j
-=> {:old=>:set}
-irb(main):035:0>
 ```
 
+### Storing a value
+
+From this example, we can see we are passed in the hash we working with and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array in the examples above, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want? 
+
+
+```ruby
+irb(main):018:0> h = Hash.new { |hash, key| hash[key] = [] } 
+=> {}
+irb(main):019:0> h[:izzo]
+=> []
+irb(main):020:0> h
+=> {:izzo=>[]}
+irb(main):021:0> h[:first] << 1
+=> [1]
+irb(main):022:0> h[:second] << 2
+=> [2]
+irb(main):023:0> h[:first] << "one
+irb(main):024:0" "
+=> [1, "one\n"]
+irb(main):025:0> h[:first] << "uno"
+=> [1, "one\n", "uno"]
+irb(main):026:0> h
+=> {:izzo=>[], :first=>[1, "one\n", "uno"], :second=>[2]}
+```
 
 * Returning just an array
 * The SO answer where you return the whole hash `hsh2 = Hash.new { |hash, key| hash[key] = [] }`
@@ -296,3 +302,4 @@ irb(main):035:0>
 # TODO
 
 - [ ] Maybe look into [`default=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D)
+- [ ] Maybe a tl;dr at the top? 
