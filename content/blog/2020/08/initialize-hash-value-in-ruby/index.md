@@ -6,6 +6,49 @@ categories: ['ruby']
 
 Ruby's [`Hash.new`](https://ruby-doc.org/core-2.7.1/Hash.html#method-c-new) has three different options for initialization. These options differ in how they handle missing keys. In this post, we will cover the three different styles as well as some potential issues you could run into.
 
+## tl;dr
+
+Before we cover the different options more in depth, here's an overview of the different options that can be used as a reference:
+
+```ruby
+# == No arguments, default to `nil`
+new_hash = Hash.new
+=> {}
+
+> new_hash[:not_here]
+=> nil
+
+> bare_hash = {}
+=> {}
+
+> bare_hash[:also_not_here]
+=> nil
+
+# == Argument, use as default
+> hash_with_default = Hash.new(:default)
+=> {}
+
+> hash_with_default[:not_set]
+=> :default
+
+# WARNING! This will use the **same** object
+> h = Hash.new([])
+> h[:first] <<= 1
+> h[:second] <<= 2
+
+> h
+=> {:first=>[1, 2], :second=>[1, 2]}
+
+# == Using a block
+> h = Hash.new { |hash, key| hash[key] = [] }
+
+# reference a key that doesn't exist
+> h[:izzo]
+
+> h
+=> {:izzo=>[]}
+```
+
 ## No Argument
 
 The primary way most people create hashes is not actually using `Hash.new`, but instead created a new hash directly with the `{}` syntax. For the purposes of handling missing keys, this behaves the same as `Hash.new`.
@@ -115,7 +158,7 @@ company
 
 What's going on here? Every hash value looks the same!?
 
-This is the result of using the **single object** for all default values. When we are setting an new key in the hash we set it to default to an array. However, rather than getting a new array each time, we get the **same** array. Another way to think about this could be something like: 
+This is the result of using the **single object** for all default values. When we are setting an new key in the hash we set it to default to an array. However, rather than getting a new array each time, we get the **same** array. Another way to think about this could be something like:
 
 ```ruby
 default_value = []
@@ -248,7 +291,7 @@ h = Hash.new do |hash, key|
        "This does not include the key '#{key}'. " \
        "We will set it to a default empty array"
 
-  # do what we did before and simply retrun the array
+  # do what we did before and simply return the array
   []
 end
 ```
@@ -273,28 +316,43 @@ Let's take a look at what this looks like when we try to set a access a key that
 
 ### Storing a value
 
-From this example, we can see we are passed in the hash we working with and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array in the examples above, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want? 
+From this example, we can see we are passed in the hash we working with and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want? 
 
 
 ```ruby
-irb(main):018:0> h = Hash.new { |hash, key| hash[key] = [] } 
+# set `hash`'s `key` to equal our default empty array
+> h = Hash.new { |hash, key| hash[key] = [] }
 => {}
-irb(main):019:0> h[:izzo]
+
+# reference a key that doesn't exist
+> h[:izzo]
 => []
-irb(main):020:0> h
+
+# confirm that it is still set
+> h
 => {:izzo=>[]}
-irb(main):021:0> h[:first] << 1
-=> [1]
-irb(main):022:0> h[:second] << 2
-=> [2]
-irb(main):023:0> h[:first] << "one
-irb(main):024:0" "
-=> [1, "one\n"]
-irb(main):025:0> h[:first] << "uno"
-=> [1, "one\n", "uno"]
-irb(main):026:0> h
-=> {:izzo=>[], :first=>[1, "one\n", "uno"], :second=>[2]}
 ```
+
+Does this also avoid our problem of re-using the same value?
+
+```ruby
+> h[:first] << 1
+> h[:second] << 2
+> h[:first] << "one"
+> h[:first] << "uno"
+
+> h
+=>  :first=>[1, "one", "uno"], :second=>[2]}
+```
+
+It does! Again, we are seeing that running the block creates a _new_ array every time the block is executed instead of reusing the same instance like we saw with the parameter version.
+
+## Conclusion
+
+In the post we've covered the three different default value options when initializing the hash - give no arguments and defaulting to `nil`, giving an argument and use that **same** object for the value each time, and using a block set the value of the new key.
+
+We also covered any gotchas you may run into with each of these options so you can avoid problems when using these options in your code.
+
 
 * Returning just an array
 * The SO answer where you return the whole hash `hsh2 = Hash.new { |hash, key| hash[key] = [] }`
@@ -302,4 +360,6 @@ irb(main):026:0> h
 # TODO
 
 - [ ] Maybe look into [`default=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D)
+    - https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D will act like the argument
+    - https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D will act like the block
 - [ ] Maybe a tl;dr at the top? 
