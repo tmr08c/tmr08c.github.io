@@ -166,11 +166,46 @@ default_value = []
 Hash.new(default_value)
 ```
 
-With it written this way, the behavior may be less surprising. When you pass in a variable, it seems more intutive that the same variable would be used.
+With it written this way, the behavior may be less surprising. When you pass in a variable, it seems more intuitive that the same variable would be used.
 
 You will see similar behavior with most other objects you use a default and should be aware of whether that is the behavior you wnt or not.
 
 So, is it possible to use something like an array as your default value? That brings us to our third and final option for setting defaults with `Hash.new`, the block syntax.
+
+### Alternative default value syntax
+
+While the focus of this post is about leveraging `Hash.new`, there is an alternative way to get this same functionality. Ruby also provides a [`Hash#default=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D) method. This works the same as passing in an object to `#new` and will re-use the single object passed in. One advantage of using the `#default=` method is that you can use it with hashes created using the implicit form (`{}`).
+
+```ruby
+> h = {}
+> h.default = []
+
+> h[:first] <<= 1
+> h[:second] <<= 2
+
+> h
+=> {:first=>[1, 2], :second=>[1, 2]}
+```
+
+You could also change it if you wanted:
+
+```ruby
+> h = {}
+
+> h.default = 0
+> h[:first] += 1
+
+> h.default = []
+> h[:second] <<= 2
+
+> h
+=> {:first=>1, :second=>[2]}
+```
+
+It's possible this is more of a [footgun](https://en.wiktionary.org/wiki/footgun), than something you want to do in practice.
+
+In general, I think there is value in co-locating the creation of the hash with the the default value for ease of understanding and debugging. Setting the default in other places can make it harder to track down what the expected behavior should be.
+
 
 ## Using a block
 
@@ -271,7 +306,7 @@ Even though our problem of sharing the same value is gone, it is a bit unintuiti
 
 Fortunately, we can make this happen!
 
-### Returning a hash
+### Updating the hash
 
 In our previous example, our block was returning our default value, but not setting the key in our hash. Let's see if there's anything in the documentation that helps us:
 
@@ -346,6 +381,70 @@ Does this also avoid our problem of re-using the same value?
 ```
 
 It does! Again, we are seeing that running the block creates a _new_ array every time the block is executed instead of reusing the same instance like we saw with the parameter version.
+
+### Alternative default block syntax
+
+Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
+
+```ruby
+> h.default_proc = proc { |hash, key| hash[key] = [] }
+=> #<Proc:0x00007f98620de268@(>
+> h[:first] << 1
+=> [1]
+irb(main):082:0> h
+=> {:first=>[1]}
+```
+
+One thing to point out is that the `default=` method covered above will **not** work if given a proc:
+
+```ruby
+> h.default = proc { |hash, key| hash[key] = [] }
+
+# instead of getting back an array, 
+# we get a Proc
+> h[:first] << 1
+=> #<Proc:0x00007f98620c8120>
+
+# and nothing is set in our hash
+> h
+=> {}
+```
+
+It also looks like Ruby will only let you have `default` or `default_proc` set and will clear out the other when one is set.
+
+```ruby
+> h = {}
+
+# check initial defaults
+> h.default
+=> nil
+> h.default_proc
+=> nil
+
+# set default
+> h.default = 0
+> h.default
+=> 0
+
+# set default_proc
+> h.default_proc = proc { [] } 
+=> #<Proc:0x00007f986313bc00@(>
+
+# default is now nil
+> h.default
+=> nil
+> h.default_proc
+=> #<Proc:0x00007f986313bc00@(>
+
+# set default again
+> h.default = 1
+
+# default_proc is now nil
+> h.default_proc
+=> nil
+> h.default
+=> 1
+```
 
 ## Conclusion
 
