@@ -8,26 +8,21 @@ Ruby's [`Hash.new`](https://ruby-doc.org/core-2.7.1/Hash.html#method-c-new) has 
 
 ## tl;dr
 
-Before we cover the different options more in depth, here's an overview of the different options that can be used as a reference:
+Before we cover the different options more in depth, here's an overview of the different options.
 
 ```ruby
 # == No arguments, default to `nil`
 new_hash = Hash.new
-=> {}
-
 > new_hash[:not_here]
 => nil
 
+# same behavior with `{}` style
 > bare_hash = {}
-=> {}
-
 > bare_hash[:also_not_here]
 => nil
 
 # == Argument, use as default
 > hash_with_default = Hash.new(:default)
-=> {}
-
 > hash_with_default[:not_set]
 => :default
 
@@ -51,25 +46,21 @@ new_hash = Hash.new
 
 ## No Argument
 
-The primary way most people create hashes is not actually using `Hash.new`, but instead created a new hash directly with the `{}` syntax. For the purposes of handling missing keys, this behaves the same as `Hash.new`.
+The primary way most people create hashes is not actually using `Hash.new`, but instead created a new hash directly with the `{}` syntax (the implicit form). For the purposes of handling missing keys, this behaves the same as `Hash.new`.
 
 When you use `Hash.new` with no arguments (or the `{}` syntax). The hash will return `nil` if a key does not exist.
 
 ```ruby
 new_hash = Hash.new
-=> {}
-
 > new_hash[:not_here]
 => nil
 
 > bare_hash = {}
-=> {}
-
 > bare_hash[:also_not_here]
 => nil
 ```
 
-Aside from the [evils of `nil`](https://thoughtbot.com/blog/if-you-gaze-into-nil-nil-gazes-also-into-you), this works most of the time. Add in some `if`s or the [safe navigation operator](https://ruby-doc.org/core-2.6/doc/syntax/calling_methods_rdoc.html#label-Safe+navigation+operator) and you're all set!
+Aside from the [evils of `nil`](https://thoughtbot.com/blog/if-you-gaze-into-nil-nil-gazes-also-into-you), this works for most situations. By adding in some `if`s or using the [safe navigation operator](https://ruby-doc.org/core-2.6/doc/syntax/calling_methods_rdoc.html#label-Safe+navigation+operator) you can successfully work with the default of `nil`.
 
 ## With an Argument
 
@@ -79,8 +70,6 @@ The second form of initializing a Hash with by passing in an object. This object
 
 ```ruby
 > hash_with_default = Hash.new(:default)
-=> {}
-
 > hash_with_default[:set] = :not_default
 
 > hash_with_default[:set]
@@ -91,7 +80,7 @@ The second form of initializing a Hash with by passing in an object. This object
 
 ### Use Case
 
-The most common way I reach for this is when I am using my hash as a counter.
+I most commonly reach for this style when using a hash as a counter.
 
 For example, let's say we want to count the number of each type of letter in a sentence. Without a default value you would have to do something lke:
 
@@ -107,7 +96,14 @@ sentence.each_char do |letter|
 end
 
 > letter_counter
-=> {"t"=>3, "o"=>4, " "=>5, "b"=>2, "e"=>2, ","=>1, "r"=>1, "n"=>1}
+=> {"t"=>3,
+    "o"=>4,
+    " "=>5,
+    "b"=>2,
+    "e"=>2,
+    ","=>1,
+    "r"=>1,
+    "n"=>1}
 ```
 
 By setting a default value of `0`, you would no longer need to do `letter_counter[letter] ||= 0`, because if a key doesn't exist, we get a default value of `0`.
@@ -123,18 +119,25 @@ sentence.each_char do |letter|
 end
 
 > letter_counter
-=> {"t"=>3, "o"=>4, " "=>5, "b"=>2, "e"=>2, ","=>1, "r"=>1, "n"=>1}
+=> {"t"=>3,
+    "o"=>4,
+    " "=>5,
+    "b"=>2,
+    "e"=>2,
+    ","=>1,
+    "r"=>1,
+    "n"=>1}
 ```
 
 While it's only a one line difference in this example, it helps remove some of the ceremony and enables more focus on what the code is actually trying to do.
 
 ### Mutable Objects
 
-When using the argument version of `Hash.new` there is a phase in the documentation you need to keep in mind (emphasis mine):
+When using the argument version of `Hash.new` there is a phrase in the documentation you need to keep in mind (emphasis mine):
 
 > If obj is specified, this **single object** will be used for all default values.
 
-The **single object** passed in will be (re)used for all defaults. In our example above we use an integer. These are not mutable, `0` will always be `0` when using it as the default. However, if you use something that can be mutated, you will see the impact of this single object re-use.
+The **single object** passed in will be (re)used for all defaults. In our example above we use an integer. These are not mutable, so `0` will always be `0` when using it as the default. However, if you use something that can be mutated, you will see the impact of this single object re-use.
 
 ```ruby
 company = Hash.new([])
@@ -145,20 +148,17 @@ company = Hash.new([])
 company[:development] <<= "dev1"
 company[:marketing] <<= "marketer1"
 company[:development] <<= "dev2"
-company[:hr] <<= "hr-rep1"
-company[:hr] <<= "hr-rep2"
 
 company
 => {
-  :development => ["dev1", "marketer1", "dev2", "hr-rep1", "hr-rep2"],
-  :marketing =>   ["dev1", "marketer1", "dev2", "hr-rep1", "hr-rep2"],
-  :hr =>          ["dev1", "marketer1", "dev2", "hr-rep1", "hr-rep2"]
+  :development => ["dev1", "marketer1", "dev2"],
+  :marketing =>   ["dev1", "marketer1", "dev2"]
 }
 ```
 
 What's going on here? Every hash value looks the same!?
 
-This is the result of using the **single object** for all default values. When we are setting an new key in the hash we set it to default to an array. However, rather than getting a new array each time, we get the **same** array. Another way to think about this could be something like:
+This is the result of using the **single object** for all default values. When we are setting a new key in the hash we set it to default to an array. However, rather than getting a new array each time, we get the **same** array. Another way to think about this could be something like:
 
 ```ruby
 default_value = []
@@ -168,9 +168,7 @@ Hash.new(default_value)
 
 With it written this way, the behavior may be less surprising. When you pass in a variable, it seems more intuitive that the same variable would be used.
 
-You will see similar behavior with most other objects you use a default and should be aware of whether that is the behavior you wnt or not.
-
-So, is it possible to use something like an array as your default value? That brings us to our third and final option for setting defaults with `Hash.new`, the block syntax.
+You will see similar behavior with most other objects you use as a default in this way, and should be aware of whether that is the behavior you want or not.
 
 ### Alternative default value syntax
 
@@ -187,7 +185,7 @@ While the focus of this post is about leveraging `Hash.new`, there is an alterna
 => {:first=>[1, 2], :second=>[1, 2]}
 ```
 
-You could also change it if you wanted:
+You could also change it if you wanted, though it's possible this is more of a [footgun](https://en.wiktionary.org/wiki/footgun) than something you want to do in practice.
 
 ```ruby
 > h = {}
@@ -202,10 +200,7 @@ You could also change it if you wanted:
 => {:first=>1, :second=>[2]}
 ```
 
-It's possible this is more of a [footgun](https://en.wiktionary.org/wiki/footgun), than something you want to do in practice.
-
-In general, I think there is value in co-locating the creation of the hash with the the default value for ease of understanding and debugging. Setting the default in other places can make it harder to track down what the expected behavior should be.
-
+In general, I think there is value in co-locating the creation of the hash with the default value. This makes it easier to understand and debug. Setting the default in (multiple) other places can make it harder to track down what the expected behavior should be.
 
 ## Using a block
 
@@ -213,12 +208,14 @@ The third option for setting a default argument with `Hash.new` is to pass it a 
 
 ```ruby
 h = Hash.new do
-  puts "it looks like you don't have this key yet. Let's set it to an empty array"
+  puts "It looks like you don't have this key yet." \
+        " Let's set it to an empty array"
   []
 end
 
 > h[:new]
-it looks like you don't have this key yet. Let's set it to an empty array
+"It looks like you don't have this key yet.
+Let's set it to an empty array"
 => []
 ```
 
@@ -227,24 +224,23 @@ Now that we are defaulting to an empty array, do we run into the same problems w
 ### Returning a value
 
 ```ruby
+h = Hash.new { [] }
+
 > h[:new]
-it looks like you don't have this key yet. Let's set it to an empty array
 => []
 
-# should we have our `new` key now? 
+# should we have our `new` key now?
 > h
 # it doesn't look like it...
 => {}
 
-# maybe we need to set it to something? 
+# maybe we need to set it to something?
 > h[:new] << 1
-it looks like you don't have this key yet. Let's set it to an empty array
 => [1]
 
 # ...still doesn't seem to stick around
 > h
 => {}
->
 ```
 
 It looks like our block is being run and returning an empty array, but it isn't actually setting up the key/value pair in the hash. One way around this is the `<<=` operator we saw before.
