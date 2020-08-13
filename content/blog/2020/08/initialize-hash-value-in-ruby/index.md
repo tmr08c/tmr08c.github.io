@@ -284,19 +284,14 @@ Now that we are able to actually _set_ things in our hash, do we run into the sa
 
 ```ruby
 > h[:first] <<= 1
-it looks like you don't have this key yet. Let's set it to an empty array
-=> [1]
 > h[:second] <<= 2
-it looks like you don't have this key yet. Let's set it to an empty array
-=> [2]
 > h[:first] <<= 3
-=> [1, 3]
 
 > h
 => {:first=>[1, 3], :second=>[2]}
 ```
 
-We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block each time and creating a _new_ array every time.
+We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block creating a _new_ array any time we we do not already have a key.
 
 Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to simply shovel in a new value and it update my hash without me having to go through the extra steps. 
 
@@ -304,13 +299,13 @@ Fortunately, we can make this happen!
 
 ### Updating the hash
 
-In our previous example, our block was returning our default value, but not setting the key in our hash. Let's see if there's anything in the documentation that helps us:
+In our previous example, our block was returning our default value, but not setting the key in our hash. Let's see if there's anything in the documentation that helps us (emphasis mine):
 
 > If a block is specified, it will be called with the hash object and the key,
-> and should return the default value. It is the block's responsibility to
-> store the value in the hash if required.
+> and should return the default value. **It is the block's responsibility to
+> store the value in the hash if required.**
 
-The documentation notes the block is responsible for storing the value in the hash. Since we weren't explicitly doing that in our previous block, it seems it's expect behavior that the values aren't set. But how do we set them? 
+The documentation notes the block is responsible for storing the value in the hash. Since we weren't explicitly doing that in our previous block, it seems it's expected behavior that the values aren't set. But how do we set them?
 
 Something else the documentation points out is the block will be passed the hash and they key requested. Previously, we weren't capturing the arguments passed into the hash. Below is an example where we capture the arugments and print out some information about them.
 
@@ -347,7 +342,7 @@ Let's take a look at what this looks like when we try to set a access a key that
 
 ### Storing a value
 
-From this example, we can see we are passed in the hash we working with and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want? 
+From this example, we can see we are passed in the hash we are attempting to index into and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want? 
 
 
 ```ruby
@@ -378,25 +373,28 @@ Does this also avoid our problem of re-using the same value?
 
 It does! Again, we are seeing that running the block creates a _new_ array every time the block is executed instead of reusing the same instance like we saw with the parameter version.
 
+By setting the value of key key in the block instead of simply returning a default value, we are able to update the hash to have the new key and default value. We are also able to interact with the new, default value as an end-user because Ruby returns the value when updating the value in a hash.
+
+With this, we get the ease of use of directly returning a default value without having to remember to update the hash itself.
+
 ### Alternative default block syntax
 
 Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
 
 ```ruby
 > h.default_proc = proc { |hash, key| hash[key] = [] }
-=> #<Proc:0x00007f98620de268@(>
 > h[:first] << 1
-=> [1]
-irb(main):082:0> h
+
+> h
 => {:first=>[1]}
 ```
 
-One thing to point out is that the `default=` method covered above will **not** work if given a proc:
+One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must us the `default_proc=` version.
 
 ```ruby
 > h.default = proc { |hash, key| hash[key] = [] }
 
-# instead of getting back an array, 
+# instead of getting back an array,
 # we get a Proc
 > h[:first] << 1
 => #<Proc:0x00007f98620c8120>
@@ -406,7 +404,7 @@ One thing to point out is that the `default=` method covered above will **not** 
 => {}
 ```
 
-It also looks like Ruby will only let you have `default` or `default_proc` set and will clear out the other when one is set.
+It also looks like Ruby will only let you have `default` or `default_proc` set. Setting one will clear out the other.
 
 ```ruby
 > h = {}
@@ -444,17 +442,12 @@ It also looks like Ruby will only let you have `default` or `default_proc` set a
 
 ## Conclusion
 
-In the post we've covered the three different default value options when initializing the hash - give no arguments and defaulting to `nil`, giving an argument and use that **same** object for the value each time, and using a block set the value of the new key.
+In the post we've covered the three different default value options when initializing a hash - (1) giving no arguments and defaulting to `nil`, (2) giving an argument and using that **same** object for the value each time, and (3) using a block set the value of the new key.
 
 We also covered any gotchas you may run into with each of these options so you can avoid problems when using these options in your code.
 
-
-* Returning just an array
-* The SO answer where you return the whole hash `hsh2 = Hash.new { |hash, key| hash[key] = [] }`
+I hope that this helps make it easy to choose which version of `Hash.new` to use.
 
 # TODO
 
-- [ ] Maybe look into [`default=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D)
-    - https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D will act like the argument
-    - https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D will act like the block
-- [ ] Maybe a tl;dr at the top? 
+- Would it make more sense to move the description of `<<=` to when we first use it?
