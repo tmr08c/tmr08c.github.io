@@ -131,6 +131,64 @@ end
 
 While it's only a one line difference in this example, it helps remove some of the ceremony and enables more focus on what the code is actually trying to do.
 
+### `<<=` Operator
+
+Before we move onto the next section, I want to provide a quick introduction to the `<<=` operator because we will be using it in upcoming examples.
+
+The `<<=` operator is an example of [abbreviated assignment](https://ruby-doc.org/core-2.7.1/doc/syntax/assignment_rdoc.html#label-Abbreviated+Assignment) - this is similar to operators like `+=` and `||=`.
+
+This operator is necessary when we return a default value for a hash, but don't actually _set_ that value in the hash.
+
+```ruby
+# default to returning an array
+> h = Hash.new([])
+
+# for a key that doesn't exist, we get back an array
+> h[:foo]
+=> []
+
+# but it's not actually set in the hash itself yet
+> h
+=> {}
+```
+
+With the `<<=` operator, we can shovel (`<<`) a value onto the default array that is returned **and** set the hash value equal to resulting array. Let's break it down.
+
+```ruby
+h[:new] <<= 1
+```
+
+This can be thought of as:
+
+```ruby
+h[:new] = h[:new] << 1
+```
+
+The right side version of `h[:new]` will be run first. Since the key doesn't exist, it will use the default value we passed in (the array).
+
+```ruby
+h[:new]
+# => []
+```
+
+We then add `1` onto our array.
+
+```ruby
+h[:new] << 1
+# => [1]
+```
+
+Our right side is now `[1]`.
+
+We will then set `h[:new]` equal to the right side, which is our array.
+
+```ruby
+h[:new] = [1]
+
+> h
+=> {:new=>[1]}
+```
+
 ### Mutable Objects
 
 When using the argument version of `Hash.new` there is a phrase in the documentation you need to keep in mind (emphasis mine):
@@ -224,65 +282,6 @@ Now that we are defaulting to an empty array, do we run into the same problems w
 ### Returning a value
 
 ```ruby
-h = Hash.new { [] }
-
-> h[:new]
-=> []
-
-# should we have our `new` key now?
-> h
-# it doesn't look like it...
-=> {}
-
-# maybe we need to set it to something?
-> h[:new] << 1
-=> [1]
-
-# ...still doesn't seem to stick around
-> h
-=> {}
-```
-
-It looks like our block is being run and returning an empty array, but it isn't actually setting up the key/value pair in the hash. One way around this is the `<<=` operator we saw before.
-
-```ruby
-h[:new] <<= 1
-```
-
-This can be thought of as:
-
-```ruby
-h[:new] = h[:new] << 1
-```
-
-The right side version of `h[:new]` will be run first. This will run our block which will return our empty array.
-
-```ruby
-h[:new]
-# => []
-```
-
-We then add `1` onto our array.
-
-```ruby
-h[:new] << 1
-# => [1]
-```
-
-Our right side is now `[1]`.
-
-We will then set `h[:new]` equal to the right side, which is our array. 
-
-```ruby
-h[:new] = [1]
-
-> h
-=> {:new=>[1]}
-```
-
-Now that we are able to actually _set_ things in our hash, do we run into the same problem where all of our values look the same? 
-
-```ruby
 > h[:first] <<= 1
 > h[:second] <<= 2
 > h[:first] <<= 3
@@ -293,7 +292,7 @@ Now that we are able to actually _set_ things in our hash, do we run into the sa
 
 We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block creating a _new_ array any time we we do not already have a key.
 
-Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to simply shovel in a new value and it update my hash without me having to go through the extra steps. 
+Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to simply shovel in a new value and it update my hash without me having to go through the extra steps.
 
 Fortunately, we can make this happen!
 
@@ -307,7 +306,7 @@ In our previous example, our block was returning our default value, but not sett
 
 The documentation notes the block is responsible for storing the value in the hash. Since we weren't explicitly doing that in our previous block, it seems it's expected behavior that the values aren't set. But how do we set them?
 
-Something else the documentation points out is the block will be passed the hash and they key requested. Previously, we weren't capturing the arguments passed into the hash. Below is an example where we capture the arugments and print out some information about them.
+Something else the documentation points out is the block will be passed the hash and they key requested. Previously, we weren't capturing the arguments passed into the hash. Below is an example where we capture the arguments and print out some information about them.
 
 ```ruby
 # in the block we receive `hash` and `key`
@@ -334,16 +333,15 @@ Let's take a look at what this looks like when we try to set a access a key that
   We will set it to a default empty array
 => []
 
-# we stil have the old key,
-# but didn't set te new one
+# we still have the old key,
+# but didn't set the new one
 > j
 => {:old=>:set}
 ```
 
 ### Storing a value
 
-From this example, we can see we are passed in the hash we are attempting to index into and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want? 
-
+From this example, we can see we are passed in the hash we are attempting to index into and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want?
 
 ```ruby
 # set `hash`'s `key` to equal our default empty array
@@ -421,7 +419,7 @@ It also looks like Ruby will only let you have `default` or `default_proc` set. 
 => 0
 
 # set default_proc
-> h.default_proc = proc { [] } 
+> h.default_proc = proc { [] }
 => #<Proc:0x00007f986313bc00@(>
 
 # default is now nil
@@ -447,7 +445,3 @@ In the post we've covered the three different default value options when initial
 We also covered any gotchas you may run into with each of these options so you can avoid problems when using these options in your code.
 
 I hope that this helps make it easy to choose which version of `Hash.new` to use.
-
-# TODO
-
-- Would it make more sense to move the description of `<<=` to when we first use it?
