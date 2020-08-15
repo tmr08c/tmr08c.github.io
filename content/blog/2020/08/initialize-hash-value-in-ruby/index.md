@@ -8,7 +8,7 @@ Ruby's [`Hash.new`](https://ruby-doc.org/core-2.7.1/Hash.html#method-c-new) has 
 
 ## tl;dr
 
-Before we cover the different options more in depth, here's an overview of the different options.
+Before we cover the different options more in-depth, here's an overview of the different options.
 
 ```ruby
 # == No arguments, default to `nil`
@@ -46,7 +46,7 @@ new_hash = Hash.new
 
 ## No Argument
 
-The primary way most people create hashes is not actually using `Hash.new`, but instead created a new hash directly with the `{}` syntax (the implicit form). For the purposes of handling missing keys, this behaves the same as `Hash.new`.
+The primary way most people create hashes is not actually by using `Hash.new`. Instead, most hashes are created with the implicit form syntax (`{}`). For the purposes of handling missing keys, this behaves the same as `Hash.new`.
 
 When you use `Hash.new` with no arguments (or the `{}` syntax). The hash will return `nil` if a key does not exist.
 
@@ -82,7 +82,7 @@ The second form of initializing a Hash with by passing in an object. This object
 
 I most commonly reach for this style when using a hash as a counter.
 
-For example, let's say we want to count the number of each type of letter in a sentence. Without a default value you would have to do something lke:
+For example, let's say we want to count the number of occurrences of each letter in a sentence. Without a default value you would have to do something like:
 
 ```ruby
 sentence =
@@ -129,7 +129,7 @@ end
     "n"=>1}
 ```
 
-While it's only a one line difference in this example, it helps remove some of the ceremony and enables more focus on what the code is actually trying to do.
+While it's only a one-line difference in this example, it helps remove some of the ceremony and enables more focus on what the code is actually trying to do.
 
 ### `<<=` Operator
 
@@ -137,7 +137,7 @@ Before we move onto the next section, I want to provide a quick introduction to 
 
 The `<<=` operator is an example of [abbreviated assignment](https://ruby-doc.org/core-2.7.1/doc/syntax/assignment_rdoc.html#label-Abbreviated+Assignment) - this is similar to operators like `+=` and `||=`.
 
-This operator is necessary when we return a default value for a hash, but don't actually _set_ that value in the hash.
+This operator is necessary when we return a default value for a hash but don't _set_ that value in the hash.
 
 ```ruby
 # default to returning an array
@@ -147,12 +147,12 @@ This operator is necessary when we return a default value for a hash, but don't 
 > h[:foo]
 => []
 
-# but it's not actually set in the hash itself yet
+# but it's not set in the hash itself yet
 > h
 => {}
 ```
 
-With the `<<=` operator, we can shovel (`<<`) a value onto the default array that is returned **and** set the hash value equal to resulting array. Let's break it down.
+With the `<<=` operator, we can shovel (`<<`) a value onto the default array that is returned **and** set the hash value equal to the resulting array. Let's break it down.
 
 ```ruby
 h[:new] <<= 1
@@ -226,7 +226,7 @@ Hash.new(default_value)
 
 With it written this way, the behavior may be less surprising. When you pass in a variable, it seems more intuitive that the same variable would be used.
 
-You will see similar behavior with most other objects you use as a default in this way, and should be aware of whether that is the behavior you want or not.
+You will see similar behavior with most other objects you use as a default in this way and should be aware of whether that is the behavior you want or not.
 
 ### Alternative default value syntax
 
@@ -243,7 +243,7 @@ While the focus of this post is about leveraging `Hash.new`, there is an alterna
 => {:first=>[1, 2], :second=>[1, 2]}
 ```
 
-You could also change it if you wanted, though it's possible this is more of a [footgun](https://en.wiktionary.org/wiki/footgun) than something you want to do in practice.
+You could also change it if you wanted, though this may be more of a [footgun](https://en.wiktionary.org/wiki/footgun) than something you want to do in practice.
 
 ```ruby
 > h = {}
@@ -290,9 +290,9 @@ Now that we are defaulting to an empty array, do we run into the same problems w
 => {:first=>[1, 3], :second=>[2]}
 ```
 
-We no longer have this problem! This is because rather than sharing the same object as our default value, we are running the block creating a _new_ array any time we we do not already have a key.
+We no longer have this problem! This is because rather than sharing the same object as our default value, we are invoking the block and creating a **new** array any time we do not already have a key.
 
-Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to simply shovel in a new value and it update my hash without me having to go through the extra steps.
+Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to use the plain shovel operator (`<<`) to add a value to our empty array. 
 
 Fortunately, we can make this happen!
 
@@ -321,7 +321,7 @@ h = Hash.new do |hash, key|
 end
 ```
 
-Let's take a look at what this looks like when we try to set a access a key that doesn't exist:
+Let's take a look at what this looks like when we try to access a key that doesn't exist:
 
 ```ruby
 > h[:old] = :set
@@ -369,9 +369,9 @@ Does this also avoid our problem of re-using the same value?
 =>  :first=>[1, "one", "uno"], :second=>[2]}
 ```
 
-It does! Again, we are seeing that running the block creates a _new_ array every time the block is executed instead of reusing the same instance like we saw with the parameter version.
+It does! Again, we are seeing that running the block creates a **new** array every time the block is executed instead of reusing the same instance as we saw with the parameter version.
 
-By setting the value of key key in the block instead of simply returning a default value, we are able to update the hash to have the new key and default value. We are also able to interact with the new, default value as an end-user because Ruby returns the value when updating the value in a hash.
+By setting the value of the key in the block instead of simply returning a default value, we can update the hash to have the new key and default value. We are also able to interact with the new, default value as an end-user because Ruby returns the value when updating the value in a hash.
 
 With this, we get the ease of use of directly returning a default value without having to remember to update the hash itself.
 
@@ -387,7 +387,7 @@ Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), t
 => {:first=>[1]}
 ```
 
-One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must us the `default_proc=` version.
+One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must use the `default_proc=` version.
 
 ```ruby
 > h.default = proc { |hash, key| hash[key] = [] }
@@ -440,8 +440,9 @@ It also looks like Ruby will only let you have `default` or `default_proc` set. 
 
 ## Conclusion
 
-In the post we've covered the three different default value options when initializing a hash - (1) giving no arguments and defaulting to `nil`, (2) giving an argument and using that **same** object for the value each time, and (3) using a block set the value of the new key.
+In this post, we've covered the three different default value options when initializing a hash - (1) giving no arguments and defaulting to `nil`, (2) giving an argument and using that **same** object for the value each time, and (3) using a block set the value of the new key.
 
 We also covered any gotchas you may run into with each of these options so you can avoid problems when using these options in your code.
 
 I hope that this helps make it easy to choose which version of `Hash.new` to use.
+
