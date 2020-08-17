@@ -46,7 +46,7 @@ new_hash = Hash.new
 
 ## No Argument
 
-The primary way most people create hashes is not actually by using `Hash.new`. Instead, most hashes are created with the implicit form syntax (`{}`). For the purposes of handling missing keys, this behaves the same as `Hash.new`.
+The primary way most people create hashes is not actually by using `Hash.new`. Instead, most hashes are created with the implicit form syntax (`{}`). For the purposes of handling missing keys, this behaves the same as `Hash.new` when no argument is passed in.
 
 When you use `Hash.new` with no arguments (or the `{}` syntax). The hash will return `nil` if a key does not exist.
 
@@ -64,7 +64,7 @@ Aside from the [evils of `nil`](https://thoughtbot.com/blog/if-you-gaze-into-nil
 
 ## With an Argument
 
-The second form of initializing a Hash with by passing in an object. This object will then be used as the default value. From the docs:
+The second form of initializing a Hash is by passing in an object. This object will then be used as the default value. From the docs:
 
 > If obj is specified, this single object will be used for all default values.
 
@@ -82,7 +82,7 @@ The second form of initializing a Hash with by passing in an object. This object
 
 I most commonly reach for this style when using a hash as a counter.
 
-For example, let's say we want to count the number of occurrences of each letter in a sentence. Without a default value you would have to do something like:
+For example, let's say we want to count the occurrences of each letter in a sentence. Without a default value you would have to do something like:
 
 ```ruby
 sentence =
@@ -200,9 +200,6 @@ The **single object** passed in will be (re)used for all defaults. In our exampl
 ```ruby
 company = Hash.new([])
 
-# If you haven't seen `<<=` it's a form of
-# [abbreviate assignment](https://ruby-doc.org/core-2.7.1/doc/syntax/assignment_rdoc.html#label-Abbreviated+Assignment)
-# similar to `+=` above, but with the shovel operator
 company[:development] <<= "dev1"
 company[:marketing] <<= "marketer1"
 company[:development] <<= "dev2"
@@ -282,6 +279,8 @@ Now that we are defaulting to an empty array, do we run into the same problems w
 ### Returning a value
 
 ```ruby
+h = Hash.new { [] }
+
 > h[:first] <<= 1
 > h[:second] <<= 2
 > h[:first] <<= 3
@@ -335,7 +334,7 @@ Let's take a look at what this looks like when we try to access a key that doesn
 
 # we still have the old key,
 # but didn't set the new one
-> j
+> h
 => {:old=>:set}
 ```
 
@@ -345,8 +344,9 @@ From this example, we can see we are passed in the hash we are attempting to ind
 
 ```ruby
 # set `hash`'s `key` to equal our default empty array
-> h = Hash.new { |hash, key| hash[key] = [] }
-=> {}
+> h = Hash.new do |hash, key|
+    hash[key] = [] 
+  end
 
 # reference a key that doesn't exist
 > h[:izzo]
@@ -380,14 +380,17 @@ With this, we get the ease of use of directly returning a default value without 
 Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
 
 ```ruby
-> h.default_proc = proc { |hash, key| hash[key] = [] }
+> h.default_proc = proc do |hash, key|
+    hash[key] = []
+  end
+
 > h[:first] << 1
 
 > h
 => {:first=>[1]}
 ```
 
-One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must use the `default_proc=` version.
+One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must use the `default_proc=` version (and vice versa for non-procs).
 
 ```ruby
 > h.default = proc { |hash, key| hash[key] = [] }
