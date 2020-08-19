@@ -342,21 +342,23 @@ Let's take a look at what this looks like when we try to access a key that doesn
 => {:old=>:set}
 ```
 
+From this example, we can see we are passed in the hash we are attempting to index into and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want?
+
 ### Storing a value
 
-From this example, we can see we are passed in the hash we are attempting to index into and the key we are attempting to access (that doesn't yet exist). We continued to simply return the new array, but what if we take the advice of the documentation and try to store the value in the hash if that's what we want?
+In this example, we will now update our hash and set the key-value pair in our block.
 
 ```ruby
 # set `hash`'s `key` to equal our default empty array
 > h = Hash.new do |hash, key|
-    hash[key] = [] 
+    hash[key] = []
   end
 
 # reference a key that doesn't exist
 > h[:izzo]
 => []
 
-# confirm that it is still set
+# it's now set in our hash
 > h
 => {:izzo=>[]}
 ```
@@ -367,15 +369,14 @@ Does this continue to avoid our problem of reusing the same value?
 > h[:first] << 1
 > h[:second] << 2
 > h[:first] << "one"
-> h[:first] << "uno"
 
 > h
-=>  :first=>[1, "one", "uno"], :second=>[2]}
+=>  :first=>[1, "one"], :second=>[2]}
 ```
 
 It does! Again, we are seeing that running the block creates a **new** array every time the block is executed instead of reusing the same instance as we saw with the parameter version.
 
-By setting the value of the key in the block instead of simply returning a default value, we can update the hash to have the new key and default value. We are also able to interact with the new, default value as an end-user because Ruby returns the value when updating the value in a hash.
+In addition to setting the kev-value pair in our hash, we also return the value. This enables us to interact with the newly set value right away with an operator like `<<`.
 
 With this, we get the ease of use of directly returning a default value without having to remember to update the hash itself.
 
@@ -443,6 +444,32 @@ It also looks like Ruby will only let you have `default` or `default_proc` set. 
 => nil
 > h.default
 => 1
+```
+
+## Checking for existence
+
+One situation to be careful when setting a default value is using `if` to check if a key exists. This is a fairly common pattern you may see when not setting a default because `nil` is false-y and the `if` will not pass. However, when we set a default value, our `if` will now pass (assuming the default set is truth-y). This may result in unexpected behavior.
+
+```ruby
+> h = Hash.new { |h,k| h[k] = [] }
+
+# `:foo` key does not exist
+if h[:foo]
+  puts 'here'
+end
+# however, since we set the default
+# for any key we reference, it's created
+# in our `if` and will print "here"
+"here"
+```
+
+Instead, consider using [`Hash#key?`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-key-3F) to check if the key already exists in the hash without triggering the default value behavior.
+
+```ruby
+> h = Hash.new { |h,k| h[k] = [] }
+
+> h.key?(:bar)
+=> false
 ```
 
 ## Conclusion
