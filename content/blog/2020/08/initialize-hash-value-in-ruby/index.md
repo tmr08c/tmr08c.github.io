@@ -66,7 +66,7 @@ Sometimes, however, it can be easier to work with your code if you have a defaul
 
 ## With an Argument
 
-The second form of initializing a Hash is by passing in an object. This object will then be used as the default value. From the docs:
+The second form of initializing a Hash is by passing in an object. This object will then be used as the default value. [From the docs](https://ruby-doc.org/core-2.7.1/Hash.html#method-c-new):
 
 > If obj is specified, this single object will be used for all default values.
 
@@ -191,6 +191,8 @@ h[:new] = [1]
 => {:new=>[1]}
 ```
 
+Let's see how we can leverage this operator to more easily interact with our new default return values.
+
 ### Mutable Objects
 
 When using the argument version of `Hash.new` there is a phrase in the documentation you need to keep in mind (emphasis mine):
@@ -229,7 +231,9 @@ You will see similar behavior with most other objects you use as a default in th
 
 ### Alternative default value syntax
 
-While the focus of this post is about leveraging `Hash.new`, there is an alternative way to get this same functionality. Ruby also provides a [`Hash#default=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D) method. This works the same as passing in an object to `#new` and will re-use the single object passed in. One advantage of using the `#default=` method is that you can use it with hashes created using the implicit form (`{}`).
+While the focus of this post is about leveraging `Hash.new`, there is an alternative way to get this same functionality. Ruby also provides a [`Hash#default=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default-3D) method. This works the same as passing in an object to `#new` and will re-use the single object passed in.
+
+One advantage of using the `#default=` method is that you can use it with hashes created using the implicit form (`{}`).
 
 ```ruby
 > h = {}
@@ -301,7 +305,7 @@ Fortunately, we can make this happen!
 
 ### Updating the hash
 
-In our previous example, our block was returning our default value, but not setting the key in our hash. Let's see if there's anything in the documentation that helps us (emphasis mine):
+In our previous example, our block was returning our default value, but not setting the key in our hash. Let's see if there's anything in the [documentation](https://ruby-doc.org/core-2.7.1/Hash.html#method-c-new) that helps us (emphasis mine):
 
 > If a block is specified, it will be called with the hash object and the key,
 > and should return the default value. **It is the block's responsibility to
