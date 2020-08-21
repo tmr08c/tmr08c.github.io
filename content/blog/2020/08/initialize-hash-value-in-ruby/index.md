@@ -108,7 +108,7 @@ end
     "n"=>1}
 ```
 
-By setting a default value of `0`, you would no longer need to do `letter_counter[letter] ||= 0`; if a key doesn't exist, we get a default value of `0`.
+By setting a default value of `0`, you would no longer need to do `letter_counter[letter] ||= 0`. If a key doesn't exist, we get a default value of `0`.
 
 ```ruby
 sentence =
@@ -221,11 +221,10 @@ This is the result of using the **single object** for all default values. When w
 
 ```ruby
 default_value = []
-
 Hash.new(default_value)
 ```
 
-With it written this way, the behavior may be less surprising. When you pass in a variable, it seems more intuitive that the same variable would be used.
+With it written this way, the behavior may be less surprising. When you pass in a variable, it may seem more intuitive that the same variable would be used.
 
 You will see similar behavior with most other objects you use as a default in this way and should be aware of whether that is the behavior you want or not.
 
@@ -246,7 +245,13 @@ One advantage of using the `#default=` method is that you can use it with hashes
 => {:first=>[1, 2], :second=>[1, 2]}
 ```
 
-You could also change the default multiple times if you wanted, though this may be more of a [footgun](https://en.wiktionary.org/wiki/footgun) than something you want to do in practice.
+#### Pick up here
+You can check what the hash's current default value is with [`Hash#default`]()
+
+Can show a code sample, or try for something shorter and mention in deubgging section 
+#### Also do something simlar for default proc
+
+You can also change the default multiple times if you want, though this may be more of a [footgun](https://en.wiktionary.org/wiki/footgun) than something you want to do in practice.
 
 ```ruby
 > h = {}
@@ -380,7 +385,7 @@ Does this continue to avoid our problem of reusing the same value?
 
 It does! Again, we are seeing that running the block creates a **new** array every time the block is executed instead of reusing the same instance as we saw with the parameter version.
 
-In addition to setting the kev-value pair in our hash, we also return the value. This enables us to interact with the newly set value right away with an operator like `<<`.
+In addition to setting the key-value pair in our hash, we also return the value. This enables us to interact with the newly set value right away with an operator like `<<`.
 
 With this, we get the ease of use of directly returning a default value without having to remember to update the hash itself.
 
@@ -452,7 +457,7 @@ It also looks like Ruby will only let you have `default` or `default_proc` set. 
 
 ## Checking for existence
 
-One situation to be careful when setting a default value is using `if` to check if a key exists. This is a fairly common pattern you may see when not setting a default because `nil` is false-y and the `if` will not pass. However, when we set a default value, our `if` will now pass (assuming the default set is truth-y). This may result in unexpected behavior.
+One situation to be careful of when setting a default value is using `if` to check if a key exists. This is a fairly common pattern you may see when not setting a default because `nil` is false-y and the `if` will not pass. However, when we set a default value, our `if` will now pass (assuming the default set is truth-y). This may result in unexpected behavior.
 
 ```ruby
 > h = Hash.new { |h,k| h[k] = [] }
