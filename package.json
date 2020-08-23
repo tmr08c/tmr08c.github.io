@@ -46,6 +46,7 @@
     "vscode-themes": "Microsoft/vscode-themes"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.2.0",
     "@types/node": "^10.17.13",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",

@@ -19,13 +19,7 @@ const Layout: React.SFC = ({ children }) => (
       <>
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
-          className="min-h-screen"
-          style={{
-            margin: "0 auto",
-            maxWidth: "40rem",
-            padding: "0px 1.0875rem 1.45rem",
-            paddingTop: 0
-          }}
+          className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0"
         >
           {children}
         </div>

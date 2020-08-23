@@ -56,7 +56,7 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
 
     return (
       <Layout>
-        <main>
+        <main className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
           <SEO title={post.frontmatter.title} description={post.excerpt} />
           <h1 className="text-4xl font-bold">{post.frontmatter.title}</h1>
           <div>
@@ -68,7 +68,6 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
             </time>
           </div>
           <div
-            className="blog-post-body"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
         </main>
