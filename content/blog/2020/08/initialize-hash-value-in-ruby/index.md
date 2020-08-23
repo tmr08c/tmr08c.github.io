@@ -8,39 +8,37 @@ Ruby's [`Hash.new`](https://ruby-doc.org/core-2.7.1/Hash.html#method-c-new) has 
 
 ## tl;dr
 
-Before we cover the different options more in-depth, here's an overview of the different options.
+Before we cover the different options more in-depth, here's an overview.
 
 ```ruby
 # == No arguments, default to `nil`
 new_hash = Hash.new
-> new_hash[:not_here]
+new_hash[:not_here]
 => nil
 
 # same behavior with `{}` style
-> bare_hash = {}
-> bare_hash[:also_not_here]
+bare_hash = {}
+bare_hash[:also_not_here]
 => nil
 
 # == Argument, use as default
-> hash_with_default = Hash.new(:default)
-> hash_with_default[:not_set]
+hash_with_default = Hash.new(:default)
+hash_with_default[:not_set]
 => :default
 
 # WARNING! This will use the **same** object
-> h = Hash.new([])
-> h[:first] <<= 1
-> h[:second] <<= 2
-
-> h
+h = Hash.new([])
+h[:first] <<= 1
+h[:second] <<= 2
 => {:first=>[1, 2], :second=>[1, 2]}
 
 # == Using a block
-> h = Hash.new { |hash, key| hash[key] = [] }
+h = Hash.new { |hash, key| hash[key] = [] }
 
 # reference a key that doesn't exist
-> h[:izzo]
+h[:izzo]
 
-> h
+h
 => {:izzo=>[]}
 ```
 
@@ -52,11 +50,11 @@ When you use `Hash.new` with no arguments (or the `{}` syntax) the hash will ret
 
 ```ruby
 new_hash = Hash.new
-> new_hash[:not_here]
+new_hash[:not_here]
 => nil
 
-> bare_hash = {}
-> bare_hash[:also_not_here]
+bare_hash = {}
+bare_hash[:also_not_here]
 => nil
 ```
 
@@ -71,12 +69,12 @@ The second form of initializing a Hash is by passing in an object. This object w
 > If obj is specified, this single object will be used for all default values.
 
 ```ruby
-> hash_with_default = Hash.new(:default)
-> hash_with_default[:set] = :not_default
+hash_with_default = Hash.new(:default)
+hash_with_default[:set] = :not_default
 
-> hash_with_default[:set]
+hash_with_default[:set]
 => :not_default
-> hash_with_default[:not_set]
+hash_with_default[:not_set]
 => :default
 ```
 
@@ -97,7 +95,7 @@ sentence.each_char do |letter|
   letter_counter[letter] += 1
 end
 
-> letter_counter
+letter_counter
 => {"t"=>3,
     "o"=>4,
     " "=>5,
@@ -120,7 +118,7 @@ sentence.each_char do |letter|
   letter_counter[letter] += 1
 end
 
-> letter_counter
+letter_counter
 => {"t"=>3,
     "o"=>4,
     " "=>5,
@@ -143,14 +141,14 @@ This operator is necessary when we return a default value for a hash but don't _
 
 ```ruby
 # default to returning an array
-> h = Hash.new([])
+h = Hash.new([])
 
 # for a key that doesn't exist, we get back an array
-> h[:foo]
+h[:foo]
 => []
 
 # but it's not set in the hash itself yet
-> h
+h
 => {}
 ```
 
@@ -187,7 +185,7 @@ We will then set `h[:new]` equal to the right side, which is our array.
 ```ruby
 h[:new] = [1]
 
-> h
+h
 => {:new=>[1]}
 ```
 
@@ -235,38 +233,32 @@ While the focus of this post is about leveraging `Hash.new`, there is an alterna
 One advantage of using the `#default=` method is that you can use it with hashes created using the implicit form (`{}`).
 
 ```ruby
-> h = {}
-> h.default = []
+h = {}
+h.default = []
 
-> h[:first] <<= 1
-> h[:second] <<= 2
+h[:first] <<= 1
+h[:second] <<= 2
 
-> h
-=> {:first=>[1, 2], :second=>[1, 2]}
+=> {:first=>[1, 2],
+    :second=>[1, 2]}
 ```
-
-#### Pick up here
-You can check what the hash's current default value is with [`Hash#default`]()
-
-Can show a code sample, or try for something shorter and mention in deubgging section 
-#### Also do something simlar for default proc
 
 You can also change the default multiple times if you want, though this may be more of a [footgun](https://en.wiktionary.org/wiki/footgun) than something you want to do in practice.
 
 ```ruby
-> h = {}
+h = {}
 
-> h.default = 0
-> h[:first] += 1
+h.default = 0
+h[:first] += 1
 
-> h.default = []
-> h[:second] <<= 2
+h.default = []
+h[:second] <<= 2
 
-> h
-=> {:first=>1, :second=>[2]}
+=> {:first=>1,
+    :second=>[2]}
 ```
 
-In general, I think there is value in co-locating the creation of the hash with the default value. This makes it easier to understand and debug. Setting the default in (multiple) other places can make it harder to track down what the expected behavior should be.
+In general, I think there is value in co-locating the creation of the hash with the default value. This makes it easier to understand and debug. Setting the default in (multiple) other places can make it harder to track down what the expected behavior should be. Although, you can use [`Hash#default`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default) to check the current default value to help with this.
 
 ## Using a block
 
@@ -279,7 +271,7 @@ h = Hash.new do
   []
 end
 
-> h[:new]
+h[:new]
 "It looks like you don't have this key yet.
 Let's set it to an empty array"
 => []
@@ -292,12 +284,12 @@ Does returning an empty array from the block help solve the problem of object re
 ```ruby
 h = Hash.new { [] }
 
-> h[:first] <<= 1
-> h[:second] <<= 2
-> h[:first] <<= 3
+h[:first] <<= 1
+h[:second] <<= 2
+h[:first] <<= 3
 
-> h
-=> {:first=>[1, 3], :second=>[2]}
+=> {:first=>[1, 3],
+    :second=>[2]}
 ```
 
 We no longer have this problem!
@@ -306,7 +298,7 @@ This is because rather than sharing the same object as our default value, we are
 
 Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to use the plain shovel operator (`<<`) to add a value to our empty array. 
 
-Fortunately, we can make this happen!
+Fortunately, we can make this happen.
 
 ### Updating the hash
 
@@ -336,10 +328,10 @@ end
 Let's take a look at what this looks like when we try to access a key that doesn't exist:
 
 ```ruby
-> h[:old] = :set
+h[:old] = :set
 => :set
 
-> h[:new]
+h[:new]
   "Currently, your hash looks like {:old=>:set}. \
   This does not include the key 'new'. \
   We will set it to a default empty array"
@@ -347,7 +339,7 @@ Let's take a look at what this looks like when we try to access a key that doesn
 
 # we still have the old key,
 # but didn't set the new one
-> h
+h
 => {:old=>:set}
 ```
 
@@ -359,27 +351,27 @@ In this example, we will now update our hash and set the key-value pair in our b
 
 ```ruby
 # set `hash`'s `key` to equal our default empty array
-> h = Hash.new do |hash, key|
-    hash[key] = []
-  end
+h = Hash.new do |hash, key|
+  hash[key] = []
+end
 
 # reference a key that doesn't exist
-> h[:izzo]
+h[:izzo]
 => []
 
 # it's now set in our hash
-> h
+h
 => {:izzo=>[]}
 ```
 
 Does this continue to avoid our problem of reusing the same value?
 
 ```ruby
-> h[:first] << 1
-> h[:second] << 2
-> h[:first] << "one"
+h[:first] << 1
+h[:second] << 2
+h[:first] << "one"
 
-> h
+h
 =>  :first=>[1, "one"], :second=>[2]}
 ```
 
@@ -389,78 +381,12 @@ In addition to setting the key-value pair in our hash, we also return the value.
 
 With this, we get the ease of use of directly returning a default value without having to remember to update the hash itself.
 
-### Alternative default block syntax
-
-Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
-
-```ruby
-> h.default_proc = proc do |hash, key|
-    hash[key] = []
-  end
-
-> h[:first] << 1
-
-> h
-=> {:first=>[1]}
-```
-
-One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must use the `default_proc=` version (and vice versa for non-procs).
-
-```ruby
-> h.default = proc { |hash, key| hash[key] = [] }
-
-# instead of getting back an array,
-# we get a Proc
-> h[:first] << 1
-=> #<Proc:0x00007f98620c8120>
-
-# and nothing is set in our hash
-> h
-=> {}
-```
-
-It also looks like Ruby will only let you have `default` or `default_proc` set. Setting one will clear out the other.
-
-```ruby
-> h = {}
-
-# check initial defaults
-> h.default
-=> nil
-> h.default_proc
-=> nil
-
-# set default
-> h.default = 0
-> h.default
-=> 0
-
-# set default_proc
-> h.default_proc = proc { [] }
-=> #<Proc:0x00007f986313bc00@(>
-
-# default is now nil
-> h.default
-=> nil
-> h.default_proc
-=> #<Proc:0x00007f986313bc00@(>
-
-# set default again
-> h.default = 1
-
-# default_proc is now nil
-> h.default_proc
-=> nil
-> h.default
-=> 1
-```
-
 ## Checking for existence
 
 One situation to be careful of when setting a default value is using `if` to check if a key exists. This is a fairly common pattern you may see when not setting a default because `nil` is false-y and the `if` will not pass. However, when we set a default value, our `if` will now pass (assuming the default set is truth-y). This may result in unexpected behavior.
 
 ```ruby
-> h = Hash.new { |h,k| h[k] = [] }
+h = Hash.new { |h,k| h[k] = [] }
 
 # `:foo` key does not exist
 if h[:foo]
@@ -475,10 +401,76 @@ end
 Instead, consider using [`Hash#key?`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-key-3F) to check if the key already exists in the hash without triggering the default value behavior.
 
 ```ruby
-> h = Hash.new { |h,k| h[k] = [] }
+h = Hash.new { |h,k| h[k] = [] }
 
-> h.key?(:bar)
+h.key?(:bar)
 => false
+```
+
+### Alternative default block syntax
+
+Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
+
+```ruby
+h.default_proc = proc do |hash, key|
+  hash[key] = []
+end
+
+h[:first] << 1
+
+h
+=> {:first=>[1]}
+```
+
+One thing to point out is that the `default=` method covered above will **not** work if given a proc and you must use the `default_proc=` version (and vice versa for non-procs).
+
+```ruby
+h.default = proc { |hash, key| hash[key] = [] }
+
+# instead of getting back an array,
+# we get a Proc
+h[:first] << 1
+=> #<Proc:0x00007f98620c8120>
+
+# and nothing is set in our hash
+h
+=> {}
+```
+
+It also looks like Ruby will only let you have `default` or `default_proc` set. Setting one will clear out the other.
+
+```ruby
+h = {}
+
+# check initial defaults
+h.default
+=> nil
+h.default_proc
+=> nil
+
+# set default
+h.default = 0
+h.default
+=> 0
+
+# set default_proc
+h.default_proc = proc { [] }
+=> #<Proc:0x00007f986313bc00@(>
+
+# default is now nil
+h.default
+=> nil
+h.default_proc
+=> #<Proc:0x00007f986313bc00@(>
+
+# set default again
+h.default = 1
+
+# default_proc is now nil
+h.default_proc
+=> nil
+h.default
+=> 1
 ```
 
 ## Conclusion
@@ -488,4 +480,3 @@ In this post, we've covered the three different default value options when initi
 We also covered any gotchas you may run into with each of these options so you can avoid problems when using these options in your code.
 
 I hope that this helps make it easy to choose which version of `Hash.new` to use.
-
