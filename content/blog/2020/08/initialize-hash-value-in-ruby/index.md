@@ -193,7 +193,7 @@ Let's see how we can leverage this operator to more easily interact with our new
 
 ### Mutable Objects
 
-When using the argument version of `Hash.new` there is a phrase in the documentation you need to keep in mind (emphasis mine):
+When using the argument version of `Hash.new` there is a phrase in the documentation we need to keep in mind (emphasis mine):
 
 > If obj is specified, this **single object** will be used for all default values.
 
@@ -213,7 +213,7 @@ company
 }
 ```
 
-What's going on here? Every hash value looks the same!?
+What's going on here? Both hash value looks the same!?
 
 This is the result of using the **single object** for all default values. When we are setting a new key in the hash we set it to default to an array. However, rather than getting a new array each time, we get the **same** array. Another way to think about this could be something like:
 
@@ -222,7 +222,7 @@ default_value = []
 Hash.new(default_value)
 ```
 
-With it written this way, the behavior may be less surprising. When you pass in a variable, it may seem more intuitive that the same variable would be used.
+When written this way, the behavior may be less surprising. When you pass in a variable, it may seem more intuitive that the same variable would be used.
 
 You will see similar behavior with most other objects you use as a default in this way and should be aware of whether that is the behavior you want or not.
 
@@ -296,7 +296,7 @@ We no longer have this problem!
 
 This is because rather than sharing the same object as our default value, we are invoking the block and creating a **new** array any time we do not already have a key.
 
-Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to use the plain shovel operator (`<<`) to add a value to our empty array. 
+Even though our problem of sharing the same value is gone, it is a bit unintuitive that we have to use the `<<=` operator. I would expect to be able to use the plain shovel operator (`<<`) to add a value to our empty array.
 
 Fortunately, we can make this happen.
 
@@ -310,7 +310,7 @@ In our previous example, our block was returning our default value, but not sett
 
 The documentation notes the block is responsible for storing the value in the hash. Since we weren't explicitly doing that in our previous block, it seems it's expected behavior that the values aren't set. But how do we set them?
 
-Something else the documentation points out is the block will be passed the hash and they key requested. Previously, we weren't capturing the arguments passed into the hash. Below is an example where we capture the arguments and print out some information about them.
+Something else the documentation points out is that the block will be passed the hash and the requested key. Previously, we weren't capturing the arguments passed into the hash. Below is an example where we capture the arguments and print out some information about them.
 
 ```ruby
 # in the block we receive `hash` and `key`
@@ -381,32 +381,6 @@ In addition to setting the key-value pair in our hash, we also return the value.
 
 With this, we get the ease of use of directly returning a default value without having to remember to update the hash itself.
 
-## Checking for existence
-
-One situation to be careful of when setting a default value is using `if` to check if a key exists. This is a fairly common pattern you may see when not setting a default because `nil` is false-y and the `if` will not pass. However, when we set a default value, our `if` will now pass (assuming the default set is truth-y). This may result in unexpected behavior.
-
-```ruby
-h = Hash.new { |h,k| h[k] = [] }
-
-# `:foo` key does not exist
-if h[:foo]
-  puts 'here'
-end
-# however, since we set the default
-# for any key we reference, it's created
-# in our `if` and will print "here"
-"here"
-```
-
-Instead, consider using [`Hash#key?`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-key-3F) to check if the key already exists in the hash without triggering the default value behavior.
-
-```ruby
-h = Hash.new { |h,k| h[k] = [] }
-
-h.key?(:bar)
-=> false
-```
-
 ### Alternative default block syntax
 
 Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
@@ -437,7 +411,7 @@ h
 => {}
 ```
 
-It also looks like Ruby will only let you have `default` or `default_proc` set. Setting one will clear out the other.
+It also looks like Ruby will (reasonably) only let you have `default` or `default_proc` set. Setting one will clear out the other.
 
 ```ruby
 h = {}
@@ -471,6 +445,32 @@ h.default_proc
 => nil
 h.default
 => 1
+```
+
+## Checking for existence
+
+One situation to be careful of when setting a default value is using `if` to check if a key exists. This is a fairly common pattern you may see when not setting a default because `nil` is false-y and the `if` will not pass. However, when we set a default value, our `if` will now pass (assuming the default set is truth-y). This may result in unexpected behavior.
+
+```ruby
+h = Hash.new { |h,k| h[k] = [] }
+
+# `:foo` key does not exist
+if h[:foo]
+  puts 'here'
+end
+# however, since we set the default
+# for any key we reference, it's created
+# in our `if` and will print "here"
+"here"
+```
+
+Instead, consider using [`Hash#key?`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-key-3F) to check if the key already exists in the hash without triggering the default value behavior.
+
+```ruby
+h = Hash.new { |h,k| h[k] = [] }
+
+h.key?(:bar)
+=> false
 ```
 
 ## Conclusion
