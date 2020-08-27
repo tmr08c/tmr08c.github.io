@@ -1,6 +1,6 @@
 ---
 title: 'Initial Hash Value in Ruby'
-date: '2020-08-04T06:08:02.123Z'
+date: '2020-08-27T06:28:02.123Z'
 categories: ['ruby']
 ---
 
@@ -34,12 +34,9 @@ h[:second] <<= 2
 
 # == Using a block
 h = Hash.new { |hash, key| hash[key] = [] }
-
-# reference a key that doesn't exist
-h[:izzo]
-
-h
-=> {:izzo=>[]}
+h[:first] <<= 1
+h[:second] <<= 2
+=> {:first=>[1], :second=>[2]}
 ```
 
 ## No Argument
@@ -386,6 +383,7 @@ With this, we get the ease of use of directly returning a default value without 
 Similar to `Hash#default=` covered [above](#alternative-default-value-syntax), there is a [`Hash#default_proc=`](https://ruby-doc.org/core-2.7.1/Hash.html#method-i-default_proc-3D) method that can be used to set a default value for a hash using a proc.
 
 ```ruby
+h = {}
 h.default_proc = proc do |hash, key|
   hash[key] = []
 end
