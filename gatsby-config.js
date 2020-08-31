@@ -3,7 +3,8 @@ module.exports = {
     title: "TroyProg",
     description:
       "This is the personal site for Troy Rosenberg - engineering manager and develop. This serves as a place to store blog posts that are generally about technology. Topics may include - Ruby, Ruby on Rails, Elixir, Phoenix, JavaScript, TypeScript, Node, project management, engineering mangement, and more!",
-    author: "Troy Rosenberg (@tmr08c)"
+    author: "Troy Rosenberg (@tmr08c)",
+    repsitory: "https://github.com/tmr08c/tmr08c.github.io"
   },
   plugins: [
     {
@@ -39,10 +40,14 @@ module.exports = {
           },
           `gatsby-remark-responsive-iframe`,
           {
-            resolve: `gatsby-remark-prismjs`
+            resolve: `gatsby-remark-vscode`,
+            options: {
+              theme: `Tomorrow`,
+              extensions: [`vscode-themes/tomorrow`]
+            },
           },
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`
+          `gatsby-remark-autolink-headers`,
         ]
       }
     },
