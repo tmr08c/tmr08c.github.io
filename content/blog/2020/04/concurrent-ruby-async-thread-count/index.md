@@ -97,7 +97,7 @@ the gem isn't installed, Bundler will download it before proceeding.
 ### `HelloAsync` Class
 
 This class is similar to what we created
-in a [previous post](/2020/05/concurrent-ruby-hello-async/). For more details on
+in the [previous post](/2020/05/concurrent-ruby-hello-async/). For more details on
 setting up a class to work with the `Concurrent::Async` module, please check
 out that post.
 
@@ -203,13 +203,13 @@ while (input = gets)
     exit(0)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
-  when /^async/ 
+  when /^async/
     hello.async.hello
-  when /^await/ 
+  when /^await/
     hello.await.hello
-  when /^new-async/ 
+  when /^new-async/
     HelloAsync.new.async.hello
-  when /^new-await/ 
+  when /^new-await/
     HelloAsync.new.await.hello
   else puts "Received unknown input: #{input}"
   end
@@ -302,7 +302,7 @@ JRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7
 Since I am using MRI, I am seeing `RubyThreadLocalVar` and not
 `JavaThreadLocalVar`.
 
-I mention this because there may be other instances where I reference 
+I mention this because there may be other instances where I reference
 the gem's MRI implementation.
 
 ## Our first (or third) thread
@@ -314,7 +314,9 @@ thread stick around when the method is done?
 
 ```markup
 > await
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
 ```
@@ -326,21 +328,23 @@ methods we are creating new threads?
 
 ```markup
 > await
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
+
 > await
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
 ```
 
-No, I did not accidentally paste something twice. When running the `await`
-command multiple times, we are seeing the same object and thread
-IDs. The object ID makes sense since in our [REPL](#command-options) we had the `await`
-command use the same object. However, the same thread ID wasn't something we
-intentionally set up. This shows us that we are reusing our thread. This is
-great, as it helps save on the cost of starting up and maintaining a new thread.
+No, I did not accidentally paste something twice. When running the `await` command multiple times, we are seeing the same object and thread IDs. 
+
+The object ID makes sense since in our [REPL](#command-options) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This means we are reusing our thread. This is great, as it helps save on the cost of starting up and maintaining a new thread.
 
 ## Fancy another
 
@@ -351,18 +355,25 @@ command](#command-options) in our REPL comes into play.
 
 ```markup
 > await
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
+
 > new-await
-Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161462088680' \
+and I'm running in thread '70161462091140'.
 ```
 
 On closer inspecting, we _are_ seeing a new object ID, but the same thread:
 
-```diff
-- Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
-+ Hello! My object id is '70161462088680' and I'm running in thread '70161462091140'.
+```{diff}
+- Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
++ Hello! My object id is '70161462088680' \
+and I'm running in thread '70161462091140'.
 ```
 
 This indicates that `concurrent-ruby` will reuse threads, even across
@@ -381,7 +392,8 @@ through the `async` proxy on our _existing_ instance of `HelloAsync`.
 
 ``` markup
 > async
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
 ```
 
 Since we are using our existing instance, it makes sense to see our same object
@@ -400,20 +412,33 @@ Currently have 3 threads.
 > async
 > list
 Currently have 3 threads.
+
 > async
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
+
 > async
+
 > list
 Currently have 3 threads.
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
+
 > list
 Currently have 3 threads.
-Hello! My object id is '70161458709520' and I'm running in thread '70161462091140'.
+
+Hello! My object id is '70161458709520' \
+and I'm running in thread '70161462091140'.
 ```
 
 Above, we have multiple calls to `async` and `list`. The goal was to see if
@@ -435,16 +460,16 @@ object. Messages are processed one at a time in the order they are received.
 [This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from erlang co-creator Robert Virding) does
 a good job explaining it:
 
->All messages are placed in a process' message queue and processes handle their message one-by-one. If a message arrives while a process is busy then it is placed in the message queue. 
+>All messages are placed in a process' message queue and processes handle their message one-by-one. If a message arrives while a process is busy then it is placed in the message queue.
 
 Staying true to their inspiration, `concurrent-ruby` follows a similar idea of
 queuing up method calls to be processed one at a time.
 [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334)
-is the relevant code in the gem:
+is the [relevant code in the gem](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334):
 
 ```ruby
-# This is in the `AsyncDelegator` class defined within the `Async` module
-# https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334
+# This is in the `AsyncDelegator`
+# class defined within the `Async` module
 def method_missing(method, *args, &block)
   super unless @delegate.respond_to?(method)
   Async::validate_argc(@delegate, method, *args)
@@ -474,11 +499,11 @@ end
 This returns an instance variable, `@__async_delegator__`. This instance
 variable is set up as a part  of initialization and is a new `AsyncDelegator`:
 
-```ruby
+```ruby{4}
 def init_synchronization
   return self if defined?(@__async_initialized__) && @__async_initialized__
   @__async_initialized__ = true
-* @__async_delegator__ = AsyncDelegator.new(self)
+  @__async_delegator__ = AsyncDelegator.new(self)
   @__await_delegator__ = AwaitDelegator.new(@__async_delegator__)
   self
 end
@@ -563,7 +588,7 @@ end
 The implementation of `synchronize` will vary by which type and version of Ruby
 you are running, but is a mechanism for working with locks. It will check if
 the thread has access to the lock before `yield`ing and running whatever is in
-the block. 
+the block.
 
 Once we have synchronized, we add an array of information to `@queue`. `@queue`
 is an array that is created in our initialization process. We are adding the
@@ -576,7 +601,7 @@ version of MRI Ruby, I eventually got to
 [`RubyExecutorService#post`](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#L17-L25).
 The `ExecutorService` classes is the abstraction for running your code in new
 threads. These classes take in the arbitrary code to run and handle interacting
-with threads. 
+with threads.
 
 Along the chain to the `RubyExecutorService`, one of the parent classes was
 [`CachedThreadPool`](https://www.rubydoc.info/gems/concurrent-ruby/Concurrent/CachedThreadPool).
@@ -659,7 +684,8 @@ similarly:
 > new-async
 > list
 Currently have 3 threads.
-Hello! My object id is '70161458746800' and I'm running in thread '70161462091140'.
+Hello! My object id is '70161458746800' \
+and I'm running in thread '70161462091140'.
 ```
 
 ### Okay, how about now
@@ -690,15 +716,31 @@ there is no waiting in the queue.
 > new-async
 > new-async
 > new-async
+
 > list
 Currently have 9 threads.
-Hello! My object id is '70161189799440' and I'm running in thread '70161462091140'.
-Hello! My object id is '70161189798560' and I'm running in thread '70161458745000'.
-Hello! My object id is '70161458781960' and I'm running in thread '70161458781240'.
-Hello! My object id is '70161458780740' and I'm running in thread '70161458780020'.
-Hello! My object id is '70161458779520' and I'm running in thread '70161458778800'.
-Hello! My object id is '70161458778300' and I'm running in thread '70161458777580'.
-Hello! My object id is '70161458777080' and I'm running in thread '70161458776360'.
+
+Hello! My object id is '70161189799440' \
+and I'm running in thread '70161462091140'.
+
+Hello! My object id is '70161189798560' \
+and I'm running in thread '70161458745000'.
+
+Hello! My object id is '70161458781960' \\
+and I'm running in thread '70161458781240'.
+
+Hello! My object id is '70161458780740' \
+and I'm running in thread '70161458780020'.
+
+Hello! My object id is '70161458779520' \
+and I'm running in thread '70161458778800'.
+
+Hello! My object id is '70161458778300' \
+and I'm running in thread '70161458777580'.
+
+Hello! My object id is '70161458777080' \
+and I'm running in thread '70161458776360'.
+
 ```
 
 At last! We've found a way to spawn more threads.
