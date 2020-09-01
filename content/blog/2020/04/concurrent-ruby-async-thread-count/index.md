@@ -268,8 +268,10 @@ We can reproduce this in `irb` as well:
 ```ruby
 irb(main)> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>]
+
 irb(main)> require 'concurrent'
 => true
+
 irb(main)> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>,
     #<Thread:0x00007f91299453b0@.../concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>
@@ -366,7 +368,7 @@ Hello! My object id is '70161462088680' \
 and I'm running in thread '70161462091140'.
 ```
 
-On closer inspecting, we _are_ seeing a new object ID, but the same thread:
+On closer inspection, we _are_ seeing a new object ID, but the same thread:
 
 ```{diff}
 - Hello! My object id is '70161458709520' \
@@ -407,13 +409,17 @@ things be running concurrently and therefore in multiple threads?
 
 ```markup
 > async
-> list
-Currently have 3 threads.
-> async
+
 > list
 Currently have 3 threads.
 
 > async
+
+> list
+Currently have 3 threads.
+
+> async
+
 Hello! My object id is '70161458709520' \
 and I'm running in thread '70161462091140'.
 
@@ -465,7 +471,7 @@ a good job explaining it:
 Staying true to their inspiration, `concurrent-ruby` follows a similar idea of
 queuing up method calls to be processed one at a time.
 [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334)
-is the [relevant code in the gem](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334):
+is the relevant code in the gem:
 
 ```ruby
 # This is in the `AsyncDelegator`
@@ -533,7 +539,7 @@ you can probably trust me that it doesn't define a `hello` method.
 
 _This_ is where the `method_missing` from above comes into play. If you are
 unfamiliar with
-[`method_missing`](https://apidock.com/ruby/BasicObject/method_missing) it is
+[`method_missing`](https://apidock.com/ruby/BasicObject/method_missing), it is
 invoked when a method is called on an object and that object doesn't have a
 definition for that method. It is a powerful tool for metaprogramming and is
 enabling our `AsyncDelegator` to accept method calls without having to
@@ -564,12 +570,14 @@ but note that the `IVar` is created, some stuff happens (which we will cover
 next), and then it is returned. This lines up with what we saw in our
 initial experimentation - we
 [found](/2020/05/concurrent-ruby-hello-async/#return-types) that when using our
-proxy methods the return value would be an `IVar` instead of what the actual
+proxy methods the return value would be an `IVar` instead of what the original
 method was returning.
 
 ```ruby
   # ...stuff from above
+
   ivar = Concurrent::IVar.new
+
   # Hiding the good stuff for now
 
   ivar
@@ -655,8 +663,8 @@ If `@queue` isn't empty, the `executor` would still be in the `loop` in
 updated everywhere, so our `loop` will have access to the new element pushed
 onto the queue. This explains the need to `synchronize` - when mutating the
 state of `@queue`, we need to lock first because we could be updating it in our
-main thread (when we call the method through the proxy) or in our `@executor`
-thread (in the `perform` loop).
+main thread (when we add to it by calling the method through the proxy) or in our `@executor`
+thread (in the `perform` loop when we `shift` elements off the queue).
 
 This shows how the `gen_server`-style FIFO message queue is implemented in the
 `Async` module. An `AsyncDelegator` instance has an instance variable, `@queue`,
@@ -668,9 +676,7 @@ queue.
 
 ## I came here to see multiple threads
 
-So far, we've seen the efficiency of `CachedThreadPool` and the message queue
-implementation style of `gen_stage`, and how this has resulted in no additional
-threads being created. What does it take to have a new thread spawn?
+So far, we've seen the efficiency of `CachedThreadPool` and the message queue implementation style of `gen_stage` and how this has resulted in no additional threads being created. What does it take to have a new thread spawn?
 
 ### Can we spawn one, now
 
@@ -682,8 +688,10 @@ similarly:
 
 ```markup
 > new-async
+
 > list
 Currently have 3 threads.
+
 Hello! My object id is '70161458746800' \
 and I'm running in thread '70161462091140'.
 ```
@@ -692,7 +700,7 @@ and I'm running in thread '70161462091140'.
 
 So, again, `CachedThreadPool` can re-use threads across instances of our
 `AsyncHello` class. But if we re-read the class's description, we know that
-threads are crated "as needed."
+threads are created "as needed."
 
 > New threads are created as needed, existing threads are reused, (...)
 
@@ -747,8 +755,13 @@ At last! We've found a way to spawn more threads.
 
 ## Conclusion
 
+While we haven't _used_ the `Async` module in any meaningful way yet, these
+simple thread count checks have begun to lead us through implementation details
+of the `concurrent-ruby` gem. This is providing us with a better understanding
+and appreciation of the gem.
+
 I initially set out expecting to see a lot of thread creation. Instead, I
-learned that thanks to `concurrent-ruby`, threads can be lazy (in the best
+learned that, thanks to `concurrent-ruby`, threads can be lazy (in the best
 way!). While the message processing aspects of `gen_stage` (and therefore the
 `Async` module) played a role in the lack of needing to spawn as many threads,
 it was the abstractions provided by `concurrent-ruby` that really helped make
@@ -757,20 +770,5 @@ things seamless. Since I imagine most people reach for a gem like
 back.
 
 If you're interested in trying out different ways to create threads with the
-`Async` module, the code for the REPL is [on
+`Async` module, the code for the REPL is available [on
 GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
-
-While we haven't _used_ the `Async` module in any meaningful way yet, these
-simple thread count checks have begun to lead us through implementation details
-of the `concurrent-ruby` gem. This is providing us with a better understanding
-and appreciation of the gem.
-
----
-TODO
-
-- [ ] (maybe) Inclue some links or code examples showing where in the library thread re-use is happening
-- [ ] (maybe) try calling a different method on the same class and see if things are the same
-- [ ] (maybe) set up ling highlighting for prism (<https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/#line-highlighting)>
-- [ ] Fix style for table
-- [x] Add style for `kbd` tag
-
