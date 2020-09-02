@@ -4,8 +4,9 @@ date: '2020-04-25T00:36:13.265Z'
 categories: ['ruby', 'concurrency']
 ---
 
-In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began my process of learning about the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem. In that post, I started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` more obvious. In this post, I try to understand the usage of `Thread`s within the `Async`
-module.
+In this post, we try understand how the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem leverages `Thread`s within its `Async` module.
+
+In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began the process of learning about the `concurrent-ruby` gem. In that post, I started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` obvious. We will build on the foundation created in that post as we dive further into the `Async` module in this post.
 
 ## Our Test Setup
 
@@ -60,7 +61,7 @@ while (input = gets)
 end
 ```
 
-If this makes sense, feel free to [skip ahead](#baseline) to the next section. Otherwise, read on for a breakdown of what's going on.
+If this makes sense, feel free to [skip ahead](#baseline) to the next section. Otherwise, read on for a breakdown of the code.
 
 ### Dependencies
 
@@ -99,10 +100,10 @@ end
 
 There are a few changes from our original implementation:
 
-* The class has been renamed to `HelloAsync` to more easily differentiate between the class and method when writing about it.
+* The class has been renamed to `HelloAsync` to more easily differentiate between the class and method when writing about them.
 * The `puts` statement has been updated to add some additional information for our experimentation, including:
   * The `object_id` for the current instance of the class. Since our REPL has an option for creating new objects (more on this below), this makes it possible to differentiate output between new and existing objects.
-  * The `object_id` of the [`Thread` that the code is being run in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This helps us to identify whether we are in a new or existing Thread.
+  * The `object_id` of the [`Thread` that the code is running in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This helps us to identify whether we are in a new or existing Thread.
 
 ### Command Options
 
@@ -143,7 +144,7 @@ These options enable tracking a program's thread count while using various combi
 
 ### Full File
 
-Pulling it all together again (and adding few other small pieces) we have the following:
+Pulling it all together again, we have the following:
 
 ```ruby
 require 'bundler/inline'
@@ -220,8 +221,7 @@ Currently have [
 ] threads.
 ```
 
-So we have the same "run" thread, but we also have a thread that looks like
-it's related to the `concurrent-ruby` gem.
+So we have the same "run" thread, but we also have a thread that looks like it's related to the `concurrent-ruby` gem.
 
 ### concurrent-ruby Initialize Thread
 
@@ -249,12 +249,6 @@ irb(main)> Thread.list
 ]
 ```
 
-From [the docs](https://ruby-concurrency.github.io/concurrent-ruby/1.1.5/Concurrent/ThreadLocalVar.html):
-
-> A ThreadLocalVar is a variable where the value is different for each thread.
-> Each variable may have a default value, but when you modify the variable only
-> the current thread will ever see that change.
-
 The implementation tracks and manages `ThreadLocalVar`s in a [long-running thread](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#L38-L39). We haven't yet begun digging into the [thread-safe objects the library provides](https://github.com/ruby-concurrency/concurrent-ruby#thread-safe-value-objects-structures-and-collections) yet, so we shouldn't need to worry too much about this additional thread.
 
 The important things to note are:
@@ -266,7 +260,7 @@ The important things to note are:
 
 You may note that the file referenced in the thread is `ruby_thread_local_var.rb` and not just `thread_local_var.rb`. `ThreadLocalVar` has [implementations for Ruby and JRuby](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/atomic/thread_local_var.rb#L60-L65). Since I am using MRI, I am seeing `RubyThreadLocalVar` and not `JavaThreadLocalVar`.
 
-I mention this because there may be other instances where I reference the gem's MRI implementation.
+I mention this because there may be other instances where I reference the gem's MRI implementation, but you may see something different.
 
 ## Our first (or third) thread
 
@@ -302,7 +296,7 @@ and I'm running in thread '70161462091140'.
 Currently have 3 threads.
 ```
 
-No, I did not accidentally paste something twice. When running the `await` command multiple times, we are seeing the same object and thread IDs.
+I did not accidentally paste something twice; when running the `await` command multiple times, we are seeing the same object and thread IDs.
 
 The object ID makes sense since in our [REPL](#command-options) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This means we are reusing our thread. This is great, as it helps save on the cost of starting up and maintaining a new thread.
 
@@ -534,7 +528,7 @@ So, why do we need the `if` on the following line?
 @executor.post { perform } if @queue.length == 1
 ```
 
-If `@queue` isn't empty, the `executor` would still be in the `loop` in `perform`. When we mutate the `@queue` by calling the `push` method it is updated everywhere, so our `loop` will have access to the new element pushed onto the queue. This explains the need to `synchronize` - when mutating the state of `@queue`, we need to lock first because we could be updating it in our main thread (when we add to it by calling the method through the proxy) or in our `@executor` thread (in the `perform` loop when we `shift` elements off the queue).
+If `@queue` isn't empty, the `executor` would still be in the `loop` in `perform`. When we mutate the `@queue` by calling the `push` method it is updated everywhere, so our `loop` will have access to the new element pushed onto the queue. This explains the need to `synchronize` - when mutating the state of `@queue`, we need to lock first because we could be updating it in our main thread (when we add to it by calling the method through the proxy) or in our `@executor` thread (in the `perform` loop when we `shift` elements off of the queue).
 
 This shows how the `gen_server`-style FIFO message queue is implemented in the `Async` module. An `AsyncDelegator` instance has an instance variable, `@queue`, that is an array and stores everything needed to run the method called. This array is passed in via the `perform` method, through a thread pool, to a thread that will run the `perform` method. In `perform`, the thread will loop, executing the next method in the queue, until there is nothing left in the queue.
 
@@ -607,7 +601,8 @@ At last! We've found a way to spawn more threads.
 
 While we haven't _used_ the `Async` module in any meaningful way yet, these simple thread count checks have begun to lead us through implementation details of the `concurrent-ruby` gem. This is providing us with a better understanding and appreciation of the gem.
 
-I initially set out expecting to see a lot of thread creation. Instead, I learned that, thanks to `concurrent-ruby`, threads can be lazy (in the best way!). While the message processing aspects of `gen_stage` (and therefore the `Async` module) played a role in the lack of needing to spawn as many threads, it was the abstractions provided by `concurrent-ruby` that really helped make things seamless. Since I imagine most people reach for a gem like `concurrent-ruby` for performance reasons, it's great to know that it has your back.
+I initially set out expecting to see a lot of thread creation. Instead, I learned that thanks to `concurrent-ruby`, threads can be lazy (in the best way!). While the message processing aspects of `gen_stage` (and therefore the `Async` module) played a role in the lack of needing to spawn as many threads, it was the abstractions provided by `concurrent-ruby` that helped make things seamless. Since I imagine most people reach for a gem like `concurrent-ruby` for performance reasons, it's great to know that it has your back.
 
 If you're interested in trying out different ways to create threads with the `Async` module, the code for the REPL is available [on
 GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
+
