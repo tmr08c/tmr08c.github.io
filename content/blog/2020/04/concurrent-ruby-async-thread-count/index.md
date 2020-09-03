@@ -207,7 +207,7 @@ Currently have 2 threads.
 I didn't _expect_ two threads, but maybe Ruby leverages threads more than I thought. Let's compare this with an `irb` session:
 
 ```ruby
-irb(main)> Thread.list
+irb> Thread.list
 => [#<Thread:0x00007fbef585ffa0 run>]
 ```
 
@@ -237,13 +237,13 @@ instance of our `HelloAsync` class - it's created as soon as we `require
 We can reproduce this in `irb` as well:
 
 ```ruby
-irb(main)> Thread.list
+irb> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>]
 
-irb(main)> require 'concurrent'
+irb> require 'concurrent'
 => true
 
-irb(main)> Thread.list
+irb> Thread.list
 => [#<Thread:0x00007f912a85ffa8 run>,
     #<Thread:0x00007f91299453b0@.../concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb:38 sleep_forever>
 ]
@@ -264,7 +264,7 @@ I mention this because there may be other instances where I reference the gem's 
 
 ## Our first (or third) thread
 
-In our [previous post](/2020/05/concurrent-ruby-hello-async/) we learned that the `await` method would create a new thread, run the method in the new thread, and return to the main thread; blocking our main thread the whole time. Does the thread stick around when the method is done?
+In our [previous post](/2020/05/concurrent-ruby-hello-async/) we learned that the `await` method would create a new thread, run the method in the new thread, and return to the main thread; blocking our main thread the whole time. Does the thread stick around when it is done running the method?
 
 ```markup
 > await
@@ -275,10 +275,10 @@ and I'm running in thread '70161462091140'.
 Currently have 3 threads.
 ```
 
-It seems it does!
+It seems it does.
 
 Does this mean that every time we use one of our proxy
-methods we are creating new threads?
+methods we are going to have extraneous threads that stick around?  
 
 ```markup
 > await
@@ -298,11 +298,11 @@ Currently have 3 threads.
 
 I did not accidentally paste something twice; when running the `await` command multiple times, we are seeing the same object and thread IDs.
 
-The object ID makes sense since in our [REPL](#command-options) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This means we are reusing our thread. This is great, as it helps save on the cost of starting up and maintaining a new thread.
+The object ID makes sense since in our [REPL](#command-options) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This means we are **reusing our thread**. This is great, as it helps save on the cost of starting up and maintaining a new thread.
 
 ## Fancy another
 
-So far, we've learned that `concurrent-ruby` will re-use our thread when calling `await` on the same instance of a class. What happens if we instantiate a new instance of our `HelloAsync` class? This is where the [`new-await` command](#command-options) in our REPL comes into play.
+So far, we've learned that `concurrent-ruby` will reuse our thread when calling `await` on the same instance of a class. What happens if we instantiate a new instance of our `HelloAsync` class? This is where the [`new-await` command](#command-options) in our REPL comes into play.
 
 ```markup
 > await
@@ -317,7 +317,7 @@ Hello! My object id is '70161462088680' \
 and I'm running in thread '70161462091140'.
 ```
 
-On closer inspection, we _are_ seeing a new object ID, but the same thread:
+On closer inspection, we _are_ seeing a new object ID, but the same thread ID:
 
 ```{diff}
 - Hello! My object id is '70161458709520' \
@@ -331,9 +331,9 @@ This indicates that `concurrent-ruby` will reuse threads, even across new instan
 
 ## What are you (a)waiting for
 
-At this point, all of our tests have only used the `await` proxy method. Since this method will block our main thread until it's complete, we aren't sending multiple requests to multiple objects at a time. This does seem like it would make it easier to re-use the same thread. Do we see the same behavior with `async`?
+At this point, all of our tests have only used the `await` proxy method. Since this method will block our main thread until it's complete, we aren't sending multiple requests to multiple objects at a time. This does seem like it would make it easier to reuse the same thread. Do we see the same behavior with `async`?
 
-Let's start with our `async` action. This will run the `hello` method through the `async` proxy on our _existing_ instance of `HelloAsync`.
+Let's start with our `async` action. This will run the `hello` method through the `async` proxy on our existing instance of `HelloAsync`.
 
 ``` markup
 > async
@@ -341,7 +341,7 @@ Hello! My object id is '70161458709520' \
 and I'm running in thread '70161462091140'.
 ```
 
-Since we are using our existing instance, it makes sense to see our same object ID. After what we've learned so far about thread re-use, it's not a complete surprise to see the same thread ID again as well (despite a different proxy method being used).
+Since we are using our existing instance, it makes sense to see our same object ID. After what we've learned so far about thread reuse, it's not a complete surprise to see the same thread ID again as well (despite a different proxy method being used).
 
 As we mentioned above, since `async` doesn't block our main thread, we can call it multiple times. If we can get multiple calls to `async` queued up, should things be running concurrently and therefore in multiple threads?
 
@@ -389,11 +389,13 @@ Above, we have multiple calls to `async` and `list`. The goal was to see if call
 
 ### Actors and Mailboxes
 
-Because the `Async` module is modeling itself off of [`gen_server`](https://erlang.org/doc/man/gen_server.html), it uses the [message-passing semantics](https://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics) of the Actor model. This means that when a method is called, rather than running right away, the method is put into the "mailbox" to be processed by the object. Messages are processed one at a time in the order they are received.
+Because the `Async` module is modeling itself off of [`gen_server`](https://erlang.org/doc/man/gen_server.html), it uses the [message-passing semantics](https://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics) of the Actor model. 
 
 [This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from erlang co-creator Robert Virding) does a good job explaining it:
 
->All messages are placed in a process' message queue and processes handle their message one-by-one. If a message arrives while a process is busy then it is placed in the message queue.
+> All messages are placed in a process' message queue and processes handle their message one-by-one. If a message arrives while a process is busy then it is placed in the message queue.
+
+This means that when a method is called, rather than running right away, the method is put into a "mailbox" to be processed by the object when it is able. Messages are processed one at a time in the order they are received.
 
 Staying true to their inspiration, `concurrent-ruby` follows a similar idea of queuing up method calls to be processed one at a time. [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334) is the relevant code in the gem:
 
@@ -424,7 +426,7 @@ def async
 end
 ```
 
-This returns an instance variable, `@__async_delegator__`. This instance variable is set up as a part  of initialization and is a new `AsyncDelegator`:
+This returns an instance variable, `@__async_delegator__`. This instance variable is set up as a part of initialization and is a new `AsyncDelegator`:
 
 ```ruby{4}
 def init_synchronization
@@ -552,7 +554,7 @@ and I'm running in thread '70161462091140'.
 
 ### Okay, how about now
 
-So, again, `CachedThreadPool` can re-use threads across instances of our `AsyncHello` class. But if we re-read the class's description, we know that threads are created "as needed."
+So, again, `CachedThreadPool` can reuse threads across instances of our `AsyncHello` class. But if we re-read the class's description, we know that threads are created "as needed."
 
 > New threads are created as needed, existing threads are reused, (...)
 
@@ -605,4 +607,3 @@ I initially set out expecting to see a lot of thread creation. Instead, I learne
 
 If you're interested in trying out different ways to create threads with the `Async` module, the code for the REPL is available [on
 GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
-
