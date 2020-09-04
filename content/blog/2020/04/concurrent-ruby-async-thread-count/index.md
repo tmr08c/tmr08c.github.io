@@ -4,7 +4,7 @@ date: '2020-04-25T00:36:13.265Z'
 categories: ['ruby', 'concurrency']
 ---
 
-In this post, we try understand how the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem leverages `Thread`s within its `Async` module.
+In this post, we try to understand how the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem leverages `Thread`s within its `Async` module.
 
 In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began the process of learning about the `concurrent-ruby` gem. In that post, I started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` obvious. We will build on the foundation created in that post as we dive further into the `Async` module in this post.
 
@@ -389,15 +389,13 @@ Above, we have multiple calls to `async` and `list`. The goal was to see if call
 
 ### Actors and Mailboxes
 
-Because the `Async` module is modeling itself off of [`gen_server`](https://erlang.org/doc/man/gen_server.html), it uses the [message-passing semantics](https://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics) of the Actor model. 
+Because the `Async` module is modeling itself off of [`gen_server`](https://erlang.org/doc/man/gen_server.html), it uses the [message-passing semantics](https://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics) of the Actor model.
 
-[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) (from erlang co-creator Robert Virding) does a good job explaining it:
+[This StackOverflow answer](https://stackoverflow.com/a/10816216/2475008) from erlang co-creator Robert Virding explains what that means:
 
 > All messages are placed in a process' message queue and processes handle their message one-by-one. If a message arrives while a process is busy then it is placed in the message queue.
 
-This means that when a method is called, rather than running right away, the method is put into a "mailbox" to be processed by the object when it is able. Messages are processed one at a time in the order they are received.
-
-Staying true to their inspiration, `concurrent-ruby` follows a similar idea of queuing up method calls to be processed one at a time. [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334) is the relevant code in the gem:
+Staying true to their inspiration, `concurrent-ruby` follows a similar idea of queuing up the method calls an object receives. The object will then process (i.e., run) the methods one at a time. [Here](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L323-L334) is the relevant code in the gem:
 
 ```ruby
 # This is in the `AsyncDelegator`
@@ -416,9 +414,9 @@ def method_missing(method, *args, &block)
 end
 ```
 
-Let's try to break this down. Before we get into this `method_missing`, we have to learn a little bit about how things are set up.
+Let's try to break this down. Before we get into this `method_missing` we have to learn a little bit more about the `Async` module.
 
-The `Async` module defines `await` and `async` methods. Let's take a look at the `async` method:
+The `Async` module defines `await` and `async` methods. Here is the `async` method:
 
 ```ruby
 def async
@@ -426,7 +424,7 @@ def async
 end
 ```
 
-This returns an instance variable, `@__async_delegator__`. This instance variable is set up as a part of initialization and is a new `AsyncDelegator`:
+This returns an instance variable, `@__async_delegator__` which is created as a part of the initialization process. The `AsyncDelegator` is initialized by passing in `self`. `self` is the instance of the object that is _calling_ the proxy method. In our case, it is `hello` our `HelloAsync` object.
 
 ```ruby{4}
 def init_synchronization
@@ -440,7 +438,7 @@ end
 
 The `AsyncDelegator` class is defined within the `Async` module. This `AsyncDelegator` class includes the `method_missing` method we saw above.
 
-Here's a reminder of what's happening when we type `async` into our REPL:
+Here's a reminder of what is happening when we type `async` into our REPL:
 
 ```ruby
 # HelloAsync has the Async module included
@@ -491,11 +489,13 @@ end
 
 The implementation of `synchronize` will vary by which type and version of Ruby you are running, but is a mechanism for working with locks. It will check if the thread has access to the lock before `yield`ing and running whatever is in the block.
 
-Once we have synchronized, we add an array of information to `@queue`. `@queue` is an array that is created in our initialization process. We are adding the `ivar`, `method`, and the method's arguments and block to the queue. This is everything that is needed to run our method and put the results in an `IVar` to be consumed later. We will then `post` a block to our `@executor`.
+Once we have synchronized, we add an array of information to `@queue`.   `@queue` is an array that is created in our initialization process and is the equivalent of the "mailbox" concept from erlang.
+
+We are adding the `ivar`, `method`, and the method's arguments and block to the queue. This is everything that is needed to run our method and put the results in an `IVar` to be consumed later. We will then `post` a block to our `@executor`.
 
 Finding the `@executor` is another chain of branching inheritance. For my version of MRI Ruby, I eventually got to [`RubyExecutorService#post`](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#L17-L25). The `ExecutorService` classes is the abstraction for running your code in new threads. These classes take in the arbitrary code to run and handle interacting with threads.
 
-Along the chain to the `RubyExecutorService`, one of the parent classes was [`CachedThreadPool`](https://www.rubydoc.info/gems/concurrent-ruby/Concurrent/CachedThreadPool). _This_ class is key for many of the observations we have seen so far. From the docs:
+Along the chain to the `RubyExecutorService`, one of the parent classes was [`CachedThreadPool`](https://www.rubydoc.info/gems/concurrent-ruby/Concurrent/CachedThreadPool). **This class is key for many of the observations we have seen so far**. From the docs:
 
 > A thread pool that dynamically grows and shrinks to fit the current workload. New threads are created as needed, existing threads are reused, and threads that remain idle for too long are killed and removed from the pool.
 
@@ -530,13 +530,17 @@ So, why do we need the `if` on the following line?
 @executor.post { perform } if @queue.length == 1
 ```
 
-If `@queue` isn't empty, the `executor` would still be in the `loop` in `perform`. When we mutate the `@queue` by calling the `push` method it is updated everywhere, so our `loop` will have access to the new element pushed onto the queue. This explains the need to `synchronize` - when mutating the state of `@queue`, we need to lock first because we could be updating it in our main thread (when we add to it by calling the method through the proxy) or in our `@executor` thread (in the `perform` loop when we `shift` elements off of the queue).
+If `@queue` isn't empty, the `executor` would still be in the `loop` in `perform`. When we mutate the `@queue` by calling the `push` method it is updated everywhere, so our `loop` will have access to the new element pushed onto the queue. This explains the need to `synchronize` - when mutating the state of `@queue` we need to lock first because we could be updating it in our main thread (when we add to it by calling the method through the proxy) or in our `@executor` thread (in the `perform` loop when we `shift` elements off of the queue).
 
-This shows how the `gen_server`-style FIFO message queue is implemented in the `Async` module. An `AsyncDelegator` instance has an instance variable, `@queue`, that is an array and stores everything needed to run the method called. This array is passed in via the `perform` method, through a thread pool, to a thread that will run the `perform` method. In `perform`, the thread will loop, executing the next method in the queue, until there is nothing left in the queue.
+This shows how the `gen_server`-style FIFO message queue is implemented in the `Async` module.
+
+* An `AsyncDelegator` instance has an instance variable `@queue` that is an array and stores everything needed to run the method called.
+* This array is passed in via the `perform` method via a thread pool to a thread that will eventually run our code.
+* In `perform` the thread will loop, executing the next method in the queue, until there is nothing left in the queue.
 
 ## I came here to see multiple threads
 
-So far, we've seen the efficiency of `CachedThreadPool` and the message queue implementation style of `gen_stage` and how this has resulted in no additional threads being created. What does it take to have a new thread spawn?
+So far, we've seen the efficiency of `CachedThreadPool` and the message queue implementation style of `gen_stage` and how this has resulted in no additional threads spawned. What does it take to make a new thread?
 
 ### Can we spawn one, now
 
@@ -558,7 +562,7 @@ So, again, `CachedThreadPool` can reuse threads across instances of our `AsyncHe
 
 > New threads are created as needed, existing threads are reused, (...)
 
-We've found we don't need multiple threads with `await` because we are blocked from doing more work in our REPL and cannot spawn more. We also found that `async` follows the `gen_stage` patten and processes multiple requests one at a time via a queue (when working with the same instance).
+We've found we don't need multiple threads with `await` because we are blocked from doing more work in our REPL and cannot spawn more. We also found that `async` follows the `gen_stage` patten and processes multiple requests one at a time via a queue when working with the same instance.
 
 We've now seen that a single call to a new `async` class can reuse the thread. Since we weren't doing any other work, that makes sense; the thread was running unused and was available for our `new-async` command. What if we run _multiple_ `new-async` commands? Since it's `async` we should be able to request them multiple times view our REPL and since each request goes to a new instance, there is no waiting in the queue.
 
@@ -601,9 +605,10 @@ At last! We've found a way to spawn more threads.
 
 ## Conclusion
 
-While we haven't _used_ the `Async` module in any meaningful way yet, these simple thread count checks have begun to lead us through implementation details of the `concurrent-ruby` gem. This is providing us with a better understanding and appreciation of the gem.
+While we haven't _used_ the `Async` module in any meaningful way yet, these simple thread count checks have begun to lead us through implementation details of the `concurrent-ruby` gem. Hopefully, this exploration has provided us with a better understanding and appreciation of the gem.
 
-I initially set out expecting to see a lot of thread creation. Instead, I learned that thanks to `concurrent-ruby`, threads can be lazy (in the best way!). While the message processing aspects of `gen_stage` (and therefore the `Async` module) played a role in the lack of needing to spawn as many threads, it was the abstractions provided by `concurrent-ruby` that helped make things seamless. Since I imagine most people reach for a gem like `concurrent-ruby` for performance reasons, it's great to know that it has your back.
+I initially set out expecting to see a lot of thread creation. Instead, I learned that, thanks to `concurrent-ruby`, threads can be lazy (in the best way!). While the message processing aspects of `gen_stage` (and therefore the `Async` module) played a role in the lack of needing to spawn as many threads, it was the abstractions provided by `concurrent-ruby` that helped make things seamless. Since I imagine most people reach for a gem like `concurrent-ruby` for performance reasons, it's great to know that it has your back.
 
 If you're interested in trying out different ways to create threads with the `Async` module, the code for the REPL is available [on
 GitHub](https://github.com/tmr08c/trying-concurrent-ruby/blob/master/01-hello-async.rb).
+
