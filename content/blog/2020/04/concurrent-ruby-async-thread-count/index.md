@@ -6,7 +6,7 @@ categories: ['ruby', 'concurrency']
 
 In this post, we try to understand how the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem leverages `Thread`s within its `Async` module.
 
-In a [previous post](/2020/05/concurrent-ruby-hello-async/), I began the process of learning about the `concurrent-ruby` gem. In that post, I started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` obvious. We will build on the foundation created in that post as we dive further into the `Async` module in this post.
+In a [previous post](/2020/05/concurrent-ruby-hello-async/), we began the process of learning about the `concurrent-ruby` gem. In that post, we started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` obvious. We will build on the foundation created in that post as we dive further into the `Async` module in this post.
 
 ## Our Test Setup
 
@@ -28,7 +28,7 @@ require 'concurrent'
 class HelloAsync
   include Concurrent::Async
 
-  def hello
+  def hello_method
     sleep(3)
     puts "Hello! My object id is '#{object_id}' " \
          "and I'm running in thread " \
@@ -36,7 +36,7 @@ class HelloAsync
   end
 end
 
-hello = HelloAsync.new
+hello_instance = HelloAsync.new
 
 print '> '
 while (input = gets)
@@ -47,13 +47,13 @@ while (input = gets)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
   when /^async/
-    hello.async.hello
+    hello_instance.async.hello_method
   when /^await/
-    hello.await.hello
+    hello_instance.await.hello_method
   when /^new-async/
-    HelloAsync.new.async.hello
+    HelloAsync.new.async.hello_method
   when /^new-await/
-    HelloAsync.new.await.hello
+    HelloAsync.new.await.hello_method
   else puts "Received unknown input: #{input}"
   end
 
@@ -89,7 +89,7 @@ This class is similar to what we created in the [previous post](/2020/05/concurr
 class HelloAsync
   include Concurrent::Async
 
-  def hello
+  def hello_method
     sleep(3)
     puts "Hello! My object id is '#{object_id}' " \
          "and I'm running in thread " \
@@ -100,7 +100,7 @@ end
 
 There are a few changes from our original implementation:
 
-* The class has been renamed to `HelloAsync` to more easily differentiate between the class and method when writing about them.
+* The class has been renamed to `HelloAsync` and the method to `hello_method` to more easily differentiate between the class and method when writing about them.
 * The `puts` statement has been updated to add some additional information for our experimentation, including:
   * The `object_id` for the current instance of the class. Since our REPL has an option for creating new objects (more on this below), this makes it possible to differentiate output between new and existing objects.
   * The `object_id` of the [`Thread` that the code is running in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This helps us to identify whether we are in a new or existing Thread.
@@ -118,15 +118,14 @@ while (input = gets)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
   when /^async/
-    hello.async.hello
+    hello_instance.async.hello_method
   when /^await/
-    hello.await.hello
+    hello_instance.await.hello_method
   when /^new-async/
-    HelloAsync.new.async.hello
+    HelloAsync.new.async.hello_method
   when /^new-await/
-    HelloAsync.new.await.hello
-  else
-    puts "Received unknown input: #{input}"
+    HelloAsync.new.await.hello_method
+  else puts "Received unknown input: #{input}"
   end
 end
 ```
@@ -137,10 +136,10 @@ These options enable tracking a program's thread count while using various combi
 |-|-|
 |<kbd>q</kbd>, <kbd>x</kbd>| Quit. Break out of the REPL and stop the script.|
 |<kbd>l</kbd>, <kbd>list</kbd>| Print the number of `Thread`s the Ruby process knows about. Uses [`Thread.list`](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-list).|
-|<kbd>async</kbd>| Run the `hello` method through the `async` proxy on an **existing** instance of the `HelloAsync` class.|
-|<kbd>new-async</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello` method through the `async` proxy.|
-|<kbd>await</kbd>| Run the `hello` method through the `await` proxy on an **existing** instance of the `HelloAsync` class.|
-|<kbd>new-await</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello` method through the `await` proxy.|
+|<kbd>async</kbd>| Run the `hello_method` method through the `async` proxy on an **existing** instance of the `HelloAsync` class.|
+|<kbd>new-async</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello_method` method through the `async` proxy.|
+|<kbd>await</kbd>| Run the `hello_method` method through the `await` proxy on an **existing** instance of the `HelloAsync` class.|
+|<kbd>new-await</kbd>| Instantiates a **new** instance of the `HelloAsync` class and runs the `hello_method` method through the `await` proxy.|
 
 ### Full File
 
@@ -160,7 +159,7 @@ require 'concurrent'
 class HelloAsync
   include Concurrent::Async
 
-  def hello
+  def hello_method
     sleep(3)
     puts "Hello! My object id is '#{object_id}' " \
          "and I'm running in thread " \
@@ -168,7 +167,7 @@ class HelloAsync
   end
 end
 
-hello = HelloAsync.new
+hello_instance = HelloAsync.new
 
 print '> '
 while (input = gets)
@@ -179,13 +178,13 @@ while (input = gets)
   when /^l(ist)?/
     puts "Currently have #{Thread.list.count} threads."
   when /^async/
-    hello.async.hello
+    hello_instance.async.hello_method
   when /^await/
-    hello.await.hello
+    hello_instance.await.hello_method
   when /^new-async/
-    HelloAsync.new.async.hello
+    HelloAsync.new.async.hello_method
   when /^new-await/
-    HelloAsync.new.await.hello
+    HelloAsync.new.await.hello_method
   else puts "Received unknown input: #{input}"
   end
 
@@ -333,7 +332,7 @@ This indicates that `concurrent-ruby` will reuse threads, even across new instan
 
 At this point, all of our tests have only used the `await` proxy method. Since this method will block our main thread until it's complete, we aren't sending multiple requests to multiple objects at a time. This does seem like it would make it easier to reuse the same thread. Do we see the same behavior with `async`?
 
-Let's start with our `async` action. This will run the `hello` method through the `async` proxy on our existing instance of `HelloAsync`.
+Let's start with our `async` action. This will run the `hello_method` method through the `async` proxy on our existing instance of `HelloAsync`.
 
 ``` markup
 > async
@@ -424,7 +423,7 @@ def async
 end
 ```
 
-This returns an instance variable, `@__async_delegator__` which is created as a part of the initialization process. The `AsyncDelegator` is initialized by passing in `self`. `self` is the instance of the object that is _calling_ the proxy method. In our case, it is `hello` our `HelloAsync` object.
+This returns an instance variable, `@__async_delegator__` which is created as a part of the initialization process. The `AsyncDelegator` is initialized by passing in `self`. `self` is the instance of the object that is _calling_ the proxy method. In our case, it is `hello_instance` our `HelloAsync` object.
 
 ```ruby{4}
 def init_synchronization
@@ -441,14 +440,13 @@ The `AsyncDelegator` class is defined within the `Async` module. This `AsyncDele
 Here's a reminder of what is happening when we type `async` into our REPL:
 
 ```ruby
-# HelloAsync has the Async module included
-hello = HelloAsync.new
+hello_instance = HelloAsync.new
 
 # ...
-when /^async/ then hello.async.hello
+when /^async/ then hello_instance.async.hello_method
 ```
 
-We call `async` on `hello`. We now know this is giving us an `AsyncDelegator` that has a reference to our `hello` object. We then call the method `hello`. However, we aren't calling it on `hello` (our instance of the `HelloAsync` class) but instead on our instance of `AsyncDelegator` (`@__async_delegator__`). While we haven't looked at the [whole `AsyncDelegator` class](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L301-L364), you can probably trust me that it doesn't define a `hello` method.
+We call `async` on `hello_instance`. We now know this is giving us an `AsyncDelegator` that has a reference to our `hello_instance` object. We then call the method `hello_method`. However, we aren't calling it on `hello_instance` (our instance of the `HelloAsync` class) but instead on our instance of `AsyncDelegator` (`@__async_delegator__`). While we haven't looked at the [whole `AsyncDelegator` class](https://github.com/ruby-concurrency/concurrent-ruby/blob/082c05f136309fd7be56e7c1b07a4edcb93968f4/lib/concurrent-ruby/concurrent/async.rb#L301-L364), you can probably trust me that it doesn't define a `hello_method` method.
 
 _This_ is where the `method_missing` from above comes into play. If you are unfamiliar with [`method_missing`](https://apidock.com/ruby/BasicObject/method_missing), it is invoked when a method is called on an object and that object doesn't have a definition for that method. It is a powerful tool for metaprogramming and is enabling our `AsyncDelegator` to accept method calls without having to explicitly define them.
 
@@ -456,9 +454,9 @@ _This_ is where the `method_missing` from above comes into play. If you are unfa
 def method_missing(method, *args, &block)
 ```
 
-When we call `hello.async.hello`, our `AsyncDelegator` (which doesn't define a `hello` method) will invoke `method_missing` and pass `hello` as the `method` argument. It will also pass any other arguments and a block if one is included.
+When we call `hello_instance.async.hello_method`, our `AsyncDelegator` (which doesn't define a `hello_method` method) will invoke `method_missing` and pass `hello_method` as the `method` argument. It will also pass any other arguments and a block if one is included.
 
-After invoking `method_missing`, the library will do some validations. First, it will check if the "delegate" object (`hello` in our case) defines the method we are calling. It will then check if the right number of arguments were passed in.
+After invoking `method_missing`, the library will do some validations. First, it will check if the "delegate" object (`hello_instance` in our case) defines the method we are calling. It will then check if the right number of arguments were passed in.
 
 ```ruby
 super unless @delegate.respond_to?(method)
@@ -558,7 +556,7 @@ and I'm running in thread '70161462091140'.
 
 ### Okay, how about now
 
-So, again, `CachedThreadPool` can reuse threads across instances of our `AsyncHello` class. But if we re-read the class's description, we know that threads are created "as needed."
+So, again, `CachedThreadPool` can reuse threads across instances of our `HelloAsync` class. But if we re-read the class's description, we know that threads are created "as needed."
 
 > New threads are created as needed, existing threads are reused, (...)
 
