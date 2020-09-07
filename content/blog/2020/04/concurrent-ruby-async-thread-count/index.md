@@ -6,7 +6,7 @@ categories: ['ruby', 'concurrency']
 
 In this post, we try to understand how the [`concurrent-ruby`](https://github.com/ruby-concurrency/concurrent-ruby) gem leverages `Thread`s within its `Async` module.
 
-In a [previous post](/2020/05/concurrent-ruby-hello-async/), we began the process of learning about the `concurrent-ruby` gem. In that post, we started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` obvious. We will build on the foundation created in that post as we dive further into the `Async` module in this post.
+In a [previous post](/2020/05/concurrent-ruby-hello-async/), we began the process of learning about the `concurrent-ruby` gem. In that post, we started with the "hello, world" example provided in the `Async` module's [documentation](http://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Async.html) and made a few small tweaks to make the effects of `async` versus `await` obvious. We will now build on those foundations as we dive further into the `Async` module.
 
 ## Our Test Setup
 
@@ -103,7 +103,7 @@ There are a few changes from our original implementation:
 * The class has been renamed to `HelloAsync` and the method to `hello_method` to more easily differentiate between the class and method when writing about them.
 * The `puts` statement has been updated to add some additional information for our experimentation, including:
   * The `object_id` for the current instance of the class. Since our REPL has an option for creating new objects (more on this below), this makes it possible to differentiate output between new and existing objects.
-  * The `object_id` of the [`Thread` that the code is running in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This helps us to identify whether we are in a new or existing Thread.
+  * The `object_id` of the [`Thread` that the code is running in](https://ruby-doc.org/core-2.5.0/Thread.html#method-c-current). This helps us to identify whether we are in a new or existing `Thread`.
 
 ### Command Options
 
@@ -276,8 +276,7 @@ Currently have 3 threads.
 
 It seems it does.
 
-Does this mean that every time we use one of our proxy
-methods we are going to have extraneous threads that stick around?  
+Does this mean that every time we use one of our proxy methods we are going to have extraneous threads that stick around?
 
 ```markup
 > await
@@ -295,9 +294,9 @@ and I'm running in thread '70161462091140'.
 Currently have 3 threads.
 ```
 
-I did not accidentally paste something twice; when running the `await` command multiple times, we are seeing the same object and thread IDs.
+When running the `await` command multiple times, we are seeing the same object and thread IDs. The object ID makes sense since in our [REPL](#command-options) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up.
 
-The object ID makes sense since in our [REPL](#command-options) we had the `await` command use the same object. However, the same thread ID wasn't something we intentionally set up. This means we are **reusing our thread**. This is great, as it helps save on the cost of starting up and maintaining a new thread.
+This means we are **reusing our thread**. Rather than having threads created and left around, the library is reusing them for subsequent calls. This is great, as it helps save on the cost of starting up and maintaining a new thread.
 
 ## Fancy another
 
@@ -423,7 +422,7 @@ def async
 end
 ```
 
-This returns an instance variable, `@__async_delegator__` which is created as a part of the initialization process. The `AsyncDelegator` is initialized by passing in `self`. `self` is the instance of the object that is _calling_ the proxy method. In our case, it is `hello_instance` our `HelloAsync` object.
+This returns an instance variable, `@__async_delegator__` which is created as a part of the initialization process. The `AsyncDelegator` is initialized by passing in `self`. `self` is the instance of the object that is _calling_ the proxy method. In our case it is `hello_instance`, our `HelloAsync` object.
 
 ```ruby{4}
 def init_synchronization
@@ -560,9 +559,7 @@ So, again, `CachedThreadPool` can reuse threads across instances of our `HelloAs
 
 > New threads are created as needed, existing threads are reused, (...)
 
-We've found we don't need multiple threads with `await` because we are blocked from doing more work in our REPL and cannot spawn more. We also found that `async` follows the `gen_stage` patten and processes multiple requests one at a time via a queue when working with the same instance.
-
-We've now seen that a single call to a new `async` class can reuse the thread. Since we weren't doing any other work, that makes sense; the thread was running unused and was available for our `new-async` command. What if we run _multiple_ `new-async` commands? Since it's `async` we should be able to request them multiple times view our REPL and since each request goes to a new instance, there is no waiting in the queue.
+So far, we haven't see the "as needed" case. What if we run _multiple_ `new-async` commands? Since it's `async` we should be able to request them multiple times view our REPL and since each request goes to a new instance, there is no waiting in the queue.
 
 ```markup
 > new-async
