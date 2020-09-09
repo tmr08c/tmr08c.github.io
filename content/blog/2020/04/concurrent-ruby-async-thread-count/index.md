@@ -130,7 +130,7 @@ while (input = gets)
 end
 ```
 
-These options enable tracking a program's thread count while using various combinations of the `async` and `await` proxy methods. Let's cover them in more detail:
+These options enable tracking the program's thread count while using various combinations of the `async` and `await` proxy methods. Let's cover them in more detail:
 
 |Command|Description|
 |-|-|
@@ -339,9 +339,9 @@ Hello! My object id is '70161458709520' \
 and I'm running in thread '70161462091140'.
 ```
 
-Since we are using our existing instance, it makes sense to see our same object ID. After what we've learned so far about thread reuse, it's not a complete surprise to see the same thread ID again as well (despite a different proxy method being used).
+Since we are using our existing instance, it makes sense to see our same object ID. After what we've learned so far about thread reuse, it's not a complete surprise to see the same thread ID again either (despite a different proxy method being used).
 
-As we mentioned above, since `async` doesn't block our main thread, we can call it multiple times. If we can get multiple calls to `async` queued up, should things be running concurrently and therefore in multiple threads?
+As we mentioned above, since `async` doesn't block our main thread, we can call it multiple times. If we can get multiple calls to `async` queued up, should things be running concurrently through multiple threads?
 
 ```markup
 > async
@@ -496,7 +496,7 @@ Along the chain to the `RubyExecutorService`, one of the parent classes was [`Ca
 
 > A thread pool that dynamically grows and shrinks to fit the current workload. New threads are created as needed, existing threads are reused, and threads that remain idle for too long are killed and removed from the pool.
 
-While this `CachedThreadPool` pool explains _some_ of what we've seen, it doesn't fully explain why we aren't seeing the thread pool grow dynamically when we proxy through `async` multiple times. For that, we will need to look at the `perform` method in `AsyncDelegator`. This method is what is passed into our `@executor` to be run in a separate thread. This method will also explain the `if @queue.length == 1` check.
+While this `CachedThreadPool` pool explains _some_ of what we've seen, it doesn't fully explain why we aren't seeing the thread pool grow dynamically when we proxy through `async` multiple times. For that, we will need to look at the `perform` method in `AsyncDelegator`. This method is what is passed into our `@executor` to be run in a separate thread
 
 ```ruby
 # Async::AsyncDelegator
@@ -532,7 +532,7 @@ If `@queue` isn't empty, the `executor` would still be in the `loop` in `perform
 This shows how the `gen_server`-style FIFO message queue is implemented in the `Async` module.
 
 * An `AsyncDelegator` instance has an instance variable `@queue` that is an array and stores everything needed to run the method called.
-* This array is passed in via the `perform` method via a thread pool to a thread that will eventually run our code.
+* This array is passed in to the `perform` method, through a thread pool, and finally to an executor thread that will eventually run our code.
 * In `perform` the thread will loop, executing the next method in the queue, until there is nothing left in the queue.
 
 ## I came here to see multiple threads
