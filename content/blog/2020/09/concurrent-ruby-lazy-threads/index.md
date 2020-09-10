@@ -1,6 +1,6 @@
 ---
 title: 'Concurrent Ruby - Lazy Threads'
-date: '2020-04-25T00:36:13.265Z'
+date: '2020-09-10T06:26:13.265Z'
 categories: ['ruby', 'concurrency']
 ---
 
