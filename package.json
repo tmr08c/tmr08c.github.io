@@ -51,7 +51,7 @@
     "@types/react-helmet": "^5.0.14",
     "gh-pages": "^2.1.1",
     "prettier": "^1.19.1",
-    "tailwindcss": "^1.7.3",
+    "tailwindcss": "^1.7.6",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0"
