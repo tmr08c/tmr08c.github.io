@@ -7,10 +7,16 @@
 .blog-post-body ol,
 .blog-post-body p,
 .blog-post-body img,
+.blog-post-body table,
 .blog-post-body pre,
 .blog-post-body .gatsby-highlight,
 .blog-post-body .gatsby-resp-image-link {
   @apply mb-4;
+}
+
+.blog-post-body li,
+.blog-post-body li > p {
+  @apply mb-2;
 }
 
 .blog-post-body {
@@ -68,3 +74,15 @@
   @apply border-solid;
   @apply border-l-4;
 }
+
+.blog-post-body table {
+  @apply table-auto;
+
+}
+
+.blog-post-body table tr td {
+  @apply border;
+  @apply px-6;
+  @apply py-4;
+}
+
