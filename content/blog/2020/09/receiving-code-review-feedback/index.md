@@ -18,19 +18,32 @@ In a worst case scenario (and the reason there is so much content on how to give
 
 If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way your wrote this line of code...do they not like you? Do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, I have experienced these emotional overreactions.
 
-I believe as "knowledge workers," our worth can feel closely tied to the knowledge we bring. When tied too closely, a lack of knowledge can feel like a like of worth.
+I believe as "knowledge workers," our worth can feel closely tied to the knowledge we bring. When tied too closely, a lack of knowledge can feel like a lack of worth.
 
-On top of tying our worth into the correctness of our code, writing code also has an artistic element to it. Different developers have different styles and aesthetic preferences (for the code). Even when trying to be rational and Spock-like about the functionality of code, sometimes feedback can be about more "artistic" choices you have made.
+<!-- On top of tying our worth into the correctness of our code, writing code also has an artistic element to it. Different developers have different styles and aesthetic preferences for their code. Even when trying to be rational and Spock-like about the functionality of code, sometimes feedback can be about more "artistic" choices you have made and. This feedback can be even more impactful because it is a tied to personal preference over fact. -->
 
+When you attach your worth into your code it's going to be hard to receive a code review. Every piece of feedback and discussion is an attack on the ego. Instead, remember, **you are not your code**.
 
+<!--It's okay to work hard on something, and for others to find opportunities to improve it. -->
+While much easier said than done, I have a few practices that can help make it easier to be less emotionally attached to the code you have up for review and more receptive to receiving feedback.
 
 1. Review your own code first
-  * This puts you in the mindset of looking for issues with the code
+
+  This can feel similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**.
+
+* separate code from self
+  1. Review your own code first
+    * This puts you in the mindset of looking for issues with the code
+  1. Step away
+    * Try to develop some mental separation
+    * Possibly starting on other work
+    * Time allowing, can help reset mindset of wanting to get a quick approval
+* why you do it
+  1. Reframe the goal of code reviews - not to get approval, but to improve code and learn
+  1. "your" code versus the team's code
+* Closing (tie to how to give code review talks) 
 1. Assume best intention
   * It's a team effort
   * Maybe someone was in a rush and wanted to get comments out
-1. Step away
-  * Try to develop some mental separation
-  * Possibly starting on other work
-  * Time allowing, can help reset mindset of wanting to get a quick approval
-1. Reframe the goal of code reviews - not to get approval, but to improve code and learn
+* unknown
+1. think of it like writing - it's  a draft
