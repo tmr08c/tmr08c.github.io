@@ -29,7 +29,14 @@ While much easier said than done, I have a few practices that can help make it e
 
 1. Review your own code first
 
-  This can feel similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**.
+This can feel similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**. You want to shift your mindset from writer to reviewer to change how you are thinking about the code you wrote.
+
+You should review your own code just like you would anyone else's. By getting into the same "mode" you would to review anyone else's code, you set brain up to realize, "oh hey, it's code review time." 
+
+To help get into this mode use the same "environment"
+
+You may find it easier to shift mindsets if review other pull requests before you review your own. Your teammates will appreciate the feedback and you will be more apt to treat your pull request jut like the others you have been reviewing. 
+
 
 * separate code from self
   1. Review your own code first
