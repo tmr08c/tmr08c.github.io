@@ -39,5 +39,10 @@ module.exports = {
     './src/**/*.html',
     './src/**/*.tsx',
     './src/**/*.jsx',
-  ]
+  ],
+  // opt-in to future breaking changes
+  future: {
+    // Will be the default in 2.0
+    removeDeprecatedGapUtilities: true,
+  },
 };
