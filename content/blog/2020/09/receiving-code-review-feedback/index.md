@@ -31,12 +31,24 @@ While much easier said than done, I have a few practices that can help make it e
 
 This can feel similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**. You want to shift your mindset from writer to reviewer to change how you are thinking about the code you wrote.
 
-You should review your own code just like you would anyone else's. By getting into the same "mode" you would to review anyone else's code, you set brain up to realize, "oh hey, it's code review time." 
+You should review your own code just like you would anyone else's. By getting into the same "mode" you would to review anyone else's code, you set your brain up to realize, "oh hey, it's code review time." 
 
-To help get into this mode use the same "environment"
+To help get into this mode use the same "environment" as you would any other code review. For example, I will create my own pull request and use the code review functionality just like I would for any other pull request. This has an added benefit that I can also annotate my pull request in area I think other may have questions or call out sections of code I think could be better am not sure how to improve.
 
-You may find it easier to shift mindsets if review other pull requests before you review your own. Your teammates will appreciate the feedback and you will be more apt to treat your pull request jut like the others you have been reviewing. 
+This mental shift can be difficult. You may find it easier to shift mindsets if review other pull requests before you review your own. Your teammates will appreciate the feedback and you will be more apt to treat your pull request just like the others you have been reviewing. 
 
+1. Step away
+
+Stepping away can be advice given to all sort of situations including preparing for code review feedback. When you receive feedback on something "hot of the presses" it's much more difficult to receive it objectively. 
+
+Stepping away can be as simple as checking email before requesting reviews. However, it can be powerful to have physical separation. If you can, take a break from screen time. This can be something quick like refilling your drink or longer like taking a walk. You want to create space between yourself and the code you are soliciting feedback on. As silly as it may sound, I have found this actual, physical space can help me feel less attached to my code.
+
+Time is precious and we don't want to get in the way of shipping code, but I think this time can be worth it. In all honesty, depending on how you do reviews, it probably doesn't even have to block reviews from getting done. You can push your code, request reviews, and step away.  
+
+* also step away after reading review
+* step away productively
+  * review other code
+  * maybe start new pr (this can really give separation, but lean agile issues)
 
 * separate code from self
   1. Review your own code first
@@ -54,3 +66,7 @@ You may find it easier to shift mindsets if review other pull requests before yo
   * Maybe someone was in a rush and wanted to get comments out
 * unknown
 1. think of it like writing - it's  a draft
+* Exposure
+  * do it more
+  * pair - get real time feedback
+* 
