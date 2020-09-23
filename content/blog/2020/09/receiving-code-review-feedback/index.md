@@ -49,7 +49,28 @@ In addition to take breaks to step away from your code, there are productive opt
 
 You can review code for other people on your team. As mentioned above this is also a great way to set yourself up to review your own code more objectively.
 
-Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/) you could also start new work. Personally, I try to limit this and prefer reviewing other code to help move work through the system, but sometimes it's the best option. Part of what can make having multiple units of work in progress harmful to overall team productivity can also help make receiving feedback easier. When you are starting work on a new problem, you often move on from the old one. When you being receiving feedback on your old work, you will likely feel less emotionally attached because your emotions are tied up in your new work. You may find that you can more easily critical feedback ("You're right, I can't believe I used to write such bad code (yesterday)"). From a project management point of view this detachment can cause productivity issues though. You can end up feeling like the feedback on your boring, terrible, old code is just a distraction from your perfect, new code. With these pros and cons in mind, consider using this method more sparingly than other options.
+Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/) you could also start new work.  Part of what can make having multiple units of work in progress harmful to overall team productivity can also help make receiving feedback easier.
+
+When you are starting work on a new problem, you often move on (emotionally) from the old one and become invested in the new problem. This emotional detachment to your old work may make it easier to receive critical feedback on it. 
+
+From a project management point of view, this detachment can cause productivity issues though. You can end up feeling like the feedback on your boring, terrible, old code is just a distraction from your interesting, perfect, new code.
+
+With these pros and cons in mind, consider using this method more sparingly than other options.
+
+1. Step away (again) 
+
+Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review in order to make you more receptive to receiving feedback. We may also want to step away _after_ you've received some feedback. Sometime, even if we've done our best to prepare ourselves, feedback can still be difficult to receive. 
+
+If you find you are getting emotional when reading through feedback, step away. 
+
+In this case I think it makes more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting the feedback sink in. When preparing to request feedback, we wanted to almost forget about the code we wrote to not be defined by our code. When receiving feedback, we do not want to immediately discard it. We need to understand it. This is especially true when it causes an emotional reactoin. Why are we feeling so bad after this feedback?
+
+I am not saying that you should dwell on improperly given feedback or personal attacks. There is no place for that in code reviews and should not be tolerated. I am saying that if someone is offering your constructive feedback, whether you agree or disagree, you shouldn't turn a blind eye.
+
+I have found that sometimes I am resistent to feedback out of laziness. I have a solution that I spent time on, and don't want to re-do everything to take this alternative approach. Depending on the situation, it may or may not make sense to invest in large changes. However, the situation that determines whether it makes sense is not how I'm feeling that day. Instead, it should be based on more objective parameters - do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), does going forward with the current solution make it harder to use the suggested solution, etc. My initial emotional reaction may be, "whelp, that's going to be a pain...let's hold off on this." That's when stepping away can be beneficial. When I step away I find I am less bogged down by the amount of work something will take and am more free to imagine what is best.
+
+If I am resistent to feedback, I find stepping away can help ease my initial emotions and help me evaluate the situation in a more thoughtful manner. At the very least, it can help prevent me from making myself look like a jerk by giving an emotional response. 
+
 
 * also step away after reading review
 * step away productively
