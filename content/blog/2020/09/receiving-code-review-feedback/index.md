@@ -12,11 +12,14 @@ If you are interested in content on giving a good code review, I recommend the t
 
 ## You are not your code
 
-A blog post about being on the receiving end a code review may seem surperfulous; all you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego gets involved. Even on a team with a strong code review culture that is considerate of each other's feeling, code reviews are still providing someone with (mostly critical) feedback.
+A blog post about being on the receiving end of a code review may seem superfluous; all you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego gets involved.
 
-If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they not like you? Do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, they happen. I have experienced these emotional overreactions.
+Even on a team with a strong code review culture that is considerate of each other's feeling, code reviews are still providing someone with (mostly critical) feedback. If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they not like you? Do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, they happen. I have experienced these emotional overreactions.
 
-I believe as "knowledge workers," our worth can feel closely tied to the knowledge we bring. When tied too closely, a lack of knowledge can feel like a lack of worth. When you attach your worth into your code it's going to be hard to receive a code review. Every piece of feedback and discussion is an attack on the ego. Instead, remember, **you are not your code**.
+As "knowledge workers," our worth can feel closely tied to the knowledge we bring. For developers, this knowledge often comes in the form of code we deliver. When tied too closely, a lack of knowledge can feel like a lack of worth. When you attach your worth into your code it's going to be hard to receive a code review. Every piece of feedback and discussion is an attack on the ego. Instead, remember, **you are not your code**.
+
+<!-- I think I may want to move away from the idea of "bad code day" because that implies one-off "bad" PRs which can make it seems like this should be rare when I think it's common to get a lot of feedback --> 
+The quality of a single pull request does not reflect the quality of person you are - not as a developer and especially not as an overall human being. Even though having a "bad code" day can be discouraging, it's completely natural. If our hair can't avoid bad days, we can't expect our code to either. The best part is, the code review that is pointing out a potential "bad code day" is also helping to fix them. When you have a culture of code reviews and high quality, you get a team effort on every pull request to improve the quality of the code.
 
 While much easier said than done, I have a few practices that can help make it easier to be less emotionally attached to the code you have up for review and more receptive to receiving feedback.
 
