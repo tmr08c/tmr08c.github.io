@@ -17,17 +17,13 @@ A blog post about being on the receiving end of a code review may seem superfluo
 Even on a team with a strong code review culture that is considerate of each other's feeling, code reviews are still providing someone with (mostly critical) feedback. If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they not like you? Do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, they happen. I have experienced these emotional overreactions.
 
 As "knowledge workers," our worth can feel closely tied to the knowledge we bring. For developers, this knowledge often comes in the form of code we deliver. When tied too closely, a lack of knowledge can feel like a lack of worth. When you attach your worth into your code it's going to be hard to receive a code review. Every piece of feedback and discussion is an attack on the ego. Instead, remember, **you are not your code**.
-
-<!-- I think I may want to move away from the idea of "bad code day" because that implies one-off "bad" PRs which can make it seems like this should be rare when I think it's common to get a lot of feedback --> 
-The quality of a single pull request does not reflect the quality of person you are - not as a developer and especially not as an overall human being. Even though having a "bad code" day can be discouraging, it's completely natural. If our hair can't avoid bad days, we can't expect our code to either. The best part is, the code review that is pointing out a potential "bad code day" is also helping to fix them. When you have a culture of code reviews and high quality, you get a team effort on every pull request to improve the quality of the code.
-
 While much easier said than done, I have a few practices that can help make it easier to be less emotionally attached to the code you have up for review and more receptive to receiving feedback.
 
 ### Review your own code first
 
 This can feel similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**. You want to shift your mindset from writer to reviewer to change how you are thinking about the code you wrote.
 
-You should review your own code just like you would anyone else's. By getting into the same "mode" you would to review anyone else's code, you set your brain up to realize, "oh hey, it's code review time" and think about the code you wrote differently.
+You should review your own code just like you would anyone else's. By getting into the same "mode" you would to review a teammate's code, you set your brain up to realize, "oh hey, it's code review time" and think about the code you wrote differently.
 
 To help get into this mode use the same "environment" as you would any other code review. For example, I will create my own pull request and use the code review functionality in GitHub just like I would for any other pull request. This has an added benefit that I can also annotate my pull request in areas I think others may have questions, or call out sections of code I think could be better but am unsure of how to improve.
 
@@ -39,7 +35,7 @@ Stepping away is advice that can be given in all sort of situations, including p
 
 Stepping away can be as simple as checking chat notifications after you've pushed your code. However, it can be powerful to have physical separation. If you can, take a break from screen time. This can be something quick like refilling your drink or longer like taking a walk. You want to create space between yourself and the code you are soliciting feedback on. As silly as it may sound, I have found that actual, physical space can help me feel less attached to my code.
 
-Time is precious and we don't want to get in the way of shipping code, but I think this time can be worth it. In all honesty, depending on how you do reviews, it probably doesn't even have to block reviews from getting done. If your team primarily does asynchronous review, you can push your code, request reviews, and step away. If you team does synchronous reviews, you can find a future time that works for the reviewer before taking your break.
+Time is precious and we don't want to get in the way of shipping code, but I think this time is worth it. In all honesty, depending on how you do reviews, it probably doesn't even have to block reviews from getting done. If your team primarily does asynchronous reviews, you can push your code, request reviews, and step away. If you team does synchronous reviews, you can find a future time that works for the reviewer before taking your break.
 
 #### Stepping away productively
 
@@ -47,7 +43,7 @@ In addition to taking breaks to step away from your code, there are productive o
 
 You can review code for other people on your team. As mentioned above this is also a great way to set yourself up to review your own code more objectively.
 
-Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/) you could also start new work.  Part of what can make having multiple units of work in progress harmful to overall team productivity can also help make receiving feedback easier.
+Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/) you could also start new work. Part of what can make having multiple units of work in progress harmful to overall team productivity can also help make receiving feedback easier.
 
 When you are starting work on a new problem, you often move on (emotionally) from the old one and become invested in the new problem. This emotional detachment to your old work may make it easier to receive critical feedback on it.
 
@@ -57,7 +53,7 @@ With these pros and cons in mind, consider using this method more sparingly than
 
 ### Step away (again)
 
-Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review in order to make you more receptive to receiving feedback. We may also want to step away _after_ you've received some feedback. Sometime, even if we've done our best to prepare ourselves, feedback can still be difficult to receive.
+Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review in order to make you more receptive to receiving feedback. We may also want to step away _after_ you've received some feedback. Sometimes, even if we've done our best to prepare ourselves, feedback can still be difficult to receive.
 
 If you find you are getting emotional when reading through feedback, step away.
 
@@ -73,7 +69,7 @@ If I am resistent to feedback, I find stepping away can help ease my initial emo
 
 ## Conclusion
 
-Code reviews are an important, and difficult part of the software development lifecycle. Working to separate yourself from the code you write can help to reduce some of the emotional aspects of this process and make it easier on you as the receiver as well as though providing you with the code review. While we want everyone to treat each other with respect, when you assume best intent and have some level of emotional detachment it can be easier for reviewers to focus more on giving feedback that results in the best final product and less on how they are delivering the feedback.
+Code reviews are an important and difficult part of the software development lifecycle. Working to separate yourself from the code you write can help to reduce some of the emotional aspects of this process and make it easier on you as the receiver as well as though providing you with the code review. While we want everyone to treat each other with respect, when you assume best intent and have some level of emotional detachment it can be easier for reviewers to focus more on giving feedback that results in the best final product and less on how they are delivering the feedback.
 
 * Time allowing, can help reset mindset of wanting to get a quick approval
 * why you do it
