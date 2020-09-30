@@ -6,15 +6,15 @@ categories: ['code review', 'soft skills']
 
 Code reviews are a common topic among blog posts and videos. This is for a good reason - code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds.
 
-Often, content around code reviews is focused on how to _give_ a good code review. In this post, I want to cover how to be on the _receiving_ end.
+Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
-If you are interested in content on giving a good code review, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It is a great overall introduction to code reviews with a strong focus on how to give a code review that can be well received. It has been hugely impactful on how I give code reviews.
+If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It is a great overall introduction to code reviews with a strong focus on how to give a code review that can be well received. It has been hugely impactful on how I give code reviews.
 
 ## You are not your code
 
-A blog post about being on the receiving end of a code review may seem superfluous; all you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego gets involved.
+A blog post about being on the receiving end of a code review may seem superfluous; all you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego, gets involved.
 
-As "knowledge workers," our worth can feel closely tied to the knowledge we bring. For developers, this knowledge often comes in the form of code we deliver. When tied too closely, a lack of knowledge can feel like a lack of worth. When you attach your worth into your code it's going to be hard to receive a code review. Every piece of feedback and discussion is an attack on the ego.
+As "knowledge workers," our self-worth can feel closely tied to the knowledge we bring to our team. For developers, this knowledge often comes in the form of code we deliver. When tied too closely, a lack of knowledge can feel like a lack of worth. When you attach your worth to your code, it's going to be hard to receive a code review. Every piece of feedback and discussion is an attack on the ego.
 
 Even on a team with a strong code review culture that is considerate of each other's feelings, code reviews are still providing someone with (often critical) feedback. If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they not like you? Do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, I know from experience it happens.
 
@@ -24,9 +24,11 @@ While much easier said than done, I have a few practices that can help make it e
 
 ### Review your code first
 
-This may sound similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**.  You want to shift from the owner's mindset to the reviewer's mindset to change how you are thinking about the code you wrote.
+This may sound similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**.  You want to shift from the creator's mindset to the reviewer's mindset to change how you are thinking about the code you wrote.
 
-The owner's mindset is protective of the code and attached to solutions. It went through the difficult journey of getting to the solution and may have a hard time seeing other options. On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes in open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the owner.
+The creator's mindset is protective of the code and attached to the choices made. It went through the difficult journey of getting to the solution and may have a hard time seeing other options. 
+
+On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes in open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the creator.
 
 You should review your code just like you would anyone else's. By getting into the same "mode" you would when reviewing a teammate's code, you set your brain up to realize, "oh hey, it's code review time" and shift mindsets.  
 
@@ -85,5 +87,18 @@ Code reviews are an important and difficult part of the software development lif
 * Exposure
   * do it more
   * pair - get real time feedback
-*
+* look  for the learning opportunity (similar to above)
+	* Could use quote James Clear's newsletter
+Architect Christopher Alexander on the importance of high standards:
+"In my life as an architect, I find that the single thing which inhibits young professionals, new students most severely, is their acceptance of standards that are too low. If I ask a student whether her design is as good as Chartres, she often smiles tolerantly at me as if to say, “Of course not, that isn’t what I am trying to do. ... I could never do that.”
+
+Then, I express my disagreement, and tell her: “That standard must be our standard. If you are going to be a builder, no other standard is worthwhile. That is what I expect of myself in my own buildings, and it is what I expect of my students.”
+
+Gradually, I show the students that they have a right to ask this of themselves, and must ask this of themselves. Once that level of standard is in their minds, they will be able to figure out, for themselves, how to do better, how to make something that is as profound as that.
+
+Two things emanate from this changed standard. First, the work becomes more fun. It is deeper, it never gets tiresome or boring, because one can never really attain this standard. One’s work becomes a lifelong work, and one keeps trying and trying. So it becomes very fulfilling, to live in the light of a goal like this.
+
+But secondly, it does change what people are trying to do. It takes away from them the everyday, lower-level aspiration that is purely technical in nature, (and which we have come to accept) and replaces it with something deep, which will make a real difference to all of us that inhabit the earth."
+
+Source: Foreword to Patterns of Software by Richard P. Gabriel
 
