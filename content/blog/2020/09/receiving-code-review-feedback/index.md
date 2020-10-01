@@ -30,13 +30,17 @@ The creator's mindset is protective of the code and attached to the choices made
 
 On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes in open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the creator.
 
-You should review your code just like you would anyone else's. By getting into the same "mode" you would when reviewing a teammate's code, you set your brain up to realize, "oh hey, it's code review time" and shift mindsets.  
+You should review your code just like you would anyone else's. By getting into the same "mode" you would when reviewing a teammate's code, you trigger your brain to shift mindsets.  
 
-To help get into this mode use the same "environment" as you would any other code review. For example, I will create a pull request and use the code review functionality in GitHub just like I would for any other pull request. This has an added benefit that I can also annotate my pull request in areas I think others may have questions, or call out sections of code I think could be better but am unsure of how to improve.
+One of the easiest ways to shift mindsets is to start reviewing other people's code. Rather than going straight into reviewing your own code first, review any open pull requests your team may have. Shifting into the reviewer's mindset for code you didn't write is significantly easier. Then, once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting to code that you _did_ write.
 
-This mental shift can be difficult. You may find it easier to shift mindsets if you review other pull requests before you review your own. Your teammates will appreciate the feedback and you will be more apt to treat your pull request just like the others you have been reviewing.
+When you get to your code, you want to keep everything the same;  review your code changes like the other changes you've reviewed. For example, I will create a pull request and use the code review functionality in GitHub just like I would for any other pull request. When reviewing code,  I will have my browser window take up the majority of my screen real estate, but also have a terminal open for testing things. This is a different setup than I would have when writing code, and that visual difference is a cue to my brain that we are (still) in review mode. 
+
+Moving away from the owner's mindset is difficult and takes practice. Even when the owner's mindset sticks around, it is still valuable to review your own code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request - help guide your team by explaining key aspects of your changes or calling our areas of concern. 
+
 
 ### Step away
+<!-- TODO want to try moving this above code review -->
 
 Stepping away is advice that can be given in all sorts of situations, including preparing for code review feedback. When you receive feedback on something you just worked on it is more difficult to receive it objectively.
 
