@@ -48,9 +48,9 @@ Moving away from the owner's mindset is difficult and takes practice. Even when 
 
 ### Start new work
 
-Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/), you could also start new work. Part of what can make having multiple units of work in progress harmful to overall team productivity can also help make receiving feedback easier.
+Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/), you could also start new work. 
 
-When you are starting work on a new problem, you not only physically move on, but also emotionally. You become invested in the new code you are writing, and lose some of the attachment you add to your previous code. This emotional detachment to your old work may make it easier to receive critical feedback on it. 
+When you are starting work on a new problem, you not only physically move on, but also emotionally. You become invested in the new code you are writing, and lose some of the attachment you had to your previous code. This emotional detachment to your old work may make it easier to receive critical feedback on it. 
 
 However, from a project management point of view, this detachment can cause productivity issues. You can end up feeling like the feedback on your old code is just a distraction from the current work you are doing. If the detachment goes too far, it can lead to slow turnaround time and delay getting code into the hands of users.
 
@@ -58,28 +58,35 @@ With these pros and cons in mind, consider using this method more sparingly than
 
 ### Step away (again)
 
-Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review to make you more receptive to receiving feedback. We may also want to step away _after_ you've received some feedback. Sometimes, even if we've done our best to prepare ourselves, feedback can still be difficult to receive.
+Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review so you can be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find it challenging to accept requests to change our code.
 
 If you find you are getting emotional when reading through feedback, step away.
 
 In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
 
-When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. 
+When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard it right away, but instead, take the time to understand it. 
 
-However, after we've gotten feedback, we do not want to discard it right away. We don't want to distract ourselves with other work, but instead, take the time to understand it. This time to process is especially important when it causes an emotional reaction.
+I am not saying that you should dwell on improper feedback like personal attacks. There is no place for that in code reviews, and the team must strive to extinguish this poor behavior. I am saying that if someone is offering you constructive feedback, whether you agree or disagree, you shouldn't turn a blind eye.
 
-I am not saying that you should dwell on poorly given feedback or personal attacks. There is no place for that in code reviews and should not be tolerated. I am saying that if someone is offering you constructive feedback, whether you agree or disagree, you shouldn't turn a blind eye.
+I have found that sometimes I am resistant to feedback out of laziness. I created a solution that I spent time on and don't want to re-do everything to take a suggested, alternative approach.
 
-I have found that sometimes I am resistant to feedback out of laziness. I have a solution that I spent time on and don't want to re-do everything to take this alternative approach. Depending on the situation, it may or may not make sense to invest in large changes. However, the situation that determines whether it makes sense is not how I'm feeling that day. Instead, it should be based on more objective parameters - do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), does going forward with the current solution make it harder to use the suggested solution, etc. My initial emotional reaction may be, "whelp, that's going to be a pain...let's hold off on this." That's when stepping away can be beneficial. 
+Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is not how we feel that day, though. Instead, we should use more objective parameters. 
 
-When I step away, I find I am less bogged down by the amount of work something will take and feel free to imagine what would be the best option. Stepping away from the keyboard frees me to not worry about work I will be doing and instead let my imagination explore the suggestion. It's much easier for me to imagine the solutions than code it up, so my laziness doesn't get in the way. After this exploration, I may find advantages or disadvantages to either solution. I can now have a more objective and constructive conversation about these. Rather than being driven by emotion, I can continue the conversation productively and objectively.
+One reason I am such a proponent of physical separation is that when I step away from the keyboard, I think less about the actual work involved in making changes. Instead, I can more freely imagine alternative solutions and how they would work. Because it's easier for me to _imagine_ possible code changes than actually _write_ the code, my laziness doesn't get triggered. As a result, I more willing to explore the suggestions offered to me during the code review. 
+
+If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you to mentally separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
+
+When in the headspace of imagining alternative solutions, ask yourself questions like - "do we have a deadline?", "is either solution objectively better for our needs (speed, memory usage, etc.)?", and "does going forward with the current solution make it harder to use the suggested solution?" The answers to these questions provide more objective points of discussion when comparing alternative solutions.
+
+After stepping away, you may find advantages or disadvantages to either solution. You can now have a more objective and constructive conversation about these. Rather than being driven by emotion, I can continue the conversation productively and objectively.
 
 If I am resistant to feedback, I find stepping away can help ease my initial emotions and help me evaluate the situation more thoughtfully. At the very least, it can help prevent me from making myself look like a jerk by giving an emotional response.
 
 ## Conclusion
 
-Code reviews are an important and difficult part of the software development lifecycle. 
+Code reviews are an important and challenging part of the software development lifecycle. 
 
 Working to separate yourself from the code you write can help to reduce some of the emotional aspects of this process and make it easier for you as the receiver to embrace the value of code reviews. This separation becomes easier with time, space, and an effort to shift mindsets.
 
 While we want everyone to treat each other with respect, when you assume best intentions and have some level of emotional detachment, it can be easier for reviewers to focus more on giving feedback that results in the best final product and less on how they are delivering the feedback.
+
