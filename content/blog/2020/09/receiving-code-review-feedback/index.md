@@ -58,17 +58,13 @@ With these pros and cons in mind, consider using this method more sparingly than
 
 ### Step away (again)
 
-Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review so you can be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find it challenging to accept requests to change our code.
-
-If you find you are getting emotional when reading through feedback, step away.
+Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review so you can be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find ourselves resisting to accept feedback on our code.
 
 In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
 
-When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard it right away, but instead, take the time to understand it. 
+When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard, but instead, take the time to understand it. 
 
-I am not saying that you should dwell on improper feedback like personal attacks. There is no place for that in code reviews, and the team must strive to extinguish this poor behavior. I am saying that if someone is offering you constructive feedback, whether you agree or disagree, you shouldn't turn a blind eye.
-
-I have found that sometimes I am resistant to feedback out of laziness. I created a solution that I spent time on and don't want to re-do everything to take a suggested, alternative approach.
+I am not saying that you should dwell on improperly given feedback like personal attacks. There is no place for that in code reviews, and the team must strive to extinguish this poor behavior. I am saying that if someone is offering you constructive feedback, whether you agree or disagree, you shouldn't turn a blind eye.
 
 Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is not how we feel that day, though. Instead, we should use more objective parameters. 
 
@@ -76,17 +72,17 @@ One reason I am such a proponent of physical separation is that when I step away
 
 If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you to mentally separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
 
-When in the headspace of imagining alternative solutions, ask yourself questions like - "do we have a deadline?", "is either solution objectively better for our needs (speed, memory usage, etc.)?", and "does going forward with the current solution make it harder to use the suggested solution?" The answers to these questions provide more objective points of discussion when comparing alternative solutions.
+When in the headspace of imagining alternative solutions, ask yourself questions like - "do we have a deadline?", "is either solution objectively better for our needs (speed, memory usage, etc.)?", and "does going forward with the current solution make it harder to use the suggested solution in the future?" The answers to these questions provide more objective points of discussion when comparing alternative solutions.
 
-After stepping away, you may find advantages or disadvantages to either solution. You can now have a more objective and constructive conversation about these. Rather than being driven by emotion, I can continue the conversation productively and objectively.
+After stepping away, you may find advantages or disadvantages to either solution. You can now have a more objective and constructive conversation about these. Rather than being driven by emotion, you can continue the conversation productively and objectively.
 
 If I am resistant to feedback, I find stepping away can help ease my initial emotions and help me evaluate the situation more thoughtfully. At the very least, it can help prevent me from making myself look like a jerk by giving an emotional response.
 
 ## Conclusion
 
-Code reviews are an important and challenging part of the software development lifecycle. 
+Code reviews are an essential, yet challenging part of the software development lifecycle. Part of this challenge comes from the first-line response your ego may have to feedback on your code. 
 
-Working to separate yourself from the code you write can help to reduce some of the emotional aspects of this process and make it easier for you as the receiver to embrace the value of code reviews. This separation becomes easier with time, space, and an effort to shift mindsets.
+Working to separate yourself from the code you write can help to reduce some of the emotional aspects of this process and make it easier to embrace the value of code reviews. With time, space, and practice, this separation will come more naturally.
 
-While we want everyone to treat each other with respect, when you assume best intentions and have some level of emotional detachment, it can be easier for reviewers to focus more on giving feedback that results in the best final product and less on how they are delivering the feedback.
+When in doubt, assume best intentions (and maybe step away ;)). 
 
