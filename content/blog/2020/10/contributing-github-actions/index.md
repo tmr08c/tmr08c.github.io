@@ -36,9 +36,9 @@ The insiration for this post came from wanting to add the [Pull Request Labeler 
 
 On my first attempt, I made the Pull Request and realized the Action wouldn't run. Not being aware of a better way to test, I said as much in the Pull Request body. The project's mantainers decide to try merging the Pull Request and manually testing the action by creating a fake Pull Request. Unfortunately, the Action was failing to run. The mantainers ended up needing to revert my change because it was causing the GitHub Checkes to fail and would block merging future Pull Request. 
 
-I want to fix the Action, but wanted to avoid having to merge before testing could happen. Espeically when it disrupts other work on the project. 
+I want to fix the Action, but wanted to avoid having to merge before testing could happen. Especially when it disrupts other work on the project. 
 
-## Owner of Your Own Fork
+## It's Your Fork
 
 For this work I was attempting to add an Action to a project I didn't own. This means I was working off of a [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) of the project. Fortunately, in GitHub, when you fork a project you have control over the project like it's your own. Often, when forking open source project you are simply using it was a separate place to make code changes. You usually do not need GitHub functionality like Issue tracking, Wikis, or even Actions. Luckily, you can enable them if you do want them though. 
 
@@ -54,9 +54,23 @@ Once I was happy with how the Action was working I created a new branch off of t
 
 ### Additional Benefit
 
-- hard to test config changes
-- running on fork seems to work
-- Side benefit - can use the Actions UI
+One additional benefit to using your own fork as a testing ground is the ability to use GitHub's UI for creating and editing an Action. When you are not a part of an Organization, you cannot leverage the GitHub's Actions UI. While, as mentioned before, the configuration for Actions is simply a `yml` file that you can manually create and edit, the UI provides some useful assitance. 
+
+With the UI, initial Action creation is much easier because you can select existing actions to use and it will generate the basic `yml` that pulls in that Action.
+
+When using the UI's editor, you will get syntax highlighting and some basic IntelliSense-like autocompletion to help guide you. This can help catch typos and formatting issues more quickly than having to commit changes to your main branch and wait for the Action to run. In addition to the IntelliSense as a form of documentation, there is also a side panel that includes high-level Documentation (with links to dig deeper). Since Actions are still relatively new and you probably aren't regularly creating new ones, having this refresher is nice. 
+
+While not necessary, if you haven't worked with Actions much yet, I would suggest initalizing your Action through the GitHun UI when you can. Since we are already working off of our own fork, this makes the proecess of contributing an Action to another process even easier.
+
+## Testing in Your Own Project
+
+This tip works well when Contributing an Action to a project you don't own, because you will likely need to have a fork of the projectanyway. When working in a fork, you can bend some of the rules around working off of the main branch, because you can reset everything based on the upstream project's real code whenever you need to. 
+
+This doesn't, however, work as well for projects you own or projects that you contribute to to directly (like you probably do at work). 
+
+Unfortunately, at this time, I am not sure of a workflow that lets you iterate as freely on changes to an Action when working in this situation. If you have any suggestions, please reach out and let me know! I would love to update this post to include a suggestion for this situation.
+
+## Conclusion
 
 
 
