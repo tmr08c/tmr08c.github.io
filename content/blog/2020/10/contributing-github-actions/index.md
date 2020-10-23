@@ -5,21 +5,29 @@ categories: ['open source', 'github actions']
 ---
 
 TODO
-- [ ] Explore differentiating workflow and Action
+[ ] Explore differentiating workflow and Action
 
-[GitHub Actions](https://github.com/features/actions) is a feature that enables automation by having GitHub run code for you in a container. With Actions, you create workflows made up of multiple Actions. The Actions can be pre-existing solutions that you simply reference in your file or custom built solutions.  This post is not about GitHub Actions themselves, but instead about how to test out an Action before making an open source contribution to enable one on a project.
+[GitHub Actions](https://github.com/features/actions) is a feature that enables automation by having GitHub run code for you in a container. With Actions, you create workflows made up of multiple steps or actions. The actions can be pre-existing solutions that you pull in to your workflow or can be custom-built.
+
+The terminology around Actions seems a bit mix at the moment, but here is how I will be using the words:
+
+* **Actions** - the overall product or feature from GitHub.
+* **action** - a packaged set of code that can be run to perform some form of automation.
+* **Workflow** - a combination of configuration and actions that perform your desired automation.
+
+This post is not about GitHub Actions themselves, but instead about how to test out an Action before making an open source contribution to enable one on a project.
 
 If you are unfamiliar with GitHub Actions, I would recommend checking out their [marketing page](https://github.com/features/actions) which links to the documentation and marketplace for further exploration.
 
 ## Why does this need a blog post
 
-GitHub Actions are set up and configured with `yml` files. This means that you can create a new file that sets up the Action and make a Pull Request to add it to a repository.
+GitHub Actions are set up and configured with `yml` files (often referred to as the workflow file). This means that you can create a new file that sets up the workflow and make a Pull Request to add it to a repository.
 
-If you are building on top of existing Actions, the [marketplace](https://github.com/marketplace?type=actions) does a great job of making this easy by having an install-like button (currently labeled as "Use latest version") that will give you a piece of the YAML needed to reference the Action.
+If you are building on top of existing actions, the [marketplace](https://github.com/marketplace?type=actions) makes this easy. It has an install-like button (currently labeled as "Use latest version") that will give you a piece of the YAML needed to pull an existing action into your workflow.
 
 <img src='./use-latest-gh-action.png' lazy />
 
-Many Actions will include more complete examples of the YAML file that can be directly copied and pasted:
+Many actions will include more complete examples of the YAML file that can be directly copied and pasted:
 
 <img src='./gh-action-readme-setup.png' lazy />
 
@@ -27,19 +35,19 @@ So, what's the problem here? If all we need is a text file and we can get the co
 
 ## Running Actions
 
-The problem with contributing a GitHub action to another project is that Actions only seem to run when they are committed to the repository's main branch. This means that if you open a Pull Request that adds a GitHub Action, it will **not be run** as a part of that Pull Request.
+The problem with contributing a GitHub Action to another project is that workflows only seem to run when they are committed to the repository's main branch. This means that if you open a Pull Request that adds a GitHub Action, it will **not be run** as a part of that Pull Request.
 
-This limitation makes sense, especially with the power that Actions can provide. You don't want to enable anyone on the Internet to be able to open a Pull Request and run arbitrary code with an Action, that could be dangerous. Despite it making sense, it does make testing difficult. While many actions are designed to be easy to set up, there are often configuration options to test out.
+This limitation makes sense, especially with the power that Actions can provide. You don't want to enable anyone on the Internet to be able to open a Pull Request and run arbitrary code with a workflow; that could be dangerous. Despite it making sense, it does make testing difficult. While many actions are designed to be easy to set up, there are often configuration options to test out.
 
-The inspiration for this post came from wanting to add the [Pull Request Labeler Action](https://github.com/actions/labeler) to an open source project. This Action requires an additional configuration file written in YAML that lists different file path glob patterns and which label to add to the Pull Request if a matching file was changed.
+The inspiration for this post came from wanting to add the [Pull Request Labeler action](https://github.com/actions/labeler) to an open source project. This action requires an additional configuration file for mapping files changed to which label to add.
 
-On my first attempt, I made the Pull Request and realized the Action wouldn't run. Not being aware of a better way to test, I said as much in the Pull Request body. The project's maintainers decided to try merging the Pull Request and manually testing the action by creating a fake Pull Request. Unfortunately, the Action failed to run correctly. The maintainers ended up needing to revert my change because it was causing the GitHub Checks to fail and block Pull Requests from getting merged.
+On my first attempt, I made the Pull Request and realized the workflow wouldn't run. Not being aware of a better way to test, I said as much in the Pull Request body. The project's maintainers decided to try merging the Pull Request and manually testing the workflow by creating a fake Pull Request. Unfortunately, the workflow failed to run correctly. The maintainers ended up needing to revert my change because it was causing the GitHub Checks to fail and block Pull Requests from getting merged.
 
-I wanted to try to add the Action to the project again but didn't want to prevent work from getting merged again.
+I wanted to try to add the workflow to the project again, but this time I didn't want to prevent work from getting merged.
 
 ## It's Your Fork 🍴
 
-Since I was attempting to add an Action to a project I didn't own, I was working off of a [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) of the project. 
+Since I was attempting to add an Action to a project I didn't own, I was working off of a [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) of the project.
 
 Often, when forking an open source project, you don't need repository features like Issue tracking, Wikis, or even Actions. Luckily, you can still enable these features if you need them. In this case, since I was attempting to contribute an Action, I wanted to enable the ability to run Actions on my fork.
 
