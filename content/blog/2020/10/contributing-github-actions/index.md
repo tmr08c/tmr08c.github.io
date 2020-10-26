@@ -6,19 +6,19 @@ categories: ['open source', 'github actions']
 
 [GitHub Actions](https://github.com/features/actions) is a feature that enables automation by having GitHub run code for you in a container. With Actions, you create workflows made up of multiple steps or actions. The actions can be pre-existing solutions that you pull in to your workflow or can be custom-built.
 
-The terminology around Actions seems a bit mix at the moment, but here is how I will be using the words:
+The terminology around Actions can get a bit mixed, so here is how I will be using the words:
 
 * **Actions** - the overall product or feature from GitHub.
 * **action** - a packaged set of code that can be run to perform some form of automation.
 * **Workflow** - a combination of configuration and actions that perform your desired automation.
 
-This post is not about GitHub Actions themselves, but instead about how to test out an Action before making an open source contribution to enable one on a project.
+This post is not about GitHub Actions themselves. Instead, it is about how to test out a workflow before contributing it to an open source project.
 
-If you are unfamiliar with GitHub Actions, I would recommend checking out their [marketing page](https://github.com/features/actions) which links to the documentation and marketplace for further exploration.
+If you are unfamiliar with GitHub Actions, I would recommend checking out their [marketing page](https://github.com/features/actions), which links to the documentation and marketplace.
 
 ## Why does this need a blog post
 
-GitHub Actions are set up and configured with `yml` files (often referred to as the workflow file). This means that you can create a new file that sets up the workflow and make a Pull Request to add it to a repository.
+GitHub Actions are set up and configured with `yml` files (often referred to as the workflow file). To add an Action/workflow to a project, you can create a new file that sets up the workflow and make a Pull Request to add it to a repository.
 
 If you are building on top of existing actions, the [marketplace](https://github.com/marketplace?type=actions) makes this easy. It has an install-like button (currently labeled as "Use latest version") that will give you a piece of the YAML needed to pull an existing action into your workflow.
 
@@ -28,7 +28,7 @@ Many actions will include more complete examples of the YAML file that can be di
 
 <img src='./gh-action-readme-setup.png' lazy />
 
-So, what's the problem here? If all we need is a text file and we can get the content of that file by copying and pasting, how is this not even easier than other open source contributions?
+So, what's the problem here? If all we need is a `yml` file and we can get the content of that file by copying and pasting, how is this not even easier than other open source contributions?
 
 ## Running Actions
 
@@ -52,15 +52,15 @@ Even on my fork, Actions would still only run when they were merged into the mai
 
 Since I was testing an action that only worked when Pull Requests were created, I was also able to create multiple Pull Requests without worrying about sending emails to people maintaining or watching the project.
 
-Once I was happy with how the workflow was working, I created a new branch off of the main branch, collected screenshots of the Action in action, and [opened up a Pull Request on the real project](https://github.com/rubyforgood/casa/pull/1029). This time, with some proof the workflow works.
+Once I was happy with how the workflow was working, I created a new branch off of the main branch, collected screenshots of the Action in action, and [opened up a Pull Request on the real project](https://github.com/rubyforgood/casa/pull/1029). 
 
 ### Additional Benefit
 
-An additional benefit to using your fork for testing Actions is the ability the use GitHub Actions UI. While, as mentioned before, the configuration for Actions is simply a `yml` file that you _can_ manually create and edit, the UI makes this easier and less error-prone.
+An additional benefit to using your fork for testing Actions is the ability to use GitHub Actions UI. While, as mentioned before, the configuration for Actions is simply a `yml` file that you _can_ manually create and edit, the UI makes this easier and less error-prone.
 
-With the UI, creating the workflow is easier because you can select existing actions to include. It will then generate a workflow file configured to use the selected action as a step in your overall workflow, as well as basic setup required for an action to run (e.g., which base container to use).
+With the UI, creating the workflow is easier because you can use the marketplace to select existing actions to include. It will then generate a workflow file configured to use the selected action as a step in your overall workflow, as well as the setup required for a workflow to run (e.g., which base container to use).
 
-When using the UI's editor, you will also get syntax highlighting and some basic IntelliSense-like autocompletion to help guide you. This editor assistance can help catch typos and formatting issues more quickly than having to commit changes to your main branch and wait for the workflow to run.
+When using the UI's editor, you will also get syntax highlighting and IntelliSense-like autocompletion to help guide you. This editor assistance can help catch typos and formatting issues more quickly than having to commit changes to your main branch and wait for the workflow to run.
 
 <img src="./github-actions-ui-example.png" />
 
@@ -76,7 +76,7 @@ If you are planning to set up an Action that seems error-prone, you could try to
 
 In situations where you still need to iterate on an Action directly on your real project's main branch, I would guess that the value the workflow will provide will outweigh the minor dent in your commit history, making it worth it.
 
-If you have any suggestions for how to test an Action on a project without requiring multiple commits to the main branch, please reach out and let me know. I would like to update this post to include a suggestion for this situation.
+If you have any suggestions for how to test an Action on a project without requiring multiple commits to the main branch, please reach out and let me know. I hope to be able to update this post to include a suggestion for this situation.
 
 ## Conclusion
 
