@@ -44,7 +44,7 @@ One of the easiest ways to shift mindsets is to start reviewing other people's c
 
 When you get to your code, you want to keep everything the same;  review your code changes like the other changes you've reviewed. For example, I will create a pull request and use the code review functionality in GitHub just like I would for any other pull request. When reviewing code,  I will have my browser window take up the majority of my screen real estate, but also have a terminal open for testing things. This is a different setup than I would have when writing code, and that visual difference is a cue to my brain that we are (still) in review mode. 
 
-Moving away from the owner's mindset is difficult and takes practice. Even when the owner's mindset sticks around, it is still valuable to review your own code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request - help guide your team by explaining key aspects of your changes or calling our areas of concern. 
+Moving away from the owner's mindset is difficult and takes practice. Even when the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request - help guide your team by explaining key aspects of your changes or calling our areas of concern. 
 
 ### Start new work
 
@@ -52,13 +52,13 @@ Depending on your team's mindset around [WIP limits](https://www.planview.com/re
 
 When you are starting work on a new problem, you not only physically move on, but also emotionally. You become invested in the new code you are writing, and lose some of the attachment you had to your previous code. This emotional detachment to your old work may make it easier to receive critical feedback on it. 
 
-However, from a project management point of view, this detachment can cause productivity issues. You can end up feeling like the feedback on your old code is just a distraction from the current work you are doing. If the detachment goes too far, it can lead to slow turnaround time and delay getting code into the hands of users.
+However, from a project management point of view, this detachment can cause productivity issues. You can end up feeling like the feedback on your old code is just a distraction from the current work you are doing. If the detachment goes too far, it can lead to delays getting code shipped to users.
 
 With these pros and cons in mind, consider using this method more sparingly than other options.
 
 ### Step away (again)
 
-Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review so you can be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find ourselves resisting to accept feedback on our code.
+Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review so you can be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find ourselves resistant to accept feedback on our code.
 
 In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
 
