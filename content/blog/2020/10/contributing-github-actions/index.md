@@ -1,20 +1,20 @@
 ---
 title: 'Contributing GitHub Actions'
-date: '2020-10-28T06:47:13.265Z'
+date: '2020-10-28T20:17:13.265Z'
 categories: ['open source', 'github actions']
 ---
 
-**tl;dr When possible, use a fork to run GitHub Actions before merging them into your repository** 
+**tl;dr When possible, use a fork to run GitHub Actions before merging them into a repository**
 
 [GitHub Actions](https://github.com/features/actions) is a feature that enables automation by having GitHub run code for you in a container. With Actions, you create workflows made up of multiple steps or actions. The actions can be pre-existing solutions that you pull in to your workflow or can be custom-built.
 
-This post is not about GitHub Actions themselves. If you are unfamiliar with GitHub Actions, I would recommend checking out their [marketing page](https://github.com/features/actions), which links to the documentation and marketplace. However, since the terminology around Actions can get a bit confusing, I wanted to define a few words I will be using:
+ If you are unfamiliar with GitHub Actions, I would recommend checking out their [marketing page](https://github.com/features/actions), which links to the documentation and marketplace. Since the terminology around Actions can get a bit confusing, I wanted to define a few terms I will be using:
 
 * **Actions** - the overall product or feature from GitHub.
 * **action** - a packaged set of code that can be run to perform some form of automation.
-* **Workflow** - a combination of configuration and actions that perform your desired automation.
+* **workflow** - a combination of configuration and actions that perform your desired automation.
 
-Instead, this post is about how to test out a workflow before contributing it to an open source project. 
+However, this post is not about GitHub Actions themselves. Instead, this post is about how to test out a workflow before contributing it to an open source project.
 
 ## Why does this need a blog post
 
@@ -34,7 +34,7 @@ So, what's the problem here? If all we need is a `yml` file and we can get the c
 
 The problem with contributing a GitHub Action to another project is that workflows only seem to run when they are committed to the repository's main branch. This means that if you open a Pull Request that adds a GitHub Action, it will **not be run** as a part of that Pull Request.
 
-This limitation makes sense, especially with the power that Actions can provide. You don't want to enable anyone on the Internet to be able to open a Pull Request and run arbitrary code with a workflow; that could be dangerous. Despite it making sense, it does make testing difficult. While many actions are designed to be easy to set up, there are often configuration options to test out.
+This limitation makes sense, especially with the power that Actions can provide. You don't want to enable anyone on the Internet to be able to open a Pull Request and run arbitrary code with a workflow; that could be dangerous. Despite it making sense, it does make testing difficult. While many actions are designed to be easy to set up, there are often configuration options you may want to test out.
 
 The inspiration for this post came from wanting to add the [Pull Request Labeler action](https://github.com/actions/labeler) to an open source project. This action requires an additional configuration file for mapping files changed to which label to add.
 
@@ -52,7 +52,7 @@ Even on my fork, Actions would still only run when they were merged into the mai
 
 Since I was testing an action that only worked when Pull Requests were created, I was also able to create multiple Pull Requests without worrying about sending emails to people maintaining or watching the project.
 
-Once I was happy with how the workflow was working, I created a new branch off of the main branch, collected screenshots of the Action in action, and [opened up a Pull Request on the real project](https://github.com/rubyforgood/casa/pull/1029). 
+Once I was happy with how the workflow was working, I created a new branch off of the main branch, collected screenshots of the Action in action, and [opened up a Pull Request on the real project](https://github.com/rubyforgood/casa/pull/1029).
 
 ## Testing in a Project You Own
 
@@ -60,7 +60,7 @@ This tip works well when contributing an Action to a project you don't own becau
 
 This advice doesn't, however, work as well for projects you own or projects that you directly contribute to. Unfortunately, at this time, I am not sure of a workflow that lets you iterate as freely on changes to an Action when working in this situation.
 
-If you are planning to set up an Action that seems error-prone, you could try to use a test repository of some sort. A test repository may not work well for actions that are tied closely to your real project but may still be useful for getting you started. 
+If you are planning to set up an Action that seems error-prone, you could try to use a test repository of some sort. While it may not work well for actions that are tied closely to your real project, it may still be useful for getting you started.
 
 In situations where you still need to iterate on an Action directly on your real project's main branch, I would guess that the value the workflow will provide will outweigh the minor dent in your commit history, making it worth it.
 
