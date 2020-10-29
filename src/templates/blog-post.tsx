@@ -33,16 +33,16 @@ const EditOnGitHubLink = ({ repoLink, postSlug} : { repoLink: string, postSlug: 
 
   return (
     <div className="text-center font-light text-sm text-gray-600 italic mb-3">
-      Notice something wrong? You can{' '}
+      Notice something wrong? Please consider{' '}
 
       <a href={linkToPostInRepo} target="_blank" rel="noopener noreferrer" className="underline hover:text-living-coral-500">
-        propose an edit
+        proposing an edit
       </a>
 
       {' '}or{' '}
 
       <a href={linkToIssues} target="_blank" rel="noopener noreferrer" className="underline hover:text-living-coral-500">
-        open an issue
+        opening an issue
       </a>.
     </div>
   )
