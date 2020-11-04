@@ -15,7 +15,7 @@ CORE COMMANDS
   repo:       Create, clone, fork, and view repositories
 ```
 
-During this year's [Hacktoberfest](https://hacktoberfest.digitalocean.com/), I found out how the tool excels in helping to make contributions to open source projects.
+During this year's [Hacktoberfest](https://hacktoberfest.digitalocean.com/), I found out how the tool excels in helping make contributions to open source projects.
 
 ## Forking
 
