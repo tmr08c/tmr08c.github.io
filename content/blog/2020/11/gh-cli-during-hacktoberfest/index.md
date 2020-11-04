@@ -1,6 +1,6 @@
 ---
 title: 'Leveraging the GitHub CLI During Hacktoberfest'
-date: '2020-11-04T06:47:13.265Z'
+date: '2020-11-04T05:31:13.265Z'
 categories: ['open source']
 ---
 
@@ -52,7 +52,7 @@ Creating pull request for tmr08c:my-fake-pr-branch
   into trunk in cli/cli
 ```
 
-By using CLI to fork the project, everything is configured to manage your fork and open the Pull Request on the original project.
+When contributing to an open source project, this will create a Pull Request in the original project and point it to your fork's branch.
 
 ## Conclusion
 
