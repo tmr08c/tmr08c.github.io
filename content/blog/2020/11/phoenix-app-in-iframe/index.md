@@ -25,6 +25,69 @@ Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 
 In addition to allowing the content to be rendered in an `iframe` on any Atlassian subdomain, this also includes the `'self'` source. This was included to allow for manual testing. Depending on your needs and testing strategy, you may be able to remove it.
 
+### Allow `iframe` Plug
+
+To actually add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. Multiple plugs are composed together to provide make Phoenix work. Plugs can also be conditionally used based on the request, this is something we will be able to leverage in our Plug, ensuring we only use it for endpoints related to our Connect app.  
+
+We will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs) like the following. Note the `call` function as that is where the logic lives.
+
+```elixir{15-21}
+# lib/my_app_web/plugs/allow_iframe.ex
+defmodule MyAppWebb.Plugs.AllowIframe do
+  @moduledoc """
+  Allow rendering in iframes for Jira. Uses `Content-Security-Policy: fame-ancestors` which
+  limits where the app can be loaded as an `iframe` to only specified hosts.
+
+  See [MDN
+  docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors)
+  for more details.
+  """
+  import Plug.Conn
+
+  def init(_), do: %{}
+
+  def call(conn, _opts) do
+    put_resp_header(
+      conn,
+      "content-security-policy",
+      "frame-ancestors 'self' https://*.atlassian.net;"
+    )
+  end
+end
+```
+
+In our `call` function we are using [`put_resp_header/3`](https://hexdocs.pm/plug/Plug.Conn.html?#put_resp_header/3) to update the response headers to include the `Content-Security-Policy` header with the `frame-ancestors` directive.
+
+### Plugging it In
+
+Now that we have a Plug, we want to add it to our `router` so it will actually be used. In order to use a Plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs).
+
+### Testing the Plug
+
+If we want, we could test our Plug directly
+
+```elixir
+defmodule BetterEstimatorWeb.Jira.Plugs.AllowIframeTest do
+  use ExUnit.Case, async: true
+  use Plug.Test
+
+  alias BetterEstimatorWeb.Jira.Plugs.AllowIframe
+
+  test "adds Content-Security-Policy header with frame-ancestors directive to response headers" do
+    # Create a test connection
+    conn = conn(:get, "/hello")
+
+    # Invoke the plug
+    conn = AllowIframe.call(conn, %{})
+
+    assert Enum.find(
+             conn.resp_headers,
+             fn {header, _value} -> header == "content-security-policy" end
+           ) == {"content-security-policy", "frame-ancestors 'self' https://*.atlassian.net;"}
+  end
+end
+```
+
 # Outline
 
 * Jira connect app
