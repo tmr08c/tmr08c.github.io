@@ -60,25 +60,47 @@ In our `call` function we are using [`put_resp_header/3`](https://hexdocs.pm/plu
 
 ### Plugging it In
 
-Now that we have a Plug, we want to add it to our `router` so it will actually be used. In order to use a Plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs).
+Now that we have a Plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will actually be used. Plugs can also be added to your application in your [endpoint](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) or in [controllers](https://hexdocs.pm/phoenix/plug.html#controller-plugs). When building Connect applicatoin, _most_ of your Jira-related interactions with end-users will be done via an `iframe`. Since this would impact a large section of routes (but not all), I decided to add the `plug` to the router.
+
+In order to use a Plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Again, since there I expect a portion of the application that interacts with Jira to need to be rendered in an `iframe` using a `pipeline` made sense. 
+
+
+```elixir
+pipeline :jira do
+  plug MyAppWeb.Plugs.AllowIframe
+end
+```
+
+Now, I can group routes that will be rendered in the Jira Connect application together for logical group and to also have them all be able to be rendered in an `iframe`:
+
+```elixir
+scope "/jira", MyAppWeb.Jira, as: :jira do
+  pipe_through [:browser, :jira]
+
+  live "/", PageLive, :index
+  get "/issue/:id", IssueController, :show
+end
+```
+
+I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block to group all routes to be nested under `/jira` and expect all modules to be namespaced with `MyAppWeb.Jira`. This helps organize the code.
 
 ### Testing the Plug
 
-If we want, we could test our Plug directly
+If we want, we could test our Plug directly:
 
 ```elixir
-defmodule BetterEstimatorWeb.Jira.Plugs.AllowIframeTest do
+defmodule MyAppWeb.Plugs.AllowIframeTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
-  alias BetterEstimatorWeb.Jira.Plugs.AllowIframe
+  alias MyAppWeb.Plugs.AllowIframe
 
   test "adds Content-Security-Policy header with frame-ancestors directive to response headers" do
     # Create a test connection
-    conn = conn(:get, "/hello")
-
-    # Invoke the plug
-    conn = AllowIframe.call(conn, %{})
+    conn = 
+      conn(:get, "/hello")
+      # Invoke the plug
+      |> AllowIframe.call(conn, %{})
 
     assert Enum.find(
              conn.resp_headers,
@@ -87,6 +109,9 @@ defmodule BetterEstimatorWeb.Jira.Plugs.AllowIframeTest do
   end
 end
 ```
+
+This doesn't test any of my routes actually leverage this plug, but does provide a unit test-style test for the logic in the plug. For now, I am happy enough with this, but do plan to explore whether I could add the additional ease-of-mind by making sure routes I expect to be renderable in an `iframe` will work as expected.
+
 
 # Outline
 
