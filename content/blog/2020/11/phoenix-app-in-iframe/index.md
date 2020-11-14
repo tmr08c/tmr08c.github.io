@@ -112,6 +112,19 @@ end
 
 This doesn't test any of my routes actually leverage this plug, but does provide a unit test-style test for the logic in the plug. For now, I am happy enough with this, but do plan to explore whether I could add the additional ease-of-mind by making sure routes I expect to be renderable in an `iframe` will work as expected.
 
+## Cookies
+
+At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, when you run the app, you may find issues with the user session. In my case, I was attempting to leverage a live route, but found the page would continuously reload. 
+
+The Phoenix server tried to helpefully log a message with the issue and even included possiblities for resolving it.
+
+```
+[debug] LiveView session was misconfigured or the user token is outdated.
+```
+
+However, it looked like the auto-generated application was set up to follow all suggestions. When looking at the server logs, I notice the `_csrf_token` was include in the parameters when attempting to connect to the socket, but this token was changing with every page reload and socket reconnect attempt. 
+
+After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. This is because the default behavior for cookies is to be first-party, meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to associate the cookies with an Atlassian/Jira domain, even though they are coming from our server (not an Atlassian/Jira domain). For security reasons, this is blocked by default. 
 
 # Outline
 
@@ -154,6 +167,7 @@ This doesn't test any of my routes actually leverage this plug, but does provide
 ## Sources to use and reference
 
 * https://web.dev/samesite-cookies-explained/
-    * https://web.dev/samesite-cookie-recipes/
+  * https://web.dev/samesite-cookie-recipes/
+  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
 & https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect
 & https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
