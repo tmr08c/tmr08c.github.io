@@ -124,9 +124,19 @@ The Phoenix server tried to helpefully log a message with the issue and even inc
 
 However, it looked like the auto-generated application was set up to follow all suggestions. When looking at the server logs, I notice the `_csrf_token` was include in the parameters when attempting to connect to the socket, but this token was changing with every page reload and socket reconnect attempt. 
 
-After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. This is because the default behavior for cookies is to be first-party, meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to associate the cookies with an Atlassian/Jira domain, even though they are coming from our server (not an Atlassian/Jira domain). For security reasons, this is blocked by default. 
+After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. This is because the default behavior for cookies is to be first-party, meaning they are only accessible on the same domain as the server.
 
-# Outline
+Since we are rendering our site in an `iframe` we are attempting to access the cookies for out application from an Atlassian/Jira domain. This is known as a third-party cookie. For security reasons, this is blocked by default and requires explicitly setting the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property of your cookie to `'None'`. When sending cookies to third-parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
+
+### Thid Party Cookies with Phoenix
+
+Updating you cookie settings
+
+https://hexdocs.pm/phoenix/plug.html#endpoint-plugs
+https://hexdocs.pm/plug/Plug.Session.html
+
+
+ Outline
 
 * Jira connect app
 * Be selective about when to show up in an iframe (`plug`)
