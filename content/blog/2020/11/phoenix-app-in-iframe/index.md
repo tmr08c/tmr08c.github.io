@@ -130,54 +130,41 @@ Since we are rendering our site in an `iframe` we are attempting to access the c
 
 ### Thid Party Cookies with Phoenix
 
-Updating you cookie settings
+Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores.  While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix adds at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`) you should have a line like:
 
-https://hexdocs.pm/phoenix/plug.html#endpoint-plugs
-https://hexdocs.pm/plug/Plug.Session.html
+```elixir
+plug Plug.Session, @session_options
+```
 
+You should also have a [module attribute](https://elixir-lang.org/getting-started/module-attributes.html) in the file names `@session_options`. On a recently generated Phoenix application, it should look something like:
 
- Outline
+```elixir
+# The session will be stored in the cookie and signed,
+# this means its contents can be read but not tampered with.
+# Set :encryption_salt if you would also like to encrypt it.
+@session_options [
+  store: :cookie,
+  key: "_my_app_key",
+  signing_salt: "Salt"
+]
+```
 
-* Jira connect app
-* Be selective about when to show up in an iframe (`plug`)
-    * Create a plug that allows atlassian
-    ```elixir
-    # lib/your_app_web/plug/allow_iframe.ex
+This is where we can set the additional [`Plug.Session` options](https://hexdocs.pm/plug/Plug.Session.html#module-options), including `:same_site`. 
 
-      def call(conn, _opts) do
-        put_resp_header(
-          conn,
-          "content-security-policy",
-          "frame-ancestors 'self' https://*.atlassian.net;"
-        )
-      end
-    ```
-      * TODO I think there was a blog post that mentioned an alternative way to check if you should allow the iframe that allowed for more logic
-    * Enable the plug for routs that should hit your iframe
-        ```elixir
-          pipeline :jira do
-            plug BetterEstimatorWeb.Jira.Plugs.AllowIframe
-            plug BetterEstimatorWeb.Jira.Plugs.JWT
-            plug :put_root_layout, {BetterEstimatorWeb.LayoutView, :jira}
-          end
-        ```
+In addition to setting the `same_site` key, we will also need to set the `secure` key. As noted above, this is a requirement for (modern) browsers to accept third-party cookies.
 
-* Work with Phoenix cookies (https://medium.com/trabe/cookies-and-iframes-f7cca58b3b9e) 
-    ```elixir{6-7}
-      # lib/your_app_web/endpoint.ex
-      @session_options [
-      store: :cookie,
-      key: "_your_app_key",
-      signing_salt: "salt",
-      secure: true,
-      same_site: "None"
-    ]
-    ```
+Our `@session_options` should now look something lke:
 
-## Sources to use and reference
+```elixir{5-6}
+@session_options [
+  store: :cookie,
+  key: "_my_app_key",
+  signing_salt: "Salt"
+  secure: true,
+  same_site: "None"
+]
+```
 
-* https://web.dev/samesite-cookies-explained/
-  * https://web.dev/samesite-cookie-recipes/
-  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
-& https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect
-& https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
+## Conclusion
+
+At this point, you should not be able to render your applicaton within an `iframe`. If you followed exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs. 
