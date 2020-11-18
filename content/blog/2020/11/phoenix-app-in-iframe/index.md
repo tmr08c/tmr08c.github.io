@@ -4,32 +4,36 @@ date: '2020-11-14T05:31:13.265Z'
 categories: ['elixir', 'phoenix']
 ---
 
-For a side project, I am working on building a [Jira Connect application](https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect) using [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/). When building a Connect app, you run run your own server, but your UI is rendered within Jira as though it is a part of Jira itself. This in-Jira UI rendering is done via an [`iframe`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
+For a side project, I am working on building a [Jira Connect application](https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect) using [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/). When building a Connect app, you run your own server, but your UI is rendered within Jira as though it is a part of Jira itself. This in-Jira UI rendering is done via an [`iframe`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
 
-To get this to work securely with my Phoenix app, I needed to:
+To get this to work securely with my Phoenix application, I needed to:
 
 1. Update the `Content-Security-Policy` response headers to allow some of the application's pages to be embedded in an `iframe`.
 2. Update the `SameSite` settings for the session cookie to allow the cookies to be used by a third-party.
 
 ## `Content-Security-Policy`
 
-The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanmism for the server to tell the browser what content is safe to load. A common use case for this is to indicate which third-party JavaScript is safe to load, blocking the rest and preventing [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting). In this case, we want to specify where it is okay to render our `iframe`; for this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive. This is similar to the older [`X-Frame-Option`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) response header.
+The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to indicate which third-party JavaScript is safe to load, blocking the rest and preventing [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting).
 
-The `fame-ancestors` directive expects a list of sources. Sources can be hostnames, IP addresses, or URLs, and can include wildcard matchers (`*`). There are also a few special case sources, `'none'` which indicates the page is not allowed to be renderd in an `iframe` and `'self'` which allows you to render the content in an `iframe` if the request comes from the same `origin`.
+In this case, we want to specify where it is okay to render our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive. This is similar to the older [`X-Frame-Option`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) response header.
 
-For the purposes of the Connect app I was building, I wanted to allow the `iframe` to be rendered in any cloud instance of Jira, the ability to use wildcards was perfect for this. My goal was to end up with something like:
+The `fame-ancestors` directive expects a list of sources. Sources can be hostnames, IP addresses, or URLs, and can include wildcard matchers (`*`). There are also a few special case sources, `'none'` which indicates the page is not allowed to be rendered in an `iframe` and `'self'` which allows you to render the content in an `iframe` if the request comes from the same `origin`.
+
+For the purposes of the Connect app I was building, I wanted to allow the `iframe` to be rendered in any cloud instance of Jira. For this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.new`. In addition to allowing the content to be rendered in an `iframe` on any Atlassian subdomain, I also decided to include the `'self'` source. This was included to allow for manual testing. Depending on your needs and testing strategy, you may be able to remove it.
+
+With these two needs in mind, my goal was to end up with a `Content-Security-Policy` header that matched:
 
 ```html
 Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 ```
 
-In addition to allowing the content to be rendered in an `iframe` on any Atlassian subdomain, this also includes the `'self'` source. This was included to allow for manual testing. Depending on your needs and testing strategy, you may be able to remove it.
-
 ### Allow `iframe` Plug
 
-To actually add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. Multiple plugs are composed together to provide make Phoenix work. Plugs can also be conditionally used based on the request, this is something we will be able to leverage in our Plug, ensuring we only use it for endpoints related to our Connect app.  
+To actually add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). 
 
-We will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs) like the following. Note the `call` function as that is where the logic lives.
+Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. The core of Phoenix's HTTP lifecycle is handled through plugs.
+
+We will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs) like the following.
 
 ```elixir{15-21}
 # lib/my_app_web/plugs/allow_iframe.ex
@@ -60,18 +64,22 @@ In our `call` function we are using [`put_resp_header/3`](https://hexdocs.pm/plu
 
 ### Plugging it In
 
-Now that we have a Plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will actually be used. Plugs can also be added to your application in your [endpoint](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) or in [controllers](https://hexdocs.pm/phoenix/plug.html#controller-plugs). When building Connect applicatoin, _most_ of your Jira-related interactions with end-users will be done via an `iframe`. Since this would impact a large section of routes (but not all), I decided to add the `plug` to the router.
+Now that we have a Plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will actually be used.
 
-In order to use a Plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Again, since there I expect a portion of the application that interacts with Jira to need to be rendered in an `iframe` using a `pipeline` made sense. 
+In order to use a Plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `jira` `pipeline` that would be used for requests that are expected to be rendered within Jira.
 
 
 ```elixir
+# This pipeline should be used for routes that are expected to be requested as
+# a part of the Jira Connect application
 pipeline :jira do
   plug MyAppWeb.Plugs.AllowIframe
 end
 ```
 
-Now, I can group routes that will be rendered in the Jira Connect application together for logical group and to also have them all be able to be rendered in an `iframe`:
+I didn't add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI. While you needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead a blanket allowance.
+
+With our `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together to make them easier to find and to also have them all be able to be rendered in an `iframe`:
 
 ```elixir
 scope "/jira", MyAppWeb.Jira, as: :jira do
@@ -82,7 +90,7 @@ scope "/jira", MyAppWeb.Jira, as: :jira do
 end
 ```
 
-I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block to group all routes to be nested under `/jira` and expect all modules to be namespaced with `MyAppWeb.Jira`. This helps organize the code.
+I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block to group all routes to be nested under `/jira` and expect all modules to be namespaced with `MyAppWeb.Jira`.
 
 ### Testing the Plug
 
