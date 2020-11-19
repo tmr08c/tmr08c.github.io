@@ -11,15 +11,19 @@ To get this to work securely with my Phoenix application, I needed to:
 1. Update the `Content-Security-Policy` response headers to allow some of the application's pages to be embedded in an `iframe`.
 2. Update the `SameSite` settings for the session cookie to allow the cookies to be used by a third-party.
 
+In this post, I will walk through how I set that up for this project.
+
 ## `Content-Security-Policy`
 
-The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to indicate which third-party JavaScript is safe to load, blocking the rest and preventing [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting).
+The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to indicate which JavaScript should actually come from the server, blocking the rest and preventing [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting).
 
-In this case, we want to specify where it is okay to render our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive. This is similar to the older [`X-Frame-Option`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) response header.
+In this case, we want to specify where it is okay to render our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive. If you are familiar with the header, [`X-Frame-Option`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) setting `Content-Security-Policy` with the `frame-ancestors` directive is the [recommended replacement](https://www.w3.org/TR/CSP2/#frame-ancestors-and-frame-options) for this header.
 
-The `fame-ancestors` directive expects a list of sources. Sources can be hostnames, IP addresses, or URLs, and can include wildcard matchers (`*`). There are also a few special case sources, `'none'` which indicates the page is not allowed to be rendered in an `iframe` and `'self'` which allows you to render the content in an `iframe` if the request comes from the same `origin`.
+The `fame-ancestors` directive expects a list of sources (e.g., URLs). For the purposes of the Connect app I was building, I wanted to allow the `iframe` to be rendered in any cloud instance of Jira.
 
-For the purposes of the Connect app I was building, I wanted to allow the `iframe` to be rendered in any cloud instance of Jira. For this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.new`. In addition to allowing the content to be rendered in an `iframe` on any Atlassian subdomain, I also decided to include the `'self'` source. This was included to allow for manual testing. Depending on your needs and testing strategy, you may be able to remove it.
+To work with any cloud instance of Jira, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.net`. The syntax for ths is `https://*.atlassian.net`.
+
+In addition to allowing the content to be rendered in an `iframe` on any Atlassian subdomain, I also decided to include the `'self'` source. This allows `iframe`s to be rendered when the `iframe`'s `src` matches the origin the user is connected to (when the page is requesting `iframe` content from its `self`). For now, it is included to allow for manual testing, but, depending on your needs and testing strategy, you may be able to remove it.
 
 With these two needs in mind, my goal was to end up with a `Content-Security-Policy` header that matched:
 
@@ -29,9 +33,7 @@ Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 
 ### Allow `iframe` Plug
 
-To actually add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). 
-
-Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. The core of Phoenix's HTTP lifecycle is handled through plugs.
+To actually add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. The core of Phoenix's HTTP lifecycle is handled through plugs.
 
 We will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs) like the following.
 
@@ -64,10 +66,9 @@ In our `call` function we are using [`put_resp_header/3`](https://hexdocs.pm/plu
 
 ### Plugging it In
 
-Now that we have a Plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will actually be used.
+Now that we have a plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will actually be used.
 
-In order to use a Plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `jira` `pipeline` that would be used for requests that are expected to be rendered within Jira.
-
+In order to use a plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `jira` `pipeline` that would be used for requests that are expected to be rendered within Jira.
 
 ```elixir
 # This pipeline should be used for routes that are expected to be requested as
@@ -77,7 +78,7 @@ pipeline :jira do
 end
 ```
 
-I didn't add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI. While you needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead a blanket allowance.
+I didn't add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI (and therefore not in an `iframe`). While you needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
 
 With our `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together to make them easier to find and to also have them all be able to be rendered in an `iframe`:
 
@@ -105,7 +106,7 @@ defmodule MyAppWeb.Plugs.AllowIframeTest do
 
   test "adds Content-Security-Policy header with frame-ancestors directive to response headers" do
     # Create a test connection
-    conn = 
+    conn =
       conn(:get, "/hello")
       # Invoke the plug
       |> AllowIframe.call(conn, %{})
@@ -118,7 +119,7 @@ defmodule MyAppWeb.Plugs.AllowIframeTest do
 end
 ```
 
-This doesn't test any of my routes actually leverage this plug, but does provide a unit test-style test for the logic in the plug. For now, I am happy enough with this, but do plan to explore whether I could add the additional ease-of-mind by making sure routes I expect to be renderable in an `iframe` will work as expected.
+This doesn't test the any of the app's routes actually _use_ this plug, but does provide a a sanity check that the plug updats our response headers to match what we were hoping for. For now, I am happy enough with this. I do plan to explore whether I could add the additional ease-of-mind by making sure routes I expect to be renderable in an `iframe` will work as expected.
 
 ## Cookies
 
@@ -176,3 +177,9 @@ Our `@session_options` should now look something lke:
 ## Conclusion
 
 At this point, you should not be able to render your applicaton within an `iframe`. If you followed exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs. 
+
+
+# Thoughts
+
+- Should we include screenshots?
+  - Show the iframe not working? Show a hello page?
