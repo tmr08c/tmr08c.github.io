@@ -7,7 +7,8 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "npm run develop",
+    "dev": "yarn run develop",
+    "start": "yarn run develop",
     "format": "prettier --write \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "gatsby build && gh-pages -d public -b master"
@@ -17,6 +18,7 @@
     "typescript"
   ],
   "dependencies": {
+    "elixir-ls": "elixir-lsp/vscode-elixir-ls",
     "gatsby": "^2.20.2",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-catch-links": "^2.3.11",
@@ -42,6 +44,7 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "typescript": "^3.9.7",
+    "viml": "XadillaX/vscode-language-viml",
     "vscode-themes": "Microsoft/vscode-themes"
   },
   "devDependencies": {
