@@ -38,6 +38,7 @@ To actually add this response header, we are going to leverage Phoenix's use of 
 We can use the [`Plug.Test`](https://hexdocs.pm/plug/Plug.Test.html) module to test-drive that the plug we create will have the `Content-Security-Policy` we expect.
 
 ```elixir
+# test/my_app_web/plugs/allow_iframe_test.exs
 defmodule MyAppWeb.Plugs.AllowIframeTest do
   use ExUnit.Case, async: true
   use Plug.Test
@@ -64,26 +65,24 @@ defmodule MyAppWeb.Plugs.AllowIframeTest do
     # Confirm it includes the `frame-ancestors` directive
     # with 'self' and our Atlassian wildcard matcher
     assert(
-      csp_headers ==
-        {
-          "content-security-policy",
-          "frame-ancestors 'self' https://*.atlassian.net;"
-        }
+      csp_headers == {
+        "content-security-policy",
+        "frame-ancestors 'self' https://*.atlassian.net;"
+      }
     )
   end
 end
-
 ```
 
 This test will create a `conn` and pass that into our soon-to-be plug. It then `assert`s that our `conn` will have response headers that include our expected `Content-Security-Policy` and `frame-ancestors` pairing.
 
-While this doesn't test the any of the app's routes actually _use_ this plug, it does confirm that the plug updates our response headers to match what we were hoping for. For now, I am happy enough with this. I do plan to explore whether I could add the additional ease-of-mind by making sure routes I expect to be renderable in an `iframe` will work as expected.
-
-With out failing test in place, let's create a plug to make it actually pass!
+With our failing test in place, let's create a plug that will make it pass.
 
 ### Creating the plug
 
-We will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs) like the following.
+To implement our `AllowIframe` plug, we will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs).
+
+In our `call` function we will use [`put_resp_header/3`](https://hexdocs.pm/plug/Plug.Conn.html?#put_resp_header/3) to update the response headers to include the `Content-Security-Policy` header with the `frame-ancestors` directive. The end result should look something like: 
 
 ```elixir{16-21}
 # lib/my_app_web/plugs/allow_iframe.ex
@@ -110,8 +109,6 @@ defmodule MyAppWebb.Plugs.AllowIframe do
   end
 end
 ```
-
-In our `call` function we are using [`put_resp_header/3`](https://hexdocs.pm/plug/Plug.Conn.html?#put_resp_header/3) to update the response headers to include the `Content-Security-Policy` header with the `frame-ancestors` directive.
 
 ### Plugging it In
 
@@ -150,14 +147,17 @@ At this point, we can render our application within an `iframe` in Jira (or wher
 The Phoenix server tried to helpfully log a message with the issue and even included possibilities for resolving it.
 
 ```log
-[debug] LiveView session was misconfigured or the user token is outdated.
+[debug] LiveView session was misconfigured
+or the user token is outdated.
 ```
 
 However, it looked like the auto-generated application was set up to follow all suggestions. When looking at the server logs, I notice the `_csrf_token` was include in the parameters when attempting to connect to the socket, but this token was changing with every page reload and socket reconnect attempt.
 
-After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. This is because the default behavior for cookies is to be first-party, meaning they are only accessible on the same domain as the server.
+After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. 
 
-Since we are rendering our site in an `iframe` we are attempting to access the cookies for out application from an Atlassian/Jira domain. This is known as a third-party cookie. For security reasons, this is blocked by default and requires explicitly setting the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property of your cookie to `'None'`. When sending cookies to third-parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
+Our cookie wasn't being set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. This is known as a [third-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies) cookie. For security reasons, this is blocked by default.
+
+In order to allow your application to store cookies that can be accessible by a third-party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property of set to  `'None'`. When sending cookies to third-parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
 
 ### Third Party Cookies with Phoenix
 
@@ -180,11 +180,7 @@ You should also have a [module attribute](https://elixir-lang.org/getting-starte
 ]
 ```
 
-This is where we can set the additional [`Plug.Session` options](https://hexdocs.pm/plug/Plug.Session.html#module-options), including `:same_site`.
-
-In addition to setting the `same_site` key, we will also need to set the `secure` key. As noted above, this is a requirement for (modern) browsers to accept third-party cookies.
-
-Our `@session_options` should now look something lke:
+This is where we can set the additional [`Plug.Session` options](https://hexdocs.pm/plug/Plug.Session.html#module-options), including `:same_site` and `:secure`. Our `@session_options` should now look something lke:
 
 ```elixir{5-6}
 @session_options [
@@ -198,8 +194,12 @@ Our `@session_options` should now look something lke:
 
 ## Conclusion
 
-At this point, you should not be able to render your application within an `iframe`. If you followed exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs.
+At this point, you should now be able to render your application within an `iframe`. If you followed exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs.
 
+Going through the process taught me two lessons:
+
+1. `iframe`s are not a dead technology of the past
+1. The architecture of plug is both powerful and flexible  
 
 # Thoughts
 
