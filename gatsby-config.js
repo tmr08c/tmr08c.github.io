@@ -73,7 +73,7 @@ module.exports = {
     "gatsby-plugin-offline",
     `gatsby-plugin-postcss`,
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      resolve: `gatsby-plugin-google-fonts-v2`,
       options: {
         fonts: [
           {
