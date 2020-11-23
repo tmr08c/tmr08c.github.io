@@ -4,24 +4,25 @@ date: '2020-11-14T05:31:13.265Z'
 categories: ['elixir', 'phoenix']
 ---
 
-For a side project, I am working on building a [Jira Connect application](https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect) using [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/). When building a Connect app, you run your own server, but your UI is rendered within Jira as though it is a part of Jira itself. This in-Jira UI rendering is done via an [`iframe`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
+For a side project, I am working on building a [Jira Connect application](https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect) using [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/). With a Connect application, your UI is rendered within Jira as though it is a part of Jira itself. This in-Jira UI rendering is supported by the use of [`iframe`s](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
 
 To get this to work securely with my Phoenix application, I needed to:
 
-1. Update the `Content-Security-Policy` response headers to allow some of the application's pages to be embedded in an `iframe`.
-2. Update the `SameSite` settings for the session cookie to allow the cookies to be used by a third-party.
+1. Update the `Content-Security-Policy` response headers to allow some pages to be embedded in an `iframe`
+2. Update the `SameSite` settings for the session cookie to allow the cookies to be used by a third-party
 
 In this post, I will walk through how I set that up for this project.
 
 ## `Content-Security-Policy`
 
-The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to indicate which JavaScript should actually come from the server, blocking the rest and preventing [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting).
+The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to help prevent [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting)
+by blocking all JavaScript not explicitly listed in the `Content-Security-Policy`.
 
 In this case, we want to specify where it is okay to render our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive.
 
-The `fame-ancestors` directive expects a list of sources (e.g., URLs) that should be allowed to render the content in an `iframe`. For the purposes of the Connect app I was building, I wanted to allow the `iframe` to be rendered in any cloud instance of Jira. To do this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.net` `https://*.atlassian.net`.
+The `fame-ancestors` directive expects a list of sources (e.g., URLs) that should be allowed to render the content in an `iframe`. For the Connect application, I wanted to allow the `iframe` to be renderable in any cloud instance of Jira. To do this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.net` - `https://*.atlassian.net`.
 
-In addition to allowing the content to be rendered in an `iframe` on any Atlassian subdomain, I also decided to include the [`'self'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) source. This allows `iframe`s to be rendered when the `iframe`'s `src` matches the origin the user is connected to. For now, it is included to allow for manual testing, but, depending on your needs and testing strategy, you may be able to remove it.
+I also decided to include the [`'self'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) source. This source enables `iframe`s to be renderable when the `iframe`'s `src` matches the origin of the page that is rendering it. For now, I am using this for manual testing, but, depending on your needs and testing strategy, you may be able to remove it.
 
 With these two needs in mind, my goal was to end up with a `Content-Security-Policy` header that matched:
 
@@ -31,7 +32,7 @@ Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 
 ### Allow `iframe` Plug
 
-To actually add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. The core of Phoenix's HTTP lifecycle is handled through plugs.
+To add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. The core of Phoenix's HTTP lifecycle is handled through plugs.
 
 ### Testing the Plug
 
@@ -112,9 +113,9 @@ end
 
 ### Plugging it In
 
-Now that we have a plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will actually be used.
+Now that we have a plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will be used.
 
-In order to use a plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `pipeline` that would be used for requests that are expected to be rendered within Jira.
+To use a plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `pipeline` that would be used for requests that are expected to be rendered within Jira.
 
 ```elixir
 # This pipeline should be used for routes
@@ -142,7 +143,7 @@ I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped
 
 ## Cookies
 
-At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, when you run the application, you may find issues with the user session. In my case, I was attempting to leverage a live route, but found the page would continuously reload.
+At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, when you run the application, you may find issues with the user session. In my case,  the frame would continuously reload when trying to a LiveView page.
 
 The Phoenix server tried to helpfully log a message with the issue and even included possibilities for resolving it.
 
@@ -151,13 +152,13 @@ The Phoenix server tried to helpfully log a message with the issue and even incl
 or the user token is outdated.
 ```
 
-However, it looked like the auto-generated application was set up to follow all suggestions. When looking at the server logs, I notice the `_csrf_token` was include in the parameters when attempting to connect to the socket, but this token was changing with every page reload and socket reconnect attempt.
+However, it looked like the auto-generated application was set up to follow all suggestions. When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but this token was changing with every page reload and socket reconnect attempt.
 
 After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. 
 
 Our cookie wasn't being set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. This is known as a [third-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies) cookie. For security reasons, this is blocked by default.
 
-In order to allow your application to store cookies that can be accessible by a third-party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property of set to  `'None'`. When sending cookies to third-parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
+To allow your application to store cookies that can be accessible by a third-party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property set to `'None'`. When sending cookies to third parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
 
 ### Third Party Cookies with Phoenix
 
