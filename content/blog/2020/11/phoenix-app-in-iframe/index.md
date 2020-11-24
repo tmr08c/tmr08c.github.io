@@ -32,7 +32,7 @@ Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 
 ### Allow `iframe` Plug
 
-To add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner. The core of Phoenix's HTTP lifecycle is handled through plugs.
+To add this response header, we are going to utilize Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner and makes up the core of Phoenix's HTTP lifecycle.
 
 ### Testing the Plug
 
@@ -77,9 +77,9 @@ end
 
 This test will create a `conn` and pass that into our soon-to-be plug. It then `assert`s that our `conn` will have response headers that include our expected `Content-Security-Policy` and `frame-ancestors` pairing.
 
-With our failing test in place, let's create a plug that will make it pass.
+With our failing test in place, we can now create a plug that will make it pass.
 
-### Creating the plug
+### Creating the Plug
 
 To implement our `AllowIframe` plug, we will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs).
 
@@ -113,9 +113,9 @@ end
 
 ### Plugging it In
 
-Now that we have a plug, we want to add it to our [router](https://hexdocs.pm/phoenix/plug.html#controller-plugs) so it will be used.
+For our use case, we are going to add our plug to the [router](https://hexdocs.pm/phoenix/plug.html#router-plugs). Router plugs allow us to manage their usage on a per-route level instead of a [per-controller](https://hexdocs.pm/phoenix/plug.html#controller-plugs) or more [global (endpoint)](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) basis. 
 
-To use a plug in the `router`, it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `pipeline` that would be used for requests that are expected to be rendered within Jira.
+To use a plug in the `router` it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `pipeline` to group routes that will be renderable within the Jira UI.
 
 ```elixir
 # This pipeline should be used for routes
@@ -126,9 +126,9 @@ pipeline :jira do
 end
 ```
 
-I didn't add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI (and therefore not in an `iframe`). While your needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
+I did not add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI (and therefore not in an `iframe`). While your needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
 
-With our `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together to make them easier to find and to also have them all be able to be rendered in an `iframe`:
+With the `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together. This grouping allows us to enable our `AllowfIframe` plug for all of these routes at the same time.
 
 ```elixir
 scope "/jira", MyAppWeb.Jira, as: :jira do
@@ -139,7 +139,7 @@ scope "/jira", MyAppWeb.Jira, as: :jira do
 end
 ```
 
-I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block to group all routes to be nested under `/jira` and expect all modules to be namespaced with `MyAppWeb.Jira`.
+I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block to group all routes to be nested under `/jira` and expect all modules to be namespaced with `MyAppWeb.Jira`. These groupings should help keep our codebase easier to manage.
 
 ## Cookies
 
