@@ -145,30 +145,32 @@ I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped
 
 At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, when you run the application, you may find issues with the user session. In my case,  the frame would continuously reload when trying to a LiveView page.
 
-The Phoenix server tried to helpfully log a message with the issue and even included possibilities for resolving it.
+The Phoenix server tried to log a message hinting at the problem:
 
 ```log
 [debug] LiveView session was misconfigured
 or the user token is outdated.
 ```
 
-However, it looked like the auto-generated application was set up to follow all suggestions. When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but this token was changing with every page reload and socket reconnect attempt.
+This log message also included suggestions for resolving the issue, but the project generator created the project to follow the suggested practices already.
 
-After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting properly set when loading the `iframe` from within Jira. 
+One of the suggestions for resolving the issues was to make sure to include the CSRF token. When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
 
-Our cookie wasn't being set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. This is known as a [third-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies) cookie. For security reasons, this is blocked by default.
+After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting set when loading the `iframe` from within Jira. 
+
+Our cookie was not getting set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. Working with cookies from a different domain is known as [third-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies) cookies. For security reasons, browsers block this type of cookie by default.
 
 To allow your application to store cookies that can be accessible by a third-party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property set to `'None'`. When sending cookies to third parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
 
 ### Third Party Cookies with Phoenix
 
-Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores.  While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix adds at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`) you should have a line like:
+Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores.  While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix adds at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`), you should have a line like:
 
 ```elixir
 plug Plug.Session, @session_options
 ```
 
-You should also have a [module attribute](https://elixir-lang.org/getting-started/module-attributes.html) in the file named `@session_options`. On a recently generated Phoenix application, it should look something like:
+This file should also include a [module attribute](https://elixir-lang.org/getting-started/module-attributes.html) named `@session_options`. On a recently generated Phoenix application, it should look something like:
 
 ```elixir
 # The session will be stored in the cookie and signed,
@@ -195,12 +197,9 @@ This is where we can set the additional [`Plug.Session` options](https://hexdocs
 
 ## Conclusion
 
-At this point, you should now be able to render your application within an `iframe`. If you followed exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs.
+At this point, you should now be able to render your application within an `iframe`. If you copied the `Content-Security-Policy` exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs.
 
-Going through the process taught me two lessons:
 
-1. `iframe`s are not a dead technology of the past
-1. The architecture of plug is both powerful and flexible  
 
 # Thoughts
 
