@@ -143,7 +143,7 @@ I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped
 
 ## Cookies
 
-At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, when you run the application, you may find issues with the user session. In my case,  the frame would continuously reload when trying to a LiveView page.
+At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, even though your application is renderable, you may find your application doesn't work quite right. For me, I found the application would constantly reload when trying to view a LiveView page. You may also see problems if you have user login or when interacting with forms.
 
 The Phoenix server tried to log a message hinting at the problem:
 
@@ -154,9 +154,9 @@ or the user token is outdated.
 
 This log message also included suggestions for resolving the issue, but the project generator created the project to follow the suggested practices already.
 
-One of the suggestions for resolving the issues was to make sure to include the CSRF token. When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
+One of the suggestions for resolving the issues was to make sure to include the [CSRF token](https://hexdocs.pm/plug/Plug.CSRFProtection.html). When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
 
-After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting set when loading the `iframe` from within Jira. 
+After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
 
 Our cookie was not getting set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. Working with cookies from a different domain is known as [third-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies) cookies. For security reasons, browsers block this type of cookie by default.
 
@@ -194,6 +194,10 @@ This is where we can set the additional [`Plug.Session` options](https://hexdocs
   secure: true
 ]
 ```
+
+### Same Problem, Different Environment
+
+With the cookie set to be available as a third-party cookie, we should see it being properly set when rendering our `iframe` on a third-party site. However, our need to set the `secure` option may cause us some pain in local development. The `secure` flag expects to only set cookies when interacting over HTTPS. For some browsers this extends to `localhost` as well. This means that you will likely  face the same issues you did when interacting with your app in an `iframe` in your local development environment.
 
 ## Conclusion
 
