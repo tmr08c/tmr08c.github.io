@@ -199,15 +199,27 @@ This is where we can set the additional [`Plug.Session` options](https://hexdocs
 
 With the cookie set to be available as a third-party cookie, we should see it being properly set when rendering our `iframe` on a third-party site. However, our need to set the `secure` option may cause us some problems in local development. The `secure` flag expects to only set cookies when interacting over HTTPS. For some browsers this extends to `localhost` as well. This means that you will likely now face the same issues you did when interacting with your app in an `iframe` in your local development environment.
 
-To allow my application's cookies to be properly set during local development, I decided to set up [SSL in development](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development). 
+To allow my application's cookies to be properly set during local development, I decided to set up [SSL in development](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development). While some browsers will warn about using self-signed certificates (even on localhost), I prefer this method over attempting to conditionally set the `secure` attribute on the cookies; I worry that the divergence in options between development and production could lead to hard to reproduce production bugs or accidentally setting less secure options in production.
 
-Phoenix provides a `mix` task to generate self-signed certificates (`mix phx.gen.cert`) that you can use during local development to interact over HTTPS. You can update the application's `Endpoint` to server `https` and use the self-signed certificates by updating `config/dev.exs`. Please check out the [Phoenix documentation](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development) for the most up-to-date way to do this.
+Phoenix makes setting up local HTTPS development easy and provides a `mix` task to generate self-signed certificates (`mix phx.gen.cert`). You then update the application's `Endpoint` to serve `https` and use the self-signed certificates by updating `config/dev.exs`.
 
-While some browsers will warn about using self-signed certificates (even on localhost), I prefer this method over attempting to conditionally set the `secure` attribute on the cookies - I worry that the divergence in options between development and production could lead to hard to reproduce production bugs and accidentally setting less secure options in production.
+
+```elixir
+# config/dev.exs
+config :my_app, MyAppWeb.Endpoint,
+  https: [
+    port: 4000,
+    cipher_suite: :strong,
+    keyfile: "priv/cert/selfsigned_key.pem",
+    certfile: "priv/cert/selfsigned.pem"
+  ],
+```
+
+Please check out the [Phoenix documentation](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development) for the most up-to-date way to do this.
 
 If you write feature tests with a tool that relies on a headless browser, you will also need to update your `Endpoint` settings in `config/test.exs` to also run with `https`. These changes should be similar to the changes needed in `config/dev.exs`. 
 
-One additional change I need to make for testing what to tell [Chrome Driver](https://chromedriver.chromium.org/) that it was okay to interact with our self-signed, less secure ceritificates when interacting with `localhost`. This can be done by setting the [`--allow-secure-localhost` flag](https://stackoverflow.com/questions/50838882/how-to-enable-an-allow-insecure-localhost-flag-in-chrome-from-selenium). I am using [Wallaby](https://github.com/elixir-wallaby/wallaby) for testing and was able to set this flag with the following config:
+One additional change I need to make for testing was to tell [Chrome Driver](https://chromedriver.chromium.org/) that it was okay to interact with our self-signed, less secure ceritificates when interacting with `localhost`. This can be done by setting the [`--allow-secure-localhost` flag](https://stackoverflow.com/questions/50838882/how-to-enable-an-allow-insecure-localhost-flag-in-chrome-from-selenium). I am using [Wallaby](https://github.com/elixir-wallaby/wallaby) for testing and was able to set this flag with the following config:
 
 
 ```elixir
@@ -216,10 +228,11 @@ config :wallaby, :chromedriver,
   capabilities: %{chromeOptions: %{args: ["--allow-insecure-localhost"]}},
 ```
 
+While running my development and test servers over HTTPS isn't the norm. So far, this setup hasn't caused any major problems, but has had the big advantage of being able to work with my `secure` cookie settings.
+
 ## Conclusion
 
 At this point, you should now be able to render your application within an `iframe`. If you copied the `Content-Security-Policy` exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs.
-
 
 
 # Thoughts
