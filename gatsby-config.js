@@ -67,7 +67,8 @@ module.exports = {
       options: {
         name: "troy-prog-blog",
         short_name: "troyprog",
-        start_url: "/"
+        start_url: "/",
+        icon: "src/images/RhiDesign\ Troy\ Avatar.png"
       }
     },
     "gatsby-plugin-offline",
