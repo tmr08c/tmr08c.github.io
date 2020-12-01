@@ -6,12 +6,12 @@ categories: ['elixir', 'phoenix']
 
 For a side project, I am working on building a [Jira Connect application](https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect) using [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/). With a Connect application, your UI is rendered within Jira as though it is a part of Jira itself. This in-Jira UI rendering is supported by the use of [`iframe`s](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
 
-To get this to work securely with my Phoenix application, I needed to:
+To get this to work with my Phoenix application, I needed to:
 
-1. Update the `Content-Security-Policy` response headers to allow some pages to be embedded in an `iframe`
+1. Update the `Content-Security-Policy` response headers to enable some pages to be embeddable in an `iframe`
 2. Update the `SameSite` settings for the session cookie to allow the cookies to be used by a third-party
 
-In this post, I will walk through how I set that up for this project.
+In this post, I will walk through how I did both of these for this project.
 
 ## `Content-Security-Policy`
 
@@ -32,7 +32,7 @@ Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 
 ### Allow `iframe` Plug
 
-To add this response header, we are going to utilize Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses in a modular manner and makes up the core of Phoenix's HTTP lifecycle.
+To add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses and makes up the core of Phoenix's HTTP lifecycle.
 
 ### Testing the Plug
 
@@ -128,7 +128,7 @@ end
 
 I did not add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI (and therefore not in an `iframe`). While your needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
 
-With the `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together. This grouping allows us to enable our `AllowfIframe` plug for all of these routes at the same time.
+With the `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together. To do this, I leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block. This groups all routes to be nested under `/jira`. This grouping allows us to enable our `AllowfIframe` plug for all of these routes at the same time. 
 
 ```elixir
 scope "/jira", MyAppWeb.Jira, as: :jira do
@@ -139,11 +139,9 @@ scope "/jira", MyAppWeb.Jira, as: :jira do
 end
 ```
 
-I also leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block to group all routes to be nested under `/jira` and expect all modules to be namespaced with `MyAppWeb.Jira`. These groupings should help keep our codebase easier to manage.
-
 ## Cookies
 
-At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, even though your application is renderable, you may find your application doesn't work quite right. For me, I found the application would constantly reload when trying to view a LiveView page. You may also see problems when interacting with forms or managing user-session information.
+At this point, we can render our application within an `iframe` in Jira (or wherever you set your `frame-ancestors`). However, even though your application is renderable, you may find your application does not work quite right. For me, I found the application would repeatedly reload when trying to view a LiveView page. You may also see problems when interacting with forms or managing user-session information.
 
 The Phoenix server tried to log a message hinting at the problem:
 
@@ -152,9 +150,7 @@ The Phoenix server tried to log a message hinting at the problem:
 or the user token is outdated.
 ```
 
-This log message also included suggestions for resolving the issue, but the project generator created the project to follow the suggested practices already.
-
-One of the suggestions for resolving the issues was to make sure to include the [CSRF token](https://hexdocs.pm/plug/Plug.CSRFProtection.html). When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
+This log message also included suggestions for resolving the issue. One of the recommendations was to make sure to include the [CSRF token](https://hexdocs.pm/plug/Plug.CSRFProtection.html) in the HTML and the JavaScript used to connect the LiveView socket. When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
 
 After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
 
