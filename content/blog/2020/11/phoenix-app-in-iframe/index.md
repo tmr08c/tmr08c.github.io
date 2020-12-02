@@ -154,9 +154,9 @@ This log message also included suggestions for resolving the issue. One of the r
 
 After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
 
-Our cookie was not getting set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. Working with cookies from a different domain is known as [third-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies) cookies. For security reasons, browsers block this type of cookie by default.
+Our cookie was not getting set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. Working with cookies from a different domain is known as [third-party cookies](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies). For security reasons, browsers block this type of cookie by default.
 
-To allow your application to store cookies that can be accessible by a third-party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property set to `'None'`. When sending cookies to third parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie. This indicates that the cookie should only be accessible when the requesting site is using `https` (or is `localhost`). For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
+To allow your application to store cookies that can be accessible by a third party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property set to `'None'`. When sending cookies to third parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie; this indicates that the cookie should only be accessible when the requesting site is using `https`. For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
 
 ### Third Party Cookies with Phoenix
 
@@ -166,7 +166,7 @@ Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that i
 plug Plug.Session, @session_options
 ```
 
-This file should also include a [module attribute](https://elixir-lang.org/getting-started/module-attributes.html) named `@session_options`. On a recently generated Phoenix application, it should look something like:
+This file should also include a [module attribute](https://elixir-lang.org/getting-started/module-attributes.html) named `@session_options`. On a recently generated Phoenix application, it should look like:
 
 ```elixir
 # The session will be stored in the cookie and signed,
@@ -193,9 +193,9 @@ This is where we can set the additional [`Plug.Session` options](https://hexdocs
 
 ### Same Problem, Different Environment
 
-With the cookie set up to be available as a third-party cookie, we should no longer see constant reloading when rendering our `iframe` on a third-party site. However, our need to set the `secure` option may cause us some problems in local development. The `secure` flag requires communication over HTTPS. For some browsers, this extends to `localhost` as well. Thie need for HTTPS means that you will likely now face the same issues you did when interacting with your app in an `iframe` in your local development environment.
+With the cookie set up to be available as a third-party cookie, we should no longer see constant reloading when rendering our `iframe` on a third-party site. However, our need to set the `secure` option may cause us some problems in local development. The `secure` flag requires communication over HTTPS. For some browsers, this extends to `localhost` as well. The need for HTTPS means that you will likely now face the same issues you did when interacting with your app in an `iframe` in your local development environment.
 
-To allow my application's cookies to be set during local development, I decided to set up [SSL in development](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development). While some browsers will warn about using self-signed certificates (even on localhost), I prefer this method over conditionally setting the `secure` attribute on the cookies. I worry that the divergence in options between development and production could lead to hard to reproduce production bugs or accidentally setting less secure options in production.
+To allow my application's cookies to get set during local development, I decided to set up [SSL in development](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development). While some browsers will warn about using self-signed certificates (even on localhost), I prefer this method over conditionally setting the `secure` attribute on the cookies. I worry that the divergence in options between development and production could lead to hard to reproduce bugs or accidentally setting less secure options in production.
 
 Phoenix makes setting up local HTTPS development easy and provides a `mix` task to generate self-signed certificates (`mix phx.gen.cert`). You then update the application's `Endpoint` to serve `https` and use the self-signed certificates by updating `config/dev.exs`.
 
@@ -214,7 +214,9 @@ Please check out the [Phoenix documentation](https://hexdocs.pm/phoenix/using_ss
 
 If you write feature tests with a tool that relies on a headless browser, you will also need to update your `Endpoint` settings in `config/test.exs` to serve over `https`. These changes should be similar to the changes we made above for the `dev` environment. 
 
-One additional change I need to make for testing was to tell [Chrome Driver](https://chromedriver.chromium.org/) that it was okay to interact with our self-signed, less secure certificates when interacting with `localhost`. This is done by setting the [`--allow-secure-localhost` flag](https://stackoverflow.com/questions/50838882/how-to-enable-an-allow-insecure-localhost-flag-in-chrome-from-selenium). I am using [Wallaby](https://github.com/elixir-wallaby/wallaby) for testing and set this flag with the following config:
+One additional change I need to make for testing was to tell [ChromeDriver](https://chromedriver.chromium.org/) that it was okay to interact with our self-signed, less secure certificates when interacting with `localhost`.  ChromeDriver provides the [`--allow-secure-localhost` flag](https://stackoverflow.com/questions/50838882/how-to-enable-an-allow-insecure-localhost-flag-in-chrome-from-selenium) to do just that. 
+
+I am using [Wallaby](https://github.com/elixir-wallaby/wallaby) for testing and set this flag with the following config:
 
 ```elixir
 # config/test.exs`
@@ -222,14 +224,8 @@ config :wallaby, :chromedriver,
   capabilities: %{chromeOptions: %{args: ["--allow-insecure-localhost"]}},
 ```
 
-Despite not being the norm, this setup has not had any problems (yet) but has had the advantage of being able to work with my `secure` cookie settings.
+Despite not being the norm, this setup has not had any problems (yet) and has had the advantage of being able to work with my `secure` cookie settings.
 
 ## Conclusion
 
 At this point, you should now be able to render your application within an `iframe`. If you copied the `Content-Security-Policy` exactly, you would be limited to self-served and Atlassian `iframe`s, but, hopefully, you will be able to tweak our `AllowIframe` plug to fit your application's needs.
-
-
-# Thoughts
-
-- Should we include screenshots?
-  - Show the iframe not working? Show a hello page?
