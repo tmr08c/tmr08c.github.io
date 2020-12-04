@@ -48,6 +48,3 @@ git switch DevS1993/master
 While the alternative method is only two commands, `pr checkout` is less typing, and it provides more user-friendly ergonomics. Not only does it save you from having to think of a new, temporary branch name, but it also handles actually `switch`ing to that branch as well. CLI knows you want to check out this code and makes it easy to do just that.
 
 Additionally, with CLI, you can use the same command to checkout a Pull Request for the first time and the N'th time; you don't have to recall if you have already created a branch for the `ref` or not and you will always get the most up-to-date version of the code.
-
-
-
