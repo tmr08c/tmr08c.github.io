@@ -10,18 +10,18 @@ After reading his excellent book, [_Atomic Habits_](https://jamesclear.com/books
 * 2 quotes from others
 * 1 question that is intended to get you thinking
 
- Architect Christopher Alexander on the importance of high standards: 
+One of the quotes included [a few months back](https://jamesclear.com/3-2-1/september-24-2020) stuck out to me as new perspective on imposter's syndrome. The quote comes from architect [Christopher Alexander](https://en.wikipedia.org/wiki/Christopher_Alexander) and is the foreword to [Patterns of Software by Richard P. Gabriel](https://www.amazon.com/gp/product/B003TJ9FGE/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=jamesclearema-20&creative=9325&linkCode=as2&creativeASIN=B003TJ9FGE&linkId=5bbe96d0ee2542beb53da79c788894af) (_note:_ I copied the link from Jame Clear's newsletter which appears to be an affiliate link if that kind of thing bothers you):
 
- > "In my life as an architect, I find that the single thing which inhibits
+ > In my life as an architect, I find that the single thing which inhibits
  > young professionals, new students most severely, is their acceptance of
  > standards that are too low. If I ask a student whether her design is as good
- > as Chartres, she often smiles tolerantly at me as if to say, “Of course not,
- > that isn’t what I am trying to do. ... I could never do that.”
+ > as Chartres, she often smiles tolerantly at me as if to say, 'Of course not,
+ > that isn’t what I am trying to do. ... I could never do that.'
 > 
-> Then, I express my disagreement, and tell her: “That standard must be our
+> Then, I express my disagreement, and tell her: 'That standard must be our
 > standard. If you are going to be a builder, no other standard is worthwhile.
 > That is what I expect of myself in my own buildings, and it is what I expect
-> of my students.”
+> of my students.'
 > 
 > Gradually, I show the students that they have a right to ask this of
 > themselves, and must ask this of themselves. Once that level of standard is
@@ -37,6 +37,10 @@ After reading his excellent book, [_Atomic Habits_](https://jamesclear.com/books
 > But secondly, it does change what people are trying to do. It takes away from
 > them the everyday, lower-level aspiration that is purely technical in nature,
 > (and which we have come to accept) and replaces it with something deep, which
-> will make a real difference to all of us that inhabit the earth."
+> will make a real difference to all of us that inhabit the earth.
 
-Source: Foreword to Patterns of Software by Richard P. Gabriel
+This quote simulatneously makes me feel inspired and overwhelmed. 
+
+I believe that my personal struggles with imposter syndrome are often the result of comparing myself to others. I look at the success of others and feel I could never compete and feel discouraged. However, in the quote, Christopher Alexander is suggesting to not be dicouraged by this high bar, but to instead use it as a driving force. 
+
+This reminds me of the concept of [fixed versus growth mindset](https://www.developgoodhabits.com/fixed-mindset-vs-growth-mindset/also%20believe%20that%20talent,grow%20with%20time%20and%20experience.)  (TODO - possibly look for laternative quote).
