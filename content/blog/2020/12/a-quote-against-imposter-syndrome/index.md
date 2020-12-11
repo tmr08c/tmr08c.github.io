@@ -49,7 +49,11 @@ The idea is that with a fixed mindset you believe you have inherit talent (and l
 
 On the other hand, with a growth mindset you believe "talents can be developed (through hard work, good strategies, and input from others)" ([source](https://hbr.org/2016/01/what-having-a-growth-mindset-actually-means)). With this mindset, you can look at a work that you admire and become inspired to grow your skills in a way that can produce similar work. Something from the quote that is interesting is the idea that growing these skills is rewarding, even if you never attain the skills: "It (the work) is deeper, it never gets tiresome or boring, because one can never really attain this standard."
 
-I believe Alexander is promoting a growth mindset with this quote and is suggesting to use the work of others to fuel this mindset. While I sturggle with comparing my self to others PICK UP HERE
+I believe Alexander is promoting a growth mindset with this quote and is suggesting to use the work of others to fuel this mindset. While I struggle with comparing my self and find it often triggers my imposter syndrome, I can also see how, with a growth mindeset, it can inspire. When you realize that everyone works hard to get where they are, looking at someone that you believe is successful should show you that what you want to achieve is humanly possible. 
+
+A subtly I may be missing in the quote is that the comparison is not between people, but the output of the work, "(...)**design** is as good as Chartes (...)" My initial interpretation what that Chartes was a famous architect. However, it seems this is actually referencing the [Chartes Cathedral](https://en.wikipedia.org/wiki/Chartres_Cathedral). In practice, I find most of the time my brain would jump from comparing the work, to comparing my self-worth to the other person. 
+
+---
 
 Maybe cite: https://bulletproofmusician.com/comparing-yourself-with-others-good-or-bad/
 
