@@ -4,9 +4,18 @@ date:   2021-01-01 22:53:02
 categories: ['career']
 ---
 
-There are many reasons those of us in the software development field are lucky. One of these reasons is that when getting into the field we have the opportuntiy to join internships and, unlikely some fields, these internships are often (well) paid. However, this post insn't pitching internships for the monetary value (though, that shouldn't be ignored). Instead, this post is about the long-term carerr value you get out of internships.
+There are many reasons those of us in the software development field are lucky. One of these reasons is that when getting into the field we have the opportuntiy to join internships and, unlike some fields, these internships are often (well) paid. However, this post insn't pitching internships for the monetary value (though, that shouldn't be ignored). Instead, this post is about the long-term career value you get out of internships.
+
+When I reflect on my career as a software developer so far, I realize I owe everything to the fact that I attended a job fair and landed an internship. In my case, this internship would lead to a full-time job where I would spend nearly eight years learning how to be a professional software developer, project leader, and people manager. After helping to run an internship program at that same company for multiple years, I now believe that the internship would have been valuable even if I didn't end up with a job offer.
+
+One of my biggest professional regrets it not getting an internship sooner. While I was fortunate and converted my internship into a job I enjoyed, the odds usually aren't on your side. Not only did I was playing against the odds, but I also missed out on the opportuntiy to gain more experience. 
+
+This post is mostly aimed at those interested in becoming software developers through attending college. While I don't think college is the only way to become a developer, I believe options such as bootcamps intend to get you job ready by the end. If you land a full-time job after something like a bootcamp, then you are probably better off then trying to first find an internship. From my experience, it seems like the summer between junior and senior year is a big time for interns. However, if I could do things over again, I would start looking as early as Freshman year (though I don't think I would have been very useful). For internship programs I have helped to run, we have had successful interns that were coming out of their Sophmore year. 
 
 
+
+
+---
 
 1. Who is this for 
 1. Why I think it's important
@@ -38,3 +47,4 @@ There are many reasons those of us in the software development field are lucky. 
     1. Possibility of joining the company you interned for
     1. Confidence
     1. Something on resume to talk about
+    1. interviewing
