@@ -4,17 +4,15 @@ date: '2020-09-11T06:14:13.265Z'
 categories: ['code review', 'soft skills']
 ---
 
-Code reviews are a common topic among blog posts and videos; this is for a good reason - code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds.
+Code reviews are a common topic among blog posts and videos, and for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
-Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
-
-If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It is a great overall introduction to code reviews with a strong focus on conducting a code review that can be well received. It has been hugely impactful on how I perform code reviews.
+If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It is a great overall introduction to code reviews with a strong focus on conducting a code review that can be well received. It has been influential in how I perform code reviews.
 
 ## You are not your code
 
 A blog post about being on the receiving end of a code review may seem superfluous. All you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego, gets involved.
 
-As "knowledge workers," our self-worth can feel closely tied to the knowledge we bring to our team. If tied too closely, a lack of knowledge can feel like a lack of worth. For developers, this knowledge often comes in the form of code we deliver. One way this shows attachment reveals itself is in our response to receiving code review feedback. If you receive any critiques about your code during a review, it may trigger your ego to feel "under attack" for a perceived lack of knowledge. This fear may result in feeling defensive or a drop in your perceived self-worth. 
+As [knowledge workers](https://en.wikipedia.org/wiki/Knowledge_worker), our self-worth can feel closely tied to the knowledge we bring to our team. If tied too closely, a lack of knowledge can feel like a lack of worth. For developers, this knowledge often comes in the form of code we deliver. One way this relationship between perceived knowledge and perceived self-worth reveals itself is in our response to receiving code review feedback. If you receive critiques on your code during a review, it may trigger your ego to feel "under attack" for a perceived lack of knowledge. In turn, this can potentially trigger feelings of being less valuable to the team. 
 
 Even on a team with a strong code review culture that is considerate of each other's feelings, code reviews are still providing someone with (often critical) feedback. If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, I know from experience it happens.
 
@@ -26,19 +24,19 @@ While much easier said than done, I have a few practices that can help make it e
 
 Stepping away is advice that can be given in all sorts of situations, including preparing for code review feedback. When you receive feedback on something you just worked on, it is more difficult to receive it objectively than something you worked on days or even hours ago.
 
-Stepping away can be as simple as checking chat notifications after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This can be something quick like refilling your drink or longer like taking a walk. You want to create space between yourself and the code you are soliciting feedback on.  Even if you're skeptical, next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
-
-This process of stepping away doesn't block reviews from getting done. If your team primarily does asynchronous reviews, you can push your code, request reviews, and step away. If your team does synchronous reviews, you can find and schedule a future time that works for the reviewer before taking your break.
+Stepping away can be as simple as checking chat notifications after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This can be something quick like refilling your drink or longer like taking a walk. You want to create space between yourself and the code for which you are soliciting feedback.  Even if you're skeptical, next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
 
 ### Review your code first
 
-This may sound similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch, but instead to **change your relationship with your code**.  You want to shift from the creator's mindset to the reviewer's mindset to change how you are thinking about the code you wrote.
+This may sound similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch. Instead, you want to review your changes to **change your relationship with your code**.  
+
+Your goal should be to review your code just like you would anyone else's.  To do this, you want to shift from the creator's mindset to the reviewer's mindset. 
 
 The creator's mindset is protective of the code and attached to the choices made. It went through the difficult journey of getting to the solution and may have a hard time seeing other options. 
 
 On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes in open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the creator.
 
-You should review your code just like you would anyone else's. By getting into the same "mode" as when reviewing a teammate's code, you trigger your brain to shift mindsets.  
+By getting into the same "mode" as when reviewing a teammate's code, you trigger your brain to shift mindsets and change how you are thinking about the code you wrote. 
 
 One of the easiest ways to shift mindsets is to start reviewing other people's code. Shifting into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Then, once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting to code that you _did_ write. To take advantage of this, rather than going straight into reviewing your code, review an open pull request your team may have first.
 
