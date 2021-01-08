@@ -28,21 +28,17 @@ Stepping away can be as simple as checking chat notifications after you've pushe
 
 ### Review your code first
 
-This may sound similar to the concept of self-deprecating humor - make fun of yourself before anyone else can. However, the intention is not to beat others to the punch. Instead, you want to review your changes to **change your relationship with your code**.  
-
-Your goal should be to review your code just like you would anyone else's.  To do this, you want to shift from the creator's mindset to the reviewer's mindset. 
+The suggestion to review your code first may sound similar to the concept of self-deprecating humor - you try to make fun of yourself before anyone else can. However, the intention is not to beat others to the punch. Instead, you want to review your changes to **change your relationship with your code**.  You should aim to review your code just like you would anyone else's.  To do this, you want to shift from the creator's mindset to the reviewer's mindset. 
 
 The creator's mindset is protective of the code and attached to the choices made. It went through the difficult journey of getting to the solution and may have a hard time seeing other options. 
 
-On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes in open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the creator.
+On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes to the changes open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the creator.
 
-By getting into the same "mode" as when reviewing a teammate's code, you trigger your brain to shift mindsets and change how you are thinking about the code you wrote. 
+One of the easiest ways to shift mindsets is to start reviewing other people's code first. Transitioning into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting back to code that you _did_ write.
 
-One of the easiest ways to shift mindsets is to start reviewing other people's code. Shifting into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Then, once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting to code that you _did_ write. To take advantage of this, rather than going straight into reviewing your code, review an open pull request your team may have first.
+When you come back to review your code, you want to keep your environment the same as when you were reviewing other code. Matching environments helps to maintain the reviewer's mindset. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than I would have when writing code, and that visual difference is a cue to my brain that we are (still) in review mode. 
 
-When you get to your code, you want to keep everything the same;  review your code changes like the other changes you've reviewed. For example, I will create a pull request and use the code review functionality in GitHub just like I would for any other pull request. When reviewing code,  I will have my browser window take up the majority of my screen real estate, but also have a terminal open for testing things. This is a different setup than I would have when writing code, and that visual difference is a cue to my brain that we are (still) in review mode. 
-
-Moving away from the owner's mindset is difficult and takes practice. Even when the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request - help guide your team by explaining key aspects of your changes or calling our areas of concern. 
+Moving away from the owner's mindset is difficult and takes practice. Even when the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your team by explaining critical aspects of your changes or calling our areas of concern. 
 
 ### Start new work
 
