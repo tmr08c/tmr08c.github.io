@@ -34,29 +34,27 @@ The creator's mindset is protective of the code and attached to the choices made
 
 On the other hand, the reviewer's mindset lacks the baggage of the journey. It comes to the changes open for anything. This openness can lead to seeing improvement opportunities that you become blind to as the creator.
 
-One of the easiest ways to shift mindsets is to start reviewing other people's code first. Transitioning into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting back to code that you _did_ write.
+This mindset transition is difficult. One practice that can help is to start reviewing other people's code first. Transitioning into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting back to code that you _did_ write.
 
-When you come back to review your code, you want to keep your environment the same as when you were reviewing other code. Matching environments helps to maintain the reviewer's mindset. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than I would have when writing code, and that visual difference is a cue to my brain that we are (still) in review mode. 
+When you come back to review your code, you want to keep your environment the same as when you were reviewing other code. Matching environments helps to maintain the reviewer's mindset. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than I would have when writing code and that visual difference provides a cue to my brain that we are (still) in review mode. 
 
-Moving away from the owner's mindset is difficult and takes practice. Even when the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your team by explaining critical aspects of your changes or calling our areas of concern. 
+Even if the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your teammates by explaining critical aspects of your changes or calling our areas of concern. 
 
 ### Start new work
 
-Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/), you could also start new work. 
+Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/), you could also start new work. When you start working on a new problem, your emotional investment shifts away from your old work and onto this new problem; this emotional detachment to your old work may make it easier to receive critical feedback on it. 
 
-When you are starting work on a new problem, you not only physically move on, but also emotionally. You become invested in the new code you are writing and lose some of the attachment you had to your previous code. This emotional detachment to your old work may make it easier to receive critical feedback on it. 
-
-However, from a project management point of view, this detachment can cause productivity issues. You can end up feeling like the feedback on your old code is just a distraction from the current work you are doing. If the detachment goes too far, it can lead to delays getting code shipped to users.
+However, from a project management point of view, this detachment can cause productivity issues. You can end up feeling like the feedback on your old code is just a distraction from the current work you are doing. If the detachment goes too far, it can lead to delays in getting code shipped to users.
 
 With these pros and cons in mind, consider using this method more sparingly than other options.
 
 ### Step away (again)
 
-Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review so you can be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find ourselves resistant to accept feedback on our code.
-
-In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
+Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review to be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find ourselves resistant to accept feedback on our code.
 
 When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard it. Instead, we want to take the time to understand it. 
+
+In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
 
 I am not saying that you should dwell on improperly given feedback like personal attacks. There is no place for that in code reviews, and the team must strive to extinguish this poor behavior. I am saying that if someone is offering you constructive feedback, whether you agree or disagree, you should seek to understand their point of view.
 
