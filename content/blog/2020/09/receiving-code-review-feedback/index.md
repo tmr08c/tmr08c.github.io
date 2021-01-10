@@ -50,19 +50,15 @@ With these pros and cons in mind, consider using this method more sparingly than
 
 ### Step away (again)
 
-Above, we discussed stepping away before receiving feedback. The goal was to create some distance between yourself and the code you are putting up for review to be more receptive to feedback. We may also want to step away _after_ the code review. Sometimes, even if we've done our best to prepare ourselves, we will still find ourselves resistant to accept feedback on our code.
+Above, we discussed stepping away before requesting a code review. The goal was to become more receptive to feedback by creating distance between yourself and the code you are putting up for review. We may also want to step away _after_ we have received code review feedback. Sometimes, even if we've done our best to prepare ourselves, we will be resistant to accept critiques on our code.
 
-When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard it. Instead, we want to take the time to understand it. 
+When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard it. Instead, we want to take the time to understand it. In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
 
-In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
+I am a proponent of physical separation because it helps me think less about the actual work involved in making changes. Instead, I can more freely imagine alternative solutions and how they would work. Because it's easier for me to _imagine_ possible code changes than to actually _write_ the code, my laziness doesn't get triggered. As a result, I am more willing to explore the suggestions offered to me. 
 
-I am not saying that you should dwell on improperly given feedback like personal attacks. There is no place for that in code reviews, and the team must strive to extinguish this poor behavior. I am saying that if someone is offering you constructive feedback, whether you agree or disagree, you should seek to understand their point of view.
+If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you to separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
 
 Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is not how we feel that day, though. Instead, we should use more objective parameters. 
-
-One reason I am such a proponent of physical separation is that when I step away from the keyboard, I think less about the actual work involved in making changes. Instead, I can more freely imagine alternative solutions and how they would work. Because it's easier for me to _imagine_ possible code changes than to actually _write_ the code, my laziness doesn't get triggered. As a result, I more willing to explore the suggestions offered to me during the code review. 
-
-If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you to mentally separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
 
 When in the headspace of imagining alternative solutions, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
 
@@ -72,9 +68,9 @@ If I am resistant to feedback, I find stepping away can help ease my initial emo
 
 ## Conclusion
 
-Code reviews are an essential, yet challenging part of the software development lifecycle. Part of this challenge comes from the first-line response your ego may have to feedback on your code. 
+Code reviews are an essential yet challenging part of the software development lifecycle. Part of this challenge comes from the first-line response your ego may have to feedback on your code. 
 
-Working to separate yourself from the code you write can help reduce some of the emotional aspects of this process and make it easier to embrace the value of code reviews. With time, space, and practice, this separation will come more naturally.
+Working to separate yourself from the code you write can help reduce some of the emotional aspects of this process and make it easier to embrace the value that code reviews provide. With time, space, and practice, this separation will come more naturally.
 
 When in doubt, assume best intentions (and maybe step away ;)). 
 
