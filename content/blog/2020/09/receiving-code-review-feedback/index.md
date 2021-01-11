@@ -6,7 +6,7 @@ categories: ['code review', 'soft skills']
 
 Code reviews are a common topic among blog posts and videos, and for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
-If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It is a great overall introduction to code reviews with a strong focus on conducting a code review that can be well received. It has been influential in how I perform code reviews.
+If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It provides a great introduction to code reviews with a strong focus on conducting a code review that can be well received.
 
 ## You are not your code
 
@@ -22,9 +22,11 @@ While much easier said than done, I have a few practices that can help make it e
 
 ### Step away
 
-Stepping away is advice that can be given in all sorts of situations, including preparing for code review feedback. When you receive feedback on something you just worked on, it is more difficult to receive it objectively than something you worked on days or even hours ago.
+When you receive feedback on something you just worked on, it is more difficult to process it objectively than something you worked on days or even hours ago. Taking some time to "step away" from the code you just worked on can help. By switching your focus away, you can begin to detach some of the emotions that come into play.
 
-Stepping away can be as simple as checking chat notifications after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This can be something quick like refilling your drink or longer like taking a walk. You want to create space between yourself and the code for which you are soliciting feedback.  Even if you're skeptical, next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
+Stepping away can be as simple as checking email after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. Stepping away can be something quick like refilling your drink or take time, like taking a walk; it doesn't have to take long but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
+
+I find the advice of stepping away (or taking a step back) to be generally useful in all walks of life. Next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
 
 ### Review your code first
 
