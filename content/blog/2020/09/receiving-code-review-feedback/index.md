@@ -22,11 +22,11 @@ While much easier said than done, I have a few practices that can help make it e
 
 ### Step away
 
-When you receive feedback on something you just worked on, it is more difficult to process it objectively than something you worked on days or even hours ago. Taking some time to "step away" from the code you just worked on can help. By switching your focus away, you can begin to detach some of the emotions that come into play.
+When you receive feedback on something you just worked on, it is more difficult to process it objectively than something you worked on days or even hours ago. This difficulty comes from the emotional attachment you form as you put effort into your work. Taking some time to "step away" from the code you just worked on can help you begin to detach these emotions and be more prepared to receive feedback.
 
 Stepping away can be as simple as checking email after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. Stepping away can be something quick like refilling your drink or take time, like taking a walk; it doesn't have to take long but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
 
-I find the advice of stepping away (or taking a step back) to be generally useful in all walks of life. Next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
+I find the advice of stepping away (or taking a step back) to be useful in all walks of life. Next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
 
 ### Review your code first
 
@@ -38,13 +38,13 @@ On the other hand, the reviewer's mindset lacks the baggage of the journey. It c
 
 This mindset transition is difficult. One practice that can help is to start reviewing other people's code first. Transitioning into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting back to code that you _did_ write.
 
-When you come back to review your code, you want to keep your environment the same as when you were reviewing other code. Matching environments helps to maintain the reviewer's mindset. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than I would have when writing code and that visual difference provides a cue to my brain that we are (still) in review mode. 
+When you come back to review your code, you want to keep your environment the same as when you were reviewing the other code changes. Matching environments helps to maintain the reviewer's mindset. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than what I would have when writing code; the visual difference provides a cue to my brain that we are (still) in review mode. 
 
 Even if the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your teammates by explaining critical aspects of your changes or calling our areas of concern. 
 
 ### Start new work
 
-Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/), you could also start new work. When you start working on a new problem, your emotional investment shifts away from your old work and onto this new problem; this emotional detachment to your old work may make it easier to receive critical feedback on it. 
+Depending on your team's mindset around [WIP limits](https://www.planview.com/resources/articles/benefits-wip-limits/), you could also start new work. When you start working on a new problem, your emotional investment shifts away from your old work and onto this new problem. As mentioned in the stepping away section, this emotional detachment to your old work may make it easier to receive critical feedback. 
 
 However, from a project management point of view, this detachment can cause productivity issues. You can end up feeling like the feedback on your old code is just a distraction from the current work you are doing. If the detachment goes too far, it can lead to delays in getting code shipped to users.
 
