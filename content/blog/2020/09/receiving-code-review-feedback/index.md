@@ -52,21 +52,19 @@ With these pros and cons in mind, consider using this method more sparingly than
 
 ### Step away (again)
 
-Above, we discussed stepping away before requesting a code review. The goal was to become more receptive to feedback by creating distance between yourself and the code you are putting up for review. We may also want to step away _after_ we have received code review feedback. Sometimes, even if we've done our best to prepare ourselves, we will be resistant to accept critiques on our code.
+Above, we discussed stepping away before requesting a code review. The goal was to become more receptive to feedback by creating distance between yourself and the code you are putting up for review. We may also want to step away _after_ we have received code review feedback. Sometimes, even if we've done our best to prepare, we will still struggle with receiving critiques on our code.
 
 When preparing to request feedback, we were trying to separate ourselves from the code. We almost wanted to forget that we wrote the code so we would receive any feedback more objectively. However, after we've gotten feedback, we do not want to discard it. Instead, we want to take the time to understand it. In this case, I think it makes even more sense to physically step away instead of moving on to a different task. Physical activity can help settle your emotions while still letting you focus on and process the feedback. 
 
-I am a proponent of physical separation because it helps me think less about the actual work involved in making changes. Instead, I can more freely imagine alternative solutions and how they would work. Because it's easier for me to _imagine_ possible code changes than to actually _write_ the code, my laziness doesn't get triggered. As a result, I am more willing to explore the suggestions offered to me. 
+I am a proponent of physical separation because it helps me think less about the actual work and code needed to implement a suggestion. Instead, I can think about alternative solutions at a high level - focusing more generally on how they would work and not how to implement them. Because it's easier for me to _imagine_ possible code changes than it is actually _write_ the code, my laziness doesn't get triggered. As a result, I am more willing to explore the suggestions offered to me. 
 
-If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you to separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
+If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
 
 Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is not how we feel that day, though. Instead, we should use more objective parameters. 
 
 When in the headspace of imagining alternative solutions, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
 
-After stepping away, you may find advantages or disadvantages to either solution. You can now have a more objective and constructive conversation about these. Rather than being driven by emotion, you can continue the conversation productively and objectively.
-
-If I am resistant to feedback, I find stepping away can help ease my initial emotions and help me evaluate the situation more thoughtfully. At the very least, it can help prevent me from making myself look like a jerk by giving an emotional response.
+After stepping away, you may find advantages or disadvantages to either solution. You can now have a more objective and constructive conversation about these points with your reviewer. Rather than being driven by emotion, you can continue the conversation productively and objectively.
 
 ## Conclusion
 
