@@ -6,13 +6,13 @@ categories: ['code review', 'soft skills']
 
 Code reviews are a common topic among blog posts and videos, and for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
-If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It provides a great introduction to code reviews with a strong focus on conducting a code review that can be well received.
+If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It provides a comprehensive introduction to code reviews with a strong focus on conducting a code review that can be well received.
 
 ## You are not your code
 
 A blog post about being on the receiving end of a code review may seem superfluous. All you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego, gets involved.
 
-As [knowledge workers](https://en.wikipedia.org/wiki/Knowledge_worker), our self-worth can feel closely tied to the knowledge we bring to our team. If tied too closely, a lack of knowledge can feel like a lack of worth. For developers, this knowledge often comes in the form of code we deliver. One way this relationship between perceived knowledge and perceived self-worth reveals itself is in our response to receiving code review feedback. If you receive critiques on your code during a review, it may trigger your ego to feel "under attack" for a perceived lack of knowledge. In turn, this can potentially trigger feelings of being less valuable to the team. 
+As [knowledge workers](https://en.wikipedia.org/wiki/Knowledge_worker), our self-worth can feel closely tied to the knowledge we bring to our team. If tied too closely, a lack of knowledge can feel like a lack of worth. For developers, this knowledge often comes in the form of code we deliver. One way this relationship between perceived knowledge and perceived self-worth reveals itself is in our response to receiving code review feedback. If you receive critiques on your code during a review, it may trigger your ego to feel "under attack" for a perceived lack of knowledge. In turn, this can potentially result in feelings of being less valuable to the team. 
 
 Even on a team with a strong code review culture that is considerate of each other's feelings, code reviews are still providing someone with (often critical) feedback. If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, I know from experience it happens.
 
@@ -22,11 +22,13 @@ While much easier said than done, I have a few practices that can help make it e
 
 ### Step away
 
+I find the advice of stepping away (or taking a step back) to be useful in all walks of life, and handling code review feedback is no exception.
+
 When you receive feedback on something you just worked on, it is more difficult to process it objectively than something you worked on days or even hours ago. This difficulty comes from the emotional attachment you form as you put effort into your work. Taking some time to "step away" from the code you just worked on can help you begin to detach these emotions and be more prepared to receive feedback.
 
-Stepping away can be as simple as checking email after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. Stepping away can be something quick like refilling your drink or take time, like taking a walk; it doesn't have to take long but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
+"Stepping away" can be a simple context switch like processing your emails after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This physical separation can be something like refilling your drink stepping outside for some fresh air. Whatever you choose, it doesn't have to take a lot of time but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
 
-I find the advice of stepping away (or taking a step back) to be useful in all walks of life. Next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
+Next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
 
 ### Review your code first
 
