@@ -26,13 +26,11 @@ I find the advice of stepping away (or taking a step back) to be useful in all w
 
 When you receive feedback on something you just worked on, it is more difficult to process it objectively than something you worked on days or even hours ago. This difficulty comes from the emotional attachment you form as you put effort into your work. Taking some time to "step away" from the code you just worked on can help you begin to detach these emotions and be more prepared to receive feedback.
 
-"Stepping away" can be a simple context switch like processing your emails after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This physical separation can be something like refilling your drink stepping outside for some fresh air. Whatever you choose, it doesn't have to take a lot of time but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
-
-Next time your code is ready for a review, try going for a walk. I think when you come back, you will see your code through a new lens.
+Stepping away can be a simple context switch like processing your emails after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This physical separation can be something like refilling your drink or stepping outside for some fresh air. Whatever you choose, it doesn't have to take a lot of time but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
 
 ### Review your code first
 
-The suggestion to review your code first may sound similar to the concept of self-deprecating humor - you try to make fun of yourself before anyone else can. However, the intention is not to beat others to the punch. Instead, you want to review your changes to **change your relationship with your code**.  You should aim to review your code just like you would anyone else's.  To do this, you want to shift from the creator's mindset to the reviewer's mindset. 
+The suggestion to review your code first may sound like a form of [self-deprecation](https://en.wikipedia.org/wiki/Self-deprecation) - attempting to call out yourself before anyone else can. However, the intention is not to beat others to the punch. Instead, you want to review your changes to **change your relationship with your code**.  You should aim to review your code just like you would anyone else's.  To do this, you want to shift from the creator's mindset to the reviewer's mindset. 
 
 The creator's mindset is protective of the code and attached to the choices made. It went through the difficult journey of getting to the solution and may have a hard time seeing other options. 
 
@@ -40,7 +38,7 @@ On the other hand, the reviewer's mindset lacks the baggage of the journey. It c
 
 This mindset transition is difficult. One practice that can help is to start reviewing other people's code first. Transitioning into the reviewer's mindset for code you didn't write is significantly easier than for code you did. Once you are in the reviewer's mindset, it becomes easier to maintain it, even when shifting back to code that you _did_ write.
 
-When you come back to review your code, you want to keep your environment the same as when you were reviewing the other code changes. Matching environments helps to maintain the reviewer's mindset. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than what I would have when writing code; the visual difference provides a cue to my brain that we are (still) in review mode. 
+When you come back to review your code, you want to keep your environment the same as when you were reviewing the other code changes. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than what I would have when writing code; the visual difference provides a cue to my brain that we are (still) in review mode. 
 
 Even if the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your teammates by explaining critical aspects of your changes or calling our areas of concern. 
 
@@ -62,11 +60,13 @@ I am a proponent of physical separation because it helps me think less about the
 
 If stepping away and taking a walk doesn't do the same thing for you, try to find what does. Find a practice that helps you separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
 
-Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is not how we feel that day, though. Instead, we should use more objective parameters. 
+## When to Implement Feedback
 
-When in the headspace of imagining alternative solutions, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
+Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is _not_ how we feel that day, though. Instead, we should use more objective parameters. 
 
-After stepping away, you may find advantages or disadvantages to either solution. You can now have a more objective and constructive conversation about these points with your reviewer. Rather than being driven by emotion, you can continue the conversation productively and objectively.
+If we've been able to pull out the emotion of code review ... PICK UP HERE. When in the headspace of imagining alternative solutions, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
+
+After processing review feedback, you may find advantages or disadvantages to either solution. Taking the time to think about the options provides you with the tools to have an objective and constructive conversation with your reviewer. Rather than being driven by emotion, you can continue the conversation productively and objectively.
 
 ## Conclusion
 
