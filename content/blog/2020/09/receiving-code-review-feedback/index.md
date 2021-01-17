@@ -20,6 +20,8 @@ Even on a team with a strong code review culture that is considerate of each oth
 
 While much easier said than done, I have a few practices that can help make it easier to be less emotionally attached to the code you have up for review and more receptive to feedback.
 
+## Preparing for Reviews
+
 ### Step away
 
 I find the advice of stepping away (or taking a step back) to be useful in all walks of life, and handling code review feedback is no exception.
@@ -50,6 +52,10 @@ However, from a project management point of view, this detachment can cause prod
 
 With these pros and cons in mind, consider using this method more sparingly than other options.
 
+## Handling the Review
+
+At this point, we've prepared ourselves to be emotionally ready for code review feedback. So, what do we do when we start to receive the feedback? We want to have productive conversations with our reviewers while continuing to manage our ego's response.
+
 ### Step away (again)
 
 Above, we discussed stepping away before requesting a code review. The goal was to become more receptive to feedback by creating distance between yourself and the code you are putting up for review. We may also want to step away _after_ we have received code review feedback. Sometimes, even if we've done our best to prepare, we will still struggle with receiving critiques on our code.
@@ -62,9 +68,9 @@ I am a proponent of physical separation because it helps me think less about the
 
 If stepping away and taking a walk doesn't do the same thing for you, try to find what does (maybe give [hammocks](https://www.youtube.com/watch?v=f84n5oFoZBc) a try). Find a practice that helps you separate yourself from the actual work involved with updating code and get into a headspace of curiosity and exploration. 
 
-## When to Implement Feedback
+### Objectively Analyze
 
-Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is _not_ how we feel that day, though. At this point, we have set ourselves up to avoid being driven by our feelings. We've prepared ourselves to be emotionally ready for code review feedback and have taken steps to begin to process the feedback dispassionately. So, what do we do with the code review comments we've received? We should find objective parameters with which to judge our options. 
+Depending on the situation, it may or may not make sense to invest in changes suggested during a code review. The determining factor of whether it makes sense is _not_ how we feel that day, though.
 
 When analyzing the feedback, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
 
@@ -74,7 +80,7 @@ After processing review feedback, you may find advantages or disadvantages to ei
 
 Code reviews are an essential yet challenging part of the software development lifecycle. Part of this challenge comes from the first-line response your ego may have to feedback on your code. 
 
-Working to separate yourself from the code you write can help reduce some of the emotional aspects of this process and make it easier to embrace the value that code reviews provide. With time, space, and practice, this separation will come more naturally.
+Working to separate yourself from the code you write can help reduce some of the emotional aspects of this process and make it easier to embrace the value that code reviews provide. With time, space, and practice, this separation will come more naturally. While you likely won't need to take a walk after every piece of code review feedback, it's helpful to have these practices in your toolbelt. 
 
 When in doubt, assume best intentions (and maybe step away ;)). 
 
