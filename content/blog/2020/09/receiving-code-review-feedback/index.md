@@ -4,9 +4,9 @@ date: '2020-09-11T06:14:13.265Z'
 categories: ['code review', 'soft skills']
 ---
 
-Code reviews are a common topic among blog posts and videos, and for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
+Code reviews are a common topic among blog posts and for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
-If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by Derek Prior. It provides a comprehensive introduction to code reviews with a strong focus on conducting a code review that can be well received.
+If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by [Derek Prior](https://twitter.com/derekprior?lang=en). It provides a comprehensive introduction to code reviews with a strong focus on conducting a code review that can be well received.
 
 ## You are not your code
 
@@ -28,7 +28,7 @@ I find the advice of stepping away (or taking a step back) to be useful in all w
 
 When you receive feedback on something you just worked on, it is more difficult to process it objectively than something you worked on days or even hours ago. This difficulty comes from the emotional attachment you form as you put effort into your work. Taking some time to "step away" from the code you just worked on can help you begin to detach these emotions and be more prepared to receive feedback.
 
-Stepping away can be a simple context switch like processing your emails after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that actual, physical space helps me feel less attached to my code. This physical separation can be something like refilling your drink or stepping outside for some fresh air. Whatever you choose, it doesn't have to take a lot of time but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
+Stepping away can be a simple context switch like processing your emails after you've pushed your code. However, it is more powerful to have physical separation. As silly as it may sound, I have found that stepping away from my computer helps me feel less attached to my code. Physical separation can be something like refilling your drink or stepping outside for some fresh air. Whatever you choose, it doesn't have to take a lot of time but should provide some physical and temporal distance between yourself and the code for which you are soliciting feedback. 
 
 ### Review your code first
 
@@ -54,7 +54,7 @@ With these pros and cons in mind, consider using this method more sparingly than
 
 ## Handling the Review
 
-At this point, we've prepared ourselves to be emotionally ready for code review feedback. So, what do we do when we start to receive the feedback? We want to have productive conversations with our reviewers while continuing to manage our ego's response.
+At this point, we've prepared ourselves to be emotionally ready for code review feedback. Once we start to receive feedback, we want to continue managing our ego as we discuss possible changes with our reviewers. 
 
 ### Step away (again)
 
@@ -74,13 +74,15 @@ Depending on the situation, it may or may not make sense to invest in changes su
 
 When analyzing the feedback, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
 
-After processing review feedback, you may find advantages or disadvantages to either solution. Taking the time to think about the options provides you with the tools to have an objective and constructive conversation with your reviewer. Rather than being driven by emotion, you can continue the conversation productively and objectively.
+After processing review feedback, you may find advantages or disadvantages to either solution. Taking the time to think about the options provides you with the tools to have an objective and constructive conversation with your reviewer and avoid relying on emotional arguments.
 
 ## Conclusion
 
 Code reviews are an essential yet challenging part of the software development lifecycle. Part of this challenge comes from the first-line response your ego may have to feedback on your code. 
 
-Working to separate yourself from the code you write can help reduce some of the emotional aspects of this process and make it easier to embrace the value that code reviews provide. With time, space, and practice, this separation will come more naturally. While you likely won't need to take a walk after every piece of code review feedback, it's helpful to have these practices in your toolbelt. 
+Working to separate yourself from the code you write can help reduce some of the emotional aspects of this process and make it easier to embrace the value that code reviews provide. With time, space, and practice, this separation will come more naturally. 
 
-When in doubt, assume best intentions (and maybe step away ;)). 
+While you likely won't need to take a walk after every piece of code review feedback, it's helpful to have these practices in your toolbelt for the times you find your emotions are running high.
+
+And, when in doubt, assume best intentions (and maybe step away ;)). 
 
