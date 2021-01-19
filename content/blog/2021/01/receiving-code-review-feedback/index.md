@@ -1,10 +1,10 @@
 ---
 title: 'Receiving Code Review Feedback'
-date: '2020-09-11T06:14:13.265Z'
+date: '2021-01-20T06:14:13.265Z'
 categories: ['code review', 'soft skills']
 ---
 
-Code reviews are a common topic among blog posts and for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
+Code reviews are a common topic among blog posts; this is for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
 If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by [Derek Prior](https://twitter.com/derekprior?lang=en). It provides a comprehensive introduction to code reviews with a strong focus on conducting a code review that can be well received.
 
@@ -74,7 +74,7 @@ Depending on the situation, it may or may not make sense to invest in changes su
 
 When analyzing the feedback, ask yourself questions like: do we have a deadline, is either solution objectively better for our needs (speed, memory usage, etc.), and does going forward with the current solution make it harder to use the suggested solution in the future? The answers to these questions provide more objective points of discussion when comparing alternative solutions.
 
-After processing review feedback, you may find advantages or disadvantages to either solution. Taking the time to think about the options provides you with the tools to have an objective and constructive conversation with your reviewer and avoid relying on emotional arguments.
+After processing review feedback, you may find advantages or disadvantages to either solution. Taking the time to think about the options provides you with the tools to have an objective and constructive conversation with your reviewer and avoid relying on emotional arguments. A result of these more productive conversations is a stronger codebase and more trust within the team.
 
 ## Conclusion
 
