@@ -1,5 +1,5 @@
 ---
-title: 'Leveraging the GitHub CLI During Hacktoberfest'
+title: 'Leveraging the GitHub CLI During Hacktoberfest - Contributing'
 date: '2020-11-04T05:31:13.265Z'
 categories: ['open source']
 ---
