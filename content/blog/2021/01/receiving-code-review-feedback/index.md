@@ -4,7 +4,7 @@ date: '2021-01-20T06:14:13.265Z'
 categories: ['code review', 'soft skills']
 ---
 
-Code reviews are a common topic among blog posts; this is for a good reason. Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
+Code reviews are a powerful tool for spreading knowledge, improving code quality, and, when done right, can strengthen team bonds. Often, content around code reviews focuses on how to _give_ better code reviews. In this post, I want to cover how to be on the _receiving_ end.
 
 If you are interested in content on giving code reviews, I recommend the talk [_Implementing a Strong Code-Review Culture_](https://youtu.be/PJjmw9TRB7s) by [Derek Prior](https://twitter.com/derekprior?lang=en). It provides a comprehensive introduction to code reviews with a strong focus on conducting a code review that can be well received.
 
@@ -12,7 +12,7 @@ If you are interested in content on giving code reviews, I recommend the talk [_
 
 A blog post about being on the receiving end of a code review may seem superfluous. All you have to do is put the code up and wait for the review, right? Not when our sneaky friend, ego, gets involved.
 
-As [knowledge workers](https://en.wikipedia.org/wiki/Knowledge_worker), our self-worth can feel closely tied to the knowledge we bring to our team. If tied too closely, a lack of knowledge can feel like a lack of worth. For developers, this knowledge often comes in the form of code we deliver. One way this relationship between perceived knowledge and perceived self-worth reveals itself is in our response to receiving code review feedback. If you receive critiques on your code during a review, it may trigger your ego to feel "under attack" for a perceived lack of knowledge. In turn, this can potentially result in feelings of being less valuable to the team. 
+As [knowledge workers](https://en.wikipedia.org/wiki/Knowledge_worker), our self-worth can feel closely tied to the knowledge we bring to our team. For developers, this knowledge often comes in the form of code we deliver. If tied too closely, a lack of knowledge can feel like a lack of worth.  One way this relationship between perceived knowledge and perceived self-worth reveals itself is in our response to receiving code review feedback. If you receive critiques on your code during a review, it may trigger your ego to feel "under attack" for a perceived lack of knowledge. In turn, this can potentially result in feelings of being less valuable to the team. 
 
 Even on a team with a strong code review culture that is considerate of each other's feelings, code reviews are still providing someone with (often critical) feedback. If you have your ego tied into the code you wrote, even a well-intentioned code review can feel like a personal attack. If they don't like the way you wrote this line of code...do they think you don't deserve to be on the team? While this jump from a comment on a line of code to worrying about job security can feel over-the-top, I know from experience it happens.
 
@@ -42,7 +42,7 @@ This mindset transition is difficult. One practice that can help is to start rev
 
 When you come back to review your code, you want to keep your environment the same as when you were reviewing the other code changes. My reviewer setup includes having a browser window with the pull request taking up the majority of the screen.  I also have a terminal for diving deeper into the code or testing out suggestions I may have. This setup is different than what I would have when writing code; the visual difference provides a cue to my brain that we are (still) in review mode. 
 
-Even if the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your teammates by explaining critical aspects of your changes or calling our areas of concern. 
+Even if the owner's mindset sticks around, it is still valuable to review your code. You may not find drastically different approaches to take, but you can often find the low hanging fruit fixes (spelling, style, etc.). You can also use the review as an opportunity to annotate your pull request and make reviewing easier for your teammates by explaining critical aspects of your changes or calling outj areas of concern. 
 
 ### Start new work
 
