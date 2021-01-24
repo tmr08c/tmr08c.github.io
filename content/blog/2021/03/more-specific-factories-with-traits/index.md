@@ -1,8 +1,58 @@
 In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities. 
 
-I find I now rarely reach for leveraging inheritance with FactoryBot, and instead leverage [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits). Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits as-needed. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfrect factory.
+I find I now rarely reach for leveraging inheritance with FactoryBot, and instead leverage [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits). Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
 
-In this post, I will cover some of the basics of traits. As you adopt them in your own project, I would reccommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers more than I will here. 
+In this post, I will cover some of the basics of traits. As you adopt them in your own project, I would recommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers more than I will here.
+
+## Defining Our Models
+
+For our example factories, we will be working with a `Camera` model. We will also have a `MemoryCard` model and a `Camera` can have zero or more `MemoryCard`s. While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby structs. Structs save us some of the work of defining an `initalize` method and will include more informnation when printed (without having to `#inspect` everytime).
+
+As a result, our example models are simply:
+
+```ruby
+Camera = Struct.new(:manufacturer, :type, :memory_cards)
+MemoryCard = Struct.new(:storage_capacity)
+```
+
+## A Basic Factory
+
+For all models in my system, I am going to want a basic factory. This factory should include any required attributes I would need to create an instance of my model. While our models do not have any form of validation, we will pretend a `Camera` requires a `manufacturer` and a `type` and that a `MemoryCard` requires `storage_capacity`. With these requirements in mind, we can create our baseline factories:
+
+```ruby
+FactoryBot.define do
+  factory :camera do
+    manufacturer { 'Kodak' }
+    type { :film }
+  end
+
+  factory :memory_card do
+    storage_capacity { "32GB" }
+  end
+end
+```
+
+With this in place, we can now easily create instances of our models wthout the need to specify attributes every times:
+
+```ruby
+FactoryBot.build(:camera)
+#<struct Camera manufacturer="Kodak", type=:film, memory_cards=nil>
+
+FactoryBot.build(:memory_card)
+#<struct MemoryCard storage_capacity="32GB">
+```
+
+## Adding Traits
+
+Most of the time, you should be able to get away with only using your baseline factories. If you need to test some specific functionality that is impacted by a particular attribute, you can build an instance of your factory with that attribute directly in your test. For example, maybe we need to test  
+
+```ruby
+ FactoryBot.build(:camera, type: :mirrorless)
+#<struct Camera manufacturer="Kodak", type=:mirrorless, memory_cards=nil>
+```
+
+
+TODO: Maybe change "type" to sensor size and have the example be calculating crop factor
 
 
 
