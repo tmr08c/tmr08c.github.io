@@ -11,19 +11,19 @@ For our example factories, we will be working with a `Camera` model. We will als
 As a result, our example models are simply:
 
 ```ruby
-Camera = Struct.new(:manufacturer, :type, :memory_cards)
+Camera = Struct.new(:manufacturer, :frame_size, :memory_cards)
 MemoryCard = Struct.new(:storage_capacity)
 ```
 
 ## A Basic Factory
 
-For all models in my system, I am going to want a basic factory. This factory should include any required attributes I would need to create an instance of my model. While our models do not have any form of validation, we will pretend a `Camera` requires a `manufacturer` and a `type` and that a `MemoryCard` requires `storage_capacity`. With these requirements in mind, we can create our baseline factories:
+For all models in my system, I am going to want a basic factory. This factory should include any required attributes I would need to create an instance of my model. While our models do not have any form of validation, we will pretend a `Camera` requires a `manufacturer` and a `frame_size` and that a `MemoryCard` requires `storage_capacity`. With these requirements in mind, we can create our baseline factories:
 
 ```ruby
 FactoryBot.define do
   factory :camera do
     manufacturer { 'Kodak' }
-    type { :film }
+    frame_size { '35x24' }
   end
 
   factory :memory_card do
@@ -36,7 +36,7 @@ With this in place, we can now easily create instances of our models wthout the 
 
 ```ruby
 FactoryBot.build(:camera)
-#<struct Camera manufacturer="Kodak", type=:film, memory_cards=nil>
+#<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=nil>
 
 FactoryBot.build(:memory_card)
 #<struct MemoryCard storage_capacity="32GB">
@@ -44,15 +44,21 @@ FactoryBot.build(:memory_card)
 
 ## Adding Traits
 
-Most of the time, you should be able to get away with only using your baseline factories. If you need to test some specific functionality that is impacted by a particular attribute, you can build an instance of your factory with that attribute directly in your test. For example, maybe we need to test  
+Most of the time, you should be able to get away with only using your baseline factories. If you need to test some specific functionality that is impacted by a particular attribute, you can build an instance of your factory with that attribute directly in your test. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation that is based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
+
 
 ```ruby
- FactoryBot.build(:camera, type: :mirrorless)
-#<struct Camera manufacturer="Kodak", type=:mirrorless, memory_cards=nil>
+describe '#crop_factor' do
+  context 'when working with a full frame camera' do
+    let(:camera) { FactoryBot.build(:camera, type: "35x24") }
+  end
+
+  context 'when working with a smart phone camera' do
+    let(:camera) { FactoryBot.build(:camera, type: "6.17x4.55") }
+  end
+end
 ```
 
-
-TODO: Maybe change "type" to sensor size and have the example be calculating crop factor
 
 
 
@@ -92,7 +98,7 @@ end
 ## Example
 
 ```ruby
-require 'bundler/inline'
+rrequire 'bundler/inline'
 
 gemfile do
   source 'https://rubygems.org'
@@ -100,30 +106,13 @@ gemfile do
   gem 'factory_bot'
 end
 
-Camera = Struct.new(:manufacturer, :type, :memory_cards)
-# class Camera
-#   attr_writer :manufacturer, :type, :memory_cards
-
-#   def initalize(manufacturer, type, memory_cards = [])
-#     @manufacturer = manufacturer
-#     @type = type
-#     @memory_cards = memory_cards
-#   end
-# end
-
+Camera = Struct.new(:manufacturer, :frame_size, :memory_cards)
 MemoryCard = Struct.new(:storage_capacity)
-# class MemoryCard
-#   attr_writer :storage_capacity
-
-#   def initalize(storage_capacity)
-#     @storage_capacity = storage_capacity
-#   end
-# end
 
 FactoryBot.define do
   factory :camera do
     manufacturer { 'Kodak' }
-    type { :film }
+    frame_size { '35x24' }
 
     trait :fujifilm do
       manufacturer { 'Fujifilm' }
@@ -133,17 +122,21 @@ FactoryBot.define do
       manufacturer { 'Nikon' }
     end
 
-    trait :mirrorless do
-      type { :mirrorless }
+    trait :full_frame do
+      frame_size { '35x24' }
     end
 
-    trait :dslr do
-      type { :dslr }
+    trait :asp_c do
+      frame_size { '23.6x15.6' }
+    end
+
+    trait :micro_4_3rd do
+      frame_size { '17x13' }
     end
 
     factory :fujifilm_xt20 do
       fujifilm
-      mirrorless
+      asp_c
     end
 
     trait :with_memory_card do
@@ -161,35 +154,38 @@ FactoryBot.define do
 end
 
 puts FactoryBot.build(:camera).inspect
+puts FactoryBot.build(:memory_card).inspect
+
+puts FactoryBot.build(:camera, frame_size: :asp_c)
 
 puts FactoryBot.build(:camera, manufacturer: "Sony")
-puts FactoryBot.build(:camera, type: :mirrorless)
+puts FactoryBot.build(:camera, frame_size: :micro_4_3rd)
 
 
 puts FactoryBot.build(:camera, :fujifilm)
-puts FactoryBot.build(:camera, :nikon, type: :dslr)
+puts FactoryBot.build(:camera, :nikon, frame_size: :full_frame)
 
-puts FactoryBot.build(:camera, :nikon, :dslr)
+puts FactoryBot.build(:camera, :nikon, :asp_c)
 
 puts FactoryBot.build(:fujifilm_xt20)
 
 
 puts FactoryBot.build(:camera, :with_memory_card).inspect
-puts FactoryBot.build(:camera, :nikon, :dslr, :with_memory_card, number_of_cards: 2).inspect
+puts FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2).inspect
 ```
 
-### Output
+Result
 
 ```ruby
-› ruby factory_traits_test.rb
-<struct Camera manufacturer="Kodak", type=:film, memory_cards=nil>
-<struct Camera manufacturer="Sony", type=:film, memory_cards=nil>
-<struct Camera manufacturer="Kodak", type=:mirrorless, memory_cards=nil>
-<struct Camera manufacturer="Fujifilm", type=:film, memory_cards=nil>
-<struct Camera manufacturer="Nikon", type=:dslr, memory_cards=nil>
-<struct Camera manufacturer="Nikon", type=:dslr, memory_cards=nil>
-<struct Camera manufacturer="Fujifilm", type=:mirrorless, memory_cards=nil>
-<struct Camera manufacturer="Kodak", type=:film, memory_cards=[<struct MemoryCard storage_capacity="32GB">]>
-<struct Camera manufacturer="Nikon", type=:dslr, memory_cards=[<struct MemoryCard storage_capacity="32GB">, <struct MemoryCard storage_capacity="32G
-B">]>
+<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=nil>
+<struct MemoryCard storage_capacity="32GB">
+<struct Camera manufacturer="Kodak", frame_size=:asp_c, memory_cards=nil>
+<struct Camera manufacturer="Sony", frame_size="35x24", memory_cards=nil>
+<struct Camera manufacturer="Kodak", frame_size=:micro_4_3rd, memory_cards=nil>
+<struct Camera manufacturer="Fujifilm", frame_size="35x24", memory_cards=nil>
+<struct Camera manufacturer="Nikon", frame_size=:full_frame, memory_cards=nil>
+<struct Camera manufacturer="Nikon", frame_size="23.6x15.6", memory_cards=nil>
+<struct Camera manufacturer="Fujifilm", frame_size="23.6x15.6", memory_cards=nil>
+<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">]>
+<struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">, #<struct MemoryCard storage_capacity="32GB">]>
 ```
