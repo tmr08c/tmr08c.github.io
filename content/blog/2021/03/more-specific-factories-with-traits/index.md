@@ -50,15 +50,22 @@ Most of the time, you should be able to get away with only using your baseline f
 ```ruby
 describe '#crop_factor' do
   context 'when working with a full frame camera' do
-    let(:camera) { FactoryBot.build(:camera, type: "35x24") }
+    let(:camera) { FactoryBot.build(:camera, frame_size: "35x24") }
   end
 
   context 'when working with a smart phone camera' do
-    let(:camera) { FactoryBot.build(:camera, type: "6.17x4.55") }
+    let(:camera) { FactoryBot.build(:camera, frame_size: "6.17x4.55") }
   end
 end
 ```
 
+However, we may find we need to set `frame_size` to a few common dimensions in multiple tests or that manually entering in the `framze_size` can be error prone. This could be a case where we consider bringing in a trait.
+
+```ruby
+# Insert trait here
+```
+
+Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `framze_size`. Since `crop_factor` is a mathematical formula based on `framze_size`, it may be easier to understand our test expectations if we see the actual `framze_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like me, the relationship between `framze_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on. On the other hand, your may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
 
 
 
