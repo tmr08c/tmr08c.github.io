@@ -36,10 +36,10 @@ With this in place, we can now easily create instances of our models wthout the 
 
 ```ruby
 FactoryBot.build(:camera)
-#<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=nil>
+=> <struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=nil>
 
 FactoryBot.build(:memory_card)
-#<struct MemoryCard storage_capacity="32GB">
+=> <struct MemoryCard storage_capacity="32GB">
 ```
 
 ## Adding Traits
@@ -59,15 +59,39 @@ describe '#crop_factor' do
 end
 ```
 
-However, we may find we need to set `frame_size` to a few common dimensions in multiple tests or that manually entering in the `framze_size` can be error prone. This could be a case where we consider bringing in a trait.
+However, we may find we need to set `frame_size` to a few common dimensions in multiple tests or that manually entering in the `framze_size` can be error prone. This could be a case where we consider defining some traits.
 
 ```ruby
-# Insert trait here
+factory :camera do
+  manufacturer { 'kodak' }
+  frame_size { '35x24' }
+
+  trait :full_frame do
+    frame_size { '35x24' }
+  end
+
+  trait :aps_c do
+    frame_size { '23.6x15.6' }
+  end
+end
 ```
 
-Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `framze_size`. Since `crop_factor` is a mathematical formula based on `framze_size`, it may be easier to understand our test expectations if we see the actual `framze_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like me, the relationship between `framze_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on. On the other hand, your may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
+Here, we've defined traits that represent common sensor type, including their frame sizes. In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames. 
 
+```ruby
+FactoryBot.build(:camera, :aps_c)
+=> <struct Camera manufacturer="kodak", frame_size="23.6x15.6", memory_cards=nil>
 
+# we can still override other attributes if we want
+FactoryBot.build(:camera, :full_frame, manufacturer: "Nikon")
+=> <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
+```
+
+Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `frame_size`. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like me, the relationship between `frame_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on. On the other hand, you may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
+
+## Combining Traits
+
+One of the biggest reasons I find myself reaching for traits over inheritance is the ability to easily combine multiple traits.
 
 # Brainstorm
 
@@ -116,17 +140,17 @@ end
 Camera = Struct.new(:manufacturer, :frame_size, :memory_cards)
 MemoryCard = Struct.new(:storage_capacity)
 
-FactoryBot.define do
+factorybot.define do
   factory :camera do
-    manufacturer { 'Kodak' }
+    manufacturer { 'kodak' }
     frame_size { '35x24' }
 
     trait :fujifilm do
-      manufacturer { 'Fujifilm' }
+      manufacturer { 'fujifilm' }
     end
 
     trait :nikon do
-      manufacturer { 'Nikon' }
+      manufacturer { 'nikon' }
     end
 
     trait :full_frame do
