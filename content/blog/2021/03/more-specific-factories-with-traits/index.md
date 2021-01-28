@@ -91,7 +91,60 @@ Now that we've seen the trait, I want to mention that, for this example, it _may
 
 ## Combining Traits
 
-One of the biggest reasons I find myself reaching for traits over inheritance is the ability to easily combine multiple traits.
+One of the biggest reasons I find myself reaching for traits over inheritance is the ability to combine multiple traits when creating new factories.
+
+Let's imagine we needed the ability to search for camera by various attributes. Starting with a single attribute, we can use our existing trait for `frame_size` and write tests like the following.
+
+```ruby
+describe '#search' do
+  context 'when searching by frame size' do
+    let(:full_frame_camera) { build(:camera, :full_frame) }
+    let(:aps_c_camera) { build(:camera, :aps_c) }
+  end
+end
+```
+
+We want our search ability to handle filtering on multiple attributes. To test this, we can try searching on `frame_size` **and** `manufacturer`. Before we write the test, let's create a few `trait`s for manufacturers.
+
+```ruby
+factory :camera do
+  trait :fujifilm do
+    manufacturer { 'fujifilm' }
+  end
+
+  trait :nikon do
+    manufacturer { 'nikon' }
+  end
+end
+```
+
+We can now create factories that leverage both types of traits we've defined.
+
+```ruby
+describe '#search' do
+  context 'when searching by multiple attributes' do
+    let(:full_frame_nikon) { build(:camera, :full_frame, :nikon) }
+    let(:aps_c_nikon) { build(:camera, :aps_c, :nikon) }
+    let(:aps_c_fujifilm) { build(:camera, :aps_c, :fujifilm) }
+  end
+end
+```
+
+While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute. 
+
+## Working with Relationships
+
+Sometimes, it may make sense to use a trait to create related models. 
+
+Without traits, if we wanted our camera to include a memory card, we would us a factory to create a memory card and pass that in when building out camera.
+
+```ruby
+let(:memory_card) { build(:memory_card) }
+let(:camera) { build(:camera, memory_cards: [memory_card]) }
+```
+
+This provides us with the flexibility to 
+
 
 # Brainstorm
 
