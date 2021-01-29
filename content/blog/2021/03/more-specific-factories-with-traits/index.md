@@ -132,18 +132,59 @@ end
 
 While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute. 
 
-## Working with Relationships
+## Working with Associations
 
 Sometimes, it may make sense to use a trait to create related models. 
 
 Without traits, if we wanted our camera to include a memory card, we would us a factory to create a memory card and pass that in when building out camera.
 
 ```ruby
-let(:memory_card) { build(:memory_card) }
-let(:camera) { build(:camera, memory_cards: [memory_card]) }
+context 'when a camera has a memory card' do
+  let(:memory_card) { build(:memory_card) }
+  let(:camera) { build(:camera, memory_cards: [memory_card]) }
+end
 ```
 
-This provides us with the flexibility to 
+If needed, this provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card. In that case, explicilty creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait. 
+
+We can create a trait on our `Camera` model that indicates this camera includes a `MemoryCard`.
+
+```ruby
+factory :camera do
+  trait :with_memory_card do
+    # Since `memory_cards` expects an array,
+    # we create a single element array
+    memory_cards { [build(:memory_card)] }
+  end
+end
+```
+
+Our trait sets our `memory_cards` association to be a single-element array with a factory-built `MemoryCard`.
+
+```ruby
+FactoryBot.build(:camera, :with_memory_card)
+=> <struct Camera 
+          manufacturer="Kodak",
+          frame_size="35x24",
+          memory_cards=[
+            <struct MemoryCard storage_capacity="32GB">
+          ]>
+```
+
+We can now update our example above to now longer explicitly create the memory card.
+
+```ruby
+context 'when a camera has a memory card' do
+  let(:camera) { build(:camera, :with_memory_card) }
+end
+```
+
+We are able to set up association like a normal attirubte because we are working with `Struct`s. In a Rails app, setting up you association would look a bit different and would rely on the ...
+
+# TODO
+
+- See if you always need the `association` keyword or only when setting up more complicated relationships
+
 
 
 # Brainstorm
