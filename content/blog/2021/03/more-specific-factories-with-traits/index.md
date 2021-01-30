@@ -6,7 +6,7 @@ In this post, I will cover some of the basics of traits. As you adopt them in yo
 
 ## Defining Our Models
 
-For our example factories, we will be working with a `Camera` model. We will also have a `MemoryCard` model and a `Camera` can have zero or more `MemoryCard`s. While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby structs. Structs save us some of the work of defining an `initalize` method and will include more informnation when printed (without having to `#inspect` everytime).
+For our example factories, we will be working with a `Camera` model. We will also have a `MemoryCard` model and a `Camera` can have zero [or more](https://www.howtogeek.com/392378/what’s-the-big-deal-about-dual-storage-card-slots-for-cameras/) `MemoryCard`s. While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby structs. Structs save us some of the work of defining an `initalize` method and will include more informnation when printed (without having to `#inspect` everytime).
 
 As a result, our example models are simply:
 
@@ -179,7 +179,38 @@ context 'when a camera has a memory card' do
 end
 ```
 
-We are able to set up association like a normal attirubte because we are working with `Struct`s. In a Rails app, setting up you association would look a bit different and would rely on the ...
+We are able to simply `build` our association because we are working with Structs and not `ActiveRecord`-backed models. If you are in a Rails app, you will want to review the different options for [specifying an association](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#associations) with FactoryBot and decide what makes sense for your situation.
+
+### Leveraging Transient Attributes
+
+We can go a step further with out trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variabls into FactoryBot that are not a part of the model you are creating, but can be referenced during during the creation of the factory. Let's take a look at what this looks like in practice:
+
+```ruby
+factory :camera do
+  trait :with_memory_card do
+    transient do
+      number_of_cards { 1 }
+    end
+
+    memory_cards { Array.new(number_of_cards) { build(:memory_card) } }
+  end
+end
+```
+
+The syntax for transient attributes is very similar to the syntax of setting attributes on a factory. Here, we have a `transient` block that sets up an attribute, `number_of_cards` and defaults it to `1`. Now, when we create our `memory_cards` associations, we create an `Array` with `number_of_cards` elements where each element defaults to `build(:memory_card)`.
+
+Just like we can explicitly set attributes when creating a factory, we can explicitly set our transient attributes as well.
+
+```ruby
+FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2)
+=> <struct Camera
+          manufacturer="Nikon",
+          frame_size="35x24",
+          memory_cards=[
+            <struct MemoryCard storage_capacity="32GB">,
+            <struct MemoryCard storage_capacity="32GB">
+          ]>
+```
 
 # TODO
 
@@ -312,5 +343,6 @@ Result
 <struct Camera manufacturer="Nikon", frame_size="23.6x15.6", memory_cards=nil>
 <struct Camera manufacturer="Fujifilm", frame_size="23.6x15.6", memory_cards=nil>
 <struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">]>
+puts FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2).inspect
 <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">, #<struct MemoryCard storage_capacity="32GB">]>
 ```
