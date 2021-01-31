@@ -197,7 +197,7 @@ factory :camera do
 end
 ```
 
-The syntax for transient attributes is very similar to the syntax of setting attributes on a factory. Here, we have a `transient` block that sets up an attribute, `number_of_cards` and defaults it to `1`. Now, when we create our `memory_cards` associations, we create an `Array` with `number_of_cards` elements where each element defaults to `build(:memory_card)`.
+The syntax for transient attributes is very similar to the syntax of setting attributes on a factory. Here, we have a `transient` block that sets up an attribute, `number_of_cards` and defaults it to `1`. Now, when we create our `memory_cards` associations, we create an `Array` with `number_of_cards` elements where each element defaults to a new, factory-built instance of a `MemoryCard`.
 
 Just like we can explicitly set attributes when creating a factory, we can explicitly set our transient attributes as well.
 
@@ -211,6 +211,43 @@ FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_card
             <struct MemoryCard storage_capacity="32GB">
           ]>
 ```
+
+This pattern is great for tests that interact with associated records, but require special set up for the associated objects.
+
+```ruby
+describe '#store_picture' do
+  context 'when there are multiple memory cards' do
+    let(:camera) { FactoryBot.build(:camera, :with_memory_card, number_of_cards: 2) }
+  end
+end
+```
+
+## Interitance is still on the table
+
+While I find I don't often reach for the option of inheritance anymore, it is still something that may make sense and using traits does not prevent you from also using inheritance. In fact, you can build nested factories that leverage your traits.
+
+```ruby
+factory :camera do
+  factory :wedding_camera do
+    full_frame
+    number_of_cards { 2 }
+    with_memory_card
+  end
+
+  # #<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">, #<struct MemoryCard storage_capacity="32GB">]>
+
+  factory :prosumer_camera do
+    manufacturer { 'Sony' }
+    aps_c
+    with_memory_card
+  end
+
+  # #<struct Camera manufacturer="Sony", frame_size="23.6x15.6", memory_cards=[#<struct MemoryCard storage_capacity="32GB">]>
+end
+```
+
+Traits provdie the building blocks for custom factories, and these building blocks can also be used for creating pre-built, more specific factories.
+
 
 # TODO
 
