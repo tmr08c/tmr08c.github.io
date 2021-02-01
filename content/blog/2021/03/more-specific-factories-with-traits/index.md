@@ -1,12 +1,12 @@
 In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities. 
 
-I find I now rarely reach for leveraging inheritance with FactoryBot, and instead leverage [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits). Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
+I find I now rarely reach for leveraging inheritance with FactoryBot and instead leverage [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits). Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
 
 In this post, I will cover some of the basics of traits. As you adopt them in your own project, I would recommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers more than I will here.
 
 ## Defining Our Models
 
-For our example factories, we will be working with a `Camera` model. We will also have a `MemoryCard` model and a `Camera` can have zero [or more](https://www.howtogeek.com/392378/what’s-the-big-deal-about-dual-storage-card-slots-for-cameras/) `MemoryCard`s. While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby structs. Structs save us some of the work of defining an `initalize` method and will include more informnation when printed (without having to `#inspect` everytime).
+For our example factories, we will be working with a `Camera` model. We will also have a `MemoryCard` model where a `Camera` can have zero [or more](https://www.howtogeek.com/392378/what’s-the-big-deal-about-dual-storage-card-slots-for-cameras/) `MemoryCard`s. While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby [`Struct`](https://ruby-doc.org/core/Struct.html)s. `Struct`s save us some of the work of defining an `initalize` method.
 
 As a result, our example models are simply:
 
@@ -32,7 +32,7 @@ FactoryBot.define do
 end
 ```
 
-With this in place, we can now easily create instances of our models wthout the need to specify attributes every times:
+With this in place, we can now easily create instances of our models without the need to specify attributes every times:
 
 ```ruby
 FactoryBot.build(:camera)
@@ -87,7 +87,7 @@ FactoryBot.build(:camera, :full_frame, manufacturer: "Nikon")
 => <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
 ```
 
-Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `frame_size`. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like me, the relationship between `frame_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on. On the other hand, you may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
+Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `frame_size`. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like myself, the relationship between `frame_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on in the test. On the other hand, you may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
 
 ## Combining Traits
 
@@ -136,7 +136,7 @@ While this is equivalent to specifying the `frame_size` and `manufacturer` attri
 
 Sometimes, it may make sense to use a trait to create related models. 
 
-Without traits, if we wanted our camera to include a memory card, we would us a factory to create a memory card and pass that in when building out camera.
+Without traits, if we wanted our camera to include a memory card, we would use a factory to create a memory card and pass that in when building out camera.
 
 ```ruby
 context 'when a camera has a memory card' do
@@ -145,7 +145,7 @@ context 'when a camera has a memory card' do
 end
 ```
 
-If needed, this provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card. In that case, explicilty creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait. 
+This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait. 
 
 We can create a trait on our `Camera` model that indicates this camera includes a `MemoryCard`.
 
@@ -159,7 +159,7 @@ factory :camera do
 end
 ```
 
-Our trait sets our `memory_cards` association to be a single-element array with a factory-built `MemoryCard`.
+Our trait sets our `memory_cards` association to be a single-element array with a factory-built `MemoryCard`. We are able to simply `build` our association because we are working with `Struct`s and not `ActiveRecord`-backed models. If you are in a Rails app, you will want to review the different options for [specifying an association](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#associations) with FactoryBot and decide what makes sense for your situation.
 
 ```ruby
 FactoryBot.build(:camera, :with_memory_card)
@@ -179,11 +179,9 @@ context 'when a camera has a memory card' do
 end
 ```
 
-We are able to simply `build` our association because we are working with Structs and not `ActiveRecord`-backed models. If you are in a Rails app, you will want to review the different options for [specifying an association](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#associations) with FactoryBot and decide what makes sense for your situation.
-
 ### Leveraging Transient Attributes
 
-We can go a step further with out trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variabls into FactoryBot that are not a part of the model you are creating, but can be referenced during during the creation of the factory. Let's take a look at what this looks like in practice:
+We can go a step further with out trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variables into FactoryBot that are not a part of the model you are creating, but can be referenced during during the creation of the factory. Let's take a look at this in practice:
 
 ```ruby
 factory :camera do
@@ -202,6 +200,16 @@ The syntax for transient attributes is very similar to the syntax of setting att
 Just like we can explicitly set attributes when creating a factory, we can explicitly set our transient attributes as well.
 
 ```ruby
+# use default value for number_of_cards
+FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card)
+=> <struct Camera
+          manufacturer="Nikon",
+          frame_size="35x24",
+          memory_cards=[
+            <struct MemoryCard storage_capacity="32GB">
+          ]>
+
+# set value for number_of_cards
 FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2)
 => <struct Camera
           manufacturer="Nikon",
@@ -212,7 +220,7 @@ FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_card
           ]>
 ```
 
-This pattern is great for tests that interact with associated records, but require special set up for the associated objects.
+This pattern is great for tests that interact with associated records and don't require special set up for the associated objects.
 
 ```ruby
 describe '#store_picture' do
@@ -222,7 +230,7 @@ describe '#store_picture' do
 end
 ```
 
-## Interitance is still on the table
+## Inheritance is still on the table
 
 While I find I don't often reach for the option of inheritance anymore, it is still something that may make sense and using traits does not prevent you from also using inheritance. In fact, you can build nested factories that leverage your traits.
 
@@ -246,12 +254,9 @@ factory :camera do
 end
 ```
 
-Traits provdie the building blocks for custom factories, and these building blocks can also be used for creating pre-built, more specific factories.
+This combination of traits and inheritance provides us with building the building blocks for easily creating models and example models that can be used 
 
-
-# TODO
-
-- See if you always need the `association` keyword or only when setting up more complicated relationships
+Traits provide building blocks for creating custom factories in your tests. These building blocks can also be used for creating pre-built, more specific factories if they make sense for your domain. 
 
 
 
