@@ -1,4 +1,4 @@
-In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities. 
+In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities.
 
 I find I now rarely reach for leveraging inheritance with FactoryBot and instead leverage [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits). Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
 
@@ -76,7 +76,7 @@ factory :camera do
 end
 ```
 
-Here, we've defined traits that represent common sensor type, including their frame sizes. In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames. 
+Here, we've defined traits that represent common sensor type, including their frame sizes. In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames.
 
 ```ruby
 FactoryBot.build(:camera, :aps_c)
@@ -130,11 +130,11 @@ describe '#search' do
 end
 ```
 
-While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute. 
+While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute.
 
 ## Working with Associations
 
-Sometimes, it may make sense to use a trait to create related models. 
+Sometimes, it may make sense to use a trait to create related models.
 
 Without traits, if we wanted our camera to include a memory card, we would use a factory to create a memory card and pass that in when building out camera.
 
@@ -145,7 +145,7 @@ context 'when a camera has a memory card' do
 end
 ```
 
-This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait. 
+This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait.
 
 We can create a trait on our `Camera` model that indicates this camera includes a `MemoryCard`.
 
@@ -163,7 +163,7 @@ Our trait sets our `memory_cards` association to be a single-element array with 
 
 ```ruby
 FactoryBot.build(:camera, :with_memory_card)
-=> <struct Camera 
+=> <struct Camera
           manufacturer="Kodak",
           frame_size="35x24",
           memory_cards=[
@@ -242,22 +242,28 @@ factory :camera do
     with_memory_card
   end
 
-  # #<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">, #<struct MemoryCard storage_capacity="32GB">]>
 
   factory :prosumer_camera do
     manufacturer { 'Sony' }
     aps_c
     with_memory_card
   end
-
-  # #<struct Camera manufacturer="Sony", frame_size="23.6x15.6", memory_cards=[#<struct MemoryCard storage_capacity="32GB">]>
 end
+
+FactoryBot.build(:wedding_camera)
+=> <struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[<struct MemoryCard storage_capacity="32GB">, <struct MemoryCard storage_capacity="32GB">]>
+
+FactoryBot.build(:prosumer_camera)
+=>  <struct Camera manufacturer="Sony", frame_size="23.6x15.6", memory_cards=[<struct MemoryCard storage_capacity="32GB">]>
 ```
 
-This combination of traits and inheritance provides us with building the building blocks for easily creating models and example models that can be used 
+This example shows how we can use traits to build up our more specific, inherited factories.
 
-Traits provide building blocks for creating custom factories in your tests. These building blocks can also be used for creating pre-built, more specific factories if they make sense for your domain. 
+# Conclusion
 
+Traits provide 
+
+While I find myself most commonly reaching for traits, with the ability to mix and match traits and inheritance you can find the combination that works best for you and your team.
 
 
 # Brainstorm
