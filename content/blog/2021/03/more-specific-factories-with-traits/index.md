@@ -1,14 +1,20 @@
-In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities.
+---
+title: "Creating More Specific Factories with Traits"
+date: '2021-03-20T06:14:13.265Z'
+categories: ['testing', 'ruby']
+---
 
-I find I now rarely reach for leveraging inheritance with FactoryBot and instead leverage [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits). Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
+In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities. In this post, I will cover my current practices for creating more specific factories which rely on [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) instead.
 
-In this post, I will cover some of the basics of traits. As you adopt them in your own project, I would recommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers more than I will here.
+Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits that has me reaching for them more often is the fact that you can combine multiple traits. Instead of relying on everything being defined as you need it in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
+
+In this post, I will cover the basics of using traits. As you adopt them in your own project, I would recommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers more than I will here.
 
 ## Defining Our Models
 
-For our example factories, we will be working with a `Camera` model. We will also have a `MemoryCard` model where a `Camera` can have zero [or more](https://www.howtogeek.com/392378/what’s-the-big-deal-about-dual-storage-card-slots-for-cameras/) `MemoryCard`s. While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby [`Struct`](https://ruby-doc.org/core/Struct.html)s. `Struct`s save us some of the work of defining an `initalize` method.
+For our example factories, we will be working with two models: `Camera` and `MemoryCard`, and a `Camera` can have zero [or more](https://www.howtogeek.com/392378/what’s-the-big-deal-about-dual-storage-card-slots-for-cameras/) `MemoryCard`s.
 
-As a result, our example models are simply:
+While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby [`Struct`](https://ruby-doc.org/core/Struct.html)s. As a result, our example models are simply:
 
 ```ruby
 Camera = Struct.new(:manufacturer, :frame_size, :memory_cards)
@@ -17,7 +23,7 @@ MemoryCard = Struct.new(:storage_capacity)
 
 ## A Basic Factory
 
-For all models in my system, I am going to want a basic factory. This factory should include any required attributes I would need to create an instance of my model. While our models do not have any form of validation, we will pretend a `Camera` requires a `manufacturer` and a `frame_size` and that a `MemoryCard` requires `storage_capacity`. With these requirements in mind, we can create our baseline factories:
+For all models in my system, I am going to want a basic factory. This factory should include any required attributes I would need to create an instance of my model. While our models do not have any form of validation, we will pretend a `Camera` requires a `manufacturer` and a `frame_size`, and that a `MemoryCard` requires `storage_capacity`. With these requirements in mind, we can create our baseline factories:
 
 ```ruby
 FactoryBot.define do
@@ -44,7 +50,7 @@ FactoryBot.build(:memory_card)
 
 ## Adding Traits
 
-Most of the time, you should be able to get away with only using your baseline factories. If you need to test some specific functionality that is impacted by a particular attribute, you can build an instance of your factory with that attribute directly in your test. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation that is based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
+Much of the time, you can get away with using your baseline factories. If you need to test some specific functionality that is impacted by a particular attribute, you can build an instance of your factory with that attribute directly in your test. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation that is based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
 
 
 ```ruby
@@ -53,7 +59,7 @@ describe '#crop_factor' do
     let(:camera) { FactoryBot.build(:camera, frame_size: "35x24") }
   end
 
-  context 'when working with a smart phone camera' do
+  context 'when working with a APS-C camera' do
     let(:camera) { FactoryBot.build(:camera, frame_size: "6.17x4.55") }
   end
 end
@@ -63,9 +69,6 @@ However, we may find we need to set `frame_size` to a few common dimensions in m
 
 ```ruby
 factory :camera do
-  manufacturer { 'kodak' }
-  frame_size { '35x24' }
-
   trait :full_frame do
     frame_size { '35x24' }
   end
@@ -76,7 +79,7 @@ factory :camera do
 end
 ```
 
-Here, we've defined traits that represent common sensor type, including their frame sizes. In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames.
+The syntax for creating a trait is similar to creating a factory. We have a `trait` block that we use to name our trait, and within the trait we use the same syntax to set values for our attributes. Here, we've defined traits that represent common sensor types, including their frame sizes. In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames.
 
 ```ruby
 FactoryBot.build(:camera, :aps_c)
@@ -86,6 +89,8 @@ FactoryBot.build(:camera, :aps_c)
 FactoryBot.build(:camera, :full_frame, manufacturer: "Nikon")
 => <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
 ```
+
+As you see above, traits will still "inheirt" the default values set up in our baseline factory. We are also not prevented from overriding individual attributes when using traits either. 
 
 Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `frame_size`. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like myself, the relationship between `frame_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on in the test. On the other hand, you may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
 
@@ -104,7 +109,7 @@ describe '#search' do
 end
 ```
 
-We want our search ability to handle filtering on multiple attributes. To test this, we can try searching on `frame_size` **and** `manufacturer`. Before we write the test, let's create a few `trait`s for manufacturers.
+Our current context only deals with searching for a single attribute, but we want our search ability to handle filtering on multiple attributes. To test this, we can try searching on `frame_size` **and** `manufacturer`. Before we write the test, let's create a few `trait`s for manufacturers.
 
 ```ruby
 factory :camera do
@@ -261,43 +266,8 @@ This example shows how we can use traits to build up our more specific, inherite
 
 # Conclusion
 
-Traits provide 
+Traits provide reusable blocks for building factories. They often result in tests that are easier to read and provide a way to name concepts that are important to a model in your system. While you don't want to set every attribute via trait, I find traits to be a go-to feature of FactoryBot for me.
 
-While I find myself most commonly reaching for traits, with the ability to mix and match traits and inheritance you can find the combination that works best for you and your team.
-
-
-# Brainstorm
-
-* Update of `/2015/11/more-specific-factories`
-    * Rename FactoryGirl to FactoryBot
-    *
-
-* Last time used inheritance
-    * https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance
-
-```ruby
-# factories.rb
-
-factory :person do
-  name 'Jane Doe'
-  sex 'female'
-  age 18
-
-  factory :female_person do
-    sex 'female'
-  end
-
-  factory :male_peson do
-    sex 'male'
-  end
-end
-```
-
-* This time, traits https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits
-
-* Can use inheritance and traits together https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#as-implicit-attributes-1
-
-* Maybe include example using transient attributes as well (https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#with-transient-attributes) since we've used this at work
 
 ## Example
 
