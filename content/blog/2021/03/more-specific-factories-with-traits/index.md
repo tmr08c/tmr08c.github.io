@@ -67,6 +67,8 @@ end
 
 However, we may find we need to set `frame_size` to a few common dimensions in multiple tests or that manually entering in the `framze_size` can be error prone. This could be a case where we consider defining some traits.
 
+The syntax for creating a trait is similar to creating a factory. We have a `trait` block that we use to name our trait and within the trait we use the same syntax to set values for our attributes. Below, we've defined traits that represent common sensor types, specifically, their frame sizes.
+
 ```ruby
 factory :camera do
   trait :full_frame do
@@ -79,24 +81,24 @@ factory :camera do
 end
 ```
 
-The syntax for creating a trait is similar to creating a factory. We have a `trait` block that we use to name our trait, and within the trait we use the same syntax to set values for our attributes. Here, we've defined traits that represent common sensor types, including their frame sizes. In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames.
+In our test, we can now create instances from our factory by referencing the trait and not having to know exact dimensions for common frames.
 
 ```ruby
 FactoryBot.build(:camera, :aps_c)
-=> <struct Camera manufacturer="kodak", frame_size="23.6x15.6", memory_cards=nil>
+=> <struct Camera manufacturer="Kodak", frame_size="23.6x15.6", memory_cards=nil>
 
 # we can still override other attributes if we want
 FactoryBot.build(:camera, :full_frame, manufacturer: "Nikon")
 => <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
 ```
 
-As you see above, traits will still "inheirt" the default values set up in our baseline factory. We are also not prevented from overriding individual attributes when using traits either. 
+As you can see above, traits will still "inherit" the default values set up in our baseline factory and we can also still override any individual attributes.
 
-Now that we've seen the trait, I want to mention that, for this example, it _may_ make sense to directly set `frame_size`. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like myself, the relationship between `frame_size` and `crop_factor` is fuzzy, so I may not fully understand what is going on in the test. On the other hand, you may find an experienced team working on this application may have a deeper understanding and understand `full_frame` means  "35x24".
+Now that we've seen the trait, I want to mention that, for this example, it _could_ make sense to directly set `frame_size` when creating our factories. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it abstracted away. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like myself, the relationship between `frame_size` and `crop_factor` is fuzzy, but having the number explicitly set in the test could provide a signal of how the calculation is done. On the other hand, you will likely find an experienced team working on this application will have industry knowledge and know `full_frame` means  "35x24" and how that impacts the `crop_factor` calculation. This is a balance you may want to experiment with as you introduce traits into your tests.
 
 ## Combining Traits
 
-One of the biggest reasons I find myself reaching for traits over inheritance is the ability to combine multiple traits when creating new factories.
+One of the primary reasons I find myself reaching for traits over inheritance is the ability to combine multiple traits when creating new factories.
 
 Let's imagine we needed the ability to search for camera by various attributes. Starting with a single attribute, we can use our existing trait for `frame_size` and write tests like the following.
 
@@ -109,21 +111,31 @@ describe '#search' do
 end
 ```
 
-Our current context only deals with searching for a single attribute, but we want our search ability to handle filtering on multiple attributes. To test this, we can try searching on `frame_size` **and** `manufacturer`. Before we write the test, let's create a few `trait`s for manufacturers.
+Our current context only deals with searching for a single attribute, but we want our search ability to handle filtering on multiple attributes. To test this, we can try searching on `frame_size` **and** `manufacturer`. Before we write the test, let's create a few traits for manufacturers.
 
 ```ruby
 factory :camera do
   trait :fujifilm do
-    manufacturer { 'fujifilm' }
+    manufacturer { 'Fujifilm' }
   end
 
   trait :nikon do
-    manufacturer { 'nikon' }
+    manufacturer { 'Nikon' }
   end
 end
 ```
 
-We can now create factories that leverage both types of traits we've defined.
+We can now combine our different traits just like we would specify attributes when creating a factory.
+
+```ruby
+FactoryBot.build(:camera, :aps_c, :fujifilm)
+=> <struct Camera manufacturer="Fujifilm", frame_size="23.6x15.6", memory_cards=nil>
+
+FactoryBot.build(:camera, :nikon, :full_frame)
+=> <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
+```
+
+While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute. The flexibility provided by traits also makes it easy for us to build up more varied combinations in our tests.
 
 ```ruby
 describe '#search' do
@@ -135,11 +147,7 @@ describe '#search' do
 end
 ```
 
-While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute.
-
 ## Working with Associations
-
-Sometimes, it may make sense to use a trait to create related models.
 
 Without traits, if we wanted our camera to include a memory card, we would use a factory to create a memory card and pass that in when building out camera.
 
@@ -150,7 +158,7 @@ context 'when a camera has a memory card' do
 end
 ```
 
-This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait.
+This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card and not care about the `storage_capacity`. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait.
 
 We can create a trait on our `Camera` model that indicates this camera includes a `MemoryCard`.
 
@@ -164,7 +172,7 @@ factory :camera do
 end
 ```
 
-Our trait sets our `memory_cards` association to be a single-element array with a factory-built `MemoryCard`. We are able to simply `build` our association because we are working with `Struct`s and not `ActiveRecord`-backed models. If you are in a Rails app, you will want to review the different options for [specifying an association](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#associations) with FactoryBot and decide what makes sense for your situation.
+Our trait sets our `memory_cards` association to be a single-element array with a factory-built `MemoryCard`. We are able to simply `build` our association because we are working with `Struct`s and not `ActiveRecord`-backed models. If you are in a Rails app, you will want to review the different options for [specifying an association](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#associations) with FactoryBot and decide which makes sense for your situation.
 
 ```ruby
 FactoryBot.build(:camera, :with_memory_card)
