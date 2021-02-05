@@ -149,7 +149,7 @@ end
 
 ## Working with Associations
 
-Without traits, if we wanted our camera to include a memory card, we would use a factory to create a memory card and pass that in when building out camera.
+Without traits, if we wanted our camera to include a memory card, we would use FactoryBot to create a `MemoryCard` and pass that in when building out camera.
 
 ```ruby
 context 'when a camera has a memory card' do
@@ -158,15 +158,13 @@ context 'when a camera has a memory card' do
 end
 ```
 
-This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often just want to make sure a camera has a memory card and not care about the `storage_capacity`. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait.
+This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often do not care about the `storage_capacity` of the memory card in the camera, but rather just that the camera has a memory card. In that case, explicitly creating an instance of a memory card in our test could add noise. This is another place where we can leverage a trait.
 
 We can create a trait on our `Camera` model that indicates this camera includes a `MemoryCard`.
 
 ```ruby
 factory :camera do
   trait :with_memory_card do
-    # Since `memory_cards` expects an array,
-    # we create a single element array
     memory_cards { [build(:memory_card)] }
   end
 end
@@ -184,7 +182,7 @@ FactoryBot.build(:camera, :with_memory_card)
           ]>
 ```
 
-We can now update our example above to now longer explicitly create the memory card.
+We can now update our example above to no longer explicitly create the memory card.
 
 ```ruby
 context 'when a camera has a memory card' do
@@ -194,7 +192,9 @@ end
 
 ### Leveraging Transient Attributes
 
-We can go a step further with out trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variables into FactoryBot that are not a part of the model you are creating, but can be referenced during during the creation of the factory. Let's take a look at this in practice:
+We can go a step further with our trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variables into FactoryBot that are not a part of the model you are creating, but can be referenced during during the creation of the factory.
+
+The syntax for transient attributes is very similar to the syntax of setting attributes on a factory.
 
 ```ruby
 factory :camera do
@@ -208,7 +208,7 @@ factory :camera do
 end
 ```
 
-The syntax for transient attributes is very similar to the syntax of setting attributes on a factory. Here, we have a `transient` block that sets up an attribute, `number_of_cards` and defaults it to `1`. Now, when we create our `memory_cards` associations, we create an `Array` with `number_of_cards` elements where each element defaults to a new, factory-built instance of a `MemoryCard`.
+Here, we have a `transient` block that sets up an attribute, `number_of_cards` and defaults it to `1`. Now, when we create our `memory_cards` associations, we create an `Array` with `number_of_cards` elements where each element defaults to a new, factory-built instance of a `MemoryCard`.
 
 Just like we can explicitly set attributes when creating a factory, we can explicitly set our transient attributes as well.
 
@@ -245,7 +245,7 @@ end
 
 ## Inheritance is still on the table
 
-While I find I don't often reach for the option of inheritance anymore, it is still something that may make sense and using traits does not prevent you from also using inheritance. In fact, you can build nested factories that leverage your traits.
+While I find I don't often reach for the option of inheritance anymore, using traits does not prevent you from using inheritance. In fact, you can build nested factories that leverage your traits.
 
 ```ruby
 factory :camera do
@@ -270,105 +270,8 @@ FactoryBot.build(:prosumer_camera)
 =>  <struct Camera manufacturer="Sony", frame_size="23.6x15.6", memory_cards=[<struct MemoryCard storage_capacity="32GB">]>
 ```
 
-This example shows how we can use traits to build up our more specific, inherited factories.
+By creating traits, you can use the same tools for defining new factories or building custom factories in your tests.
 
-# Conclusion
+## Conclusion
 
-Traits provide reusable blocks for building factories. They often result in tests that are easier to read and provide a way to name concepts that are important to a model in your system. While you don't want to set every attribute via trait, I find traits to be a go-to feature of FactoryBot for me.
-
-
-## Example
-
-```ruby
-rrequire 'bundler/inline'
-
-gemfile do
-  source 'https://rubygems.org'
-
-  gem 'factory_bot'
-end
-
-Camera = Struct.new(:manufacturer, :frame_size, :memory_cards)
-MemoryCard = Struct.new(:storage_capacity)
-
-factorybot.define do
-  factory :camera do
-    manufacturer { 'kodak' }
-    frame_size { '35x24' }
-
-    trait :fujifilm do
-      manufacturer { 'fujifilm' }
-    end
-
-    trait :nikon do
-      manufacturer { 'nikon' }
-    end
-
-    trait :full_frame do
-      frame_size { '35x24' }
-    end
-
-    trait :asp_c do
-      frame_size { '23.6x15.6' }
-    end
-
-    trait :micro_4_3rd do
-      frame_size { '17x13' }
-    end
-
-    factory :fujifilm_xt20 do
-      fujifilm
-      asp_c
-    end
-
-    trait :with_memory_card do
-      transient do
-        number_of_cards { 1 }
-      end
-
-      memory_cards { number_of_cards.times.map { build(:memory_card) } }
-    end
-  end
-
-  factory :memory_card do
-    storage_capacity { "32GB" }
-  end
-end
-
-puts FactoryBot.build(:camera).inspect
-puts FactoryBot.build(:memory_card).inspect
-
-puts FactoryBot.build(:camera, frame_size: :asp_c)
-
-puts FactoryBot.build(:camera, manufacturer: "Sony")
-puts FactoryBot.build(:camera, frame_size: :micro_4_3rd)
-
-
-puts FactoryBot.build(:camera, :fujifilm)
-puts FactoryBot.build(:camera, :nikon, frame_size: :full_frame)
-
-puts FactoryBot.build(:camera, :nikon, :asp_c)
-
-puts FactoryBot.build(:fujifilm_xt20)
-
-
-puts FactoryBot.build(:camera, :with_memory_card).inspect
-puts FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2).inspect
-```
-
-Result
-
-```ruby
-<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=nil>
-<struct MemoryCard storage_capacity="32GB">
-<struct Camera manufacturer="Kodak", frame_size=:asp_c, memory_cards=nil>
-<struct Camera manufacturer="Sony", frame_size="35x24", memory_cards=nil>
-<struct Camera manufacturer="Kodak", frame_size=:micro_4_3rd, memory_cards=nil>
-<struct Camera manufacturer="Fujifilm", frame_size="35x24", memory_cards=nil>
-<struct Camera manufacturer="Nikon", frame_size=:full_frame, memory_cards=nil>
-<struct Camera manufacturer="Nikon", frame_size="23.6x15.6", memory_cards=nil>
-<struct Camera manufacturer="Fujifilm", frame_size="23.6x15.6", memory_cards=nil>
-<struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">]>
-puts FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2).inspect
-<struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=[#<struct MemoryCard storage_capacity="32GB">, #<struct MemoryCard storage_capacity="32GB">]>
-```
+In this post, we covered how to leverage FactoryBot traits for setting attributes and managing associations. Traits are a go-to option for me when working with FactoryBot because they provide easy to use building blocks for building out custom models. While you don't want to set every attribute via trait, hopefully this post helped show you when traits can be useful.
