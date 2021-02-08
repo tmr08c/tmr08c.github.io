@@ -4,17 +4,15 @@ date: '2021-03-20T06:14:13.265Z'
 categories: ['testing', 'ruby']
 ---
 
-In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities. In this post, I will cover my current practices for creating more specific factories that rely on [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) instead.
+In a [previous post](/2015/11/more-specific-factories), I wrote about creating more specific [FactoryBot](https://github.com/thoughtbot/factory_bot) factories using FactoryBot's [inheritance and nested factories](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inheritance) capabilities. In this post, I will cover creating more specific factories leveraging [traits](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) instead. 
 
-Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits is the ability to combine multiple traits; instead of relying on everything being defined upfront in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
-
-In this post, I will cover the basics of using traits. As you begin to adopt them, I would recommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers more than I will here.
+Similar to inheritance, you can use traits to create additional "presets" for your factories. One advantage of traits, and the reason I find myself using them more often, is their composability. Instead of relying on everything being defined upfront in your nested factory, you can combine the pieces you need at test time to build the perfect factory.
 
 ## Defining Our Models
 
 For our example factories, we will be working with two models: `Camera` and `MemoryCard` where a `Camera` can have zero [or more](https://www.howtogeek.com/392378/what’s-the-big-deal-about-dual-storage-card-slots-for-cameras/) `MemoryCard`s.
 
-While you may be more familiar with using FactoryBot in the context of Rails, you can create factories for any Ruby class. For our `Camera` and `MemoryCard`, we are going to use simple Ruby [`Struct`s](https://ruby-doc.org/core/Struct.html):
+While you may be more familiar with using FactoryBot with Rails, it can be used to create factories for any Ruby class. For our `Camera` and `MemoryCard` classes, we are going to use simple Ruby [`Struct`s](https://ruby-doc.org/core/Struct.html):
 
 ```ruby
 Camera =
@@ -61,7 +59,7 @@ FactoryBot.build(:memory_card)
 
 ## Adding Traits
 
-Much of the time, you can get away with using your baseline factories. If you need to test some specific functionality that is impacted by a particular attribute, you can build an instance of your factory with that attribute directly in your test. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation that is based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
+Much of the time, you can get away with using your baseline factories. If you need to test some specific functionality that is affected by a particular attribute, you can build an instance of your factory with that attribute set directly in your test. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation that is based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
 
 
 ```ruby
@@ -349,4 +347,7 @@ By creating traits, you can use the same tools when defining new factories or wh
 
 ## Conclusion
 
-In this post, we covered how to leverage FactoryBot traits for setting attributes and managing associations. Traits are a go-to option for me when working with FactoryBot because they provide easy to use building blocks for building out custom models. While you won't set every attribute via trait, hopefully, this post helped show you when traits can be useful.
+Traits are a go-to option for me when working with FactoryBot because they provide easy to use building blocks for building out custom models. While you won't set every attribute via trait, hopefully, this post helped show you when traits can be useful.
+
+In this post, we covered how to leverage FactoryBot traits for setting attributes and managing associations. As you begin to use traits in your projects, I would recommend reading through the [full documentation](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#traits) as it covers additional use cases.
+
