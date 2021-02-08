@@ -49,13 +49,13 @@ With this in place, we can now easily create instances of our models without the
 
 ```ruby
 FactoryBot.build(:camera)
-=> <Camera   
+=> <Camera
     manufacturer="Kodak",
     frame_size="35x24",
     memory_cards=nil>
 
 FactoryBot.build(:memory_card)
-=> <MemoryCard 
+=> <MemoryCard
     storage_capacity="32GB">
 ```
 
@@ -68,13 +68,13 @@ Much of the time, you can get away with using your baseline factories. If you ne
 describe '#crop_factor' do
   context 'when working with a full-frame camera' do
     let(:camera) do
-      FactoryBot.build(:camera, frame_size: "35x24") 
+      FactoryBot.build(:camera, frame_size: "35x24")
     end
   end
 
   context 'when working with a APS-C camera' do
     let(:camera) do
-      FactoryBot.build(:camera, frame_size: "6.17x4.55") 
+      FactoryBot.build(:camera, frame_size: "6.17x4.55")
     end
   end
 end
@@ -99,11 +99,23 @@ end
 In our test, we can now reference these traits to create instances of our `Camera` class with common sensor sizes without having to know the exact dimensions of these sensors.
 
 ```ruby
+# use trait and baseline attribute
 FactoryBot.build(:camera, :aps_c)
-=> <struct Camera manufacturer="Kodak", frame_size="23.6x15.6", memory_cards=nil>
+=> <Camera
+  manufacturer="Kodak",
+  frame_size="23.6x15.6",
+  memory_cards=nil>
 
-FactoryBot.build(:camera, :full_frame, manufacturer: "Nikon")
-=> <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
+# use trait and specify attributes
+FactoryBot.build(
+  :camera,
+  :full_frame,
+  manufacturer: "Nikon"
+)
+=> <Camera
+    manufacturer="Nikon",
+    frame_size="35x24",
+    memory_cards=nil>
 ```
 
 As you can see above, traits will still "inherit" the default values set up in our baseline factory and we can also still override any individual attributes.
@@ -119,8 +131,12 @@ Let's imagine we needed the ability to search for a camera by any of its attribu
 ```ruby
 describe '#search' do
   context 'when searching by frame size' do
-    let(:full_frame_camera) { build(:camera, :full_frame) }
-    let(:aps_c_camera) { build(:camera, :aps_c) }
+    let(:full_frame_camera) do
+      build(:camera, :full_frame)
+    end
+    let(:aps_c_camera) do
+      build(:camera, :aps_c)
+    end
   end
 end
 ```
@@ -143,10 +159,16 @@ We can now combine our different traits just like we would specify attributes wh
 
 ```ruby
 FactoryBot.build(:camera, :aps_c, :fujifilm)
-=> <struct Camera manufacturer="Fujifilm", frame_size="23.6x15.6", memory_cards=nil>
+=> <Camera
+    manufacturer="Fujifilm",
+    frame_size="23.6x15.6",
+    memory_cards=nil>
 
 FactoryBot.build(:camera, :nikon, :full_frame)
-=> <struct Camera manufacturer="Nikon", frame_size="35x24", memory_cards=nil>
+=> <Camera
+    manufacturer="Nikon",
+    frame_size="35x24",
+    memory_cards=nil>
 ```
 
 While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute. The ability to mix-and-match traits also makes it easy for us to build up more varied combinations in our tests.
@@ -154,9 +176,15 @@ While this is equivalent to specifying the `frame_size` and `manufacturer` attri
 ```ruby
 describe '#search' do
   context 'when searching by multiple attributes' do
-    let(:full_frame_nikon) { build(:camera, :full_frame, :nikon) }
-    let(:aps_c_nikon) { build(:camera, :aps_c, :nikon) }
-    let(:aps_c_fujifilm) { build(:camera, :aps_c, :fujifilm) }
+    let(:full_frame_nikon) do
+      build(:camera, :full_frame, :nikon)
+    end
+    let(:aps_c_nikon) do
+      build(:camera, :aps_c, :nikon)
+    end
+    let(:aps_c_fujifilm) do
+      build(:camera, :aps_c, :fujifilm)
+    end
   end
 end
 ```
@@ -167,8 +195,12 @@ Without traits, if we wanted our camera to include a memory card, we would use F
 
 ```ruby
 context 'when a camera has a memory card' do
-  let(:memory_card) { build(:memory_card) }
-  let(:camera) { build(:camera, memory_cards: [memory_card]) }
+  let(:memory_card) do
+    build(:memory_card)
+  end
+  let(:camera) do
+    build(:camera, memory_cards: [memory_card])
+  end
 end
 ```
 
@@ -217,7 +249,9 @@ factory :camera do
       number_of_cards { 1 }
     end
 
-    memory_cards { Array.new(number_of_cards) { build(:memory_card) } }
+    memory_cards do
+      Array.new(number_of_cards) { build(:memory_card) }
+    end
   end
 end
 ```
@@ -228,23 +262,34 @@ Just like we can explicitly set attributes when creating a factory, we can expli
 
 ```ruby
 # use default value for `number_of_cards`
-FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card)
-=> <struct Camera
-          manufacturer="Nikon",
-          frame_size="35x24",
-          memory_cards=[
-            <struct MemoryCard storage_capacity="32GB">
-          ]>
+FactoryBot.build(
+  :camera,
+  :nikon,
+  :full_frame,
+  :with_memory_card
+)
+=> <Camera
+    manufacturer="Nikon",
+    frame_size="35x24",
+    memory_cards=[
+      <MemoryCard storage_capacity="32GB">
+    ]>
 
 # set value for `number_of_cards`
-FactoryBot.build(:camera, :nikon, :full_frame, :with_memory_card, number_of_cards: 2)
-=> <struct Camera
-          manufacturer="Nikon",
-          frame_size="35x24",
-          memory_cards=[
-            <struct MemoryCard storage_capacity="32GB">,
-            <struct MemoryCard storage_capacity="32GB">
-          ]>
+FactoryBot.build(
+  :camera,
+  :nikon,
+  :full_frame,
+  :with_memory_card,
+  number_of_cards: 2
+)
+=> <Camera
+    manufacturer="Nikon",
+    frame_size="35x24",
+    memory_cards=[
+      <MemoryCard storage_capacity="32GB">,
+      <MemoryCard storage_capacity="32GB">
+    ]>
 ```
 
 This pattern is great for tests that interact with associated records and don't require any special setup for the associated objects.
@@ -252,7 +297,13 @@ This pattern is great for tests that interact with associated records and don't 
 ```ruby
 describe '#store_picture' do
   context 'when there are multiple memory cards' do
-    let(:camera) { FactoryBot.build(:camera, :with_memory_card, number_of_cards: 2) }
+    let(:camera) do
+      FactoryBot.build(
+        :camera,
+        :with_memory_card,
+        number_of_cards: 2
+      )
+    end
   end
 end
 ```
@@ -277,10 +328,21 @@ factory :camera do
 end
 
 FactoryBot.build(:wedding_camera)
-=> <struct Camera manufacturer="Kodak", frame_size="35x24", memory_cards=[<struct MemoryCard storage_capacity="32GB">, <struct MemoryCard storage_capacity="32GB">]>
+=> <Camera
+    manufacturer="Kodak",
+    frame_size="35x24",
+    memory_cards=[
+      <MemoryCard storage_capacity="32GB">,
+      <MemoryCard storage_capacity="32GB">
+    ]>
 
 FactoryBot.build(:prosumer_camera)
-=>  <struct Camera manufacturer="Sony", frame_size="23.6x15.6", memory_cards=[<struct MemoryCard storage_capacity="32GB">]>
+=>  <Camera
+      manufacturer="Sony",
+      frame_size="23.6x15.6",
+      memory_cards=[
+        <MemoryCard storage_capacity="32GB">
+      ]>
 ```
 
 By creating traits, you can use the same tools when defining new factories or when building custom records in your tests.
