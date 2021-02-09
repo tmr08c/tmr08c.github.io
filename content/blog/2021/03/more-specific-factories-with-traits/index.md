@@ -59,28 +59,27 @@ FactoryBot.build(:memory_card)
 
 ## Adding Traits
 
-Much of the time, you can get away with using your baseline factories. If you need to test some specific functionality that is affected by a particular attribute, you can build an instance of your factory with that attribute set directly in your test. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation that is based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
-
+Our baseline factories provide an easy way to create new, valid instances of our models. If our test requires any different attributes, we can set them when creating our factory. For example, maybe we need to test how we calculate crop factor. Since the crop factor is a [calculation based on the frame size](https://shuttermuse.com/calculate-cameras-crop-factor/), we could create factories with various frame sizes:
 
 ```ruby
 describe '#crop_factor' do
   context 'when working with a full-frame camera' do
     let(:camera) do
-      FactoryBot.build(:camera, frame_size: "35x24")
+      FactoryBot.build(:camera, frame_size: '35x24')
     end
   end
 
   context 'when working with a APS-C camera' do
     let(:camera) do
-      FactoryBot.build(:camera, frame_size: "6.17x4.55")
+      FactoryBot.build(:camera, frame_size: '6.17x4.55')
     end
   end
 end
 ```
 
-We may find we need to set `frame_size` to a few common dimensions in multiple tests or that manually entering in the `framze_size` can be error-prone. This could be a case where we consider defining some traits.
+If we find we are regularly setting `frame_size` to a few standard dimensions, we may consider defining some traits.
 
-The syntax for creating a trait is similar to creating a factory. We have a `trait` block that we use to name our trait and within the trait block, we use the same syntax to set values for our attributes. Below, we've defined traits that represent common sensor types, specifically, their frame sizes.
+The syntax for creating a trait is similar to creating a factory. We have a `trait` block that we use to name our trait, and, within the trait block, we use the same syntax to set values for our attributes. Below, we have defined traits that represent standard sensor types, specifically, their frame sizes.
 
 ```ruby
 factory :camera do
@@ -94,7 +93,7 @@ factory :camera do
 end
 ```
 
-In our test, we can now reference these traits to create instances of our `Camera` class with common sensor sizes without having to know the exact dimensions of these sensors.
+In our test, we can now reference these traits when creating instances of our `Camera` class with standard sensor sizes and not have to know exact dimensions. without having to know the exact dimensions of these sensors.
 
 ```ruby
 # use trait and baseline attribute
