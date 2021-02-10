@@ -93,7 +93,7 @@ factory :camera do
 end
 ```
 
-In our test, we can now reference these traits when creating instances of our `Camera` class with standard sensor sizes and not have to know exact dimensions. without having to know the exact dimensions of these sensors.
+In our test, we can now use these traits when creating new `Camera` records. Using factories this way allows us to work with standard sensor sizes without knowing the exact dimensions.
 
 ```ruby
 # use trait and baseline attribute
@@ -115,15 +115,15 @@ FactoryBot.build(
     memory_cards=nil>
 ```
 
-As you can see above, traits will still "inherit" the default values set up in our baseline factory and we can also still override any individual attributes.
+As you can see above, traits will still inherit the default values set up in our baseline factory, and we are still able to override any individual attributes.
 
-Now that we've created our traits, I want to mention that, for this example, it _could_ make sense to directly set `frame_size` when creating our factories. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` as opposed to having it obfuscated by our trait. This reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like myself, the relationship between `frame_size` and `crop_factor` is fuzzy, but having the number explicitly set in the test could provide a signal of how the calculation is done. On the other hand, you will likely find an experienced team working on this application will have industry knowledge, and know `full_frame` means  "35x24" and how that impacts the `crop_factor` calculation. This is a balance you may want to experiment with as you introduce traits into your tests.
+Now that we have introduced traits, I want to mention that, for this example, it _could_ make sense to set `frame_size` directly when building our factories. Since `crop_factor` is a mathematical formula based on `frame_size`, it may be easier to understand our test expectations if we see the actual `frame_size` (as opposed to it potentially being obfuscated by our trait). This concern reveals some of the subtly of dealing with traits and the potential to introduce [mystery guests](https://thoughtbot.com/blog/mystery-guest). For a casual photographer like myself, the relationship between `frame_size` and `crop_factor` is not something I understand well.  In my case, having the `frame_size` set directly in the test could provide a signal of how it is involved in the `crop_factor` calculation. On the other hand, you will likely find that an experienced team working on this application will have industry expertise and know `full_frame` means  35x24 and how that impacts the `crop_factor` calculation. These concerns are a balance you will want to experiment with as your application, test suite, and team evolves. 
 
 ## Combining Traits
 
-One of the primary reasons I find myself reaching for traits over inheritance is the ability to combine multiple traits when creating new factories.
+A principal reason I find myself reaching for traits over inheritance is the ability to combine traits when creating new factories.
 
-Let's imagine we needed the ability to search for a camera by any of its attributes. Starting with a single attribute, we can use our existing trait for `frame_size` and write tests like the following.
+To try out combining traits, imagine that we need to support searching for a camera by any of its attributes. Starting with a single attribute, we can use our existing trait for `frame_size` and write a test like the following.
 
 ```ruby
 describe '#search' do
@@ -131,6 +131,7 @@ describe '#search' do
     let(:full_frame_camera) do
       build(:camera, :full_frame)
     end
+
     let(:aps_c_camera) do
       build(:camera, :aps_c)
     end
