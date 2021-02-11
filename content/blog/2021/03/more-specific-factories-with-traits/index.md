@@ -121,7 +121,7 @@ Now that we have introduced traits, I want to mention that, for this example, it
 
 ## Combining Traits
 
-A principal reason I find myself reaching for traits over inheritance is the ability to combine traits when creating new factories.
+One of the main reasons I find myself reaching for traits over inheritance is the ability to combine traits when creating new factories.
 
 To try out combining traits, imagine that we need to support searching for a camera by any of its attributes. Starting with a single attribute, we can use our existing trait for `frame_size` and write a test like the following.
 
@@ -139,7 +139,7 @@ describe '#search' do
 end
 ```
 
-Our current context only deals with searching for a single attribute, but we want our search ability to handle filtering on multiple attributes at the same time. To test this, we can try searching on `frame_size` **and** `manufacturer`. Before we write the test, let's create a few traits for manufacturers.
+Our current context only deals with searching for a single attribute, but we want our search ability to handle filtering on multiple attributes at once. To test this, we can try searching by `frame_size` **and** `manufacturer`. Before we write the test, we will create a few traits for `manufacturer`s.
 
 ```ruby
 factory :camera do
@@ -169,7 +169,7 @@ FactoryBot.build(:camera, :nikon, :full_frame)
     memory_cards=nil>
 ```
 
-While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without the need to specify every attribute. The ability to mix-and-match traits also makes it easy for us to build up more varied combinations in our tests.
+While this is equivalent to specifying the `frame_size` and `manufacturer` attributes directly, with well-named traits you can quickly see what is being set without specifying every attribute. The ability to mix-and-match traits also makes it easy for us to build up more varied combinations in our tests.
 
 ```ruby
 describe '#search' do
@@ -177,9 +177,11 @@ describe '#search' do
     let(:full_frame_nikon) do
       build(:camera, :full_frame, :nikon)
     end
+
     let(:aps_c_nikon) do
       build(:camera, :aps_c, :nikon)
     end
+
     let(:aps_c_fujifilm) do
       build(:camera, :aps_c, :fujifilm)
     end
@@ -196,13 +198,14 @@ context 'when a camera has a memory card' do
   let(:memory_card) do
     build(:memory_card)
   end
+
   let(:camera) do
     build(:camera, memory_cards: [memory_card])
   end
 end
 ```
 
-This provides us with the flexibility to customize the `memory_cards` we supply our camera with. However, we may find we often do not care about the `storage_capacity` of the memory card in the camera, but rather just that the camera has a memory card. In that case, explicitly creating an instance of a memory card in our test could add unnecessary noise. This is another place where we can leverage a trait.
+Creating a `MemoryCard` provides us with the flexibility to customize the `memory_cards` we supply to our camera record. However, we may find we often do not care about the `storage_capacity` of the memory card in the camera, but rather just that the camera _has_ a memory card. In these cases, explicitly creating a `MemoryCard` record in our test could add unnecessary noise and be more easily managed with a trait.
 
 We can create a trait on our `Camera` model that indicates this camera includes a `MemoryCard`.
 
@@ -236,7 +239,7 @@ end
 
 ### Leveraging Transient Attributes
 
-We can go a step further with our trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variables into FactoryBot that are not a part of the model you are creating, but can be referenced during the creation of the factory instance.
+We can go a step further with our trait and add the ability to specify how many memory cards a `Camera` has. For this, we can use [transient attributes](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#transient-attributes). Transient attributes allow you to pass variables into FactoryBot that are not a part of the model you are creating but will be referenceable during the creation of the factory instance.
 
 The syntax for transient attributes is very similar to the syntax of setting attributes on a factory.
 
