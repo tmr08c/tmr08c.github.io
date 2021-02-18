@@ -41,21 +41,65 @@ sequence :string do |n|
 end
 
 factory :user do
-  sequence(:username) { |n| "user-#{n}" }
   first_name { generate(:string) }
   last_name { generate(:string) }
 end
 
-=> <User username="user-1", first_name="string 1", last_name="string 2">
-=> <User username="user-2", first_name="string 3", last_name="string 4">
-=> <User username="user-3", first_name="string 5", last_name="string 6">
+=> <User first_name="string 1", last_name="string 2">
+=> <User first_name="string 3", last_name="string 4">
+=> <User first_name="string 5", last_name="string 6">
 ```
 
 ### Randomness
 
-While sequences generate similarly shaped data and aren't going to cover any particularly difficult-to-process data they do introduce randomness into your system. Every time your tets run in a different order, your factory has a chance of generating a value at a different step in the sequence and end up with a slightly different value. This small amount of variation provides an easy starting point for introducing randomness into your system.
+While sequences generate similarly shaped data and aren't going to cover any particularly difficult-to-process data, they do introduce randomness into your system. Every time your tests run in a different order, your factory has a chance of generating a value at a different step in the sequence and end up with a slightly different attribute. This small amount of variation provides an easy starting point for introducing randomness into your system.
 
+## Sampling Options
 
+Another form of randomness I like to use comes into play for attribute that have a set number of valid values (i.e., `enum`s). Rather than having your factory always set the attribute with the same value, consider having the value chosen randomly each time you create a factory.
+
+Let's imagine we have a `class` representing a pizza, and that pizza can have toppings. Our restaraunt only has a set number of toppings, and we have a constant that lists what those are.
+
+```ruby
+class Pizza
+  AVAILABLE_TOPPINGS = %w[
+    bacon
+    jalapenos
+    onions
+    pepperoni
+    peppers
+    pineapple
+  ]
+
+  attr_writer :toppings
+
+  def initalize(toppings)
+    @toppings = Array(toppings)
+  end
+end
+```
+
+In our factory, we can choose a random entry from our list of available toppings using Ruby's [`Array#sample`](https://ruby-doc.org/core/Array.html#method-i-sample) method.
+
+```ruby
+FactoryBot.define do
+  factory :pizza do
+    toppings { Pizza::AVAILABLE_TOPPINGS.sample }
+  end
+end
+```
+
+This results in a different topping being chosen every time we use our factory to create a new pizza.
+
+```ruby
+3.times { puts FactoryBot.build(:pizza).inspect }
+
+=> <Pizza toppings=["jalapenos"]>
+=> <Pizza toppings=["onions"]>
+=> <Pizza toppings=["pineapple"]>
+```
+
+Next: add random number of toppings
 
 
 * Examples
