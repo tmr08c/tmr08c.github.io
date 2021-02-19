@@ -99,8 +99,35 @@ This results in a different topping being chosen every time we use our factory t
 => <Pizza toppings=["pineapple"]>
 ```
 
-Next: add random number of toppings
+### Random Amount of Random
 
+Our random topping selection is a great way to introduce some randomness into our system. Often, when dealing with `enum`-like data, your attribute will only be a single value and `Array#sample` is all you will need. However, in our example we can have no toppings, one topping, or many toppings, but our current factory will always give us a `Pizza` with a single topping. Always testing against a single topping could result in missing out on some edge cases. Ideally, we will have explicit tests for cases like "when there are no toppings," but we may not add a case like that anytime we are dealing with a pizza. Herein lies an issue with example-base testing - it relies on the examples you remember to include. We may think to test zero, one, and many toppings in a test case specifically dealing with presenting the list of toppings, but we may not think about it when writing more complicated, higher-level tests. What if, instead, the factory always returned a random number of random toppings? This would add some variability to all tests that use this factory in our system. 
+
+We can update the `toppings` attribute in our factory to build a random number of pizza toppings - some number between no toppings and the total number of available toppings. We can represent this with something like `Array.new(rand(0..Pizza::AVAILABLE_TOPPINGS.size))`. This will generate a random number between zero and the number of available toppings (`rand(0..Pizza::AVAILABLE_TOPPINGS.size)`) and create an array of that size. We can leverage [`Array#new`](https://ruby-doc.org/core/Array.html#method-c-new)'s block argument to run some code to generate each entry in our new array. For generating entries, we ill use the same code we had before, `Pizza::AVAILABLE_TOPPINGS.sample`. Putting this all together, our factory looks like the following:
+
+```ruby
+FactoryBot.define do
+  factory :pizza do
+    toppings do
+      Array.new(rand(0..Pizza::AVAILABLE_TOPPINGS.size)) do
+        Pizza::AVAILABLE_TOPPINGS.sample
+      end
+    end
+  end
+end
+```
+
+Now, when we generate our `Pizza`s, we will have a different number of different toppings.
+
+```ruby
+3.times { puts FactoryBot.build(:pizza).inspect }
+
+<Pizza toppings=["peppers", "bacon"]>
+<Pizza toppings=["peppers"]>
+<Pizza toppings=["pepperoni", "pineapaple", "bacon", "onions"]>
+```
+
+Next: maybe talk about the fact this isn't unique and show example that would be (but is more complicated)
 
 * Examples
   * Sequences (built into FactoryBot)
