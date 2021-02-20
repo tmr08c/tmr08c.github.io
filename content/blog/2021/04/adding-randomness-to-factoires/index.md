@@ -26,9 +26,9 @@ Now, anytime we create a user, we will have a unique `username` attribute:
 ```ruby
 3.times { puts FactoryBot.build(:user) }
 
-=> <User username="user-1">
-=> <User username="user-2">
-=> <User username="user-3">
+=> <User @username="user-1">
+=> <User @username="user-2">
+=> <User @username="user-3">
 ```
 
 ### Global
@@ -45,9 +45,9 @@ factory :user do
   last_name { generate(:string) }
 end
 
-=> <User first_name="string 1", last_name="string 2">
-=> <User first_name="string 3", last_name="string 4">
-=> <User first_name="string 5", last_name="string 6">
+=> <User @first_name="string 1", @last_name="string 2">
+=> <User @first_name="string 3", @last_name="string 4">
+=> <User @first_name="string 5", @last_name="string 6">
 ```
 
 ### Randomness
@@ -94,9 +94,9 @@ This results in a different topping being chosen every time we use our factory t
 ```ruby
 3.times { puts FactoryBot.build(:pizza).inspect }
 
-=> <Pizza toppings=["jalapenos"]>
-=> <Pizza toppings=["onions"]>
-=> <Pizza toppings=["pineapple"]>
+=> <Pizza @toppings=["jalapenos"]>
+=> <Pizza @toppings=["onions"]>
+=> <Pizza @toppings=["pineapple"]>
 ```
 
 ### Random Amount of Random
@@ -122,12 +122,73 @@ Now, when we generate our `Pizza`s, we will have a different number of different
 ```ruby
 3.times { puts FactoryBot.build(:pizza).inspect }
 
-<Pizza toppings=["peppers", "bacon"]>
-<Pizza toppings=["peppers"]>
-<Pizza toppings=["pepperoni", "pineapaple", "bacon", "onions"]>
+<Pizza @toppings=["peppers", "bacon"]>
+<Pizza @toppings=["peppers"]>
+<Pizza @toppings=["pepperoni", "pineapaple", "bacon", "onions"]>
 ```
 
-Next: maybe talk about the fact this isn't unique and show example that would be (but is more complicated)
+### Valid Amount of Random
+
+Something to be careful of when dealing with randomness is the fact you could end up with invalid data. Our current factory doesn't do anything to protect against having multiple entries of same topping. Below is an example of what this could look like.
+
+```ruby
+3.times { puts FactoryBot.build(:pizza).inspect }
+
+<Pizza @toppings=["peppers", "peppers", "bacon", "peppers", "peppers", "onions"]>
+<Pizza @toppings=["peppers", "peppers"]>
+<Pizza @toppings=["onions", "bacon", "peppers", "jalapenos", "pineapaple"]>
+```
+
+Depending on your model, this may or may not matter. If you want to guarantee uniqueness, you could add some additional logic to your factory that avoids duplication.
+
+```ruby
+FactoryBot.define do
+  factory :pizza do
+    toppings do
+      # Set will make sure we have unique list
+      topping_set = Set.new
+      topping_count = rand(0..Pizza::AVAILABLE_TOPPINGS.size)
+
+      while topping_set.size < topping_count
+        topping_set << Pizza::AVAILABLE_TOPPINGS.sample
+      end
+
+      topping_set.to_a
+    end
+  end
+end
+```
+
+```ruby
+3.times { puts FactoryBot.build(:pizza).inspect }
+
+<Pizza @toppings=["onions", "peppers", "pineapaple", "bacon"]>
+<Pizza @toppings=["pineapaple", "peppers", "bacon", "pepperoni", "onions", "jalapenos"]>
+<Pizza @toppings=[]>
+```
+
+## Delegating Randomness
+
+The final suggestion for introducing randomness into your system relies on a gem, [Faker](https://github.com/faker-ruby/faker). Faker provides hundred of modules themed around different topics in which you can get fake data on. 
+
+With Faker, you can get names, email address, physical addresses, quotes, and more. Faker provides an advantage over our [sequences](#sequences) example in that you aren't pulling from the same basic template. Instead, you are pulling from a large list of possible value.  
+
+```ruby
+Faker::Name.name
+=> "Marquerite Legros CPA"
+
+Faker::Internet.email
+=> "lawana_lesch@donnelly.com"
+
+Faker::TvShows::TheITCrowd.quote
+=> "Well, I'm the boss... Head Honcho. El Numero Uno. Mr. Big. The Godfather. Lord of the Rings. The Bourne... Identity. Er... Taxi Driver. Jaws. I forgot the question quite a while back. Who are you, again?"
+
+Faker::TvShows::SiliconValley.url
+=> "http://raviga.com"
+```
+
+Word of warning: part of the fun of Faker could be 
+
 
 * Examples
   * Sequences (built into FactoryBot)
