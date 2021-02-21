@@ -171,7 +171,7 @@ end
 
 The final suggestion for introducing randomness into your system relies on a gem, [Faker](https://github.com/faker-ruby/faker). Faker provides hundred of modules themed around different topics in which you can get fake data on. 
 
-With Faker, you can get names, email address, physical addresses, quotes, and more. Faker provides an advantage over our [sequences](#sequences) example in that you aren't pulling from the same basic template. Instead, you are pulling from a large list of possible value.  
+With Faker, you can get names, email address, physical addresses, quotes, and more. 
 
 ```ruby
 Faker::Name.name
@@ -187,8 +187,15 @@ Faker::TvShows::SiliconValley.url
 => "http://raviga.com"
 ```
 
-Word of warning: part of the fun of Faker could be 
+Faker provides an advantage over our [sequences](#sequences) example in that you aren't pulling from the same basic template. Instead, you are pulling from a large list of possible values. Even better, most basic data types can generate fairly complex sample data. For example, looking at how [names](https://github.com/faker-ruby/faker/blob/master/lib/locales/en/name.yml) can be generated, there are prefixes, suffixes, and middle names; these additional variations provides more than a basic first and last name combination would and could help potentially catch issues if you were not handling them.
 
+Like all of our examples so far, Faker does not provide the same level of scrutiny you would get from a property testing tool - it's goal is to provide realistic data. That said, it's realistic data is likely to provide more variation and randomness than you would if left to your own devises. 
+
+
+Maybe - advantage of using something like `Faker` or `generate` over making up your own names
+
+- save time
+- make it more clear this data isn't important to the test 
 
 * Examples
   * Sequences (built into FactoryBot)
