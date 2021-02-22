@@ -1,5 +1,4 @@
 ---
-
 title: 'Adding Randomness to FactoryBot'
 date: '2021-04-20T06:14:13.265Z'
 categories: ['testing', 'ruby']
@@ -189,20 +188,9 @@ Faker::TvShows::SiliconValley.url
 
 Faker provides an advantage over our [sequences](#sequences) example in that you aren't pulling from the same basic template. Instead, you are pulling from a large list of possible values. Even better, most basic data types can generate fairly complex sample data. For example, looking at how [names](https://github.com/faker-ruby/faker/blob/master/lib/locales/en/name.yml) can be generated, there are prefixes, suffixes, and middle names; these additional variations provides more than a basic first and last name combination would and could help potentially catch issues if you were not handling them.
 
-Like all of our examples so far, Faker does not provide the same level of scrutiny you would get from a property testing tool - it's goal is to provide realistic data. That said, it's realistic data is likely to provide more variation and randomness than you would if left to your own devises. 
+Like all of our options so far, Faker does not provide the same level of scrutiny you would get from a property testing tool - it's goal is to provide realistic data. That said, it's realistic data is likely to provide more variation and randomness than you would if left to your own devises.
 
+## Conclusion
 
-Maybe - advantage of using something like `Faker` or `generate` over making up your own names
+Adding some randomness into your tests can potentially help catch use cases that you were not thinking of when designing a solution. While there are different levels of randomness and chances of catching corner cases in your system, some of the options covered in this post are low-cost enough that I use them by default.
 
-- save time
-- make it more clear this data isn't important to the test 
-
-* Examples
-  * Sequences (built into FactoryBot)
-    * Global sequences (`generate`)  https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences
-    * Inline https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inline-sequences
-  * Array.sample
-  * Faker https://github.com/faker-ruby/faker
-    * May need to use https://github.com/faker-ruby/faker#ensuring-unique-values
-        * We've found flaky tests as the result of `.not contain` faker data that is found elsewhere
-    * Can be fun, but also add noise if people use different sets across different tests
