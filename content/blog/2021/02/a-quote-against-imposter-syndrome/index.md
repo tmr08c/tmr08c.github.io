@@ -1,7 +1,7 @@
 ---
 title:  "A quote against imposter syndrome"
-date:   "2020-12-19T07:02:34.781Z"
-categories: ["imposter syndrome"]
+date:   "2021-02-26T06:30:34.781Z"
+categories: ["imposter syndrome", "soft skills"]
 ---
 
 I want to share one of the quotes included [a few months back](https://jamesclear.com/3-2-1/september-24-2020) in [James Clear's](https://jamesclear.com/about) weekly [3-2-1 newsletter](https://jamesclear.com/3-2-1) because it has provided me with a new perspective on fighting imposter syndrome. 
@@ -12,7 +12,7 @@ For some background, Jame Clear writes about productivity-related topics on [his
 - 2 quotes from others
 - 1 question intended to get you thinking
 
-The quote that I want to share comes from architect [Christopher Alexander](https://en.wikipedia.org/wiki/Christopher_Alexander) and is the foreword to [_Patterns of Software_ by Richard P. Gabriel](https://www.amazon.com/gp/product/B003TJ9FGE/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=jamesclearema-20&creative=9325&linkCode=as2&creativeASIN=B003TJ9FGE&linkId=5bbe96d0ee2542beb53da79c788894af) (_note:_ I copied the link from Jame Clear's newsletter which appears to be an affiliate link if that kind of thing bothers you).
+The quote that I want to share comes from architect [Christopher Alexander](https://en.wikipedia.org/wiki/Christopher_Alexander) and is the foreword to [_Patterns of Software_ by Richard P. Gabriel](https://www.amazon.com/gp/product/B003TJ9FGE/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=jamesclearema-20&creative=9325&linkCode=as2&creativeASIN=B003TJ9FGE&linkId=5bbe96d0ee2542beb53da79c788894af) (note, I copied the link from Jame Clear's newsletter which appears to be an affiliate link if that kind of thing bothers you).
 
  > In my life as an architect, I find that the single thing which inhibits
  > young professionals, new students most severely, is their acceptance of
