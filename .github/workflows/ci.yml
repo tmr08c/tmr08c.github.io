@@ -14,5 +14,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          build: yarn build
+          start: yarn serve
+          wait-on: 'http://localhost:8000'
           # Tell Cypress to use our custom test scrpit
-          command: yarn test:e2e:ci
+          # command: yarn test:e2e:ci
+
