@@ -9,7 +9,10 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "format": "prettier --write \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
+    "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run",
     "deploy": "gatsby build && gh-pages -d public -b master"
   },
   "keywords": [
@@ -49,8 +52,10 @@
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-helmet": "^5.0.14",
+    "cypress": "^6.5.0",
     "gh-pages": "^2.1.1",
     "prettier": "^1.19.1",
+    "start-server-and-test": "^1.12.0",
     "tailwindcss": "^1.7.6",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
