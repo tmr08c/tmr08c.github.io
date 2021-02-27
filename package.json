@@ -11,7 +11,6 @@
     "format": "prettier --write \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "serve": "gatsby serve --port=8000",
     "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
     "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run",
     "deploy": "gatsby build && gh-pages -d public -b master"
