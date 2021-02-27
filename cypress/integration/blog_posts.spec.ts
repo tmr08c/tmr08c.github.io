@@ -21,10 +21,11 @@ describe('Blog Posts', () => {
       cy.get('.posts .post').each(($post) => {
         const link = $post.find('a').first()
         const title = link.text()
+        console.log(`Checking post with title ${title}`)
 
-        cy.visit(link.attr('href'))
+        console.log(`Visiting: ${link.attr('href')}`)
 
-        cy.get('h1').should('contain.text', title)
+        cy.visit(link.attr('href')).get('h1').should('contain.text', title)
 
         cy.go('back')
       })
