@@ -1,4 +1,4 @@
-import {graphql, Link} from "gatsby";
+import { graphql, Link } from "gatsby";
 import * as React from "react";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
@@ -26,7 +26,7 @@ interface IndexPageProps {
 
 class IndexPage extends React.Component<IndexPageProps, {}> {
   render() {
-    const {data} = this.props;
+    const { data } = this.props;
     const posts = data.allMarkdownRemark.edges;
 
     return (
@@ -41,7 +41,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
         </h1>
 
         <div className={"posts"}>
-          {posts.map(({node}) => {
+          {posts.map(({ node }) => {
             const title = node.frontmatter.title || node.fields.slug;
             return (
               <div className={"post mb-5"} key={node.fields.slug}>
@@ -51,7 +51,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                 <small className={"italic text-gray-800"}>
                   {node.frontmatter.date}
                 </small>
-                <p dangerouslySetInnerHTML={{__html: node.excerpt}} />
+                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
               </div>
             );
           })}
