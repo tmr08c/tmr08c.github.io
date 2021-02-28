@@ -27,46 +27,32 @@ interface BlogPostTemplateProps {
   };
 }
 
-const EditOnGitHubLink = ({
-  repoLink,
-  postSlug
-}: {
-  repoLink: string;
-  postSlug: string;
-}) => {
-  const linkToPostInRepo = `${repoLink}/tree/develop/content/blog/${postSlug}index.md`;
-  const linkToIssues = `${repoLink}/issues`;
+const EditOnGitHubLink = ({ repoLink, postSlug} : { repoLink: string, postSlug: string}) => {
+  const linkToPostInRepo = `${repoLink}/tree/develop/content/blog/${postSlug}index.md`
+  const linkToIssues = `${repoLink}/issues`
 
   return (
     <div className="text-center font-light text-sm text-gray-600 italic mb-3">
-      Notice something wrong? Please consider{" "}
-      <a
-        href={linkToPostInRepo}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline hover:text-living-coral-500"
-      >
+      Notice something wrong? Please consider{' '}
+
+      <a href={linkToPostInRepo} target="_blank" rel="noopener noreferrer" className="underline hover:text-living-coral-500">
         proposing an edit
-      </a>{" "}
-      or{" "}
-      <a
-        href={linkToIssues}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline hover:text-living-coral-500"
-      >
-        opening an issue
       </a>
-      .
+
+      {' '}or{' '}
+
+      <a href={linkToIssues} target="_blank" rel="noopener noreferrer" className="underline hover:text-living-coral-500">
+        opening an issue
+      </a>.
     </div>
-  );
-};
+  )
+}
 
 class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
   render() {
     const post = this.props.data.markdownRemark;
     const { slug, previous, next } = this.props.pageContext;
-    const repoLink = this.props.data.site.siteMetadata.repsitory;
+    const repoLink = this.props.data.site.siteMetadata.repsitory
 
     return (
       <Layout>

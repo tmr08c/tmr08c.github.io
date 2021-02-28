@@ -44,10 +44,10 @@ module.exports = {
             options: {
               theme: `Tomorrow`,
               extensions: [`vscode-themes/tomorrow`]
-            }
+            },
           },
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`
+          `gatsby-remark-autolink-headers`,
         ]
       }
     },
@@ -68,7 +68,7 @@ module.exports = {
         name: "troy-prog-blog",
         short_name: "troyprog",
         start_url: "/",
-        icon: "src/images/RhiDesign Troy Avatar.png"
+        icon: "src/images/RhiDesign\ Troy\ Avatar.png"
       }
     },
     "gatsby-plugin-offline",
