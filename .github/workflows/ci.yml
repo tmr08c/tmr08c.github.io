@@ -3,6 +3,20 @@ name: CI
 on: [push]
 
 jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check formatting
+        # if this gets annoying consider trying something like
+        # https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
+        # or https://github.com/creyD/prettier_action to automatically write
+        # changes
+        run: |
+          yarn install --frozen-lockfile
+          yarn run format:check
+
   # https://docs.cypress.io/guides/continuous-integration/github-actions.html#Cypress-GitHub-Action
   cypress-run:
     runs-on: ubuntu-latest
