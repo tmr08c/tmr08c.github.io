@@ -11,7 +11,8 @@ jobs:
       - name: Check formatting
         # if this gets annoying consider trying something like
         # https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
-        # to automatically write changes
+        # or https://github.com/creyD/prettier_action to automatically write
+        # changes
         run: |
           yarn install --frozen-lockfile
           yarn run format:check
