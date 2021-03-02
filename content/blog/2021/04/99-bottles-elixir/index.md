@@ -23,21 +23,14 @@ To determine if the code reflects the problem, you will need to ask yourself que
 1. Which verses are most different, and in what way?
 1. What is the rule to determine which verse comes next?
 
-While it's not a book on functional programming, I wanted to see how a solution in Elixir would stand up against these questions. 
+While it's not a book on functional programming, I wanted to see how a solution in Elixir would stand up against these questions. Below is my attempt at solving the problem using Elixir.
 
-
-
-
-
-----
-
-* https://sandimetz.com/99bottles
-
+## The Solution 
 
 ```elixir
-defmodule NientyNineElixirsOfJoy do
+defmodule NinetyNineElixirsOfJoy do
   @moduledoc """
-  Documentation for `NientyNineElixirsOfJoy`.
+  Documentation for `NinetyNineElixirsOfJoy`.
   """
 
   def song, do: verses(99, 0)
@@ -69,24 +62,48 @@ defmodule NientyNineElixirsOfJoy do
 end
 ```
 
+To "sing" the whole song, you would call `NinetyNineElixirsOfJoy.song/0`. This calls out to `NinetyNineElixirsOfJoy.verses/2`, which calls and `join`s  `NinetyNineElixirsOfJoy.verse/1` together. This patten follows the book. An advantage of having the three separate methods is ease of testing. It's easier to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`. It's possible a team could consider making `verse/1` and `verses/2` private and dropping the tests, it would depend on the needs.
+
+In addition the the public functions, we have a few helper functions where we leverage pattern matching.
+
+With `beverage/1`, I tried to be clever and replace "bottles of beer" with "elixirs of joy".
+
+```elixir
+defp beverage(0), do: "no more elixirs of joy"
+defp beverage(1), do: "1 elixir of joy"
+defp beverage(number), do: "#{number} elixirs of joy"
+```
+
+This generically named `beverage` function _could_ be repurposed for beer, kombucha, or anything else. The primary value in splitting it out was handling the logic for pluralizing our elixirs of joy. While we could do something similar with `if` or `case` in another language, I think pattern matching does really well here.
+
+Following the same idea, our generlically named `do_something/1` function also leverages pattern matching. This time, rather than handling pluralization we are handling two different sorts of actions. 
+
+
+
+----
+
+* https://sandimetz.com/99bottles
+
+
+
 ```elixir
   test "verse/1" do
-    assert NientyNineElixirsOfJoy.verse(99) == """
+    assert NinetyNineElixirsOfJoy.verse(99) == """
            99 elixirs of joy on the wall, 99 elixirs of joy.
            Take one down and pass it around, 98 elixirs of joy on the wall.
            """
 
-    assert NientyNineElixirsOfJoy.verse(2) == """
+    assert NinetyNineElixirsOfJoy.verse(2) == """
            2 elixirs of joy on the wall, 2 elixirs of joy.
            Take one down and pass it around, 1 elixir of joy on the wall.
            """
 
-    assert NientyNineElixirsOfJoy.verse(1) == """
+    assert NinetyNineElixirsOfJoy.verse(1) == """
            1 elixir of joy on the wall, 1 elixir of joy.
            Take one down and pass it around, no more elixirs of joy on the wall.
            """
 
-    assert NientyNineElixirsOfJoy.verse(0) == """
+    assert NinetyNineElixirsOfJoy.verse(0) == """
            No more elixirs of joy on the wall, no more elixirs of joy.
            Ask Jose to brew up some more, 99 elixirs of joy on the wall.
            """
