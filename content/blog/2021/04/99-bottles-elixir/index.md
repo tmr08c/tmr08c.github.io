@@ -29,10 +29,6 @@ While it's not a book on functional programming, I wanted to see how a solution 
 
 ```elixir
 defmodule NinetyNineElixirsOfJoy do
-  @moduledoc """
-  Documentation for `NinetyNineElixirsOfJoy`.
-  """
-
   def song, do: verses(99, 0)
 
   def verses(start, stop) do
@@ -56,15 +52,20 @@ defmodule NinetyNineElixirsOfJoy do
     "Ask Jose to brew up some more, #{beverage(99)} on the wall."
   end
 
+  defp do_something(1) do
+    "Take it down and pass it around, #{beverage(0)} on the wall."
+  end
+
   defp do_something(number) do
     "Take one down and pass it around, #{beverage(number - 1)} on the wall."
   end
 end
+ 
 ```
 
 To "sing" the whole song, you would call `NinetyNineElixirsOfJoy.song/0`. This calls out to `NinetyNineElixirsOfJoy.verses/2`, which calls and `join`s  `NinetyNineElixirsOfJoy.verse/1` together. This patten follows the book. An advantage of having the three separate methods is ease of testing. It's easier to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`. It's possible a team could consider making `verse/1` and `verses/2` private and dropping the tests, it would depend on the needs.
 
-In addition the the public functions, we have a few helper functions where we leverage pattern matching.
+In addition to the public functions, we have a few helper functions where we leverage pattern matching.
 
 With `beverage/1`, I tried to be clever and replace "bottles of beer" with "elixirs of joy".
 
@@ -76,8 +77,33 @@ defp beverage(number), do: "#{number} elixirs of joy"
 
 This generically named `beverage` function _could_ be repurposed for beer, kombucha, or anything else. The primary value in splitting it out was handling the logic for pluralizing our elixirs of joy. While we could do something similar with `if` or `case` in another language, I think pattern matching does really well here.
 
-Following the same idea, our generlically named `do_something/1` function also leverages pattern matching. This time, rather than handling pluralization we are handling two different sorts of actions. 
+Following the same idea, our generlically named `do_something/1` function also leverages pattern matching. This time, rather than handling pluralization we are handling two actions that are similar and a third that is very different.
 
+```elixir
+defp do_something(0) do
+  "Ask Jose to brew up some more, #{beverage(99)} on the wall."
+end
+
+defp do_something(1) do
+  "Take it down and pass it around, #{beverage(0)} on the wall."
+end
+
+defp do_something(number) do
+  "Take one down and pass it around, #{beverage(number - 1)} on the wall."
+end
+```
+
+Our `do_something/1` function is very similar when the number of bottles is between 1 and 99 - we take a bottle down and pass it around. When we are on the last bottle we take "it" down instead of "one." The two function calls are very similar and we could probably find a way to handle them in the same function. For now, leaving it makes sense. Without the need to change anything, the duplication is cheap. Having the same three pattern match casese (`0`, `1` and `number`) for `beverage/1` and `do_something/1` also provies some value, we'll get to that later.
+
+Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the suggestion is to go to the store and buy some more. In our case, we will ask Jose, the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (the attempt at cleverness stops here).
+
+While the function name isn't very helpful and we have some potential duplication, I think this ends up being fairly straightforward to follow. This leads us into discussing the understandability of code.
+
+## Concrete or Abstract
+
+The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand, but harder to change. On the other side, code is generally more difficult to understand, with the intention of being easier to change. 
+
+This is followed up with the suggestion that more senior engineers will often too quickly move into abstract territory. This struck home for me. 
 
 
 ----
