@@ -101,10 +101,15 @@ While the function name isn't very helpful and we have some potential duplicatio
 
 ## Concrete or Abstract
 
-The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand, but harder to change. On the other side, code is generally more difficult to understand, with the intention of being easier to change. 
+The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand, but harder to change. On the other side, abstract code is generally more difficult to understand, with the intention of being easier to change. 
 
-This is followed up with the suggestion that more senior engineers will often too quickly move into abstract territory. This struck home for me. 
+The book posits that when learning how to program we often start out writing code the skews on the concrete since of things. Over time, we generally move towards abstract by default. While being able to write code that is changeable often proves to be valuable, the book points out that it doesn't always make sense to start there.
 
+> Unfortunately, abstractions are hard, and even with the best of intentions, it’s easy to get them wrong. Well-meaning programmers tend to over-anticipate abstractions, inferring them prematurely from incomplete information. Early abstractions are often not quite right, and therefore they create a catch-22. You can’t create the right abstraction until you fully understand the code, but the existence of the wrong abstraction may prevent you from ever doing so. This suggests that you should not reach for abstractions, but instead, you should resist them until they absolutely insist upon being created.
+
+This also aligns with the the [second-system effect](https://wiki.c2.com/?SecondSystemEffect) identified by [Fred Brooks](https://www.cs.unc.edu/~brooks/) in [_The Mythical Man-Month_](https://en.wikipedia.org/wiki/The_Mythical_Man-Month).
+
+One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. 
 
 ----
 
