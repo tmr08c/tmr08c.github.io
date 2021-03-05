@@ -107,9 +107,18 @@ The book posits that when learning how to program we often start out writing cod
 
 > Unfortunately, abstractions are hard, and even with the best of intentions, it’s easy to get them wrong. Well-meaning programmers tend to over-anticipate abstractions, inferring them prematurely from incomplete information. Early abstractions are often not quite right, and therefore they create a catch-22. You can’t create the right abstraction until you fully understand the code, but the existence of the wrong abstraction may prevent you from ever doing so. This suggests that you should not reach for abstractions, but instead, you should resist them until they absolutely insist upon being created.
 
-This also aligns with the the [second-system effect](https://wiki.c2.com/?SecondSystemEffect) identified by [Fred Brooks](https://www.cs.unc.edu/~brooks/) in [_The Mythical Man-Month_](https://en.wikipedia.org/wiki/The_Mythical_Man-Month).
+The idea of waiting to abstract until it "insists" upon being created has struck me. It's often tempting to "clean up" code you are writing and seek out abstractions. In my solution, I attempted to do so with the `beverage/1` and `do_something/1` functions. While I can cite the [rule of three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)#:~:text=Rule%20of%20three%20(%22Three%20strikes,be%20refactored%20to%20avoid%20duplication.) (refactor when you do somehting three times), if I'm being honest I extrated those functions at the first sign of duplication.
 
-One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. 
+
+Since we are prone to abstracting, let's talk about how you can think about when to _not_ abstract things. The cost of abstractions is code that is generlically more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is that it's esier to follow at the cost of being more difficult to change. Because we don't have a need to change the song, let's focus on how to decide if our code is more understandable. 
+
+One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. In the book, the authors ask questions like:
+
+1. How many verse variants are there?
+1. Which verses are most alike? In what way?
+1. Which verses are most different? In what way?
+1. What is the rule to determine which verse should be sung next?
+
 
 ----
 
