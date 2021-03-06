@@ -112,12 +112,21 @@ The idea of waiting to abstract until it "insists" upon being created has struck
 
 Since we are prone to abstracting, let's talk about how you can think about when to _not_ abstract things. The cost of abstractions is code that is generlically more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is that it's esier to follow at the cost of being more difficult to change. Because we don't have a need to change the song, let's focus on how to decide if our code is more understandable. 
 
+## What is the code doing
+
 One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. In the book, the authors ask questions like:
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
 1. Which verses are most different? In what way?
 1. What is the rule to determine which verse should be sung next?
+
+As we alluded to earlier, our reliance on pattern matching, and the fact that we are matching the came clausees, can help us identify the difference between verses. In both `beverage` and `do_something` we match on `0` and `1`, and then everything else is captured in `number`. This may be an indicatation that we have three verse variants. 
+
+Continuing on with pattern matching as our guide, we could say the final and penultimate verses are the most differnt, and everything else is similar. The difference come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involved taking it down, sometimes we ask for more). 
+
+Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
+
 
 
 ----
