@@ -60,7 +60,6 @@ defmodule NinetyNineElixirsOfJoy do
     "Take one down and pass it around, #{beverage(number - 1)} on the wall."
   end
 end
- 
 ```
 
 To "sing" the whole song, you would call `NinetyNineElixirsOfJoy.song/0`. This calls out to `NinetyNineElixirsOfJoy.verses/2`, which calls and `join`s  `NinetyNineElixirsOfJoy.verse/1` together. This patten follows the book. An advantage of having the three separate methods is ease of testing. It's easier to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`. It's possible a team could consider making `verse/1` and `verses/2` private and dropping the tests, it would depend on the needs.
@@ -114,20 +113,34 @@ Since we are prone to abstracting, let's talk about how you can think about when
 
 ## What is the code doing
 
-One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. In the book, the authors ask questions like:
+One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. In the book, the authors ask questions intended to reveal if you can easily see how similar or different different code paths would be. When code is abstract, you often "hide" variations in your abstations. As a result, more abstract code will often be more difficult to, at a glance, identify obvious code path variations. For the 99 Bottles problem, below are some questions the authors suggest asking to evaluate your solution.
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
 1. Which verses are most different? In what way?
 1. What is the rule to determine which verse should be sung next?
 
-As we alluded to earlier, our reliance on pattern matching, and the fact that we are matching the came clausees, can help us identify the difference between verses. In both `beverage` and `do_something` we match on `0` and `1`, and then everything else is captured in `number`. This may be an indicatation that we have three verse variants. 
+Let's attempt to answer these questions for our Elixir solution.
 
-Continuing on with pattern matching as our guide, we could say the final and penultimate verses are the most differnt, and everything else is similar. The difference come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involved taking it down, sometimes we ask for more). 
+Earlier, we hinted at how we may determine the number of verse variants - through our use of pattern matching. In both `beverage` and `do_something` we match on `0` and `1`, and then everything else is captured in `number`. This may be an indicatation that we have three verse variants. 
 
-Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
+Continuing on with pattern matching as our guide, we can try to determine which verses are most similar and disimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different and everything else is similar. The difference come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involved taking our beverage down down, sometimes we ask for more). 
 
+To understand how we determin which verse to sing next, we turn to the main entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
 
+Through pattern matching, we have surfaced variation on our codepaths, while allowing each individual function to only focus on its own case.
+
+### A caveat
+
+Based on our answers, the verse for when we have `2` elixirs of joy and `3` basically be identical. Let's see if this holds:
+
+```diff
+3 elixirs of joy on the wall, 3 elixirs of joy.
+Take one down and pass it around, 2 elixirs of joy on the wall.
+
+2 elixirs of joy on the wall, 2 elixirs of joy.
+Take one down and pass it around, 1 elixir of joy on the wall.
+```
 
 ----
 
