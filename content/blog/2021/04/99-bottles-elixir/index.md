@@ -132,15 +132,28 @@ Through pattern matching, we have surfaced variation on our codepaths, while all
 
 ### A caveat
 
-Based on our answers, the verse for when we have `2` elixirs of joy and `3` basically be identical. Let's see if this holds:
+Based on our answers, the verse for when we have `2` elixirs of joy and `3` should basically be identical (except the the numbers). Let's see if this holds:
 
-```diff
+```{diff}
 3 elixirs of joy on the wall, 3 elixirs of joy.
-Take one down and pass it around, 2 elixirs of joy on the wall.
+-Take one down and pass it around, 2 elixirs of joy on the wall.
 
 2 elixirs of joy on the wall, 2 elixirs of joy.
-Take one down and pass it around, 1 elixir of joy on the wall.
++Take one down and pass it around, 1 elixir of joy on the wall.
 ```
+
+When we have three elixirs of joy on the wall, when we take one down, we still have two elixir**s**. However, when we do the same after starting with two elixir we only have one elixir (no **s**) left. This is handled in `do_something/1`, where we call `beverage/1` with `number - 1`. 
+
+Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the pervious questions about similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`), than previous calls would have made. 
+
+Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. Rather than our verse matching `do_something(1)` to `beverage(1)`, we actualaly match `do_something(1)` to `beverage(1 - 1)`. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0` we end up matching something different (`beverage(1)`, `beverage(0)`, and `beveage(number)` respectively).
+
+This slight mismatch "hides" the fact that we have four verse variants:
+
+1. `do_something(number)` with `beverage(number)`
+1. `do_something(number)` with `beveage(1)` (when `number` is `2`)
+
+
 
 ----
 
