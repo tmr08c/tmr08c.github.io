@@ -152,6 +152,50 @@ This slight mismatch "hides" the fact that we have four verse variants:
 
 1. `do_something(number)` with `beverage(number)`
 1. `do_something(number)` with `beveage(1)` (when `number` is `2`)
+1. `do_something(1)` with `beverage(0)` (when `number` is `1`)
+1. `do_something(0)` with `beverage(number)` (when `number` is `0`, `99` is passed into `beverage`, which is the `number` pattern)
+
+This is an indication that our code may be more abstract than it is concrete. A more concrete version would more directly surface the four variants. It could look something like (or use `case` or `if`/`else`):
+
+```elixir
+def verse(0) do
+  """
+  No more elixirs of joy on the wall, no more elixirs of joy.
+  Ask Jose to brew up some more, 99 elixirs of joy on the wall.
+  """
+end
+
+def verse(1) do
+  """
+  1 elixir of joy on the wall, 1 elixir of joy.
+  Take one down and pass it around, no more elixirs of joy on the wall.
+  """
+end
+
+def verse(2) do
+  """
+  2 elixirs of joy on the wall, 2 elixirs of joy.
+  Take one down and pass it around, 1 elixir of joy on the wall.
+  """
+end
+
+def verse(number) do
+  """
+  #{number} elixirs of joy on the wall, #{number} elixirs of joy.
+  Take one down and pass it around, #{number - 1} elixirs of joy on the wall.
+  """
+end
+```
+
+Is it "bad" that our code doesn't reveal with four verse variants as directly? 
+
+## It depends
+
+As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
+
+In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change may be the wrong tradeoff. If I could develop a solution that was easier to write and is easier to understand by others. Even if I expected I would have upcoming changes, it would probably be better to wait unti I need to make the actual changes before I attempt generating abstractions on a hunch.
+
+The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possilby, developing against the wrong abstractions. 
 
 
 
