@@ -193,9 +193,13 @@ Is it "bad" that our code doesn't reveal with four verse variants as directly?
 
 As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
 
-In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change may be the wrong tradeoff. If I could develop a solution that was easier to write and is easier to understand by others. Even if I expected I would have upcoming changes, it would probably be better to wait unti I need to make the actual changes before I attempt generating abstractions on a hunch.
+In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change may be the wrong tradeoff. If I could develop a solution that was easier to write and is easier to understand by others, that sounds like a win. Even if I expected I would have upcoming changes, it would probably be better to wait unti I need to make the actual changes before I attempt generating abstractions based on assumptions.
 
-The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possilby, developing against the wrong abstractions. 
+The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possibly, developing against the wrong abstractions. Even after reading the chapter, my Elixir solution still went for a more abstract solution, one that inadvertently hid some details about how the varations of the 99 Bottles song. While I feel like the solution I came up with is a nice mix of concrete and abstract, and I am happy with how it turned out, but I think I am suffering from "it's my code, so I think it's great" syndrome. Trying to see things through a more pragmatic lens (and heavily influenced by conclusions drawn in the book), I wonder if the addiction to multiple, small functions needs should be continued for new solutions. I will never no less about the solution than I do right now, so maybe I should just wait until I know more before I make more abstract assumptions.
+
+One chapter in, and [/99 Bottles of OOP/](https://sandimetz.com/99bottles) already feels like it will be taking me to a new stage in my programming life. I will leave you with a quote from the book:
+
+> As programmers grow, they get better at solving challenging problems, and become comfortable with complexity. This higher level of comfort sometimes leads to the belief that complexity is inevitable, as if it’s the natural, inescapable state of all finished code. However, there’s something beyond complexity—a higher level of simplicity. Infinitely experienced programmers do not write infinitely complex code; they write code that’s blindingly simple.
 
 
 
