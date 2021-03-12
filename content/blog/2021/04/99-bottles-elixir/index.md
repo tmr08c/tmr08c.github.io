@@ -4,38 +4,7 @@ date:   "2021-02-26T06:30:34.781Z"
 categories: ["elixir"]
 ---
 
-At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a bookclub book. The tongue-in-cheek tl;dr of the book laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
-
-> It turns out that everything you need to know about Object-Oriented Design (OOD) can be learned from the "[99 Bottles of Beer](https://en.wikipedia.org/wiki/99_Bottles_of_Beer)" song.
-
-Over the course of the book, the authors use the fairly simple problem of writing a program to "sing" the 99 Bottles of beer song to discuss different aspect of object-oriented programming and design. Our group is a chapter in and I am already excited about the disucssions we are beginning to have. 
-
-In the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity), the authors discuss the balance between concrete and abstact code. This balance relates to how easy code is to understand versus change, respectively. They then show a few [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) to the 99 Bottles Problem, and provide measures on which to to [judge the solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-judging-code).
-
-While it's not a book on functional programming, I wanted to see how a solution in Elixir would stand up against these questions. Below is my attempt at solving the problem using Elixir.
-
-## The Solution 
-
-```elixir
-defmodule NinetyNineElixirsOfJoy do
-  def song, do: verses(99, 0)
-
-  def verses(start, stop) do
-    start..stop
-    |> Enum.map(&verse/1)
-    |> Enum.join("\n")
-  end
-
-  def verse(number) do
-    """
-    #{String.capitalize(beverage(number))} on the wall, #{beverage(number)}.
-    #{do_something(number)}
-    """
-  end
-
-  defp beverage(0), do: "no more elixirs of joy"
-  defp beverage(1), do: "1 elixir of joy"
-  defp beverage(number), do: "#{number} elixirs of joy"
+At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a bookclub book. The tongue-in-cheek tl;dr of the book laid out r), do: "#{number} elixirs of joy"
 
   defp do_something(0) do
     "Ask José to brew up some more, #{beverage(99)} on the wall."
@@ -108,7 +77,7 @@ The cost of abstractions is code that is generally more difficult to follow for 
 > Code is easy to understand when it clearly reflects the problem it’s solving, and thus openly exposes that problem’s domain.
 > -- 99 Bottles of OOP
 
-One way to help identify where your code falls on this spectrum is to ask questions aimed to reval what the code is telling you about the problem. In the book, the authors ask questions intended to reveal if you can easily see how similar or different different code paths would be. When code is abstract, you often "hide" variations in your abstations. As a result, more abstract code will often be more difficult to, at a glance, identify obvious code path variations. For the 99 Bottles problem, below are some questions the authors suggest asking to evaluate your solution.
+One way to help identify where your code falls on this spectrum is to see if a surface level review of the code can reveal what problem the code is mean to solve. In the book, the authors ask questions intended to reveal if you can easily see how similar or different different code paths would be. When code is abstract, you often "hide" variations in your abstations. As a result, more abstract code will often be more difficult to, at a glance, identify obvious code path variations. For the 99 Bottles problem, below are some questions the authors suggest asking to evaluate your solution.
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
@@ -119,15 +88,15 @@ Let's attempt to answer these questions for our Elixir solution.
 
 Earlier, we hinted at how we may determine the number of verse variants - through our use of pattern matching. In both `beverage` and `do_something` we match on `0` and `1`, and then everything else is captured in `number`. This may be an indicatation that we have three verse variants. 
 
-Continuing on with pattern matching as our guide, we can try to determine which verses are most similar and disimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different and everything else is similar. The difference come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involved taking our beverage down down, sometimes we ask for more). 
+Continuing on with pattern matching as our guide, we can try to determine which verses are most similar and disimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own special cases) and everything else is similar. The difference come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
 
-To understand how we determin which verse to sing next, we turn to the main entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
+To understand how we determine which verse to sing next, we turn to the main entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
 
 Through pattern matching, we have surfaced variation on our codepaths, while allowing each individual function to only focus on its own case.
 
 ### A caveat
 
-Based on our answers, the verse for when we have `2` elixirs of joy and `3` should basically be identical (except the the numbers). Let's see if this holds:
+Based on our answers, the verse for when we have `2` elixirs of joy and `3` should basically be identical (except the numbers). Let's see if this holds:
 
 ```{diff}
 3 elixirs of joy on the wall, 3 elixirs of joy.
@@ -137,20 +106,20 @@ Based on our answers, the verse for when we have `2` elixirs of joy and `3` shou
 +Take one down and pass it around, 1 elixir of joy on the wall.
 ```
 
-When we have three elixirs of joy on the wall, when we take one down, we still have two elixir**s**. However, when we do the same after starting with two elixir we only have one elixir (no **s**) left. This is handled in `do_something/1`, where we call `beverage/1` with `number - 1`. 
+When we have three elixirs of joy on the wall, when we take one down, we still have two elixir**s**. However, when we do the same after starting with two elixirs we only have one elixir (no **s**) left. This is the result of calling `beverage/1` with `number - 1` in `do_something/1`. 
 
 Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the pervious questions about similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`), than previous calls would have made. 
 
-Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. Rather than our verse matching `do_something(1)` to `beverage(1)`, we actualaly match `do_something(1)` to `beverage(1 - 1)`. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0` we end up matching something different (`beverage(1)`, `beverage(0)`, and `beveage(number)` respectively).
+Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. Rather than our verse matching `do_something(1)` to `beverage(1)`, we actually match `do_something(1)` to `beverage(1 - 1)`. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0` we end up matching something different (`beverage(1)`, `beverage(0)`, and `beveage(number)`, respectively).
 
 This slight mismatch "hides" the fact that we have four verse variants:
 
-1. `do_something(number)` with `beverage(number)`
+1. `do_something(number)` with `beverage(number)` (when `number` is greater than `2`)
 1. `do_something(number)` with `beveage(1)` (when `number` is `2`)
 1. `do_something(1)` with `beverage(0)` (when `number` is `1`)
-1. `do_something(0)` with `beverage(number)` (when `number` is `0`, `99` is passed into `beverage`, which is the `number` pattern)
+1. `do_something(0)` with `beverage(number)` (when `number` is `0`; `99` is passed into `beverage/1`, which is the `number` pattern)
 
-This is an indication that our code may be more abstract than it is concrete. A more concrete version would more directly surface the four variants. It could look something like (or use `case` or `if`/`else`):
+This is an indication that our code may be more abstract than it is concrete. A more concrete version would more directly surface the four variants. It could look something like this:
 
 ```elixir
 def verse(0) do
@@ -181,6 +150,8 @@ def verse(number) do
   """
 end
 ```
+
+While this example uses pattern matching, `if` or `case` could also work.
 
 Is it "bad" that our code doesn't reveal with four verse variants as directly? 
 
