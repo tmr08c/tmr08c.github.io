@@ -91,6 +91,6 @@ module.exports = {
       }
     },
     `gatsby-plugin-catch-links`,
-    `gatsby-transformer-json`,
+    `gatsby-transformer-json`
   ]
 };

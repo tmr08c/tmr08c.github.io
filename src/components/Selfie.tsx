@@ -15,8 +15,11 @@ import * as React from "react";
 
 const Selfie = () => {
   return (
-    <StaticImage src='../images/RhiDesign Troy Avatar.png' alt="avatar"
-    className="rounded-lg w-1/2 max-w-sm mx-auto" />
+    <StaticImage
+      src="../images/RhiDesign Troy Avatar.png"
+      alt="avatar"
+      className="rounded-lg w-1/2 max-w-sm mx-auto"
+    />
   );
 };
 
