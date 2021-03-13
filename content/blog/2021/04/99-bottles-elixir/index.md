@@ -10,9 +10,11 @@ At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.c
 
 Over the course of the book, the authors use the fairly simple problem of writing a program to "sing" the 99 Bottles of beer song to discuss different aspect of object-oriented programming and design. Our group is a chapter in and I am already excited about the disucssions we are beginning to have. 
 
-In the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity), the authors discuss the balance between concrete and abstact code. This balance relates to how easy code is to understand versus change, respectively. They then show a few [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) to the 99 Bottles Problem, and provide measures on which to to [judge the solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-judging-code).
+Everything discussed in this post is based on the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) which is available as a way to preview the book. If this post has **anything** that seems valuable, it's because of this book. Please consider purchasing it.
 
-While it's not a book on functional programming, I wanted to see how a solution in Elixir would stand up against these questions. Below is my attempt at solving the problem using Elixir.
+In the first chapter, the authors discuss the balance between concrete and abstact code. This balance relates to how easy code is to understand versus change, respectively. They then show [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) to the 99 Bottles problem. To help compare solutions, the authors discuss subjective and objective measures for evaluating a solution.
+
+While it's not a book on functional programming, I wanted to see how a solution in Elixir would compare to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book. Below is my attempt at solving the problem using Elixir.
 
 ## The Solution 
 
