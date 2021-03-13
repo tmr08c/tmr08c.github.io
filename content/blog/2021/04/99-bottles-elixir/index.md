@@ -4,7 +4,38 @@ date:   "2021-02-26T06:30:34.781Z"
 categories: ["elixir"]
 ---
 
-At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a bookclub book. The tongue-in-cheek tl;dr of the book laid out r), do: "#{number} elixirs of joy"
+At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a bookclub book. The tongue-in-cheek tl;dr of the book laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
+
+> It turns out that everything you need to know about Object-Oriented Design (OOD) can be learned from the "[99 Bottles of Beer](https://en.wikipedia.org/wiki/99_Bottles_of_Beer)" song.
+
+Over the course of the book, the authors use the fairly simple problem of writing a program to "sing" the 99 Bottles of beer song to discuss different aspect of object-oriented programming and design. Our group is a chapter in and I am already excited about the disucssions we are beginning to have. 
+
+In the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity), the authors discuss the balance between concrete and abstact code. This balance relates to how easy code is to understand versus change, respectively. They then show a few [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) to the 99 Bottles Problem, and provide measures on which to to [judge the solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-judging-code).
+
+While it's not a book on functional programming, I wanted to see how a solution in Elixir would stand up against these questions. Below is my attempt at solving the problem using Elixir.
+
+## The Solution 
+
+```elixir
+defmodule NinetyNineElixirsOfJoy do
+  def song, do: verses(99, 0)
+
+  def verses(start, stop) do
+    start..stop
+    |> Enum.map(&verse/1)
+    |> Enum.join("\n")
+  end
+
+  def verse(number) do
+    """
+    #{String.capitalize(beverage(number))} on the wall, #{beverage(number)}.
+    #{do_something(number)}
+    """
+  end
+
+  defp beverage(0), do: "no more elixirs of joy"
+  defp beverage(1), do: "1 elixir of joy"
+  defp beverage(number), do: "#{number} elixirs of joy"
 
   defp do_something(0) do
     "Ask José to brew up some more, #{beverage(99)} on the wall."
@@ -159,9 +190,9 @@ Is it "bad" that our code doesn't reveal with four verse variants as directly?
 
 As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
 
-In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change may be the wrong tradeoff. If I could develop a solution that was easier to write and is easier to understand by others, that sounds like a win. Even if I expected I would have upcoming changes, it would probably be better to wait unti I need to make the actual changes before I attempt generating abstractions based on assumptions.
+In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change may be the wrong tradeoff. Instead, I could develop a solution that is both easier to write and understand. It may not be as "elegant" but it would be a lower-cost solution for a problem that doesn't require high effort. Even if I expected I would have upcoming changes, starting with the easier solution and waiting until I knew the actual changes I needed to make would help prevent creating the wrong abstractions.
 
-The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possibly, developing against the wrong abstractions. Even after reading the chapter, my Elixir solution still went for a more abstract solution, one that inadvertently hid some details about how the varations of the 99 Bottles song. While I feel like the solution I came up with is a nice mix of concrete and abstract, and I am happy with how it turned out, but I think I am suffering from "it's my code, so I think it's great" syndrome. Trying to see things through a more pragmatic lens (and heavily influenced by conclusions drawn in the book), I wonder if the addiction to multiple, small functions needs should be continued for new solutions. I will never no less about the solution than I do right now, so maybe I should just wait until I know more before I make more abstract assumptions.
+The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possibly, developing against the wrong abstractions. Even after reading the chapter, my Elixir solution still went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song. While I feel like the solution I came up with is a nice mix of concrete and abstract and I am happy with how it turned out, I think I am suffering from "it's my code, so I think it's great" syndrome and not being fully objective in my evaluation. Trying to see things through a more pragmatic lens (and heavily influenced by conclusions drawn in the book), I wonder if the addiction to early abstractions and multiple, small functions should be fought off in implementations. I will never know less about the solution than I do right now, so maybe I should just wait until I know more before I make more abstract assumptions.
 
 One chapter in, and [/99 Bottles of OOP/](https://sandimetz.com/99bottles) already feels like it will be taking me to a new stage in my programming life. I will leave you with a quote from the book:
 
