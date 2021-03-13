@@ -18,11 +18,11 @@ const Layout: React.SFC = ({ children }) => (
     render={data => (
       <>
         <Header siteTitle={data.site.siteMetadata.title} />
-        <div
-          className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0"
+        <main
+          className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 sm:py-12 lg:max-w-4xl lg:py-16 xl:max-w-5xl xl:px-0"
         >
           {children}
-        </div>
+        </main>
         <Footer />
       </>
     )}
