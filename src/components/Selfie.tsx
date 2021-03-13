@@ -1,5 +1,5 @@
 import { graphql, StaticQuery } from "gatsby";
-import Img from "gatsby-image";
+import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
 
 /*
@@ -15,27 +15,8 @@ import * as React from "react";
 
 const Selfie = () => {
   return (
-    <StaticQuery
-      query={graphql`
-        query {
-          placeholderImage: file(
-            relativePath: { eq: "RhiDesign Troy Avatar.png" }
-          ) {
-            childImageSharp {
-              fluid(maxWidth: 700) {
-                ...GatsbyImageSharpFluid
-              }
-            }
-          }
-        }
-      `}
-      render={data => (
-        <Img
-          className="rounded-lg w-1/2 max-w-sm mx-auto"
-          fluid={data.placeholderImage.childImageSharp.fluid}
-        />
-      )}
-    />
+    <StaticImage src='../images/RhiDesign Troy Avatar.png' alt="avatar"
+    className="rounded-lg w-1/2 max-w-sm mx-auto" />
   );
 };
 
