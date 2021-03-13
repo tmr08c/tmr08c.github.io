@@ -70,7 +70,7 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
 
     return (
       <Layout>
-        <article >
+        <article>
           <SEO title={post.frontmatter.title} description={post.excerpt} />
           <h1 className="text-4xl font-bold">{post.frontmatter.title}</h1>
           <div className="mb-5">
