@@ -34,7 +34,7 @@ In both Ruby and JavaScript, you can use splat/spread to build up a new array fr
 => [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
-##### Idiomatic Ruby
+#### Idiomatic Ruby
 
 In Ruby, this approach does not seem very common. Instead, it seems more common to use the [`+`](https://ruby-doc.org/core-2.7.0/Array.html#method-i-2B) operator:
 
