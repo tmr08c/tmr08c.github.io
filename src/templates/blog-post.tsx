@@ -70,11 +70,10 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
 
     return (
       <Layout>
-        <article
-            className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">
+        <article>
           <SEO title={post.frontmatter.title} description={post.excerpt} />
-          <h1 className="font-bold">{post.frontmatter.title}</h1>
-          <div className="mb-5">
+          <h1 className="font-bold text-3xl">{post.frontmatter.title}</h1>
+          <div className="mb-8 lg:mb-10">
             <time
               dateTime={post.frontmatter.date}
               className="text-gray-800 italic mb-7"
@@ -84,6 +83,7 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post.html }}
+            className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl"
           />
         </article>
 
