@@ -4,13 +4,13 @@ date:   "2021-02-26T06:30:34.781Z"
 categories: ["elixir"]
 ---
 
-At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a bookclub book. The tongue-in-cheek tl;dr of the book laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
+At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a book club book. The tongue-in-cheek tl;dr of the book laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
 
 > It turns out that everything you need to know about Object-Oriented Design (OOD) can be learned from the "[99 Bottles of Beer](https://en.wikipedia.org/wiki/99_Bottles_of_Beer)" song.
 
-Over the course of the book, the authors use the problem of writing a program to "sing" the 99 Bottles of beer song to discuss different aspect of object-oriented programming and design. Our group recently discussed the first chapter, and I am already excited about the discussions we are having. 
+Through the book, the authors use the problem of writing a program to "sing" the 99 Bottles of beer song to discuss different aspects of object-oriented programming and design. 
 
-Everything discussed in this post is based on the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) which is available as a way to preview the book. If this post has **anything** that seems valuable, it's because of this book. Please consider purchasing it.
+Everything discussed in this post is based on the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) which is available as a way to preview the book. If this post has _anything_ that seems valuable, it's because of this book. Please consider purchasing it.
 
 While it's not a book on functional programming, I wanted to see how a solution in Elixir would compare to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book. Below is my attempt at solving the problem using Elixir.
 
@@ -53,7 +53,7 @@ end
 
 To "sing" the whole song, you would call `song/0`. This calls out to `verses/2`, which calls and `join/2`s  `verse/1` together. 
 
-The choice of having functions for `song`, `verses`, and `verse` comes from the book. An advantage of having the three separate functions is ease of testing. It's easier to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`.
+The choice of having functions for `song`, `verses`, and `verse` comes from the book. An advantage of having the three separate functions is the ease of testing. It's more straightforward to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`.
 
 In addition to the public functions, we have helper functions, `beverage/1` and `do_something/1`
 
@@ -65,9 +65,9 @@ defp beverage(1), do: "1 elixir of joy"
 defp beverage(number), do: "#{number} elixirs of joy"
 ```
 
-This generically named `beverage` function _could_ be repurposed for beer, kombucha, or anything else. The primary value in splitting it out was handling the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case` in another language, I think pattern matching does really well here.
+The primary value in splitting out the function was handling the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case` in another language, I think pattern matching works well here.
 
-Following the same idea, our generically named `do_something/1` function also leverages pattern matching. Having the same three pattern match cases (`0`, `1` and `number`) for `beverage/1` and `do_something/1` provides some potential value in making it easier to understand what's going on, we'll get to that later.
+Following the same idea, our generically named `do_something/1` function also leverages pattern matching. Having the same three pattern match cases (`0`, `1` and `number`) for `beverage/1` and `do_something/1` provides some potential value in making it easier to understand what's going on, but we'll get to that later.
 
 ```elixir
 defp do_something(0) do
@@ -83,30 +83,30 @@ defp do_something(number) do
 end
 ```
 
-Our `do_something/1` function is similar when the number of bottles is between 1 and 99 - we take a bottle down and pass it around. When we are on the last bottle we take "it" down instead of "one." The two function calls are so similar that we could probably find a way to handle them in the same function if we wanted.
+Our `do_something/1` function is similar when the number of bottles is between 1 and 99 - we take a bottle down and pass it around. When we are on the last bottle we take "it" down instead of "one." 
 
 Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the verse is normally about going to the store and buy some more. In our case, we will ask José, the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (fortunately, the attempt at cleverness stops here).
 
-While the function name isn't particularly helpful and we have some potential duplication, I think this ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this idea.
+While the function name isn't particularly helpful and we have some potential duplication between the `number` and `1` cases, I think this ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this claim.
 
 ## Concrete or Abstract
 
-The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand, but harder to change. On the other side, abstract code is generally more difficult to understand, with the intention of being easier to change. 
+The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand, but harder to change. On the other side, abstract code is generally more difficult to understand, but (intended to be) easier to change. 
 
-The book posits that when learning how to program we often start out writing code the skews on the concrete side of things. Over time, we often move towards writing abstract code by default. While being able to write code that is changeable often proves to be valuable, the book points out that it doesn't always make sense to start there.
+The book posits that when learning how to program we often start out writing concrete code. Over time, we often move towards writing abstract code by default. While being able to write changeable code provides value, the book points out that it doesn't always make sense to start there.
 
 > Unfortunately, abstractions are hard, and even with the best of intentions, it’s easy to get them wrong. Well-meaning programmers tend to over-anticipate abstractions, inferring them prematurely from incomplete information. Early abstractions are often not quite right, and therefore they create a catch-22. You can’t create the right abstraction until you fully understand the code, but the existence of the wrong abstraction may prevent you from ever doing so. This suggests that you should not reach for abstractions, but instead, you should resist them until they absolutely insist upon being created.
 
-The idea of waiting to abstract until it "insists" upon being created has struck me. It's often tempting to "clean up" code you are writing and seek out abstractions. In my solution, I attempted to do so with the `beverage/1` and `do_something/1` functions. While I can cite the [rule of three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)#:~:text=Rule%20of%20three%20(%22Three%20strikes,be%20refactored%20to%20avoid%20duplication.) (refactor when you do something three times), if I'm being honest I extracted those functions at the first sign of duplication.
+The idea of waiting to abstract until it "insists" upon being created has struck me. It's often tempting to "clean up" the code you are writing and seek out abstractions. In my solution, I attempted to do so with the `beverage/1` and `do_something/1` functions. While I can cite the [rule of three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)#:~:text=Rule%20of%20three%20(%22Three%20strikes,be%20refactored%20to%20avoid%20duplication.) (refactor when you do something three times), if I'm being honest I extracted those functions at the first sign of duplication.
 
-The cost of abstractions is code that is generally more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is that it's easier to follow at the cost of being more difficult to change. Because we don't have a need to change the song, let's focus on how to decide if our code is more understandable. 
+The cost of abstractions is code that is generally more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is that it's easier to follow at the cost of being more difficult to change. Because we don't have any requirements to change the song, let's focus on how to decide if our code is understandable. 
 
 ## What is the code doing
 
 > Code is easy to understand when it clearly reflects the problem it’s solving, and thus openly exposes that problem’s domain.
 > -- 99 Bottles of OOP
 
-One way to help identify where your code falls on this spectrum is to see if a surface-level review of the code can reveal what problem the code is meant to solve. In the book, the authors ask questions intended to reveal if you can easily see how similar or different code paths would be. When code is abstract, you often "hide" variations in your abstractions. As a result, more abstract code will often be more difficult to, at a glance, identify obvious code path variations. For the 99 Bottles problem, below are some questions the authors suggest asking to evaluate your solution.
+One way to help identify where your code falls on this spectrum is to see if a surface-level reading of the code can reveal what problem it is meant to solve. In the book, the authors ask questions intended to reveal if you can easily see how similar or different code paths would be. When code is abstract, you often "hide" variations in your abstractions. As a result, more abstract code will often be more difficult to, at a glance, identify obvious code path variations. Below are some questions the authors suggest asking to evaluate the understandability of a solution to the 99 Bottles problem.
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
@@ -115,13 +115,13 @@ One way to help identify where your code falls on this spectrum is to see if a s
 
 Let's attempt to answer these questions for our Elixir solution.
 
-Earlier, we hinted at how we may determine the number of verse variants - through our use of pattern matching. In both `beverage` and `do_something` we match on `0` and `1`, and then everything else is captured in `number`. This may be an indication that we have three verse variants. 
+Earlier, we hinted at how we may determine the number of verse variants - through our use of pattern matching. In both `beverage/1` and `do_something/1`, we match on `0` and `1`, and then everything else is captured in `number`. This may be an indication that we have three verse variants. 
 
-Continuing on with pattern matching as our guide, we can try to determine which verses are most similar and dissimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own special cases) and everything else is similar. The difference come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
+Continuing with pattern matching as our guide, we can try to determine which verses are most similar and dissimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own special cases) and everything else is similar. The differences come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
 
 To understand how we determine which verse to sing next, we turn to the entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
 
-Through pattern matching, we have surfaced variation on our code paths, while allowing each individual function to only focus on its own case.
+Through pattern matching, we have surfaced variations in our code paths, while still allowing each function to only focus on its particular case.
 
 ### A caveat
 
