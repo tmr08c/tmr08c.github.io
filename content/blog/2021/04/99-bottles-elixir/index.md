@@ -85,7 +85,7 @@ end
 
 Our `do_something/1` function is similar when the number of bottles is between 1 and 99 - we take a bottle down and pass it around. When we are on the last bottle we take "it" down instead of "one." 
 
-Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the verse is normally about going to the store and buy some more. In our case, we will ask José, the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (fortunately, the attempt at cleverness stops here).
+Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the verse is normally about going to the store and buy some more. In our case, we will ask [José](https://github.com/josevalim), the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (fortunately, the attempt at cleverness stops here).
 
 While the function name isn't particularly helpful and we have some potential duplication between the `number` and `1` cases, I think this ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this claim.
 
@@ -117,15 +117,15 @@ Let's attempt to answer these questions for our Elixir solution.
 
 Earlier, we hinted at how we may determine the number of verse variants - through our use of pattern matching. In both `beverage/1` and `do_something/1`, we match on `0` and `1`, and then everything else is captured in `number`. This may be an indication that we have three verse variants. 
 
-Continuing with pattern matching as our guide, we can try to determine which verses are most similar and dissimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own special cases) and everything else is similar. The differences come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
+Continuing with pattern matching as our guide, we can try to determine which verses are most similar and dissimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own, special cases) and everything else is similar. The differences come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
 
-To understand how we determine which verse to sing next, we turn to the entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses start with the high number and ending with the low number. This means the next verse will be `number - 1`.
+To understand how we determine which verse to sing next, we turn to the entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses starting with the high number (99) and ending with the low number (0). This means the next verse will be `number - 1`.
 
 Through pattern matching, we have surfaced variations in our code paths, while still allowing each function to only focus on its particular case.
 
-### A caveat
+## A caveat
 
-Based on our answers, the verse for when we have `2` elixirs of joy and `3` should basically be identical (except the numbers). Let's see if this holds:
+Based on our answers, the verse for when we have `2` elixirs of joy and `3` should essentially be identical (except the numbers). Let's see if this holds:
 
 ```{diff}
 3 elixirs of joy on the wall, 3 elixirs of joy.
@@ -137,11 +137,11 @@ Based on our answers, the verse for when we have `2` elixirs of joy and `3` shou
 
 When we have three elixirs of joy on the wall, when we take one down, we still have two elixir**s**. However, when we do the same after starting with two elixirs we only have one elixir (no **s**) left. This is the result of calling `beverage/1` with `number - 1` in `do_something/1`. 
 
-Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the previous questions about similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`), than previous calls would have made. 
+Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the previous questions about the similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`) than previous calls would have made (`beverage(number)`). 
 
-Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. Rather than our verse matching `do_something(1)` to `beverage(1)`, we actually match `do_something(1)` to `beverage(1 - 1)`. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0` we end up matching something different (`beverage(1)`, `beverage(0)`, and `beveage(number)`, respectively).
+Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. Rather than our verse matching `do_something(1)` to `beverage(1)`, we actually match `do_something(1)` to `beverage(1 - 1)`. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0` we end up matching something different (`beverage(1)`, `beverage(0)`, and `beverage(number)`, respectively).
 
-This slight mismatch "hides" the fact that we actually have four verse variants:
+This slight mismatch "hides" the fact that we _actually_ have four verse variants:
 
 1. `do_something(number)` with `beverage(number)` (when `number` is greater than `2`)
 1. `do_something(number)` with `beveage(1)` (when `number` is `2`)
@@ -154,7 +154,7 @@ This is an indication that our code may be more abstract than it is concrete. A 
 def verse(0) do
   """
   No more elixirs of joy on the wall, no more elixirs of joy.
-  Ask Jose to brew up some more, 99 elixirs of joy on the wall.
+  Ask José to brew up some more, 99 elixirs of joy on the wall.
   """
 end
 
@@ -188,9 +188,11 @@ Is it "bad" that our code doesn't reveal with four verse variants as directly?
 
 As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
 
-In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change may be the wrong tradeoff. Instead, I could develop a solution that is both easier to write and understand. It may not be as "elegant" but it would be a lower-cost solution for a problem that doesn't require high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am more likely than not going to pick a bad abstractions. Starting with the easier solution and waiting until I knew the actual changes I needed to make would help prevent creating the wrong abstractions.
+The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possibly, developing against the wrong abstractions. Even after already reading the chapter, my Elixir solution _still_ went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song.
 
-The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possibly, developing against the wrong abstractions. Even after reading the chapter, my Elixir solution still went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song. While I feel like the solution I came up with is a nice mix of concrete and abstract and I am happy with how it turned out, I think I am suffering from "it's my code, so I think it's great" syndrome and not being fully objective in my evaluation. Trying to see things through a more pragmatic lens (and heavily influenced by conclusions drawn in the book), I wonder if the addiction to early abstractions and multiple, small functions should resisted more often. I will never know less about the solution than I do right now, so maybe I should just wait until I know more before I make more abstract assumptions.
+In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change is not valuable. Instead, I could develop a solution that is both easier to write and understand. It may not be as "elegant," but it would be a lower-cost solution for a problem that doesn't necessitate high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am more likely than not going to pick the wrong abstraction. Starting with the easier solution and waiting until I knew what the actual changes I needed to make were, could help to avoid creating poor abstractions.
+
+ I wonder if the addiction to early abstractions and multiple, small functions should be resisted more often. we will never know less about our problem than we do right now, so maybe we should just wait until we know more before making abstract assumptions.
 
 One chapter in, and [/99 Bottles of OOP/](https://sandimetz.com/99bottles) already feels like it will be taking me to a new stage in my programming life. I will leave you with a quote from the book:
 
