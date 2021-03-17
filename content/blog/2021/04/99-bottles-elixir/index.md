@@ -4,17 +4,19 @@ date:   "2021-02-26T06:30:34.781Z"
 categories: ["elixir"]
 ---
 
-At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a book club book. The tongue-in-cheek tl;dr of the book laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
+At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a book club book. The tongue-in-cheek tl;dr of the book, laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
 
 > It turns out that everything you need to know about Object-Oriented Design (OOD) can be learned from the "[99 Bottles of Beer](https://en.wikipedia.org/wiki/99_Bottles_of_Beer)" song.
 
-Through the book, the authors use the problem of writing a program to "sing" the 99 Bottles of beer song to discuss different aspects of object-oriented programming and design. 
+The authors use writing a program to "sing" the 99 Bottles of beer song to discuss different aspects of object-oriented programming and design. 
 
-Everything discussed in this post is based on the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) which is available as a way to preview the book. If this post has _anything_ that seems valuable, it's because of this book. Please consider purchasing it.
+Everything discussed in this post is inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity), which is freely available as a way to preview the book. If this post has _anything_ that seems valuable, it is because of this book. Please consider purchasing it.
 
-While it's not a book on functional programming, I wanted to see how a solution in Elixir would compare to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book. Below is my attempt at solving the problem using Elixir.
+While it's not a book on functional programming, I wanted to see what I would come up with for a solution written in Elixir. I also wanted to how the Elixir solution would compare in terms of understandability to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book.
 
 ## The Solution 
+
+Below is my attempt at solving the problem using Elixir.
 
 ```elixir
 defmodule NinetyNineElixirsOfJoy do
@@ -51,9 +53,9 @@ defmodule NinetyNineElixirsOfJoy do
 end
 ```
 
-To "sing" the whole song, you would call `song/0`. This calls out to `verses/2`, which calls and `join/2`s  `verse/1` together. 
+To "sing" the whole song, you would call `song/0`. In turn, `song/0` calls out to `verses/2`, which calls and `join/2`s  `verse/1` together. 
 
-The choice of having functions for `song`, `verses`, and `verse` comes from the book. An advantage of having the three separate functions is the ease of testing. It's more straightforward to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`.
+The choice of having functions for `song`, `verses`, and `verse` comes from the book. An advantage of having three separate functions is the ease of testing. It's more straightforward to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`.
 
 In addition to the public functions, we have helper functions, `beverage/1` and `do_something/1`
 
