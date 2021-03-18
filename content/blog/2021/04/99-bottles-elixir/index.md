@@ -53,13 +53,11 @@ defmodule NinetyNineElixirsOfJoy do
 end
 ```
 
-To "sing" the whole song, you would call `song/0`. In turn, `song/0` calls out to `verses/2`, which calls and `join/2`s  `verse/1` together. 
-
-The choice of having functions for `song`, `verses`, and `verse` comes from the book. An advantage of having three separate functions is the ease of testing. It's more straightforward to TDD starting with `verse/1`, moving onto `verses/2`, and ending with `song/0`.
+To "sing" the whole song, you would call `song/0`. In turn, `song/0` calls out to `verses/2`, which calls and `join/2`s  `verse/1`s together. 
 
 In addition to the public functions, we have helper functions, `beverage/1` and `do_something/1`
 
-With `beverage/1`, I tried to be clever and replace "bottles of beer" with "elixirs of joy".
+With `beverage/1`, I tried to be clever and replace "bottles of beer" with "elixirs of joy."
 
 ```elixir
 defp beverage(0), do: "no more elixirs of joy"
@@ -69,7 +67,7 @@ defp beverage(number), do: "#{number} elixirs of joy"
 
 The primary value in splitting out the function was handling the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case` in another language, I think pattern matching works well here.
 
-Following the same idea, our generically named `do_something/1` function also leverages pattern matching. Having the same three pattern match cases (`0`, `1` and `number`) for `beverage/1` and `do_something/1` provides some potential value in making it easier to understand what's going on, but we'll get to that later.
+Following the same idea, our generically named `do_something/1` function also leverages pattern matching. Having the same three pattern match cases (`0`, `1` and `number`) for `beverage/1` and `do_something/1` provides some potential value in making it easier to understand the pieces of the program (we will explore this further, later).
 
 ```elixir
 defp do_something(0) do
@@ -85,30 +83,30 @@ defp do_something(number) do
 end
 ```
 
-Our `do_something/1` function is similar when the number of bottles is between 1 and 99 - we take a bottle down and pass it around. When we are on the last bottle we take "it" down instead of "one." 
+Our `do_something/1` function is similar when the number of bottles is between 1 and 99 - we take a bottle down and pass it around. When we are on the last bottle, we take "it" down instead of "one." 
 
-Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the verse is normally about going to the store and buy some more. In our case, we will ask [José](https://github.com/josevalim), the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (fortunately, the attempt at cleverness stops here).
+Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the verse is usually about going to the store and buying some more. In our case, we will ask [José](https://github.com/josevalim), the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (the attempt at cleverness stops here).
 
-While the function name isn't particularly helpful and we have some potential duplication between the `number` and `1` cases, I think this ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this claim.
+Despite having a vague function name and some potential duplication, I think this ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this claim.
 
 ## Concrete or Abstract
 
-The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand, but harder to change. On the other side, abstract code is generally more difficult to understand, but (intended to be) easier to change. 
+The book describes code as being on a concrete-abstract spectrum. On the concrete side, code is generally easier to understand but harder to change. On the other side, abstract code is generally more difficult to understand but (intended to be) easier to change. 
 
-The book posits that when learning how to program we often start out writing concrete code. Over time, we often move towards writing abstract code by default. While being able to write changeable code provides value, the book points out that it doesn't always make sense to start there.
+The book posits that, when learning how to program, we start out writing concrete code. Over time, we often move towards writing abstract code as a default. While writing changeable code provides value, the book points out that it does not always make sense to start there.
 
 > Unfortunately, abstractions are hard, and even with the best of intentions, it’s easy to get them wrong. Well-meaning programmers tend to over-anticipate abstractions, inferring them prematurely from incomplete information. Early abstractions are often not quite right, and therefore they create a catch-22. You can’t create the right abstraction until you fully understand the code, but the existence of the wrong abstraction may prevent you from ever doing so. This suggests that you should not reach for abstractions, but instead, you should resist them until they absolutely insist upon being created.
 
-The idea of waiting to abstract until it "insists" upon being created has struck me. It's often tempting to "clean up" the code you are writing and seek out abstractions. In my solution, I attempted to do so with the `beverage/1` and `do_something/1` functions. While I can cite the [rule of three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)#:~:text=Rule%20of%20three%20(%22Three%20strikes,be%20refactored%20to%20avoid%20duplication.) (refactor when you do something three times), if I'm being honest I extracted those functions at the first sign of duplication.
+The idea of waiting to develop an abstraction until it "insists" upon being created has begun to shift my thinking. It's often tempting to "clean up" the code you are writing by seeking out abstractions. In my solution, I attempted to do so with the `beverage/1` and `do_something/1` functions. While I can cite the [rule of three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)#:~:text=Rule%20of%20three%20(%22Three%20strikes,be%20refactored%20to%20avoid%20duplication.) (consider refactoring when you do something three times), if I'm honest, I extracted those functions at the first sign of duplication.
 
-The cost of abstractions is code that is generally more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is that it's easier to follow at the cost of being more difficult to change. Because we don't have any requirements to change the song, let's focus on how to decide if our code is understandable. 
+The cost of abstractions is code that is generally more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is code that is easier to follow at the cost of being more difficult to change. Because we don't have any requirements to change the song, let's focus on how to decide if our code is understandable. 
 
 ## What is the code doing
 
 > Code is easy to understand when it clearly reflects the problem it’s solving, and thus openly exposes that problem’s domain.
 > -- 99 Bottles of OOP
 
-One way to help identify where your code falls on this spectrum is to see if a surface-level reading of the code can reveal what problem it is meant to solve. In the book, the authors ask questions intended to reveal if you can easily see how similar or different code paths would be. When code is abstract, you often "hide" variations in your abstractions. As a result, more abstract code will often be more difficult to, at a glance, identify obvious code path variations. Below are some questions the authors suggest asking to evaluate the understandability of a solution to the 99 Bottles problem.
+One way to help identify where your code falls on the concrete-abstract spectrum is to see if a surface-level reading of the code can reveal what problem it is meant to solve. In the book, the authors ask questions intended to reveal if you can easily see how similar or different code paths would be. When code is abstract, you often "hide" variations in your abstractions. As a result, more abstract code will be more difficult to, at a glance, identify obvious code path variations. Below are some questions the authors suggest asking to evaluate the understandability of a solution to the 99 Bottles problem.
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
