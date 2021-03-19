@@ -180,20 +180,18 @@ def verse(number) do
 end
 ```
 
-While this example uses pattern matching, `if` or `case` could also work.
+While this example uses pattern matching, using `if` or `case` could also work.
 
 Is it "bad" that our code doesn't reveal with four verse variants as directly? 
 
 ## It depends
 
-As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
+As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding versus ease of changeability.  
 
-The authors suggest developers are often too quick to add abstractions to their solutions. This comes at the cost of making the code harder to understand, and, possibly, developing against the wrong abstractions. Even after already reading the chapter, my Elixir solution _still_ went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song.
+The authors suggest developers are often too quick to add abstractions to their solutions. Case in point, even after reading the chapter, my Elixir solution _still_ went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song. 
 
-In the case of this problem, there are no upcoming feature requests I am expecting, so optimizing for change is not valuable. Instead, I could develop a solution that is both easier to write and understand. It may not be as "elegant," but it would be a lower-cost solution for a problem that doesn't necessitate high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am more likely than not going to pick the wrong abstraction. Starting with the easier solution and waiting until I knew what the actual changes I needed to make were, could help to avoid creating poor abstractions.
+I could have instead started with a solution that is both easier to write and understand. It may not be as "elegant," but it would be a lower-cost solution for a problem that doesn't necessitate high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am more likely than not going to pick the wrong abstraction. We always know less about our products now than we will later. By waiting until we know what functionality we _actually_ need, we increase our chances of discovering the right abstractions. 
 
- I wonder if the addiction to early abstractions and multiple, small functions should be resisted more often. we will never know less about our problem than we do right now, so maybe we should just wait until we know more before making abstract assumptions.
-
-One chapter in, and [/99 Bottles of OOP/](https://sandimetz.com/99bottles) already feels like it will be taking me to a new stage in my programming life. I will leave you with a quote from the book:
+One chapter in, and [/99 Bottles of OOP/](https://sandimetz.com/99bottles) has already begun influencing my perspective. I will leave you with a quote from the book:
 
 > As programmers grow, they get better at solving challenging problems, and become comfortable with complexity. This higher level of comfort sometimes leads to the belief that complexity is inevitable, as if it’s the natural, inescapable state of all finished code. However, there’s something beyond complexity—a higher level of simplicity. Infinitely experienced programmers do not write infinitely complex code; they write code that’s blindingly simple.
