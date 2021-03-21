@@ -4,19 +4,19 @@ date:   "2021-02-26T06:30:34.781Z"
 categories: ["elixir"]
 ---
 
-At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a book club book. The tongue-in-cheek tl;dr of the book, laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface) is:
+At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.com/99bottles) as a book club book. The tongue-in-cheek tl;dr of the book, laid out in the [preface](https://sandimetz.com/99bottles-sample-ruby#preface), is:
 
 > It turns out that everything you need to know about Object-Oriented Design (OOD) can be learned from the "[99 Bottles of Beer](https://en.wikipedia.org/wiki/99_Bottles_of_Beer)" song.
 
 The authors use writing a program to "sing" the 99 Bottles of beer song to discuss different aspects of object-oriented programming and design. 
 
-Everything discussed in this post is inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity), which is freely available as a way to preview the book. If this post has _anything_ that seems valuable, it is because of this book. Please consider purchasing it.
-
 While it's not a book on functional programming, I wanted to see what I would come up with for a solution written in Elixir. I also wanted to how the Elixir solution would compare in terms of understandability to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book.
+
+Everything discussed in this post has been inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) of the book. The first chapter is freely available as a reading sample, so this post includes links to specific sections of the chapter. If this post has _anything_ that seems valuable, it is because of this book. Please consider purchasing it.
 
 ## The Solution 
 
-Below is my attempt at solving the problem using Elixir.
+Below is my attempt at solving the 99 Bottles problem using Elixir.
 
 ```elixir
 defmodule NinetyNineElixirsOfJoy do
@@ -87,7 +87,7 @@ Our `do_something/1` function is similar when the number of bottles is between 1
 
 Our final match for `do_something/1` is what to do when we run out of our beverage. In the song, the verse is usually about going to the store and buying some more. In our case, we will ask [José](https://github.com/josevalim), the alchemist that brought us the joyful Elixir language, to brew up some more of our elixirs of joy (the attempt at cleverness stops here).
 
-Despite having a vague function name and some potential duplication, I think this ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this claim.
+Despite having a vague function name and some potential duplication, I think the solution ends up being straightforward to follow. Let's go back to _99 Bottles of OOP_ to help us evaluate this claim.
 
 ## Concrete or Abstract
 
@@ -104,9 +104,8 @@ The cost of abstractions is code that is generally more difficult to follow for 
 ## What is the code doing
 
 > Code is easy to understand when it clearly reflects the problem it’s solving, and thus openly exposes that problem’s domain.
-> -- 99 Bottles of OOP
 
-One way to help identify where your code falls on the concrete-abstract spectrum is to see if a surface-level reading of the code can reveal what problem it is meant to solve. In the book, the authors ask questions intended to reveal if you can easily see how similar or different code paths would be. When code is abstract, you often "hide" variations in your abstractions. As a result, more abstract code will be more difficult to, at a glance, identify obvious code path variations. Below are some questions the authors suggest asking to evaluate the understandability of a solution to the 99 Bottles problem.
+According to the book, one way to help identify where your code falls on the concrete-abstract spectrum is to see if a surface-level reading of the code can reveal what problem it is meant to solve. The authors suggest asking questions that will reveal similarities and differences between code paths. When code is abstract, you often "hide" variations in your abstractions. As a result, more abstract code will be more difficult to, at a glance, identify code path variations. Below are some questions the authors suggest asking to evaluate the understandability of a solution to the 99 Bottles problem.
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
@@ -115,7 +114,7 @@ One way to help identify where your code falls on the concrete-abstract spectrum
 
 Let's attempt to answer these questions for our Elixir solution.
 
-Earlier, we hinted at how we may determine the number of verse variants - through our use of pattern matching. In both `beverage/1` and `do_something/1`, we match on `0` and `1`, and then everything else is captured in `number`. This may be an indication that we have three verse variants. 
+Earlier, we hinted at how we may be able to determine the number of verse variants:  through our use of pattern matching. In both `beverage/1` and `do_something/1`, we match on `0` and `1`, and then everything else is captured in `number`. This may be an indication that we have three verse variants. 
 
 Continuing with pattern matching as our guide, we can try to determine which verses are most similar and dissimilar. Because we have special matching for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own, special cases) and everything else is similar. The differences come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
 
