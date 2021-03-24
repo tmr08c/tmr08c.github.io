@@ -44,10 +44,10 @@ module.exports = {
             options: {
               theme: `Tomorrow`,
               extensions: [`elixir-ls`, `viml`, `vscode-themes/tomorrow`]
-            },
+            }
           },
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-autolink-headers`
         ]
       }
     },
