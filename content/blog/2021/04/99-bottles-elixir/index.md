@@ -10,9 +10,9 @@ At work, we have begun reading through [_99 Bottles of OOP_](https://sandimetz.c
 
 The authors use writing a program to "sing" the 99 Bottles of beer song to discuss different aspects of object-oriented programming and design. 
 
-While it's not a book on functional programming, I wanted to see what I would come up with for a solution written in Elixir. I also wanted to how the Elixir solution would compare in terms of understandability to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book.
+While it is not a book on functional programming, I wanted to see what I would come up with for a solution written in Elixir. I was interested to learn how the Elixir solution would compare in terms of understandability to the [possible solutions](https://sandimetz.com/99bottles-sample-ruby#section-c1-simplifying-code) discussed in the book.
 
-Everything discussed in this post has been inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) of the book. The first chapter is freely available as a reading sample. If this post has _anything_ that seems valuable, it is because of this book. Please consider reading the chapter and purchasing the book.
+Everything discussed in this post was inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) of the book. The first chapter is freely available as a reading sample. If this post has _anything_ that seems valuable, it is because of this book. Please consider reading the chapter and purchasing the book.
 
 ## The Solution 
 
@@ -103,7 +103,7 @@ The cost of abstractions is code that is generally more difficult to follow for 
 
 > Code is easy to understand when it clearly reflects the problem it’s solving, and thus openly exposes that problem’s domain.
 
-According to the book, one way to help identify where your code falls on the concrete-abstract spectrum is to see if a surface-level reading of the code can reveal what problem it is solving. The authors suggest asking questions that will reveal similarities and differences between code paths. When code is abstract, you often "hide" variations in your abstractions. As a result, identifying code path variations will be more difficult, at a glance, with more abstract code. Below are questions that the authors suggest asking when evaluating a solution to the 99 Bottles problem.
+According to the book, one way to help identify where your code falls on the concrete-abstract spectrum is to see if a surface-level reading of the code can reveal what problem it is solving. The authors suggest asking questions that will reveal similarities and differences between code paths. When code is abstract, you often "hide" variations in your abstractions. As a result, identifying code path variations, at a glance,  will be more difficult with more abstract code. Below are questions that the authors suggest asking when evaluating a solution to the 99 Bottles problem.
 
 1. How many verse variants are there?
 1. Which verses are most alike? In what way?
@@ -118,7 +118,7 @@ Continuing with pattern matching as our guide, we can determine which verses are
 
 To understand how we determine which verse to sing next, we turn to the entry point, `song/0`, and its usage of `verse/1`. Looking at `verse/1` the current `number` is how we determine the verse to sing. In `song/0` we iterate through the verses starting with the high number (99) and ending with the low number (0). This means the next verse will be `number - 1`.
 
-As the name suggests, pattern matching has allowed us to easily identify common patterns in our solution. With a surface-level review of our solution, we have recognized how 99 Bottles is sungl, and the similarities and differences between verses.
+As the name suggests, pattern matching has allowed us to recognize common patterns in our code. As a result, with a surface-level review of our solution, we have identified how our 99 Bottles solution works.
 
 ## A caveat
 
@@ -136,7 +136,7 @@ With three elixirs of joy on the wall, when we take one down, we still have two 
 
 Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the previous questions about the similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`) than previous calls would have made (`beverage(number)`). 
 
-Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. Rather than our verse matching `do_something(1)` to `beverage(1)`, we actually match `do_something(1)` to `beverage(1 - 1)`. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0`, we end up matching something different (`beverage(1)`, `beverage(0)`, and `beverage(number)`, respectively).
+Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0`, we end up matching something different (`beverage(1)`, `beverage(0)`, and `beverage(number)`, respectively).
 
 This slight mismatch "hides" the fact that we _actually_ have four verse variants:
 
@@ -145,39 +145,7 @@ This slight mismatch "hides" the fact that we _actually_ have four verse variant
 1. `do_something(1)` with `beverage(0)` (when `number` is `1`)
 1. `do_something(0)` with `beverage(number)` (when `number` is `0`; `99` is passed into `beverage/1`, which is the `number` pattern)
 
-Our "hidden" variant is an indication that our code may be more abstract than it is concrete. As discussed before, a more concrete version would more directly surface the four variants. It could look something like this:
-
-```elixir
-def verse(0) do
-  """
-  No more elixirs of joy on the wall, no more elixirs of joy.
-  Ask José to brew up some more, 99 elixirs of joy on the wall.
-  """
-end
-
-def verse(1) do
-  """
-  1 elixir of joy on the wall, 1 elixir of joy.
-  Take one down and pass it around, no more elixirs of joy on the wall.
-  """
-end
-
-def verse(2) do
-  """
-  2 elixirs of joy on the wall, 2 elixirs of joy.
-  Take one down and pass it around, 1 elixir of joy on the wall.
-  """
-end
-
-def verse(number) do
-  """
-  #{number} elixirs of joy on the wall, #{number} elixirs of joy.
-  Take one down and pass it around, #{number - 1} elixirs of joy on the wall.
-  """
-end
-```
-
-While this example uses pattern matching, using `if` or `case` could also work.
+Our "hidden" variant is an indication that our code may be more abstract than it is concrete. As discussed before, a more concrete version would more directly surface the four variants. 
 
 Is it "bad" that our code doesn't reveal with four verse variants as directly? 
 
