@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "dev": "yarn run develop",
     "start": "npm run develop",
     "format": "prettier \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
     "format:check": "npm run format -- --check",
@@ -22,6 +23,7 @@
     "typescript"
   ],
   "dependencies": {
+    "elixir-ls": "elixir-lsp/vscode-elixir-ls",
     "gatsby": "^2.20.2",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-catch-links": "^2.3.11",
@@ -47,6 +49,7 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "typescript": "^3.9.7",
+    "viml": "XadillaX/vscode-language-viml",
     "vscode-themes": "Microsoft/vscode-themes"
   },
   "devDependencies": {
