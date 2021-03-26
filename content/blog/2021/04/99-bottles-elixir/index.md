@@ -55,7 +55,7 @@ end
 
 To "sing" the whole song, you would call `song/0`. In turn, `song/0` calls out to `verses/2`, which calls and `join/2`s  `verse/1`s together. 
 
-In addition to the public functions, we have helper functions, `beverage/1` and `do_something/1`
+In addition to the public API, we have helper functions, `beverage/1` and `do_something/1`
 
 With `beverage/1`, I tried to be clever and replace "bottles of beer" with "elixirs of joy."
 
@@ -91,7 +91,7 @@ Despite having a vague function name and some potential duplication, I think the
 
 ## Concrete or Abstract
 
-The book posits that, when learning how to program, we start out writing concrete code. Over time, we often move towards writing abstract code as a default. While writing changeable code provides value, the book points out that it does not always make sense to start there.
+The book posits that, when learning how to program, we start out writing concrete code. Over time, we often move towards writing abstract code as a default. While writing changeable (abstract) code provides value, the book points out that it does not always make sense to start there.
 
 > Unfortunately, abstractions are hard, and even with the best of intentions, it’s easy to get them wrong. Well-meaning programmers tend to over-anticipate abstractions, inferring them prematurely from incomplete information. Early abstractions are often not quite right, and therefore they create a catch-22. You can’t create the right abstraction until you fully understand the code, but the existence of the wrong abstraction may prevent you from ever doing so. This suggests that you should not reach for abstractions, but instead, you should resist them until they absolutely insist upon being created.
 
@@ -112,7 +112,7 @@ According to the book, one way to help identify where your code falls on the con
 
 Let's attempt to answer these questions for our Elixir solution.
 
-In both `beverage/1` and `do_something/1`, we use pattern matching to match on `0` and `1`, and then everything else (which is captured in `number`). This same pattern in both places may be an indication that we have three verse variants. 
+In both `beverage/1` and `do_something/1`, we use pattern matching to match on `0` and `1`, and then everything else (which is captured in `number`). Having this same pattern in both places may be an indication that we have three verse variants. 
 
 Continuing with pattern matching as our guide, we can determine which verses are most similar and dissimilar. Because we have cases for `0` and `1`, we could say the final and penultimate verses are the most different (they have their own, special cases), and everything else is similar. The differences come from how we reference the beverage (if we look at `beverage/1`, we can see pluralization is at play) and what we do in the second line of the verse (usually this involves taking our beverage down, sometimes we ask for more). 
 
@@ -122,7 +122,7 @@ As the name suggests, pattern matching has allowed us to recognize common patter
 
 ## A caveat
 
-Based on our answers, the verse for when we have `2` elixirs of joy and `3` should essentially be identical (except the numbers). Let's see if this holds:
+Based on our answers, the verses for two and three bottles/elixirs should follow the same pattern and match everything except the numbers. Let's see if this holds:
 
 ```{diff}
 3 elixirs of joy on the wall, 3 elixirs of joy.
@@ -132,7 +132,7 @@ Based on our answers, the verse for when we have `2` elixirs of joy and `3` shou
 +Take one down and pass it around, 1 elixir of joy on the wall.
 ```
 
-With three elixirs of joy on the wall, when we take one down, we still have two elixir**s** left. However, when we do the same after starting with two elixirs we only have one elixir (no **s**) left. This difference in remaining elixirs is the result of calling `beverage/1` with `number - 1` in `do_something/1`. 
+With three elixirs of joy on the wall, when we take one down, we still have two elixir**s** left. However, when we do the same after starting with two elixirs we only have one elixir (no **s**) left. This difference in remaining elixirs is the result of calling `beverage/1` with `number - 1` from `do_something/1`. 
 
 Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the previous questions about the similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`) than previous calls would have made (`beverage(number)`). 
 
@@ -147,7 +147,7 @@ This slight mismatch "hides" the fact that we _actually_ have four verse variant
 |1|`do_something(1)`|`beverage(0)`|
 |0|`do_something(0)`|`beverage(number)`|
 
-Our "hidden" variant is an indication that our code may be more abstract than it is concrete. As discussed before, a more concrete version would more directly surface the four variants. 
+Our "hidden" variant is an indication that our code may be more abstract than we previously identified. As discussed before, a more concrete version would more directly surface the four variants. 
 
 Is it "bad" that our code doesn't reveal with four verse variants as directly? 
 
@@ -157,7 +157,7 @@ As always, what is "right" or "best" depends on your situation. As we said earli
 
 The authors suggest developers are often too quick to add abstractions to their solutions. Case in point, even after reading the chapter, my Elixir solution _still_ went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song. 
 
-I could have instead started with a solution that is both [easier to write and understand](https://sandimetz.com/99bottles-sample-ruby#_shameless_green). It may not be as "elegant," but it would be a lower-cost solution for a problem that didn't necessitate high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am more likely than not going to pick the wrong abstraction. We always know less about our products now than we will later. By waiting until we know what functionality we _actually_ need, we increase our chances of discovering the right abstractions. 
+I could have instead started with a solution that is both [easier to write and understand](https://sandimetz.com/99bottles-sample-ruby#_shameless_green). It may not be as "elegant," but it would be a lower-cost solution for a problem that didn't necessitate high effort. Even if we expected to have upcoming changes, the authors have pointed out we are more likely than not going to pick the wrong abstraction. We always know less about our products now than we will later. By waiting until we know what functionality we _actually_ need, we increase our chances of discovering the right abstractions. 
 
 One chapter in, and [99 Bottles of OOP](https://sandimetz.com/99bottles) has already begun influencing my perspective. I will leave you with a quote from the book:
 
