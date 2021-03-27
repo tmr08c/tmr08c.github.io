@@ -12,8 +12,8 @@ module.exports = {
             // styling preferring remark gatsby plugin
             pre: false,
             a: {
-              '&:hover': {
-                color: theme('colors.purple.400')
+              "&:hover": {
+                color: theme("colors.purple.400")
               }
             }
           }
