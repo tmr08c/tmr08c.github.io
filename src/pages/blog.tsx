@@ -36,9 +36,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
           keywords={["blog", "gatsby", "javascript", "react"]}
         />
 
-        <h1 className="text-5xl text-center font-bold mb-14">
-          All Blog Posts
-        </h1>
+        <h1 className="text-5xl text-center font-bold mb-14">All Blog Posts</h1>
 
         <div className={"posts"}>
           {posts.map(({ node }) => {
@@ -51,7 +49,10 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                 <small className="italic text-gray-600">
                   {node.frontmatter.date}
                 </small>
-                <p className="text-gray-700 mt-1" dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+                <p
+                  className="text-gray-700 mt-1"
+                  dangerouslySetInnerHTML={{ __html: node.excerpt }}
+                />
               </div>
             );
           })}
