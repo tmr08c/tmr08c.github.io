@@ -15,7 +15,7 @@ module.exports = {
         "living-coral-500": "#FF6F61"
       },
       typography: _theme => ({
-        default: {
+        DEFAULT: {
           css: {
             // turn off @tailwindcss/typography default `pre`
             // styling preferring remark gatsby plugin
