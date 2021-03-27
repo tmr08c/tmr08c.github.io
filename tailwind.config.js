@@ -1,8 +1,4 @@
 module.exports = {
-  future: {
-    // Intro in - https://github.com/tailwindlabs/tailwindcss/releases/tag/v1.7.0#deprecated-gap-utilities
-    removeDeprecatedGapUtilities: true
-  },
   theme: {
     // Some useful comment
     extend: {
