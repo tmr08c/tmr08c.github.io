@@ -43,11 +43,11 @@ module.exports = {
             resolve: `gatsby-remark-vscode`,
             options: {
               theme: `Tomorrow`,
-              extensions: [`vscode-themes/tomorrow`]
-            },
+              extensions: [`elixir-ls`, `viml`, `vscode-themes/tomorrow`]
+            }
           },
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-autolink-headers`
         ]
       }
     },
@@ -67,13 +67,14 @@ module.exports = {
       options: {
         name: "troy-prog-blog",
         short_name: "troyprog",
-        start_url: "/"
+        start_url: "/",
+        icon: "src/images/RhiDesign Troy Avatar.png"
       }
     },
     "gatsby-plugin-offline",
     `gatsby-plugin-postcss`,
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      resolve: `gatsby-plugin-google-fonts-v2`,
       options: {
         fonts: [
           {

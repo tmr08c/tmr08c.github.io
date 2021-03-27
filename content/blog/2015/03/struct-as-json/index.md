@@ -6,7 +6,7 @@ categories: ['ruby']
 
 I am working on a side project in which I want to use [Sinatra](http://www.sinatrarb.com/) as a simple backend and experiment with a more rich Javascript front end.
 
-# The Setup
+## The Setup
 
 The idea was to respond to a `GET` request to my endpoint with a JSON-ified array of simple Ruby [Structs](http://ruby-doc.org/core-2.2.0/Struct.html).
 
@@ -43,7 +43,7 @@ firing up `irb` this seems to have worked well enough
 ]
 ```
 
-# The Problem
+## The Problem
 
 The `to_json` version of my response looks a little funny
 
@@ -78,7 +78,7 @@ It can parse the JSON but it results in an array of strings and there seemed to 
 
 It seemed that the JSON version of my structs was not being deserialized the way I would have liked.
 
-# The Solution
+## The Solution
 
 The solution was to serialize my data in a way that Javascript would like and could easily deserialize - a `Hash`.
 

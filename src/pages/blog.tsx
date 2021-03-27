@@ -40,20 +40,22 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
           All Blog Posts
         </h1>
 
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug;
-          return (
-            <div className={"mb-5"} key={node.fields.slug}>
-              <h3 className={"text-3xl"}>
-                <Link to={node.fields.slug}>{title}</Link>
-              </h3>
-              <small className={"italic text-gray-800"}>
-                {node.frontmatter.date}
-              </small>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-            </div>
-          );
-        })}
+        <div className={"posts"}>
+          {posts.map(({ node }) => {
+            const title = node.frontmatter.title || node.fields.slug;
+            return (
+              <div className={"post mb-5"} key={node.fields.slug}>
+                <h3 className={"text-3xl"}>
+                  <Link to={node.fields.slug}>{title}</Link>
+                </h3>
+                <small className={"italic text-gray-800"}>
+                  {node.frontmatter.date}
+                </small>
+                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              </div>
+            );
+          })}
+        </div>
       </Layout>
     );
   }
