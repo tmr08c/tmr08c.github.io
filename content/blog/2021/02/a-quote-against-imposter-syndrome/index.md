@@ -1,5 +1,5 @@
 ---
-title:  "A quote against imposter syndrome"
+title:  "A Quote Against Imposter Syndrome"
 date:   "2021-02-26T06:30:34.781Z"
 categories: ["imposter syndrome", "soft skills"]
 ---

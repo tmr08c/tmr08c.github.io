@@ -27,6 +27,15 @@ interface BlogPostTemplateProps {
   };
 }
 
+interface PostInfo {
+  frontmatter: {
+    title: string;
+  };
+  fields: {
+    slug: string;
+  };
+}
+
 const EditOnGitHubLink = ({
   repoLink,
   postSlug
@@ -38,7 +47,7 @@ const EditOnGitHubLink = ({
   const linkToIssues = `${repoLink}/issues`;
 
   return (
-    <div className="text-center font-light text-sm text-gray-600 italic mb-3">
+    <div className="text-center font-light text-sm md:text-sm text-gray-600 italic mb-10 xl:mb-8">
       Notice something wrong? Please consider{" "}
       <a
         href={linkToPostInRepo}
@@ -62,6 +71,42 @@ const EditOnGitHubLink = ({
   );
 };
 
+const OtherPostsNav = ({
+  previous,
+  next
+}: {
+  previous: PostInfo;
+  next: PostInfo;
+}) => {
+  return (
+    <div className="text-gray-600 grid grid-flow-col grid-cols-3 justify-items-stretch align-middle items-center text-xs sm:text-sm lg:text-base">
+      {previous ? (
+        <Link to={previous.fields.slug} rel="prev" className="flex flex-row">
+          <span className="self-center flex-none mr-2">←</span>
+          <span>{previous.frontmatter.title}</span>
+        </Link>
+      ) : (
+        <span></span>
+      )}
+      <Link to="/blog" className="text-center">
+        - All Posts -
+      </Link>
+      {next ? (
+        <Link
+          to={next.fields.slug}
+          rel="next"
+          className="flex flex-row justify-right"
+        >
+          <span className="text-right">{next.frontmatter.title}</span>
+          <span className="self-center flex-none ml-2">→</span>
+        </Link>
+      ) : (
+        <span></span>
+      )}
+    </div>
+  );
+};
+
 class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
   render() {
     const post = this.props.data.markdownRemark;
@@ -70,49 +115,20 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
 
     return (
       <Layout>
-        <main>
+        <article className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
           <SEO title={post.frontmatter.title} description={post.excerpt} />
-          <h1 className="text-4xl font-bold">{post.frontmatter.title}</h1>
-          <div>
-            <time
-              dateTime={post.frontmatter.date}
-              className="text-gray-800 italic mb-7"
-            >
-              {post.frontmatter.date}
-            </time>
-          </div>
-          <div
-            className="blog-post-body"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
-        </main>
-        <hr
-          style={{
-            marginBottom: "14px"
-          }}
-        />
+          <h1>{post.frontmatter.title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        </article>
+
+        <div className="flex justify-end text-xs md:text-sm text-gray-600 font-light italic mb-2">
+          <time dateTime={post.frontmatter.date}>{post.frontmatter.date}</time>
+        </div>
+
+        <hr className="mb-3" />
 
         <EditOnGitHubLink repoLink={repoLink} postSlug={slug} />
-
-        <ul className="text-gray-600 flex flex-wrap justify-between">
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            <Link to="/blog">- All Posts -</Link>
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
+        <OtherPostsNav previous={previous} next={next} />
       </Layout>
     );
   }
