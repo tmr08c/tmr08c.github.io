@@ -18,9 +18,7 @@ const Footer: React.SFC = () => (
       </li>
     </ul>
     <div className="flex flex-col items-end pr-5 my-auto">
-      <Link to="/talks">
-        Talks
-      </Link>
+      <Link to="/talks">Talks</Link>
       <div className="flex items-center">
         <Link to="/rss.xml" className="mr-3">
           {/* Logo thanks to https://www.svgrepo.com/svg/95552/rss-sign  */}
@@ -30,9 +28,7 @@ const Footer: React.SFC = () => (
             <path d="M0 73.411c0 8.51 6.713 15.482 15.216 15.819 194.21 7.683 350.315 161.798 358.098 355.879.34 8.491 7.32 15.208 15.818 15.208h56.457c4.297 0 8.408-1.744 11.393-4.834a15.857 15.857 0 004.441-11.552C453.181 199.412 261.024 9.27 16.38 1.121A15.844 15.844 0 004.838 5.568 15.842 15.842 0 000 16.954v56.457z" />
           </svg>
         </Link>
-        <Link to="/blog">
-          Blog
-        </Link>
+        <Link to="/blog">Blog</Link>
       </div>
     </div>
   </div>

@@ -8,10 +8,7 @@ interface HeaderProps {
 const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
   <nav className="flex items-center justify-between flex-wrap bg-green-800 px-6 py-12 mb-5 text-white">
     <div className="flex flex-no-shrink">
-      <Link
-        to="/"
-        className="font-semibold text-4xl tracking-tighter"
-      >
+      <Link to="/" className="font-semibold text-4xl tracking-tighter">
         {siteTitle}
       </Link>
     </div>
@@ -21,9 +18,7 @@ const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
           Talks
         </Link>
 
-        <Link to="/blog">
-          Blog
-        </Link>
+        <Link to="/blog">Blog</Link>
       </div>
     </div>
   </nav>
