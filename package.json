@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "dev": "yarn run develop",
     "start": "npm run develop",
     "format": "prettier \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
     "format:check": "npm run format -- --check",
@@ -22,6 +23,8 @@
     "typescript"
   ],
   "dependencies": {
+    "autoprefixer": "^10.2.5",
+    "elixir-ls": "elixir-lsp/vscode-elixir-ls",
     "gatsby": "^2.20.2",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-catch-links": "^2.3.11",
@@ -42,11 +45,13 @@
     "gatsby-transformer-json": "^2.4.11",
     "gatsby-transformer-remark": "^2.6.45",
     "gatsby-transformer-sharp": "^2.1.8",
+    "postcss": "^8.2.8",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "typescript": "^3.9.7",
+    "viml": "XadillaX/vscode-language-viml",
     "vscode-themes": "Microsoft/vscode-themes"
   },
   "devDependencies": {
@@ -59,7 +64,7 @@
     "gh-pages": "^2.1.1",
     "prettier": "^1.19.1",
     "start-server-and-test": "^1.12.0",
-    "tailwindcss": "^1.7.6",
+    "tailwindcss": "^2.0.4",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0"

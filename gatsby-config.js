@@ -43,7 +43,7 @@ module.exports = {
             resolve: `gatsby-remark-vscode`,
             options: {
               theme: `Tomorrow`,
-              extensions: [`vscode-themes/tomorrow`]
+              extensions: [`elixir-ls`, `viml`, `vscode-themes/tomorrow`]
             }
           },
           `gatsby-remark-copy-linked-files`,
