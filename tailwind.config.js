@@ -5,17 +5,17 @@ module.exports = {
       fontSize: {
         "8xl": "5rem"
       },
-      colors: {
-        // PAANTONE's 2019 Color of the Year
-        // https://www.pantone.com/color-intelligence/color-of-the-year/color-of-the-year-2019
-        "living-coral-500": "#FF6F61"
-      },
-      typography: _theme => ({
+      typography: theme => ({
         DEFAULT: {
           css: {
             // turn off @tailwindcss/typography default `pre`
             // styling preferring remark gatsby plugin
-            pre: false
+            pre: false,
+            a: {
+              '&:hover': {
+                color: theme('colors.purple.400')
+              }
+            }
           }
         }
       })

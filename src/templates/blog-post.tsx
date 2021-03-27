@@ -53,7 +53,7 @@ const EditOnGitHubLink = ({
         href={linkToPostInRepo}
         target="_blank"
         rel="noopener noreferrer"
-        className="underline hover:text-living-coral-500"
+        className="underline hover:text-purple-400"
       >
         proposing an edit
       </a>{" "}
@@ -62,7 +62,7 @@ const EditOnGitHubLink = ({
         href={linkToIssues}
         target="_blank"
         rel="noopener noreferrer"
-        className="underline hover:text-living-coral-500"
+        className="underline hover:text-purple-400"
       >
         opening an issue
       </a>
