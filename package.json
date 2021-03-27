@@ -50,11 +50,12 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
-    "typescript": "^3.9.7",
+    "typescript": "^4.2.3",
     "viml": "XadillaX/vscode-language-viml",
     "vscode-themes": "Microsoft/vscode-themes"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.4.0",
     "@types/node": "^10.17.13",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
