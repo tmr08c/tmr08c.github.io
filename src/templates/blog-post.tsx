@@ -38,7 +38,7 @@ const EditOnGitHubLink = ({
   const linkToIssues = `${repoLink}/issues`;
 
   return (
-    <div className="text-center font-light text-sm text-gray-600 italic mb-3">
+    <div className="text-center font-light text-sm md:text-sm text-gray-600 italic mb-3">
       Notice something wrong? Please consider{" "}
       <a
         href={linkToPostInRepo}
@@ -70,28 +70,23 @@ class BlogPostTemplate extends React.Component<BlogPostTemplateProps, {}> {
 
     return (
       <Layout>
-        <article>
+        <article
+            className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl"
+        >
           <SEO title={post.frontmatter.title} description={post.excerpt} />
-          <h1 className="font-bold text-3xl">{post.frontmatter.title}</h1>
-          <div className="mb-8 lg:mb-10">
-            <time
-              dateTime={post.frontmatter.date}
-              className="text-gray-800 italic mb-7"
-            >
-              {post.frontmatter.date}
-            </time>
-          </div>
+          <h1>{post.frontmatter.title}</h1>
           <div
             dangerouslySetInnerHTML={{ __html: post.html }}
-            className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl"
           />
         </article>
 
-        <hr
-          style={{
-            marginBottom: "14px"
-          }}
-        />
+        <div className="flex justify-end text-xs md:text-sm text-gray-600 font-light italic mb-2">
+          <time dateTime={post.frontmatter.date}>
+            {post.frontmatter.date}
+          </time>
+        </div>
+
+        <hr className="mb-3" />
 
         <EditOnGitHubLink repoLink={repoLink} postSlug={slug} />
 
