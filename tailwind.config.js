@@ -13,7 +13,6 @@ module.exports = {
     }
   },
   variants: {
-    // Some useful comment
     textColor: ["responsive", "hover", "focus", "active", "group-hover"],
     borderStyle: ["responsive", "hover", "focus", "active", "group-hover"]
   },
@@ -22,10 +21,5 @@ module.exports = {
   ],
   // Using the built-in support for purging CSS
   // https://tailwindcss.com/docs/controlling-file-size/
-  purge: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.jsx"],
-  // opt-in to future breaking changes
-  future: {
-    // Will be the default in 2.0
-    removeDeprecatedGapUtilities: true
-  }
+  purge: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.jsx"]
 };
