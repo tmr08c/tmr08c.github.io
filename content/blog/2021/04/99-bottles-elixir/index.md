@@ -12,7 +12,7 @@ The authors use writing a program to "sing" the 99 Bottles of beer song to discu
 
 While it is not a book on functional programming, I wanted to see what I would come up with for a solution written in Elixir. I was also interested in how an Elixir solution would stand in terms of understandability when using the book's qualitative metrics. 
 
-Everything discussed in this post was inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) of the book, which is freely available as a reading sample. If this post has _anythingj_ that seems valuable, it is because of this book. Please consider reading the chapter and purchasing the book.
+Everything discussed in this post was inspired by the [first chapter](https://sandimetz.com/99bottles-sample-ruby#chapter-rediscovering-simplicity) of the book, which is freely available as a reading sample. If this post has _anything_ that seems valuable, it is because of this book. Please consider reading the chapter and purchasing the book.
 
 ## The Solution 
 
@@ -97,7 +97,7 @@ The book posits that, when learning how to program, we start out writing concret
 
 The idea of waiting to develop an abstraction until it "insists" upon being created has begun to shift my thinking. It's often tempting to "clean up" the code you are writing by seeking out abstractions. In my solution, I attempted to do so with the `beverage/1` and `do_something/1` functions. While I can cite the [rule of three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)) (consider refactoring when you do something three times), if I'm honest, I extracted those functions at the first sign of duplication.
 
-The cost of abstractions is code that is generally more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is code that is easier to follow at the cost of being more difficult to change. Because we don't have any requirements to change the song, let's focus on how to decide if our code is understandable. 
+The cost of abstractions is code that is generally more difficult to follow for the benefit of being easier to change. The inversion of this is that the benefit of concrete code is code that is easier to follow at the cost of being more difficult to change. Because we don't have any requirements to change the song, let's focus on how to decide if our code is optimized for understandability. 
 
 ## What is the code doing
 
@@ -147,17 +147,19 @@ This slight mismatch "hides" the fact that we _actually_ have four verse variant
 |1|`do_something(1)`|`beverage(0)`|
 |0|`do_something(0)`|`beverage(number)`|
 
-Our "hidden" variant is an indication that our code may be more abstract than it is concrete. As discussed before, a more concrete version would more directly surface the four variants. 
+Our "hidden" variant is an indication that our code may be more abstract than it is concrete. As discussed before, a more concrete version would have directly surfaced all verse variants. 
 
-Is it "bad" that our code doesn't reveal with four verse variants as directly? 
+Is it bad that our code doesn't reveal all four verse variants directly? 
 
 ## It depends
 
-As always, what is "right" or "best" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
+As always, what is "good" or "bad" depends on your situation. As we said earlier, the concrete-abstract spectrum has tradeoffs on both sides - ease of understanding for ease of changeability.  
 
 The authors suggest developers are often too quick to add abstractions to their solutions. Case in point, even after reading the chapter, my Elixir solution _still_ went for a more abstract solution, one that inadvertently hid some details about the variations of the 99 Bottles song. 
 
-I could have instead started with a solution that is both [easier to write and understand](https://sandimetz.com/99bottles-sample-ruby#_shameless_green). It may not be as "elegant," but it would be a lower-cost solution for a problem that didn't necessitate high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am more likely than not going to pick the wrong abstraction. We always know less about our products now than we will later. By waiting until we know what functionality we _actually_ need, we increase our chances of discovering the right abstractions. 
+So, while not necessarily a bad solution, I may not have fully optimized the code on the side of understandability.  I could have instead started with a solution that is both [easier to write and understand](https://sandimetz.com/99bottles-sample-ruby#_shameless_green). 
+
+A concrete solution may not be as "elegant," but it would be a lower-cost solution for a problem that didn't necessitate high effort. Even if I expected I would have upcoming changes, the authors have pointed out I am likely to pick the wrong abstraction. We always know less about our products now than we will later. By waiting until we know what functionality we _actually_ need, we increase our chances of discovering the right abstractions. 
 
 One chapter in, and [99 Bottles of OOP](https://sandimetz.com/99bottles) has already begun influencing my perspective. I will leave you with a quote from the book:
 
