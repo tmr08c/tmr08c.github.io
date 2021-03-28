@@ -6,11 +6,9 @@ categories: ['writing', 'remote work']
 
 At the time of writing, many people around the world are forced to work from home as a result of the [COVID-19 pandemic](https://en.wikipedia.org/wiki/COVID-19_pandemic). This sudden transition to working from home is a major change for most. Fortunately for those of us new to remote work, there is an experienced remote workforce willing to share their knowledge.
 
-One of the areas of advice that sticks out to me is around managing communication and interruptions. A lot of this thinking has been spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the [Rework podcast](https://rework.fm/). At [Basecamp](https://basecamp.com/), they have a bias towards asynchronous communication:
+One of the areas of advice that sticks out to me is around managing communication and interruptions. A lot of this thinking has been spurred from this [two](https://rework.fm/remote-work-q-a-1/) [part](https://rework.fm/remote-work-q-a-2/) Q&A session on the [Rework podcast](https://rework.fm/). At [Basecamp](https://basecamp.com/), they [have a bias towards asynchronous communication](https://m.signalvnoise.com/is-group-chat-making-you-sweat/):
 
 > At Basecamp our perfect-world rule of thumb is 'real-time sometimes, asynchronous most of the time'.
->
-> -- [This blog post](https://m.signalvnoise.com/is-group-chat-making-you-sweat/) (which focuses on group chat applications)
 
 ## Why asynchronous
 
@@ -47,10 +45,6 @@ Now that I am bought, I want to work to get better at it. For me better means:
 One way I am trying to improve my written communication is through practice; specifically, by writing more blog posts.
 
 ## (Deliberate) Practice
-
-> It takes practices to get better
->
-> -- Everyone?
 
 To get better, I need to practice.
 
