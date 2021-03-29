@@ -1,6 +1,6 @@
 ---
 title:  "Singing 99 Bottles of Elixir"
-date:   "2021-02-26T06:30:34.781Z"
+date:   "2021-03-30T06:30:34.781Z"
 categories: ["elixir"]
 ---
 
@@ -65,7 +65,7 @@ defp beverage(1), do: "1 elixir of joy"
 defp beverage(number), do: "#{number} elixirs of joy"
 ```
 
-The primary value in splitting out the function was handling the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case` in another language, I think pattern matching works well here.
+The primary value in splitting out the function was handling the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case`, I think pattern matching works well here.
 
 Following the same idea, our generically named `do_something/1` function also leverages pattern matching. 
 
@@ -132,11 +132,11 @@ Based on our answers, the verse for when we have `2` elixirs of joy and `3` shou
 +Take one down and pass it around, 1 elixir of joy on the wall.
 ```
 
-With three elixirs of joy on the wall, when we take one down, we still have two elixir**s** left. However, when we do the same after starting with two elixirs we only have one elixir (no **s**) left. This difference in remaining elixirs is the result of calling `beverage/1` with `number - 1` in `do_something/1`. 
+With three elixirs of joy on the wall, when we take one down we still have two elixir**s** left. However, when we do the same after starting with two elixirs we only have one elixir (no **s**) left. This difference in remaining elixirs is the result of calling `beverage/1` with `number - 1` from `do_something/1`. 
 
 Our call to `beverage/1` with `number - 1` makes it a little more complicated to answer the previous questions about the similarity between verses. We cannot simply look at the patterns we are matching on to know the number of verse variants. We now know there is another variant for when `number` is `2` - because `2 - 1` is `1`, and that will call a different variant of our `beverage/1` function (`beverage(1)`) than previous calls would have made (`beverage(number)`). 
 
-Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we originally thought. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0`, we end up matching something different (`beverage(1)`, `beverage(0)`, and `beverage(number)`, respectively).
+Our matches for `beverage/1` and `do_something/1` still line up, but not as directly as we previously thought. For most cases (when `number` is greater than `2`), we end up matching the same `number` variant. However, with `2`, `1`, and `0`, we end up matching something different (`beverage(1)`, `beverage(0)`, and `beverage(number)`, respectively).
 
 This slight mismatch "hides" the fact that we _actually_ have four verse variants:
 
@@ -147,7 +147,7 @@ This slight mismatch "hides" the fact that we _actually_ have four verse variant
 |1|`do_something(1)`|`beverage(0)`|
 |0|`do_something(0)`|`beverage(number)`|
 
-Our "hidden" variant is an indication that our code may be more abstract than it is concrete. As discussed before, a more concrete version would have directly surfaced all verse variants. 
+As discussed before, a concrete solution would directly surface all verse variants. Our "hidden" variant is an indication that our code may be more abstract than it is concrete. 
 
 Is it bad that our code doesn't reveal all four verse variants directly? 
 
