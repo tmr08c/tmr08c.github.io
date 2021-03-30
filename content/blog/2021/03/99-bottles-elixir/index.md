@@ -65,7 +65,7 @@ defp beverage(1), do: "1 elixir of joy"
 defp beverage(number), do: "#{number} elixirs of joy"
 ```
 
-The primary value in splitting out the function was handling the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case`, I think pattern matching works well here.
+The primary value in splitting out this function was to handle the logic for pluralizing our elixir(s) of joy. While we could do something similar with `if` or `case`, I think pattern matching works well here.
 
 Following the same idea, our generically named `do_something/1` function also leverages pattern matching. 
 
