@@ -27,8 +27,58 @@ EXPLAIN(
 
 You can think of the query plan as map directions. It include the steps you will be taking as well as additional information about each step. Rather than getting information about the distance before you turn left or how long you will be on a highway, you will instead get information about which steps are involved in fetching the data and how many rows of data you will be searching along the way. 
 
+## Reading a Query Plan
+
+In our simple example above, there was only one step in our list of direction, sequential scan on `my_table`. For this single step, we get a lot of data about what will be happening. Let's break down was is involved in a row from the query planner.
+
+
+```sql
+Seq Scan on my_table  (cost=0.00..10.50 rows=50 width=1572)
+```
+
+### Reading from the Table
+
+Our query plan starts off by letting us know how it's going to read the data from a given databse table.
+
+```sql
+Seq Scan on my_table
+```
+
+In this example, we will be doing a sequential scan on `my_table`. A sequential scan means each row in the table will be read. There are other types of scans we may see later involving bitmaps or indexes. Check out [this post](https://severalnines.com/database-blog/overview-various-scan-methods-postgresql) for more information on the different types of scans. 
+
+### Cost
+
+The `cost` is made up of two numbers.
+
+```sql
+cost=0.00..10.50
+```
+
+The first number is the `estimated start-up cost`. This is the amount of time /before/ this step in the plan will run. In our example the start-up cost is `0.00`. This means that this step will run at the beginning of the query execution. This make sense since this is the only step in our plan. 
+
+Let's take a look at a more complicated example:
+
+```sql
+ Nested Loop  (cost=4.65..49.46 rows=33 width=488)
+   Join Filter: (t1.hundred < t2.hundred)
+   ->  Bitmap Heap Scan on tenk1 t1  (cost=4.36..39.47 rows=10 width=244)
+         Recheck Cond: (unique1 < 10)
+                                                        |--- this is where we start
+                                                        v
+         ->  Bitmap Index Scan on tenk1_unique1  (cost=0.00..4.36 rows=10 width=0)
+               Index Cond: (unique1 < 10)
+                           |---- this run in parallel with heap scan above; looks like a slight delay to tarting
+                           v
+   ->  Materialize  (cost=0.29..8.51 rows=10 width=244)
+         ->  Index Scan using tenk2_unique2 on tenk2 t2  (cost=0.29..8.46 rows=10 width=244)
+               Index Cond: (unique2 < 10)
+```
+
+In this example we have multiple steps and nested steps. This example highlights the query planers ability to run steps in parallel. There's a lot going on in this plan that we haven't yet covered. For the purposes of our focus on start-up cost, let's focus only on the first number in the `cost` sections of this plan.
+
 
 - Tree
 - How can I highlight part of the query plan?
-
-
+- Caveats
+  - Focused on querying (updates don't show up)
+  - Will vary by amount of data; need to test with similar data set 
