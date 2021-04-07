@@ -54,9 +54,50 @@ The `cost` is made up of two numbers.
 cost=0.00..10.50
 ```
 
-The first number is the `estimated start-up cost`. This is the amount of time /before/ this step in the plan will run. In our example the start-up cost is `0.00`. This means that this step will run at the beginning of the query execution. This make sense since this is the only step in our plan. 
+The first number is the `estimated start-up cost`. This is the amount of time _before_ this step in the plan will run. In our example the start-up cost is `0.00`. This means that this step will run at the beginning of the query execution. This make sense since this is the only step in our plan. 
 
-Let's take a look at a more complicated example:
+Let's take a look at a slightly more complex query. In this exapmle, our `where` clause is filtering based on a subquery.
+
+```sql
+EXPLAIN(
+    SELECT * 
+    FROM chat_room_messages
+    WHERE author IN (
+        SELECT email 
+        FROM users 
+        WHERE updated_at > '2021-01-01'::date
+    )
+);
+```
+
+This results in a plan with multiple steps.
+
+```sql
+                                 QUERY PLAN                                  
+-----------------------------------------------------------------------------
+ Hash Join  (cost=10.84..22.49 rows=17 width=580)
+   Hash Cond: ((chat_room_messages.author)::text = (users.email)::text)
+   ->  Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=580)
+   ->  Hash  (cost=10.62..10.62 rows=17 width=516)
+         ->  Seq Scan on users  (cost=0.00..10.62 rows=17 width=516)
+               Filter: (updated_at > '2021-01-01'::date)
+```
+
+As we said before, when the `estimated start-up cost` is `0.00`, that is first steps of the plan. The plan above has **two** rows that seems to have `0.00` for the `estimated start-up cost`:
+
+We have the sequential scan on the `users` table
+
+```sql
+->  Seq Scan on users  (cost=0.00..10.62 rows=17 width=516)
+```
+
+**and** we also have a sequential scan on the `chat_room_messages` tbale:
+
+```sql
+->  Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=580)
+```
+
+Without worry about the details of what the query plan actually is, the important thing to note is that this is an indication we will start these two steps at the same time and run them in parallel.
 
 ```sql
  Nested Loop  (cost=4.65..49.46 rows=33 width=488)
