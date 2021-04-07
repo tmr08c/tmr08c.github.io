@@ -97,7 +97,38 @@ We have the sequential scan on the `users` table
 ->  Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=580)
 ```
 
-Without worry about the details of what the query plan actually is, the important thing to note is that this is an indication we will start these two steps at the same time and run them in parallel.
+Without worrying about the details of what the query plan actually is, the important thing to note is that this is an indication we will start these two steps at the same time and run them in parallel.
+
+While some steps in the plan can run in parallel, we also have a multi-part step that will be run sequentially.
+
+```sql
+->  Hash  (cost=10.62..10.62 rows=17 width=516)
+        ->  Seq Scan on users  (cost=0.00..10.62 rows=17 width=516)
+            Filter: (updated_at > '2021-01-01'::date)
+```
+
+This step reveals how nesting is leverages in the query plan output. When reading a query plan, actions will be run starting with the most nested steps. This lines up with what we've learned so far about an `estimated start-up cost` of `0.00` indicating a first step. 
+
+So far, we've only talked about the first number in `cost`, but there are two. The second number is the `estimated total cost`. Together, `cost` gives us an idea of when the step will start and when it will end. 
+
+With these two pieces together, the timelien and `cost` for the above multi-part step should make more sense. We start with the `seq scan on users` since the start-up cost is `0.00`. This step's `estimated total cost` is `10.62`. If we look at the `Hash` line above, we see that its `estimated start-up cost` is `10.62`. This means that as soon as we finish our `seq scan on users`, we will be able to start the `Hash` step. 
+
+### How Much?
+
+So far we have takled about what the two number of cost represent, but not what the values mean. While we've talked about the `cost` as a sort of time-like measurement, it isn't actually a representation of time. The unit type used for `cost` can be changed, but defaults to being based on sequential page fetches. However, the units are arbitrary; what matters is the _relative_ costs. From the [postgreSQL documentation](https://www.postgresql.org/docs/current/runtime-config-query.html#RUNTIME-CONFIG-QUERY-CONSTANTS
+)
+
+> The cost variables described in this section are measured on an arbitrary
+> scale. Only their relative values matter, hence scaling them all up or down by
+> the same factor will result in no change in the planner's choices
+
+So while you may want to track the cost in terms of sequential page fetches or base it on the CPU processing a tuple, what seems to be more important is comparing the numbers relative to other parts of the query plan. 
+
+## Rows
+
+The next part of a query plan node is `rows`. This is the **estimated** number of rows that will be returned for a given step. Since `EXPLAIN` will not actually run the query it cannot give exact numbers. This estimation can be a useful indication of  
+
+
 
 ```sql
  Nested Loop  (cost=4.65..49.46 rows=33 width=488)
