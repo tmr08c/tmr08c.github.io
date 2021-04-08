@@ -126,9 +126,65 @@ So while you may want to track the cost in terms of sequential page fetches or b
 
 ## Rows
 
-The next part of a query plan node is `rows`. This is the **estimated** number of rows that will be returned for a given step. Since `EXPLAIN` will not actually run the query it cannot give exact numbers. This estimation can be a useful indication of  
+```sql
+Seq Scan on my_table  (cost=0.00..10.50 rows=50 width=1572)
+```
 
+The next part of a query plan node is `rows`. This is the **estimated** number of rows that will be returned for a given step. Since `EXPLAIN` will not actually run the query it cannot give exact numbers. This estimation can be a useful indication of how much data you're dealing with as well as the potential impact of filtering. 
 
+## Width
+
+The final element of the query plan node that we are going to cover is `width`. The `width` is the average width of the rows in bytes. This is more than just the number of columns, but gives you an idea of the average number of bytes across all columns you will be selecting. Combined with `rows`, you can get a rough idea of the size of the data the database will be scanning.
+
+While it may be obvious that select fewer columns results in less data, `EXPLAIN` can help reveal that. When we perform a `SELECT *` we such a much larger width than if we only `SELECT id`.
+
+```sql
+-- SELECT * has a width of 580
+# EXPLAIN(SELECT * FROM chat_room_messages);
+
+                              QUERY PLAN                               
+-----------------------------------------------------------------------
+ Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=580)
+(1 row)
+
+-- SELECT id only 8
+# EXPLAIN(SELECT id FROM chat_room_messages);
+
+                             QUERY PLAN                              
+---------------------------------------------------------------------
+ Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=8)
+(1 row)
+
+```
+
+## Analyze
+
+As previously mentioned, `EXPLAIN` doesn't actually run the query. As a result, it will only give you estimations. This can be useful for gathering the performance characteristics of different potential queries. If you want to get more accurate performance information, you will want to use `EXPLAIN ANALYZE`. With `ANALYZE`, the query will be run. This allows the database to include information about run time, the actual number `row`s, and more.
+
+Let's take a look at one of our previous queries and include an `ANALYZE`.
+
+```sql
+EXPLAIN ANALYZE
+SELECT * 
+FROM chat_room_messages
+WHERE author IN (
+    SELECT email FROM users WHERE updated_at > '2021-01-01'::date
+);
+
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=10.84..22.49 rows=17 width=580) (actual time=0.028..0.033 rows=10 loops=1)
+   Hash Cond: ((chat_room_messages.author)::text = (users.email)::text)
+   ->  Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=580) (actual time=0.007..0.008 rows=10 loops=1)
+   ->  Hash  (cost=10.62..10.62 rows=17 width=516) (actual time=0.009..0.009 rows=2 loops=1)
+         Buckets: 1024  Batches: 1  Memory Usage: 9kB
+         ->  Seq Scan on users  (cost=0.00..10.62 rows=17 width=516) (actual time=0.005..0.005 rows=2 loops=1)
+               Filter: (updated_at > '2021-01-01'::date)
+ Planning Time: 0.104 ms
+ Execution Time: 0.050 ms
+(9 rows)
+
+```
 
 ```sql
  Nested Loop  (cost=4.65..49.46 rows=33 width=488)
