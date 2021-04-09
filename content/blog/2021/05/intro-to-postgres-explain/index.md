@@ -186,24 +186,30 @@ WHERE author IN (
 
 ```
 
-```sql
- Nested Loop  (cost=4.65..49.46 rows=33 width=488)
-   Join Filter: (t1.hundred < t2.hundred)
-   ->  Bitmap Heap Scan on tenk1 t1  (cost=4.36..39.47 rows=10 width=244)
-         Recheck Cond: (unique1 < 10)
-                                                        |--- this is where we start
-                                                        v
-         ->  Bitmap Index Scan on tenk1_unique1  (cost=0.00..4.36 rows=10 width=0)
-               Index Cond: (unique1 < 10)
-                           |---- this run in parallel with heap scan above; looks like a slight delay to tarting
-                           v
-   ->  Materialize  (cost=0.29..8.51 rows=10 width=244)
-         ->  Index Scan using tenk2_unique2 on tenk2 t2  (cost=0.29..8.46 rows=10 width=244)
-               Index Cond: (unique2 < 10)
-```
+While the overall plan is the same as before, we now have additional information next to our `cost`, `rows`, `width` tuple. This new tuple gives us our actual runtime statistics.
 
-In this example we have multiple steps and nested steps. This example highlights the query planers ability to run steps in parallel. There's a lot going on in this plan that we haven't yet covered. For the purposes of our focus on start-up cost, let's focus only on the first number in the `cost` sections of this plan.
+Now, instead of our arbitrary units for `cost`, we get `time`, which is actual runtime in milliseconds. We also get to see the actual number of `rows` that were returned. We can see some steps where the planner was close (17 versus 10) and others where no quite as much (130 versus 10). These examples are coming from a small, test database which isn't getting regularly `ANALYZE` runs, so I imagine the statistics table is sparse. 
 
+In addition to the additional tuple data, we also have information about our hash function (number buckets, amount of memory used) and overall run times (planning versus actual execution).
+
+I find `ANALYZE` to be an extermly useful addition when using `EXPLAIN`. Since it does require running the query, it will take longer for large queries, so keep that in mind when experimenting. 
+
+## Caveats
+
+The biggest caveat I took away from the documentation is that query plans are specific to the amount of data in the database. As a result, running an `EXPLAIN` locally with a small dataset may not reveal what the query planner is _actually_ going to do on your production system. As an example, with a small enough table, the query planner may actually prefer a sequential scan over leveraging an index. If you are hoping to confirm your newly added index is going to provider performance gains, you _may_ not see that locally.
+
+From what I can tell the query plan is more impact by amount of data than by underlying hardware conerns. As a result, you should be able to get a better idea of production-like characteristics if you load you local databse with enough data (if feasible). However, like many performance tuning tasks, you will ultimately want to confirm on your real data.
+
+
+## Conclusion
+
+Hopefully, this introduction will empower you to leverage the `EXPLAIN` function. If you find particulary confusing query plans or struggle to know how to leverage the query plan to do something action, remember this quote from the [documentation](https://www.postgresql.org/docs/current/using-explain.html):
+
+> Plan-reading is an art that requires some experience to master
+
+
+
+---
 
 - Tree
 - How can I highlight part of the query plan?
