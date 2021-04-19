@@ -8,10 +8,7 @@ For most of the database performance work I've done, simply looking at the queri
 
 The goal of this post is to provide a quick introduction to the `EXPLAIN` function and provide the ability to read its output.
 
-**Caveats**
-
-- While other database management systems provide the `EXLPAIN` functionality, I will be focusing on how it works with PostgreSQL since that is what I use most often.
-- This post is essentially me rehashing the [documentation](https://www.postgresql.org/docs/current/using-explain.html). I hope to provide a more basic introduction, but you could consider going straight to the docs.
+While other database management systems provide the `EXLPAIN` functionality it is not SQL standard. I will be focusing on how it works with PostgreSQL since that is what I use most often, but you will want to read the documentation for your own DBMS if you work with a different system.
 
 ## What is EXPLAIN
 
@@ -92,7 +89,7 @@ This results in a plan with multiple steps.
                Filter: (updated_at > '2021-01-01'::date)
 ```
 
-As we said before, when the `estimated start-up cost` is `0.00`, that is first steps of the plan. The plan above has **two** rows with `0.00` for the `estimated start-up cost`:
+As we said before, when the `estimated start-up cost` is `0.00`, that is first steps of the plan. The plan above has **two** rows with `0.00` for the `estimated start-up cost`.
 
 ```sql{5,7}
                                  QUERY PLAN
@@ -105,7 +102,7 @@ As we said before, when the `estimated start-up cost` is `0.00`, that is first s
                Filter: (updated_at > '2021-01-01'::date)
 ```
 
-We have the sequential scan on the `chat_room_messages` table:
+We have the sequential scan on the `chat_room_messages` table
 
 ```sql
 ->  Seq Scan on chat_room_messages  (cost=0.00..11.30 rows=130 width=580)
@@ -121,9 +118,13 @@ Without worrying about the details of what the query plan actually is, the impor
 
 ### Total
 
-So far, we've only talked about the first number in `cost`, but there are two. The second number is the `estimated total cost`. Together, `cost` gives us an idea of when the step will start and when it will end.
+The second number in `cost` is the `estimated total cost`. This is relatively straightforward and represents the accumulated cost after the step completes.
 
-This can help us better understand what nested steps mean in a query plan.
+Together, the numbers in `cost` give us an idea of when the step will start and when it will end.
+
+### Nesting
+
+Now that we've covered what the two pieces of cost are, we better understand what nested steps mean in a query plan.
 
 ```sql
 ->  Hash  (cost=10.62..10.62 rows=17 width=516)
@@ -131,8 +132,11 @@ This can help us better understand what nested steps mean in a query plan.
     Filter: (updated_at > '2021-01-01'::date)
 ```
 
-TODO UPDATE THIS SECTION
-This step reveals what nesting means in the query plan output. When reading a query plan, actions will be run starting with the most nested steps. This lines up with what we've learned so far about an `estimated start-up cost` of `0.00` indicating a first step - we see that our scan on the `users` table is nested **and** has an `estimated start-up cost` of `0.00`.
+When reading a query plan, actions will be run starting with the most nested steps. Looking at the query above `-> Seq Scan on users` is nested below our `-> Hash` step. Note that `Filter` isn't prefixed with `->` and isn't separate step in our plan, rather it a part of our scan on the `users` table. This means that `Seq Scan on users` is our most nested step.
+
+TODO - still working on this section
+
+We see that our scan on the `users` table is nested **and** has an `estimated start-up cost` of `0.00`. From what learned earlier, this `estimated start-up cost` means this step will run at the start of the query.
 
 With these two pieces together, the timeline and `cost` for the above multi-part step should make more sense. We start with the `seq scan on users` since the start-up cost is `0.00`. This step's `estimated total cost` is `10.62`. If we look at the `Hash` line above, we see that its `estimated start-up cost` is `10.62`. This means that as soon as we finish our `seq scan on users`, we will be able to start the `Hash` step.
 
