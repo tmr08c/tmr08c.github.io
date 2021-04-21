@@ -124,7 +124,7 @@ Together, the numbers in `cost` give us an idea of when the step will start and 
 
 ### Nesting
 
-Now that we've covered what the two pieces of cost are, we better understand what nested steps mean in a query plan.
+Now that we've covered what the two pieces of cost are, we can more easily understand what nested steps mean in a query plan.
 
 ```sql
 ->  Hash  (cost=10.62..10.62 rows=17 width=516)
@@ -134,20 +134,18 @@ Now that we've covered what the two pieces of cost are, we better understand wha
 
 When reading a query plan, actions will be run starting with the most nested steps. Looking at the query above `-> Seq Scan on users` is nested below our `-> Hash` step. Note that `Filter` isn't prefixed with `->` and isn't separate step in our plan, rather it a part of our scan on the `users` table. This means that `Seq Scan on users` is our most nested step.
 
-TODO - still working on this section
-
-We see that our scan on the `users` table is nested **and** has an `estimated start-up cost` of `0.00`. From what learned earlier, this `estimated start-up cost` means this step will run at the start of the query.
-
-With these two pieces together, the timeline and `cost` for the above multi-part step should make more sense. We start with the `seq scan on users` since the start-up cost is `0.00`. This step's `estimated total cost` is `10.62`. If we look at the `Hash` line above, we see that its `estimated start-up cost` is `10.62`. This means that as soon as we finish our `seq scan on users`, we will be able to start the `Hash` step.
+We can validate this with our knowledge of the two values of `cost`. We start with the `Seq Scan on users` since the `etimated start-up cost` is `0.00`. This step's `estimated total cost` is `10.62`. If we look at the `Hash` line above, we see that its `estimated start-up cost` is `10.62`. This means that as soon as we finish our `seq scan on users`, we will be able to start the `Hash` step.
 
 ```sql
 ->  Hash  (cost=10.62..10.62 rows=17 width=516)
   ->  Seq Scan on users  (cost=0.00..10.62 rows=17 width=516)
 ```
 
+Through our understanding of the `cost` attribute, we have been able to piece together an understanding for one of the fundamental aspects of a query plan's layout - that it represent a tree-like structure where the leaf nodes (the most nested elements) are run first.
+
 ### How Much?
 
-So far we have covered about what the two number of cost represent, but not what the values are. While we've talked about the `cost` as a sort of time-like measurement, it isn't actually a representation of time. The unit type used for `cost` can be changed, but defaults to being based on sequential page fetches. However, the units are arbitrary; what matters is the _relative_ costs. From the [postgreSQL documentation](https://www.postgresql.org/docs/current/runtime-config-query.html#RUNTIME-CONFIG-QUERY-CONSTANTS)
+So far, we have covered about what the two number of cost represent but not what the values are. While we've talked about the `cost` as a sort of time-like measurement, it isn't actually a representation of time. The unit type used for `cost` can be changed, but defaults to representing sequential page fetches. However, the units are arbitrary; what matters is the _relative_ costs. From the [postgreSQL documentation](https://www.postgresql.org/docs/current/runtime-config-query.html#RUNTIME-CONFIG-QUERY-CONSTANTS)
 
 > The cost variables described in this section are measured on an arbitrary
 > scale. Only their relative values matter, hence scaling them all up or down by
@@ -165,7 +163,7 @@ The next part of a query plan node is `rows`. This is the **estimated** number o
 
 ## Width
 
-The final element of the query plan node that we are going to cover is `width`. The `width` is the average width of the rows in bytes. This is more than just the number of columns selected, it gives you an idea of the average amount of data stored in those columns. Combined with `rows`, you can get a rough estimation of the amount of data the database will be scanning.
+The final element of the query plan node that we are going to cover is `width`. The `width` is the average width of the rows in bytes. This is more than just the number of columns selected, it gives you an idea of the average amount of data stored in those columns. Combined with `rows`, you can get a rough estimation of the amount of data the database will be pulling into memory for scanning.
 
 While it may be obvious that selecting fewer columns results in less data, `EXPLAIN` can help reveal which columns have the biggest impact. When we perform a `SELECT *` we such a much larger width than if we only `SELECT id`.
 
