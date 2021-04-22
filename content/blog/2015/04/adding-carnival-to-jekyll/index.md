@@ -6,7 +6,7 @@ categories: ['blogging']
 
 **Update April 2019** The [carnival repository](https://github.com/thoughtbot/carnival) has been archived and the [site](https://carnivalapp.io/) fails to load, so it looks like the service is no longer being supported.
 
-# Original Post
+## Original Post
 
 I have mentioned before that I have been listening to [thoughtbot's podcasts](https://thoughtbot.com/podcasts) a lot lately. One of the shows, [The Bike Shed](http://bikeshed.fm/), recently had a [few](http://bikeshed.fm/9) episodes in which they discussed the functional language, [Haskell](https://www.haskell.org/), including an [episode](http://bikeshed.fm/10) in which thoughtbotter Pat Brisbin discussed how he was using Haskell at work to create a commenting system for their training program, [Upcase](https://upcase.com/join).
 
@@ -17,7 +17,7 @@ I have mentioned before that I have been listening to [thoughtbot's podcasts](ht
 
  Since there is a [free hosting plan](https://carnivalapp.io/plans) available for non-commercial sites I figured I would see how easy it was to set up with Jekyll.
 
-# Signing Up
+## Signing Up
 
 Signing up for an account is easy as they allow you to use GitHub or Google if you don't want to create an account.
 
@@ -25,7 +25,7 @@ After signing in with my GitHub account I just had to provide a name for my site
 
 <img src='./carnival_new_site.png'></img>
 
-# Setting Up
+## Setting Up
 
 I was shown a success message and the JavaScript I would need to include on my site.
 
@@ -68,7 +68,7 @@ Since I already had this set up, adding Carnival was simple, I just had to add t
 
 That's it! Now I have in-post comments.
 
-# Tweaking
+## Tweaking
 
 I checked a few pages and noticed that comments were not working for code blocks. I looked into the [docs](https://carnivalapp.io/docs) and saw an option named `block_selector`, which is, according to the docs:
 
@@ -96,13 +96,13 @@ When using the `>` markdown tag for quotes, Jekyll will wrap the text in a `<blo
 
 Now everyone can comment on paragraphs, list items, code blocks, and quotes.
 
-# Things to Watch Out For
+## Things to Watch Out For
 
 There are two things to be aware of:
 
 1. Commenting locally with be reflected on your blog - since you are pushing your comments to the service testing your comments "locally" will show up on your live blog. If you look at one of my older posts you will see I learned this from experience
 2. At the time of writing there is no way to delete a comment (see above for how I figured this out). Since Carnival is [open source](https://github.com/thoughtbot/carnival) we can see that this is a [known issue](https://github.com/thoughtbot/carnival/issues/264) so I'm sure there will be some solutions soon.
 
-# Conclusion
+## Conclusion
 
 I am happy to get to have Medium-like comments added to my blog so easily. For now I want to leave up both Discqus and Carnival. I can see uses for both, commenting on the overall post versus specific sections, but could see removing one or the other at some point as well.

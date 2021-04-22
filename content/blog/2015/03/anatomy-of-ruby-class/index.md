@@ -32,7 +32,7 @@ class Cat
 end
 ```
 
-#Creating an Instance of our Class
+## Creating an Instance of our Class
 
 To create an instance of a Ruby class we use the `new` method, like
 
@@ -60,7 +60,7 @@ Cat.new('Mr. Whiskers')
 #=> #<Cat:0x00000104833f10 @name="Mr. Whiskers", @hunger_level=10>
 ```
 
-#Instance Variables
+## Instance Variables
 
 We see that our new object has `@name` and `@hunger_level` attributes. The `@` variables are known as instance variables. These are variable associated with only that object or that *instance* of the class.
 
@@ -78,9 +78,9 @@ end
 
 `@hunger_level` is set to a value of `10` every time which is why our new `Cat` has a `@hunger_level` equal to `10`.
 
-##Accessing Instance Variables
+## Accessing Instance Variables
 
-###Getting
+### Getting
 
 In order to give users access to our instance variable we need to provide a method call that will return the value.
 
@@ -112,7 +112,7 @@ cat.name
 #=> "Mr. Whiskers"
 ```
 
-###Setting
+### Setting
 
 As you may be able to imply from the name, `attr_reader` only allows the ability to read the value, not set it.
 
@@ -161,7 +161,7 @@ end
 
 and remove our definition of `name=`.
 
-###Both
+### Both
 
 The need for getters and setters, or `attr_reader`s and `attr_writer`s, is so common, Ruby has a method that will do both at the same time, `attr_accessor`.
 
@@ -188,7 +188,7 @@ cat.hunger_level
 #=> 12
 ```
 
-#Class Methods
+## Class Methods
 
 Some methods can be called directly on a class, these are known as class methods.
 
@@ -208,7 +208,7 @@ which can be sent to the `Cat` class directly
 Cat.says #=> "Meow"
 ```
 
-##Alternative Class Method Definition
+### Alternative Class Method Definition
 
 There is an alternative syntax for defining class methods, `class << self`
 
@@ -248,7 +248,7 @@ There are, however, reasons for the `class << self` syntax. For example, from [t
 
 I see this reasoning as potentially being beneficial, especially in some larger classes we have in our applications at work. However, when there are so many method you are hunting around and have various types of method all about the class this may be a code smell in and of itself and a sign some additional objects may need to be created (as is probably the case for the work example I am thinking of).
 
-#Instance Methods
+## Instance Methods
 
 Method defined without `self` (or not in a `class << self` block) are known as instance methods. These methods can be called on instances of a given class.
 
@@ -288,7 +288,7 @@ but rather must be called on an *instance* of the `Cat` class
 "I'm not hungry" # convenient, eh?
 ```
 
-##Scoping
+## Scoping
 
 I would like to point out something about the way we access `@hunger_level` via our `attr_accessor` helper methods.
 
@@ -424,7 +424,7 @@ Thanks for the yummy fish!
 
 This time we do not receive an exception but we see are changing the `@hunger_level` but rather creating a new local variable each time.
 
-# Conclusion
+## Conclusion
 
 We have covered some basics and some intricate details of a basic Ruby class and should now understand exactly what is going on in our `Cat` class definition.
 

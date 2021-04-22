@@ -7,9 +7,15 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "dev": "yarn run develop",
     "start": "npm run develop",
-    "format": "prettier --write \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
+    "format:check": "npm run format -- --check",
+    "format:write": "npm run format -- --write",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
+    "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run",
     "deploy": "gatsby build && gh-pages -d public -b master"
   },
   "keywords": [
@@ -17,6 +23,8 @@
     "typescript"
   ],
   "dependencies": {
+    "autoprefixer": "^10.2.5",
+    "elixir-ls": "elixir-lsp/vscode-elixir-ls",
     "gatsby": "^2.20.2",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-catch-links": "^2.3.11",
@@ -37,21 +45,26 @@
     "gatsby-transformer-json": "^2.4.11",
     "gatsby-transformer-remark": "^2.6.45",
     "gatsby-transformer-sharp": "^2.1.8",
+    "postcss": "^8.2.8",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "typescript": "^3.9.7",
+    "viml": "XadillaX/vscode-language-viml",
     "vscode-themes": "Microsoft/vscode-themes"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.4.0",
     "@types/node": "^10.17.13",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-helmet": "^5.0.14",
+    "cypress": "^6.5.0",
     "gh-pages": "^2.1.1",
     "prettier": "^1.19.1",
-    "tailwindcss": "^1.7.6",
+    "start-server-and-test": "^1.12.0",
+    "tailwindcss": "^2.0.4",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0"

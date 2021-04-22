@@ -3,6 +3,7 @@ title:  "Why I made this blog"
 date:   2015-02-28 12:20:02
 categories: ['blogging']
 ---
+
 Like many developers I felt the need to create a blog. The dream is, it will provide some benefit to other software developers around the world.
 
 The reality is - I am being selfish. I want to be a better developer. When looking at the great developers they all write and share their knowledge. These great developers use blogs as a driving force for sharing solutions, and delve deeper into these solutions so they can more fully understand and explain them.

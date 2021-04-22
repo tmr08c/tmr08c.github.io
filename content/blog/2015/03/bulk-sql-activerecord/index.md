@@ -214,7 +214,7 @@ remove_with_delete_all   0.060000   0.040000   0.100000 (  0.154572)
 
 we noticethat the total exectuion time is only miliseconds more than the query took. This is because there was no additional overhead of creating objects, running callbacks or dealing with associations.
 
-# Conclusion
+## Conclusion
 
 In conclusion, if you are not worried about callbacks or managing associations `delete_all` will result in speedy deletion of large datasets.
 
