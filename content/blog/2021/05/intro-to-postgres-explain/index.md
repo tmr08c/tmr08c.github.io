@@ -188,7 +188,7 @@ While it may be obvious that selecting fewer columns results in less data, `EXPL
 
 ## Analyze
 
-As previously mentioned, `EXPLAIN` doesn't perform the query. This is why we've been dealing with estimations so far. If you want to get more accurate performance information, you will want to use `EXPLAIN ANALYZE`. With `ANALYZE`, the query will actually run. This allows the database to include information about run time, the actual number `row`s, and more.
+As previously mentioned, `EXPLAIN` will not run the query you pass in. This is why we've been dealing with estimations so far. If you want to get more accurate performance information, you will want to use `EXPLAIN ANALYZE`. With `ANALYZE`, the query will run. This allows the database to include information about run time, the actual number `row`s, and more.
 
 Let's take a look at one of our previous queries and include an `ANALYZE`.
 
@@ -218,28 +218,57 @@ EXPLAIN ANALYZE(
 
 While the overall plan is the same as before, we now have additional information next to our `cost`, `rows`, `width` tuple. This new tuple gives us our actual runtime statistics.
 
-Now, instead of our arbitrary units for `cost`, we get `time` (in milliseconds). We also get to see the actual number of `rows` returned. We can see some steps where the planner was close (17 versus 10) and others less so (130 versus 10). These examples are coming from a small, test database which isn't getting regularly `ANALYZE` runs, so I imagine the statistics table is sparse.
+Now, in addition to our arbitrary units for `cost`, we get `time` (in milliseconds). We also get to see the actual number of `rows` returned. We can see some steps where the planner was close (17 versus 10) and others less so (130 versus 10). These examples are coming from a small, test database which isn't getting regularly `ANALYZE` runs, so I imagine the statistics table is sparse.
 
 We also have new information about our hash function (number buckets, amount of memory used) and the overall run time (planning versus actual execution).
 
-`ANALYZE` provide useful addition information ontop of onlyusing `EXPLAIN`. Since it does require running the query, it will take longer for large queries, so keep that in mind when experimenting.
+`ANALYZE` provide useful addition information on top of only using `EXPLAIN`. Since it does require running the query, it will take longer for large queries, so keep that in mind when experimenting.
 
 ## Caveats
 
-The biggest caveat I took away from the documentation is that query plans are specific to the amount of data in the database. As a result, running an `EXPLAIN` locally with a small dataset may not reveal what the query planner is _actually_ going to do on your production system.
+### Matching Environments
+
+The biggest caveat I took away from the documentation is that query plans are specific to the amount of data in the database. As a result, running an `EXPLAIN` locally with a small dataset may not reveal what the query planner is going to do on your production system.
 
 As an example, with a small enough table, the query planner may prefer a sequential scan over leveraging an index. If you are hoping to confirm your newly added index is going to provide performance gains, you _may_ not see that locally.
 
-From what I can tell, the query plan is more impacted by amount of data (as opposed to taking into account something like the underlying hardware). As a result, you should be able to get a better idea of production-like characteristics if you load you local databse with enough data (if feasible). However, like many performance tuning tasks, you will ultimately want to confirm on your real data.
+From what I can tell, the query plan is impacted by amount of data as not other factors like the underlying hardware. As a result, you should be able to get a better idea of production-like characteristics if you load you local database with enough data (if feasible). However, like many performance tuning tasks, you will ultimately want to validate on production.
 
-Another thing to note is that plans are focused on reading, and do not include information about updates. GET EXAMPLE
+### Reading and Writing
+
+Another thing to note is that plans are focused on reading, and do not include information about updates. In the example below, we run `EXPLAIN` on an `UPDATE` command.
+
+```sql
+EXPLAIN
+UPDATE chat_room_messages
+SET body = 'this is an updated message'
+WHERE id = 1;
+
+                                                QUERY PLAN
+----------------------------------------------------------------------------------------------------------
+ Update on chat_room_messages  (cost=0.14..8.16 rows=1 width=586)
+   ->  Index Scan using chat_room_messages_pkey on chat_room_messages  (cost=0.14..8.16 rows=1 width=586)
+         Index Cond: (id = 1)
+(3 rows)
+```
+
+The query plan includes information about scanning the table, but does not include any `cost` information for performing the update itself.
+
+With `EXPLAIN ANALYZE`, the `actual time` shows a gap between the scan and the overall runtime, so you may be able to estimate how long the `UDPATE` is taking.
+
+```sql{3,4}
+                                                                     QUERY PLAN
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ Update on chat_room_messages  (cost=0.14..8.16 rows=1 width=586) (actual time=0.055..0.055 rows=0 loops=1)
+   ->  Index Scan using chat_room_messages_pkey on chat_room_messages  (cost=0.14..8.16 rows=1 width=586) (actual time=0.021..0.022 rows=1 loops=1)
+         Index Cond: (id = 1)
+ Planning Time: 0.064 ms
+ Execution Time: 0.076 ms
+(5 rows)
+```
 
 ## Conclusion
 
 Hopefully, this introduction will empower you to leverage the `EXPLAIN` function. If you find a confusing query plans or struggle to know how to leverage the query plan to do something action, remember this quote from the [documentation](https://www.postgresql.org/docs/current/using-explain.html):
 
 > Plan-reading is an art that requires some experience to master
-
-```
-
-```
