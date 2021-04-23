@@ -1,7 +1,7 @@
 ---
-title: 'Running a Phoenix App in an iframe'
-date: '2020-11-14T05:31:13.265Z'
-categories: ['elixir', 'phoenix']
+title: "Running a Phoenix App in an iframe"
+date: "2020-11-14T05:31:13.265Z"
+categories: ["elixir", "phoenix"]
 ---
 
 For a side project, I am working on building a [Jira Connect application](https://developer.atlassian.com/cloud/jira/platform/#atlassian-connect) using [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/). With a Connect application, your UI is rendered within Jira as though it is a part of Jira itself. This in-Jira UI rendering is supported by the use of [`iframe`s](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
@@ -11,14 +11,14 @@ To get this to work with my Phoenix application, I needed to:
 1. Update the `Content-Security-Policy` response headers to enable some pages to be embeddable in an `iframe`
 2. Update the `SameSite` settings for the session cookie to allow the cookies to be used by a third-party
 
-In this post, I will walk through how I did both of these for this project.
+In this post, I will cover how I accomplished both of these tasks.
 
 ## `Content-Security-Policy`
 
 The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to help prevent [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting)
 by blocking all JavaScript not explicitly listed in the `Content-Security-Policy`.
 
-In this case, we want to specify where it is okay to render our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive.
+In this case, we want our server to tell the browser where we approve rendering our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive.
 
 The `fame-ancestors` directive expects a list of sources (e.g., URLs) that should be allowed to render the content in an `iframe`. For the Connect application, I wanted to allow the `iframe` to be renderable in any cloud instance of Jira. To do this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.net` - `https://*.atlassian.net`.
 
@@ -83,7 +83,7 @@ With our failing test in place, we can now create a plug that will make it pass.
 
 To implement our `AllowIframe` plug, we will create a [module plug](https://hexdocs.pm/phoenix/plug.html#module-plugs).
 
-In our `call` function we will use [`put_resp_header/3`](https://hexdocs.pm/plug/Plug.Conn.html?#put_resp_header/3) to update the response headers to include the `Content-Security-Policy` header with the `frame-ancestors` directive. The end result should look something like: 
+In our `call` function we will use [`put_resp_header/3`](https://hexdocs.pm/plug/Plug.Conn.html?#put_resp_header/3) to update the response headers to include the `Content-Security-Policy` header with the `frame-ancestors` directive. The end result should look something like:
 
 ```elixir{16-21}
 # lib/my_app_web/plugs/allow_iframe.ex
@@ -113,13 +113,11 @@ end
 
 ### Plugging it In
 
-For our use case, we are going to add our plug to the [router](https://hexdocs.pm/phoenix/plug.html#router-plugs). Router plugs allow us to manage their usage on a per-route level instead of a [per-controller](https://hexdocs.pm/phoenix/plug.html#controller-plugs) or more [global (endpoint)](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) basis. 
+For our use case, we are going to add our plug to the [router](https://hexdocs.pm/phoenix/plug.html#router-plugs). Router plugs allow us to manage their usage on a per-route level instead of a [per-controller](https://hexdocs.pm/phoenix/plug.html#controller-plugs) or more [global (endpoint)](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) basis.
 
-To use a plug in the `router` it must be [included in a pipeline](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `pipeline` to group routes that will be renderable within the Jira UI.
+To use a plug in the `router`, it must be [included in a `pipeline`](https://hexdocs.pm/phoenix/plug.html#router-plugs). Since we are building a Connect application, I decided to make a `pipeline` to group routes that will be renderable within the Jira UI.
 
 ```elixir
-# This pipeline should be used for routes
-# that are expected to be requested as
 # a part of the Jira Connect application
 pipeline :jira do
   plug MyAppWeb.Plugs.AllowIframe
@@ -128,7 +126,7 @@ end
 
 I did not add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI (and therefore not in an `iframe`). While your needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
 
-With the `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together. To do this, I leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block. This groups all routes to be nested under `/jira`. This grouping allows us to enable our `AllowfIframe` plug for all of these routes at the same time. 
+With the `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together. To do this, I leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block. This groups all routes to be nested under `/jira`. This grouping allows us to enable our `AllowfIframe` plug for all of these routes at the same time.
 
 ```elixir
 scope "/jira", MyAppWeb.Jira, as: :jira do
@@ -150,9 +148,9 @@ The Phoenix server tried to log a message hinting at the problem:
 or the user token is outdated.
 ```
 
-This log message also included suggestions for resolving the issue. One of the recommendations was to make sure to include the [CSRF token](https://hexdocs.pm/plug/Plug.CSRFProtection.html) in the HTML and the JavaScript used to connect the LiveView socket. When looking at the server logs, I notice the `_csrf_token` was included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
+This log message also included suggestions for resolving the issue. One of the recommendations was to make sure to include the [CSRF token](https://hexdocs.pm/plug/Plug.CSRFProtection.html) in the HTML and the JavaScript used to connect the LiveView socket. When looking at the server logs, I notice the `_csrf_token` _was_ included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
 
-After some digging, I eventually found out the problem was the cookie, which is supposed to store information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
+After some digging, I eventually found out the problem was the cookie, which stores information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
 
 Our cookie was not getting set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. Working with cookies from a different domain is known as [third-party cookies](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies). For security reasons, browsers block this type of cookie by default.
 
@@ -160,7 +158,7 @@ To allow your application to store cookies that can be accessible by a third par
 
 ### Third Party Cookies with Phoenix
 
-Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores.  While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix adds at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`), you should have a line like:
+Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores. While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix adds at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`), you should have a line like:
 
 ```elixir
 plug Plug.Session, @session_options
@@ -212,9 +210,9 @@ config :my_app, MyAppWeb.Endpoint,
 
 Please check out the [Phoenix documentation](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development) for the most up-to-date way to do this.
 
-If you write feature tests with a tool that relies on a headless browser, you will also need to update your `Endpoint` settings in `config/test.exs` to serve over `https`. These changes should be similar to the changes we made above for the `dev` environment. 
+If you write feature tests with a tool that relies on a headless browser, you will also need to update your `Endpoint` settings in `config/test.exs` to serve over `https`. These changes should be similar to the changes we made above for the `dev` environment.
 
-One additional change I need to make for testing was to tell [ChromeDriver](https://chromedriver.chromium.org/) that it was okay to interact with our self-signed, less secure certificates when interacting with `localhost`.  ChromeDriver provides the [`--allow-secure-localhost` flag](https://stackoverflow.com/questions/50838882/how-to-enable-an-allow-insecure-localhost-flag-in-chrome-from-selenium) to do just that. 
+One additional change I need to make for testing was to tell [ChromeDriver](https://chromedriver.chromium.org/) that it was okay to interact with our self-signed, less secure certificates when interacting with `localhost`. ChromeDriver provides the [`--allow-insecure-localhost` flag](https://stackoverflow.com/questions/50838882/how-to-enable-an-allow-insecure-localhost-flag-in-chrome-from-selenium) to do just that.
 
 I am using [Wallaby](https://github.com/elixir-wallaby/wallaby) for testing and set this flag with the following config:
 
