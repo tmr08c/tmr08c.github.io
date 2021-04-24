@@ -18,11 +18,11 @@ In this post, I will cover how I accomplished both of these tasks.
 The [`Content-Security-Policy` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) provide a mechanism for the server to tell the browser what content is safe to load. A common use case for this is to help prevent [XSS attacks](https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting)
 by blocking all JavaScript not explicitly listed in the `Content-Security-Policy`.
 
-In this case, we want our server to tell the browser where we approve rendering our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive.
+In this case, we want our server to tell the browser on which domain we approve rendering our `iframe`. For this, we use the [`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive.
 
 The `fame-ancestors` directive expects a list of sources (e.g., URLs) that should be allowed to render the content in an `iframe`. For the Connect application, I wanted to allow the `iframe` to be renderable in any cloud instance of Jira. To do this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.net` - `https://*.atlassian.net`.
 
-I also decided to include the [`'self'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) source. This source enables `iframe`s to be renderable when the `iframe`'s `src` matches the origin of the page that is rendering it. For now, I am using this for manual testing, but, depending on your needs and testing strategy, you may be able to remove it.
+I also decided to include the [`'self'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) source. This source enables `iframe`s to be renderable when the `iframe`'s `src` matches the origin of the page that is rendering it. For now, I am using this for manual testing but, depending on your needs and testing strategy, you may be able to remove it.
 
 With these two needs in mind, my goal was to end up with a `Content-Security-Policy` header that matched:
 
@@ -85,7 +85,7 @@ To implement our `AllowIframe` plug, we will create a [module plug](https://hexd
 
 In our `call` function we will use [`put_resp_header/3`](https://hexdocs.pm/plug/Plug.Conn.html?#put_resp_header/3) to update the response headers to include the `Content-Security-Policy` header with the `frame-ancestors` directive. The end result should look something like:
 
-```elixir{16-21}
+```elixir{15-19}
 # lib/my_app_web/plugs/allow_iframe.ex
 defmodule MyAppWebb.Plugs.AllowIframe do
   @moduledoc """
@@ -93,10 +93,8 @@ defmodule MyAppWebb.Plugs.AllowIframe do
   Uses `Content-Security-Policy: fame-ancestors`
   which limits where the app can be loaded as
   an `iframe` to only specified hosts.
-
-  See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors)
-  for more details.
   """
+
   import Plug.Conn
 
   def init(_), do: %{}
@@ -158,7 +156,7 @@ To allow your application to store cookies that can be accessible by a third par
 
 ### Third Party Cookies with Phoenix
 
-Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores. While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix adds at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`), you should have a line like:
+Phoenix has a [`Plug.Session`](https://hexdocs.pm/plug/Plug.Session.html) that is responsible for handling session cookies and stores. While we added the plug that we created above into the router, this plug is an [Endpoint plug](https://hexdocs.pm/phoenix/plug.html#endpoint-plugs) that Phoenix created at project generation time. In your project's endpoint module (`lib/my_app_web/endpoint.ex`), you should have a line like:
 
 ```elixir
 plug Plug.Session, @session_options
@@ -195,7 +193,7 @@ With the cookie set up to be available as a third-party cookie, we should no lon
 
 To allow my application's cookies to get set during local development, I decided to set up [SSL in development](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development). While some browsers will warn about using self-signed certificates (even on localhost), I prefer this method over conditionally setting the `secure` attribute on the cookies. I worry that the divergence in options between development and production could lead to hard to reproduce bugs or accidentally setting less secure options in production.
 
-Phoenix makes setting up local HTTPS development easy and provides a `mix` task to generate self-signed certificates (`mix phx.gen.cert`). You then update the application's `Endpoint` to serve `https` and use the self-signed certificates by updating `config/dev.exs`.
+For local HTTPS development, Phoenix provides a `mix` task to generate self-signed certificates (`mix phx.gen.cert`). You can then update the application's `Endpoint` to serve `https` and use the self-signed certificates by updating `config/dev.exs`.
 
 ```elixir
 # config/dev.exs
@@ -208,7 +206,7 @@ config :my_app, MyAppWeb.Endpoint,
   ],
 ```
 
-Please check out the [Phoenix documentation](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development) for the most up-to-date way to do this.
+Please reference the [Phoenix documentation](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development) for the most up-to-date way to do this.
 
 If you write feature tests with a tool that relies on a headless browser, you will also need to update your `Endpoint` settings in `config/test.exs` to serve over `https`. These changes should be similar to the changes we made above for the `dev` environment.
 
@@ -218,8 +216,13 @@ I am using [Wallaby](https://github.com/elixir-wallaby/wallaby) for testing and 
 
 ```elixir
 # config/test.exs`
-config :wallaby, :chromedriver,
-  capabilities: %{chromeOptions: %{args: ["--allow-insecure-localhost"]}},
+config :wallaby,
+       :chromedriver,
+       capabilities: %{
+         chromeOptions: %{
+           args: ["--allow-insecure-localhost"]
+         }
+       }
 ```
 
 Despite not being the norm, this setup has not had any problems (yet) and has had the advantage of being able to work with my `secure` cookie settings.
