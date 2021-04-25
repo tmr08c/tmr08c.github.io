@@ -22,9 +22,9 @@ In this case, we want our server to tell the browser on which domain we approve 
 
 The `fame-ancestors` directive expects a list of sources (e.g., URLs) that should be allowed to render the content in an `iframe`. For the Connect application, I wanted to allow the `iframe` to be renderable in any cloud instance of Jira. To do this, I was able to leverage the ability to use wildcard matchers to match any subdomain of `atlassian.net` - `https://*.atlassian.net`.
 
-I also decided to include the [`'self'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) source. This source enables `iframe`s to be renderable when the `iframe`'s `src` matches the origin of the page that is rendering it. For now, I am using this for manual testing but, depending on your needs and testing strategy, you may be able to remove it.
+I also decided to include the [`'self'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) source. This source enables `iframe`s to be renderable when the `iframe`'s `src` matches the origin of the page that is rendering it. I am using this to enable manual testing. Depending on your needs and testing strategy, you may be able to remove it.
 
-With these two needs in mind, my goal was to end up with a `Content-Security-Policy` header that matched:
+With these two pieces in mind, my goal was to end up with a `Content-Security-Policy` header that matched:
 
 ```html
 Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
@@ -32,11 +32,11 @@ Content-Security-Policy: frame-ancestors 'self' https://*.atlassian.net
 
 ### Allow `iframe` Plug
 
-To add this response header, we are going to leverage Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses and makes up the core of Phoenix's HTTP lifecycle.
+To add this response header, we will take advantage of Phoenix's use of [Plug](https://hexdocs.pm/phoenix/plug.html). Plug is a library that allows you to interact with HTTP requests and responses and makes up the core of Phoenix's HTTP lifecycle.
 
 ### Testing the Plug
 
-We can use the [`Plug.Test`](https://hexdocs.pm/plug/Plug.Test.html) module to test-drive that the plug we create will have the `Content-Security-Policy` we expect.
+We can use the [`Plug.Test`](https://hexdocs.pm/plug/Plug.Test.html) module to test-drive our new plug.
 
 ```elixir
 # test/my_app_web/plugs/allow_iframe_test.exs
@@ -77,7 +77,7 @@ end
 
 This test will create a `conn` and pass that into our soon-to-be plug. It then `assert`s that our `conn` will have response headers that include our expected `Content-Security-Policy` and `frame-ancestors` pairing.
 
-With our failing test in place, we can now create a plug that will make it pass.
+With a failing test in place, we can now create a plug that will make it pass.
 
 ### Creating the Plug
 
@@ -122,7 +122,7 @@ pipeline :jira do
 end
 ```
 
-I did not add this directly to the existing `browser` `pipeline` because I anticipated the need to have some routes that would not be required to render within the Jira UI (and therefore not in an `iframe`). While your needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
+I did not add this directly to the existing `browser` `pipeline` because I anticipated the need to have routes that would not be rendered within the Jira UI (and therefore not in an `iframe`). While your needs will be different, please remember the ability to render `iframe`s is limited for security purposes. I would suggest trying to limit the ability to display your application in an `iframe` as much as possible and allow access on an as-needed basis instead of defaulting to making it available.
 
 With the `pipeline` in place, I can group routes that will be rendered in the Jira Connect application together. To do this, I leverage Phoenix's [scope](https://hexdocs.pm/phoenix/routing.html#scoped-routes) block. This groups all routes to be nested under `/jira`. This grouping allows us to enable our `AllowfIframe` plug for all of these routes at the same time.
 
@@ -148,11 +148,11 @@ or the user token is outdated.
 
 This log message also included suggestions for resolving the issue. One of the recommendations was to make sure to include the [CSRF token](https://hexdocs.pm/plug/Plug.CSRFProtection.html) in the HTML and the JavaScript used to connect the LiveView socket. When looking at the server logs, I notice the `_csrf_token` _was_ included in the parameters when attempting to connect to the socket, but that it was changing with every page reload and socket reconnect attempt.
 
-After some digging, I eventually found out the problem was the cookie, which stores information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
+After some digging, I eventually discovered that the cookie, which stores information like the CSRF token, was not getting set when loading the `iframe` from within Jira.
 
 Our cookie was not getting set because the default behavior for cookies is to be [first-party](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies), meaning they are only accessible on the same domain as the server. Since we are rendering our site in an `iframe` we are attempting to access the cookies for our application from an Atlassian/Jira domain. Working with cookies from a different domain is known as [third-party cookies](https://web.dev/samesite-cookies-explained/#what-are-first-party-and-third-party-cookies). For security reasons, browsers block this type of cookie by default.
 
-To allow your application to store cookies that can be accessible by a third party the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property set to `'None'`. When sending cookies to third parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie; this indicates that the cookie should only be accessible when the requesting site is using `https`. For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
+For your application to create cookies that can be accessible by a third party, the cookie must have the [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) property set to `'None'`. When sending cookies to third parties, you must also set the [`Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Secure) property on the cookie; this indicates that the cookie should only be accessible when the requesting site is using `https`. For more information on the `SameSite` options when working with cookies check out [this article](https://web.dev/samesite-cookies-explained/).
 
 ### Third Party Cookies with Phoenix
 
@@ -189,7 +189,7 @@ This is where we can set the additional [`Plug.Session` options](https://hexdocs
 
 ### Same Problem, Different Environment
 
-With the cookie set up to be available as a third-party cookie, we should no longer see constant reloading when rendering our `iframe` on a third-party site. However, our need to set the `secure` option may cause us some problems in local development. The `secure` flag requires communication over HTTPS. For some browsers, this extends to `localhost` as well. The need for HTTPS means that you will likely now face the same issues you did when interacting with your app in an `iframe` in your local development environment.
+With the cookie set up to be available as a third-party cookie, we should no longer see constant reloading when rendering our `iframe` on a third-party site. However, setting the `secure` option on our session cookie may cause us some problems in local development. The `secure` flag requires communication over HTTPS. For some browsers, this extends to `localhost` as well. The need for HTTPS means that you will likely now face the same issues you did when interacting with your app in an `iframe` in your local development environment.
 
 To allow my application's cookies to get set during local development, I decided to set up [SSL in development](https://hexdocs.pm/phoenix/using_ssl.html#ssl-in-development). While some browsers will warn about using self-signed certificates (even on localhost), I prefer this method over conditionally setting the `secure` attribute on the cookies. I worry that the divergence in options between development and production could lead to hard to reproduce bugs or accidentally setting less secure options in production.
 
@@ -225,7 +225,7 @@ config :wallaby,
        }
 ```
 
-Despite not being the norm, this setup has not had any problems (yet) and has had the advantage of being able to work with my `secure` cookie settings.
+Despite not being the norm, this setup has not had any problems (yet) and has had the advantage of working with the `secure` cookie settings.
 
 ## Conclusion
 
