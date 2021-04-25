@@ -1,6 +1,6 @@
 ---
 title: "Running a Phoenix App in an iframe"
-date: "2020-11-14T05:31:13.265Z"
+date: "2021-04-26T06:31:13.265Z"
 categories: ["elixir", "phoenix"]
 ---
 
