@@ -6,13 +6,15 @@ categories: ["elixir"]
 
 Despite being a compiled language, Elixir has provided support for executing code in file as though it were a scripting language since it's inception. By using the `.exs` extension, Elixir will compile the file in-memory and run the compiled code.
 
+As a simple example, we can create a file, `my_script.exs` to print something "Hello, World"-like.
+
 ```elixir
 # my_script.exs
 IO.puts("Hello, from Elixir")
 IO.puts("...a scripting language?")
 ```
 
-The scripts can be run using the `elixir` command
+We can run `.exs` by passing the pathname to the `elixir` command.
 
 ```bash
 › elixir my_script.exs
@@ -45,3 +47,5 @@ Compiling 8 files (.ex)
 Generated jason app
 {"hello":"world"}
 ```
+
+Link to =escript= at end as compairson
