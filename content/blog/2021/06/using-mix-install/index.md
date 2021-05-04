@@ -25,6 +25,94 @@ Hello, from Elixir
 
 [This article](https://thinkingelixir.com/2019-04-running-an-elixir-file-as-a-script/) covers more of how this works and some of the downsides. One downside not mentioned in the article is the inability to use packages. Since `exs` scripts are not intended to be complicated programs it makes sense this was not mentioned.
 
+However, to further extend the ability for Elixir to be used in this scripting context, a new, experimental feature has [been added](https://github.com/elixir-lang/elixir/pull/10674) in 1.12, [`Mix.Install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.Install`, you can list dependencies to install just like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [linline functionality provided by Bundler](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html).
+
+To steal an example from the documentation, we can JSON-encode a map with [Jason](https://github.com/michalmuskala/jason).
+
+```elixir
+Mix.install([:jason])
+
+IO.puts(Jason.encode!(%{hello: :world}))
+```
+
+When running this we see the following output:
+
+```bash
+Resolving Hex dependencies...
+Dependency resolution completed:
+New:
+  jason 1.2.2
+* Getting jason (Hex package)
+==> jason
+Compiling 8 files (.ex)
+Generated jason app
+{"hello":"world"}
+```
+
+Similar to the output of `mix deps.get`, we resolve, fetch, and compile our dependencies. Once `Mix.Install` is complete and we have our dependencies, we run our `IO.puts` and output the encoded JSON.
+
+As a part of our first run our dependencies will be cached. As a result, subsequent runs (assuming the same version of Elixir and dependencies) will be much faster and not include dependency management:
+
+```bash
+› elixir mix_install_test.exs
+{"hello":"world"}
+```
+
+To find out where the dependencies are bing cached on your system, you can pass the `verbose` option to `Mix.Install`.
+
+```elixir
+Mix.install(
+  [:jason],
+  verbose: true
+)
+
+IO.puts(Jason.encode!(%{hello: :world}))
+```
+
+Now, when we run our script it will tell us if found cached dependencies and where they are:
+
+```bash
+› elixir mix_install_test.exs
+using /Users/me/Library/Caches/mix/installs/elixir-1.12.0-rc.1-erts-12.0/11989020f314102159a0c9ca882052fc
+
+{"hello":"world"}
+```
+
+The dependency list passed to `Mix.Install` is th esame as your `deps` list in a project's `mix.exs`. This means you can take advantage of specifying versions and other [options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-options) provided by Mix.
+
+As an example, when trying to create an example script that pulls from an API, I ran into an issue with OTP 24 in [mint](https://github.com/elixir-mint/mint) that [was resolved](https://github.com/elixir-mint/mint/pull/293) on their `main` branch, but not in a release. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using the Mint wrapper, [Mojito](https://github.com/appcues/mojito), I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency.
+
+```elixir
+Mix.install(
+  [
+    :jason,
+    :mojito,
+    # override version of Mint to include
+    # https://github.com/elixir-mint/mint/pull/293
+    {:mint, git: "https://github.com/elixir-mint/mint", branch: "main", override: true}
+  ],
+)
+```
+
+This shows that `Mix.install` was built to fully leverage the flexible dependency management provide in a full `mix` project`.
+
+As I mentioned before, I got into the `Mix` configuration options because I wanted to make a mildly more complex option. One possible use case I imagined for these style of scripts was to provide an easy way to test out APIs.
+
+```elixir
+{:ok, %{body: body}} =
+  Mojito.request(
+    method: :get,
+    url: "https://api.coindesk.com/v1/bpi/currentprice.json"
+  )
+
+bit_coin_rate =
+  body
+  |> Jason.decode!()
+  |> get_in(["bpi", "USD", "rate"])
+
+IO.puts("The current rate for Bitcoin is #{bit_coin_rate}")
+```
+
 # Notes
 
 Installing and using verbose
