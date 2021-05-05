@@ -96,9 +96,18 @@ Mix.install(
 
 This shows that `Mix.install` was built to fully leverage the flexible dependency management provide in a full `mix` project`.
 
-As I mentioned before, I got into the `Mix` configuration options because I wanted to make a mildly more complex option. One possible use case I imagined for these style of scripts was to provide an easy way to test out APIs.
+As I mentioned before, I got into the `Mix` configuration options because I wanted to make a mildly more complex option. One possible use case I imagined for these style of scripts was to provide an easy way to test out APIs. As an example, let's fetch the current price of Bitcoin from the [Coinbase API](https://developers.coinbase.com/).
 
 ```elixir
+# Mix.Install from before
+Mix.install(
+  [
+    :jason,
+    :mojito,
+    {:mint, git: "https://github.com/elixir-mint/mint", branch: "main", override: true}
+  ],
+)
+
 {:ok, %{body: body}} =
   Mojito.request(
     method: :get,
@@ -112,6 +121,22 @@ bit_coin_rate =
 
 IO.puts("The current rate for Bitcoin is #{bit_coin_rate}")
 ```
+
+We can now run this program like we would a Ruby or Python script.
+
+```bash
+› elixir bitcoin_price.exs
+The current rate for Bitcoin is 55,277.6167
+
+› elixir bitcoin_price.exs
+The current rate for Bitcoin is 55,168.1100
+```
+
+This may not be the best way to explore new APIs, but gives us a new option. At the very least, we can now track our Bitcoin investment 💎🙌🚀!
+
+We could also hand the script off to a co-worker if we wanted to. If we wanted to make some more portable and use it over time, we would probably want to consider locking down some of the versions we specify for our dependencies.
+
+Because we still need Elixir installed on our system to run the script, this doesn't provide us with the portability of something like a go's ability to build executable binaries. For that, you may want to explore [Bakeware](https://github.com/bake-bake-bake/bakeware).
 
 # Notes
 
