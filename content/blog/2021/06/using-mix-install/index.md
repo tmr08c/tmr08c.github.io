@@ -4,9 +4,9 @@ date: "2021-06-26T06:31:13.265Z"
 categories: ["elixir"]
 ---
 
-Despite being a compiled language, Elixir has provided support for executing code in file as though it were a scripting language since it's inception. By using the `.exs` extension, Elixir will compile the file in-memory and run the compiled code.
+Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since it's inception. By using the `.exs` extension, Elixir will compile the file in-memory and run the compiled code.
 
-As a simple example, we can create a file, `my_script.exs` to print something "Hello, World"-like.
+As a simple example we can create a file, `my_script.exs`, to print something "Hello, World"-like.
 
 ```elixir
 # my_script.exs
@@ -14,7 +14,7 @@ IO.puts("Hello, from Elixir")
 IO.puts("...a scripting language?")
 ```
 
-We can run `.exs` by passing the pathname to the `elixir` command.
+We can run our `.exs` file by passing its pathname to the `elixir` command.
 
 ```bash
 › elixir my_script.exs
@@ -23,11 +23,11 @@ Hello, from Elixir
 ...a scripting language?
 ```
 
-[This article](https://thinkingelixir.com/2019-04-running-an-elixir-file-as-a-script/) covers more of how this works and some of the downsides. One downside not mentioned in the article is the inability to use packages. Since `exs` scripts are not intended to be complicated programs it makes sense this was not mentioned.
+[This article](https://thinkingelixir.com/2019-04-running-an-elixir-file-as-a-script/) covers more of how this works as well as some of the downsides.
 
-However, to further extend the ability for Elixir to be used in this scripting context, a new, experimental feature has [been added](https://github.com/elixir-lang/elixir/pull/10674) in 1.12, [`Mix.Install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.Install`, you can list dependencies to install just like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [linline functionality provided by Bundler](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html).
+In order to further extend the ability for Elixir to be used in this scripting context, a new, experimental feature has [been added](https://github.com/elixir-lang/elixir/pull/10674) in Elixir's 1.12 release, [`Mix.Install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.Install`, you can list dependencies to install just like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline functionality provided by Bundler](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html).
 
-To steal an example from the documentation, we can JSON-encode a map with [Jason](https://github.com/michalmuskala/jason).
+To start with something simple, let's steal an example from the documentation: JSON-encoding a map with the [Jason](https://github.com/michalmuskala/jason).
 
 ```elixir
 Mix.install([:jason])
@@ -55,18 +55,17 @@ As a part of our first run our dependencies will be cached. As a result, subsequ
 
 ```bash
 › elixir mix_install_test.exs
+# no resolving dependencies!
 {"hello":"world"}
 ```
 
-To find out where the dependencies are bing cached on your system, you can pass the `verbose` option to `Mix.Install`.
+To find out where the dependencies are being cached on your system, you can pass the `verbose` option to `Mix.Install`.
 
 ```elixir
 Mix.install(
   [:jason],
   verbose: true
 )
-
-IO.puts(Jason.encode!(%{hello: :world}))
 ```
 
 Now, when we run our script it will tell us if found cached dependencies and where they are:
@@ -74,13 +73,11 @@ Now, when we run our script it will tell us if found cached dependencies and whe
 ```bash
 › elixir mix_install_test.exs
 using /Users/me/Library/Caches/mix/installs/elixir-1.12.0-rc.1-erts-12.0/11989020f314102159a0c9ca882052fc
-
-{"hello":"world"}
 ```
 
-The dependency list passed to `Mix.Install` is th esame as your `deps` list in a project's `mix.exs`. This means you can take advantage of specifying versions and other [options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-options) provided by Mix.
+The dependency list passed to `Mix.Install` is the same as your `deps` list in a project's `mix.exs`. This means you can take advantage of specifying versions and other [options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-options) provided by Mix.
 
-As an example, when trying to create an example script that pulls from an API, I ran into an issue with OTP 24 in [mint](https://github.com/elixir-mint/mint) that [was resolved](https://github.com/elixir-mint/mint/pull/293) on their `main` branch, but not in a release. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using the Mint wrapper, [Mojito](https://github.com/appcues/mojito), I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency.
+As an example, when trying to create an example script that pulls from an API, I ran into an issue with using OTP 24 with [Mint](https://github.com/elixir-mint/mint). This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on their `main` branch, but not in a release. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using the Mint wrapper, [Mojito](https://github.com/appcues/mojito), I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency.
 
 ```elixir
 Mix.install(
@@ -94,7 +91,7 @@ Mix.install(
 )
 ```
 
-This shows that `Mix.install` was built to fully leverage the flexible dependency management provide in a full `mix` project`.
+This shows that `Mix.install` was built to fully leverage the flexible dependency management provided in a full `mix` project`.
 
 As I mentioned before, I got into the `Mix` configuration options because I wanted to make a mildly more complex option. One possible use case I imagined for these style of scripts was to provide an easy way to test out APIs. As an example, let's fetch the current price of Bitcoin from the [Coinbase API](https://developers.coinbase.com/).
 
@@ -134,9 +131,9 @@ The current rate for Bitcoin is 55,168.1100
 
 This may not be the best way to explore new APIs, but gives us a new option. At the very least, we can now track our Bitcoin investment 💎🙌🚀!
 
-We could also hand the script off to a co-worker if we wanted to. If we wanted to make some more portable and use it over time, we would probably want to consider locking down some of the versions we specify for our dependencies.
+Another use case I imagine for using `Mix.Install` is for sharing code example or scripting common tasks at work. If we wanted to make our script more portable and usable over time, we would probably want to consider locking down some of the versions we specify for our dependencies.
 
-Because we still need Elixir installed on our system to run the script, this doesn't provide us with the portability of something like a go's ability to build executable binaries. For that, you may want to explore [Bakeware](https://github.com/bake-bake-bake/bakeware).
+With the addition of a single function, Elixir has greatly increased its abilities to write small scripts. Because we still need Elixir installed on our system to run the script, this doesn't provide us with the portability of something like a [Go's ability to build executable binaries](https://www.digitalocean.com/community/tutorials/how-to-build-and-install-go-programs). For that, you may want to explore [Bakeware](https://github.com/bake-bake-bake/bakeware). For something between a single file script and `Bakeware`, you may also want to investigate [escript](https://hexdocs.pm/mix/master/Mix.Tasks.Escript.Build.html)s. With `escript` you can build your `mix` project into an executable. It does, however, require building the project for the architecture you are working with.
 
 # Notes
 
