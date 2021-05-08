@@ -4,11 +4,11 @@ date: "2021-06-26T06:31:13.265Z"
 categories: ["elixir"]
 ---
 
-Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since it's inception. By using the `.exs` extension, Elixir will compile the file in-memory and run the compiled code.
+Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since its inception. By using the `.exs` extension, Elixir will compile the file in-memory and run the compiled code.
 
 ## A Basic Elixir Script
 
-As a simple example we can create a file, `my_script.exs`, to print something "Hello, World"-like.
+As a simple example, we can create a file, `my_script.exs`, to print something "Hello, World"-like.
 
 ```elixir
 # my_script.exs
@@ -29,7 +29,7 @@ Hello, from Elixir
 
 ## Bringing in Dependencies
 
-In order to further extend the ability for Elixir to be used in this scripting context, a new experimental feature has [been added](https://github.com/elixir-lang/elixir/pull/10674) in Elixir's 1.12 release, [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list dependencies to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline functionality provided by Bundler](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html).
+To further extend the ability of Elixir to be used in this scripting context, a new experimental feature has [been added](https://github.com/elixir-lang/elixir/pull/10674) in Elixir's 1.12 release, [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list dependencies to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
 
 ## A Basic `Mix.install`
 
@@ -41,7 +41,7 @@ Mix.install([:jason])
 IO.puts(Jason.encode!(%{hello: :world}))
 ```
 
-When running this we see the following output:
+When running, we see the following output:
 
 ```bash
 Resolving Hex dependencies...
@@ -52,6 +52,7 @@ New:
 ==> jason
 Compiling 8 files (.ex)
 Generated jason app
+
 {"hello":"world"}
 ```
 
@@ -59,7 +60,7 @@ Similar to the output of `mix deps.get`, we resolve, fetch, and compile our depe
 
 ## Caching
 
-As a part of our first run, our dependencies will be cached. This means subsequent runs will not need to include any dependency management:
+After our first run, the dependencies will be cached; this means subsequent runs will not need to include any dependency management:
 
 ```bash
 › elixir mix_install_test.exs
@@ -76,20 +77,20 @@ Mix.install(
 )
 ```
 
-Now, when we run our script it will tell us if found cached dependencies and where they are:
+Now, when we run our script, it will tell us where the dependency cache is.
 
 ```bash
 › elixir mix_install_test.exs
 using /Users/me/Library/Caches/mix/installs/elixir-1.12.0-rc.1-erts-12.0/11989020f314102159a0c9ca882052fc
 ```
 
-Caching is based on a combination of Elixir and OTP versions as well as the dependencies you have listed. Changing any of these will result in a cache miss and require re-fetching and compiling packages.
+Caching is based on a combination of Elixir and OTP versions, as well as the dependencies you have listed. Changing any of these will result in a cache miss and require re-fetching and compiling packages.
 
 ## Mix Options
 
 The dependency list passed to `Mix.install` is the same as your `deps` list in a project's `mix.exs`. This means you can take advantage of specifying versions and other [options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-options) provided by Mix.
 
-When trying to create an example script that pulls from an API, I ran into an issue with using OTP 24 with [Mint](https://github.com/elixir-mint/mint). This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on their `main` branch, but not in a release. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using the Mint wrapper, [Mojito](https://github.com/appcues/mojito), I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency.
+When creating a script that pulls from an API, I ran into an issue using OTP 24 with [Mint](https://github.com/elixir-mint/mint). This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on the `main` branch, but had not yet been released. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using the Mint wrapper, [Mojito](https://github.com/appcues/mojito), I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency.
 
 My resulting call to `Mix.install` ended up looking like the following:
 
@@ -107,11 +108,11 @@ Mix.install(
 
 This shows that `Mix.install` was built to fully leverage the flexible dependency management provided in a full `mix` project`.
 
-In addition to the less commonly used options, there's also the ability to specify dependency versions. Pinning package versions can make it easier to share and re-use scripts in the future. Since scripts are often used for one-off tasks and less maintained, using the same package versions every time an help prevent the need to unnecessary maintenance.
+In addition to the less commonly used options, there's also the ability to specify dependency versions. Pinning package versions can make it easier to share and re-use scripts in the future. Since scripts are often used for one-off tasks and less maintained, using the same package versions every time helps prevent the need for unnecessary maintenance.
 
 ## Another Example
 
-I got into the `Mix` configuration options mentioned above because I wanted to make a mildly more complex option. One possible use case I imagined for these style of scripts was to provide an easy way to test out APIs. As an example, I wanted to take a ride on the Bitcoin hype train and fetch its current price from the [Coinbase API](https://developers.coinbase.com/).
+I got into the `Mix` configuration options mentioned above because I wanted to make a mildly more complex option. One possible use case I imagined for this style of script was to provide an easy way to test out APIs. As an example, I wanted to take a ride on the Bitcoin hype train and fetch its current price from the [Coinbase API](https://developers.coinbase.com/).
 
 ```elixir
 Mix.install(
@@ -146,7 +147,7 @@ The current rate for Bitcoin is 55,277.6167
 The current rate for Bitcoin is 55,168.1100
 ```
 
-This may not be the best way to explore new APIs, but gives us a new option. At the very least, we can now track our Bitcoin investment 💎🙌🚀!
+This may not be the best way to explore new APIs but gives us a new option. At the very least, we can now track our Bitcoin investment 💎🙌🚀!
 
 ## Future
 
