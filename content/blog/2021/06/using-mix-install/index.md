@@ -4,11 +4,11 @@ date: "2021-06-26T06:31:13.265Z"
 categories: ["elixir"]
 ---
 
-Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since its inception. When processing a file with the `.exs` extension Elixir will compile the file in-memory and run the compiled code. In this post, we will cover an experimental feature that is expanding the language's scripting abilities.
+Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since its inception. When processing a file with the `.exs` extension Elixir will compile the file in-memory and run the compiled code. In this post, we will cover an experimental feature that is expanding upon the language's scripting abilities.
 
 ## A Basic Elixir Script
 
-As a simple example, we can create a file, `my_script.exs`, to print something "Hello, World"-like.
+To introduce scripting with Elixir, we can create a file, `my_script.exs`, to print something "Hello, World"-like.
 
 ```elixir
 # my_script.exs
@@ -25,19 +25,19 @@ Hello, from Elixir
 ...a scripting language?
 ```
 
-[This article](https://thinkingelixir.com/2019-04-running-an-elixir-file-as-a-script/) covers more of how this works as well as some of the downsides.
+[This article](https://thinkingelixir.com/2019-04-running-an-elixir-file-as-a-script/) covers more on how this works.
 
 ## Bringing in Dependencies
 
-To further extend the ability of Elixir to be used in this scripting context, a new experimental feature has [been added](https://github.com/elixir-lang/elixir/pull/10674) in Elixir's 1.12 release, [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list third-party packages to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
+To further extend the ability of Elixir to be used in this scripting context, a new [experimental feature](https://github.com/elixir-lang/elixir/pull/10674) has been added in Elixir's [1.12 release](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0-rc.0), [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list third-party packages to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
 
 ## A Basic `Mix.install`
 
 To start with something simple, let's steal an example from the documentation: JSON-encoding a map with the [Jason](https://github.com/michalmuskala/jason) package.
 
 ```elixir
+# mix_install_test.exs
 Mix.install([:jason])
-
 IO.puts(Jason.encode!(%{hello: :world}))
 ```
 
@@ -88,13 +88,13 @@ Caching [is based](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746
 
 ## Mix Options
 
-`Mix.install` works by [dynamically making a Mix project](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746a7db359da505e688a6f504/lib/mix/lib/mix.ex#L567-L582) for you when the script runs. As a result, the dependency list passed to `Mix.install` is the same as your `deps` list in a Mix project's `mix.exs`. By working with an in-memory Mix project, you can take full advantage of Mix dependency management, including specifying package versions and all other [options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-options) provided by Mix.
+`Mix.install` works by [dynamically building a Mix project](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746a7db359da505e688a6f504/lib/mix/lib/mix.ex#L567-L582) for you when the script runs. As a result, the dependency list passed to `Mix.install` is the same as your `deps` list in a Mix project's `mix.exs`. By working with an in-memory Mix project, you can take full advantage of Mix dependency management, including specifying package versions and all other [options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-options) provided by Mix.
 
 ## Another Example
 
 One possible use case I imagined for using `Mix.install` was to test new APIs. As an example, I wanted to fetch the current price of Bitcoin from the [Coinbase API](https://developers.coinbase.com/).
 
-When creating the script, I decided to use [Mojito](https://github.com/appcues/mojito) for HTTP requests. Unfortunately, I ran into an issue using OTP 24 with [Mint](https://github.com/elixir-mint/mint), the underlying packages Mojito is built on. This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on the `main` branch, but had not yet been released. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using Mojito, I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency. By leveraging the power that Mix dependency management provides, I was able to easily work around the temporary issues and create a script that solved my problem.
+When creating the script, I decided to use [Mojito](https://github.com/appcues/mojito) for HTTP requests. Unfortunately, I ran into an issue using OTP 24 with [Mint](https://github.com/elixir-mint/mint), the underlying packages Mojito is built on. This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on the `main` branch, but had not yet been released. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using Mojito, I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency. Because `Mix.Install` provides the full power of Mix dependency management, I was able to easily work around the temporary issues and create a script that solved my problem.
 
 ```elixir
 Mix.install(
@@ -119,7 +119,7 @@ bit_coin_rate =
 IO.puts("The current rate for Bitcoin is #{bit_coin_rate}")
 ```
 
-We can now run this program as though it were a Ruby or Python script to track our Bitcoin investment 💎🙌🚀!
+We can now run this program as though it were a Ruby or Python script to track our Bitcoin investment 💎 🙌 🚀!
 
 ```bash
 › elixir bitcoin_price.exs
