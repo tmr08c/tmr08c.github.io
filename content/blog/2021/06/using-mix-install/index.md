@@ -29,7 +29,7 @@ Hello, from Elixir
 
 ## Bringing in Dependencies
 
-To further extend the ability of Elixir to be used in this scripting context, a new [experimental feature](https://github.com/elixir-lang/elixir/pull/10674) has been added in Elixir's [1.12 release](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0-rc.0), [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list third-party packages to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
+To further extend Elxir's ability to be used in this scripting context, a new [experimental feature](https://github.com/elixir-lang/elixir/pull/10674) has been added in Elixir's [1.12 release](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0-rc.0), [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list third-party packages to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
 
 ## A Basic `Mix.install`
 
@@ -92,7 +92,7 @@ Caching [is based](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746
 
 ## Another Example
 
-One possible use case I imagined for using `Mix.install` was to test new APIs. As an example, I wanted to fetch the current price of Bitcoin from the [Coinbase API](https://developers.coinbase.com/).
+One possible use case I imagined for using `Mix.install` was to explore new APIs. As an example, I wanted to fetch the current price of Bitcoin from the [Coinbase API](https://developers.coinbase.com/).
 
 When creating the script, I decided to use [Mojito](https://github.com/appcues/mojito) for HTTP requests. Unfortunately, I ran into an issue using OTP 24 with [Mint](https://github.com/elixir-mint/mint), the underlying packages Mojito is built on. This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on the `main` branch, but had not yet been released. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using Mojito, I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency. Because `Mix.Install` provides the full power of Mix dependency management, I was able to easily work around the temporary issues and create a script that solved my problem.
 
@@ -101,7 +101,12 @@ Mix.install(
   [
     :jason,
     :mojito,
-    {:mint, git: "https://github.com/elixir-mint/mint", branch: "main", override: true}
+    {
+      :mint,
+      git: "https://github.com/elixir-mint/mint",
+      branch: "main",
+      override: true
+    }
   ]
 )
 
@@ -131,6 +136,6 @@ The current rate for Bitcoin is 55,168.1100
 
 ## Future
 
-Because we still need Elixir installed on our system to run the script, this doesn't provide us with the portability of something like a [Go's ability to build executable binaries](https://www.digitalocean.com/community/tutorials/how-to-build-and-install-go-programs). For that, you may want to explore [Bakeware](https://github.com/bake-bake-bake/bakeware). For something between a single file script and `Bakeware`, you may also want to investigate [escript](https://hexdocs.pm/mix/master/Mix.Tasks.Escript.Build.html). With `escript`, you can build your `mix` project into an executable. It does, however, require Erlang to be installed on the system running the program.
+Because we still need Elixir installed on our system to run the script, this doesn't provide us with the portability of something like [Go's ability to build executable binaries](https://www.digitalocean.com/community/tutorials/how-to-build-and-install-go-programs). For that, you may want to explore [Bakeware](https://github.com/bake-bake-bake/bakeware). For something between a single file script and `Bakeware`, you may also want to investigate [escript](https://hexdocs.pm/mix/master/Mix.Tasks.Escript.Build.html). With `escript`, you can build your `mix` project into an executable. It does, however, require Erlang to be installed on the system running the program.
 
 While you may need to reach for more robust options, `Mix.install` provides another tool in the Elixir toolbelt. With the addition of a single function, Elixir has increased its abilities to write small scripts and be used in more ways.
