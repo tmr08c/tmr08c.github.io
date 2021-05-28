@@ -1,6 +1,6 @@
 ---
 title: "Using Mix.install"
-date: "2021-06-26T06:31:13.265Z"
+date: "2021-05-28T07:01:13.265Z"
 categories: ["elixir"]
 ---
 
