@@ -4,7 +4,7 @@ date: "2021-06-26T06:31:13.265Z"
 categories: ["elixir"]
 ---
 
-Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since its inception. When processing a file with the `.exs` extension Elixir will compile the file in-memory and run the compiled code. In this post, we will cover an experimental feature that is expanding upon the language's scripting abilities.
+Despite being a compiled language, Elixir has provided support for running code in a single file as though it were a scripting language since its release. When processing a file with the `.exs` extension Elixir will compile the file in-memory and run the compiled code. In this post, we will cover an experimental feature that is expanding upon the language's scripting abilities.
 
 ## A Basic Elixir Script
 
@@ -29,7 +29,7 @@ Hello, from Elixir
 
 ## Bringing in Dependencies
 
-To further extend Elxir's ability to be used in this scripting context, a new [experimental feature](https://github.com/elixir-lang/elixir/pull/10674) has been added in Elixir's [1.12 release](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0-rc.0), [`Mix.install`](https://hexdocs.pm/mix/1.12.0-rc.0/Mix.html#install/2). With `Mix.install`, you can list third-party packages to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
+To further extend Elxir's ability to be used in this scripting context, a new [experimental feature](https://github.com/elixir-lang/elixir/pull/10674) has been added in Elixir's [1.12 release](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0), [`Mix.install`](https://hexdocs.pm/mix/1.12.0/Mix.html#install/2). With `Mix.install`, you can list third-party packages to use in your script like you would in a `mix.exs` file. If you are familiar with the Ruby ecosystem, this is similar to the [inline](https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html) functionality provided by Bundler.
 
 ## A Basic `Mix.install`
 
@@ -56,7 +56,7 @@ Generated jason app
 {"hello":"world"}
 ```
 
-We first resolve, fetch, and compile our dependencies. The output should look familiar to you if you've used `mix deps.get` before. Once `Mix.install` is complete and we have our dependencies, we run our `IO.puts` and output the encoded JSON.
+We first resolve, fetch, and compile our dependencies; this should look familiar to you if you've used `mix deps.get` before. Once `Mix.install` is complete and we have our dependencies, we run our `IO.puts` and output the encoded JSON.
 
 ## Caching
 
@@ -81,10 +81,10 @@ Now, when we run our script, it will output the path to the dependency cache.
 
 ```bash
 › elixir mix_install_test.exs
-using /Users/me/Library/Caches/mix/installs/elixir-1.12.0-rc.1-erts-12.0/11989020f314102159a0c9ca882052fc
+using /Users/me/Library/Caches/mix/installs/elixir-1.12.0-erts-12.0/11989020f314102159a0c9ca882052fc
 ```
 
-Caching [is based](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746a7db359da505e688a6f504/lib/mix/lib/mix.ex#L555-L557) on a combination of Elixir and OTP versions, as well as the dependencies you have listed. Changing any of these (or setting the [`force` flag](https://hexdocs.pm/mix/1.12.0-rc.1/Mix.html#install/2-options)) will result in a cache miss and require re-fetching and compiling packages.
+Caching [is based](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746a7db359da505e688a6f504/lib/mix/lib/mix.ex#L555-L557) on a combination of Elixir and OTP versions, as well as the dependencies you have listed. Changing any of these (or setting the [`force` flag](https://hexdocs.pm/mix/1.12.0/Mix.html#install/2-options)) will result in a cache miss and require re-fetching and compiling packages.
 
 ## Mix Options
 
@@ -94,7 +94,7 @@ Caching [is based](https://github.com/elixir-lang/elixir/blob/3c7e3bd67d3c78c746
 
 One possible use case I imagined for using `Mix.install` was to explore new APIs. As an example, I wanted to fetch the current price of Bitcoin from the [Coinbase API](https://developers.coinbase.com/).
 
-When creating the script, I decided to use [Mojito](https://github.com/appcues/mojito) for HTTP requests. Unfortunately, I ran into an issue using OTP 24 with [Mint](https://github.com/elixir-mint/mint), the underlying packages Mojito is built on. This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on the `main` branch, but had not yet been released. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch and get a working example. Since I was _actually_ using Mojito, I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency. Because `Mix.Install` provides the full power of Mix dependency management, I was able to easily work around the temporary issues and create a script that solved my problem.
+When creating the script, I decided to use [Mojito](https://github.com/appcues/mojito) for HTTP requests. Unfortunately, I ran into an issue using OTP 24 with [Mint](https://github.com/elixir-mint/mint), the underlying packages Mojito is built on. This issue [was resolved](https://github.com/elixir-mint/mint/pull/293) on the `main` branch, but had not yet been released. By leveraging the [git options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-git-options-git) provided by Mix, I was able to point at the `main` branch to use the latest code. Since I was _actually_ using Mojito, I was also able to leverage the `override` option to tell Mix to use my overridden version of the dependency. Because `Mix.Install` provides the full power of Mix dependency management, I was able to easily work around the temporary issues and create a script that solved my problem.
 
 ```elixir
 Mix.install(
