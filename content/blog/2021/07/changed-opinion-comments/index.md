@@ -27,9 +27,24 @@ It's fortuitous that Google Books has this section of the book available, becaus
 
 The book even continues on with additional exceptions of when it makes sense to add even why and how comments.
 
-Similar to how my early programming years were an experiment in sparingly writing comments, I've spend the last year experimenting with being more liberal. A contributing factor to my increased commentary was due to my team's usage of [YARD](https://yardoc.org/), a Ruby documentation tool, and [Solargraph](https://solargraph.org/), a Ruby [language server](https://microsoft.github.io/language-server-protocol/).
+Similar to how my early programming years were an experiment in sparingly writing comments, I've spent the last year experimenting with being more liberal. A contributing factor to my increased commentary was due to my team's usage of [YARD](https://yardoc.org/), a Ruby documentation tool, and [Solargraph](https://solargraph.org/), a Ruby [language server](https://microsoft.github.io/language-server-protocol/).
 
-With YARD we strove to include [`@param`](https://rubydoc.info/gems/yard/file/docs/Tags.md#param) and [`@return`](https://rubydoc.info/gems/yard/file/docs/Tags.md#return) tags to provide type annotation to our methods. These type annotations worked with Solargraph to provide documentation to provide _some_ type sanity to the dynamically typed Ruby.
+With YARD we strove to include [`@param`](https://rubydoc.info/gems/yard/file/docs/Tags.md#param) and [`@return`](https://rubydoc.info/gems/yard/file/docs/Tags.md#return) tags to provide type annotation to our methods. These type annotations worked with Solargraph to provide documentation to provide _some_ type sanity to the dynamically typed Ruby. I found that since I was already adding comments to annotate the types related to my method, I would often see if there were other useful [YARD tags](https://rubydoc.info/gems/yard/file/docs/Tags.md) or information I could add. Over time, this developed into a handful of common types of comments I add to my programs.
 
-- http://eloquentruby.com/
-- https://www.google.com/books/edition/Eloquent_Ruby/-s2xL0pVsLUC?hl=en&gbpv=1&dq=eloquent%20ruby&pg=PA6&printsec=frontcover&bsq=eloquent%20ruby
+- Will often push for "why" comments versus "what" something is doing comments. Sometimes "how" makes sense
+- Brief introductin to method
+  - weakest useage - this can often redudnant when well named
+  - can be nice in Yard docs
+  - often use as a starting sentence when I know I will be writing more
+- Class-level docs
+  - could cover why a class exists
+  - may cover how the class works at a high level (try to think of simple example like ComplianceSet)
+- TODO
+  - TODO + ticket number to easily find
+- Context
+
+  - Known limitations
+  -
+
+* http://eloquentruby.com/
+* https://www.google.com/books/edition/Eloquent_Ruby/-s2xL0pVsLUC?hl=en&gbpv=1&dq=eloquent%20ruby&pg=PA6&printsec=frontcover&bsq=eloquent%20ruby
