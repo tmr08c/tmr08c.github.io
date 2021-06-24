@@ -31,10 +31,38 @@ Similar to how my early programming years were an experiment in sparingly writin
 
 With YARD we strove to include [`@param`](https://rubydoc.info/gems/yard/file/docs/Tags.md#param) and [`@return`](https://rubydoc.info/gems/yard/file/docs/Tags.md#return) tags to provide type annotation to our methods. These type annotations worked with Solargraph to provide documentation to provide _some_ type sanity to the dynamically typed Ruby. I found that since I was already adding comments to annotate the types related to my method, I would often see if there were other useful [YARD tags](https://rubydoc.info/gems/yard/file/docs/Tags.md) or information I could add. Over time, this developed into a handful of common types of comments I add to my programs.
 
+In this post, I will cover some of the common types of comments I find myself writing.
+
+## Brief Method Explanation
+
+We will start with the comment type I am least sure about: giving a one-liner introduction to a method. This type of comment is counter to the self-documenting code concept of well named methods. However, I have found with the rise of the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) and improved tooling across languages and editors that it can be helpful to have a small bit of prose about a method to explore the capabilities of a class.
+
+Admittedly, this does often end up being a slightly longer restatement of the method name.
+
+```ruby
+class Cookie
+  # The total calorie count
+  def calories
+  end
+end
+```
+
+I have found I tend to still leave the comments, but I am not toally convinced of their value. However, I often find this first line is often followed by additional details about the method. In this context, I like to keep the one line introduction before going into more details about a method.
+
+```ruby
+class Cookie
+  # The total calorie count
+  #
+  #
+  def calories
+  end
+end
+```
+
 - Will often push for "why" comments versus "what" something is doing comments. Sometimes "how" makes sense
-- Brief introductin to method
+- Brief introduction to method
   - weakest useage - this can often redudnant when well named
-  - can be nice in Yard docs
+  - can be nice in Yard docs, editor documentation
   - often use as a starting sentence when I know I will be writing more
 - Class-level docs
   - could cover why a class exists
