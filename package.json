@@ -64,7 +64,7 @@
     "gh-pages": "^3.1.0",
     "prettier": "^1.19.1",
     "start-server-and-test": "^1.12.0",
-    "tailwindcss": "^2.0.4",
+    "tailwindcss": "^2.2.4",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.1.0"
