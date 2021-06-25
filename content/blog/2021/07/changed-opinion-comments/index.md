@@ -47,17 +47,52 @@ class Cookie
 end
 ```
 
-I have found I tend to still leave the comments, but I am not toally convinced of their value. However, I often find this first line is often followed by additional details about the method. In this context, I like to keep the one line introduction before going into more details about a method.
+I have found I tend to still leave the comments, but I am not totally convinced of their value. However, I often find this first line is often followed by additional details about the method. In this context, I like to keep the one line introduction before going into more details about a method.
 
 ```ruby
 class Cookie
   # The total calorie count
   #
-  #
+  # Calculation for the remaining number of calories in the cookies based on how
+  # much remains. Results will be rounded up to the nearest whole number.
   def calories
   end
 end
 ```
+
+In this example, the additional commentary goes into further explanation of what the method returns. As a consumer of this class, I appreciate this style of comment. While it doesn't replace the need to write understandable code, it does potentially save me from having to read the source code anytime I want to use it.
+
+## Why and How Comments
+
+When reviewing code, my most common reason for suggesting to remove a comment is that we are restating what the code is doing.
+
+```ruby
+def validate_phone_number(raw_phone_number)
+  number_of_digits =
+    raw_phone_number
+        .gsub(/-/, '') # remove any dashes
+        .sub(/^1/, '') # remove leading 1
+        .length        # get the length
+
+  number_of_digits == 7
+end
+```
+
+In this example, we are stating what the methods we are calling doing. If someone is unfamiliar with `gsub` or `sub`, they could look up that methods documentation to understand what they do. What someone cannot get from external documentation is an explanation of _why_ we are using that functionality in our method. Instead, let's see if we can use our comments to provide context.
+
+```ruby
+def validate_phone_number(raw_phone_number)
+  number_of_digits =
+    raw_phone_number
+        .gsub(/-/, '') # remove common separator character so we only have numbers
+        .sub(/^1/, '') # optionally remove the country code
+        .length
+
+  number_of_digits == 7
+end
+```
+
+While we are still
 
 - Will often push for "why" comments versus "what" something is doing comments. Sometimes "how" makes sense
 - Brief introduction to method
