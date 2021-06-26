@@ -67,7 +67,7 @@ In this example, the additional commentary goes into further explanation of what
 When reviewing code, my most common reason for suggesting to remove a comment is that we are restating what the code is doing.
 
 ```ruby
-def validate_phone_number(raw_phone_number)
+def valid_phone_number?(raw_phone_number)
   number_of_digits =
     raw_phone_number
         .gsub(/-/, '') # remove any dashes
@@ -81,10 +81,10 @@ end
 In this example, we are stating what the methods we are calling doing. If someone is unfamiliar with `gsub` or `sub`, they could look up that methods documentation to understand what they do. What someone cannot get from external documentation is an explanation of _why_ we are using that functionality in our method. Instead, let's see if we can use our comments to provide context.
 
 ```ruby
-def validate_phone_number(raw_phone_number)
+def valid_phone_number?(raw_phone_number)
   number_of_digits =
     raw_phone_number
-        .gsub(/-/, '') # remove common separator character so we only have numbers
+        .gsub(/-/, '') # remove dash separator character so we only have numbers
         .sub(/^1/, '') # optionally remove the country code
         .length
 
@@ -92,7 +92,55 @@ def validate_phone_number(raw_phone_number)
 end
 ```
 
-While we are still
+While we are still restarting what the method calls are doing, we have updated our comments to include context related to the domain.
+
+This is an example where we can leverage the practices of self-documenting code to remove the need for our comments. By extracting our regular expressions into well named constants (or methods or variables), I feel a diminished need for comments.
+
+```ruby
+PHONE_NUMBER_SEPARATOR_REGEX = /-/
+COUNTRY_CODE_REGEX = /^1/
+
+def valid_phone_number?(raw_phone_number)
+  number_of_digits =
+    raw_phone_number
+        .gsub(PHONE_NUMBER_SEPARATOR_REGEX, '')
+        .sub(COUNTRY_CODE_REGEX, '')
+        .length
+
+  number_of_digits == 7
+end
+```
+
+I think there are a few quirks to our method that may not be obvious to a consumer. I would call these out in a method-level comments.
+
+```ruby
+PHONE_NUMBER_SEPARATOR_REGEX = /-/
+COUNTRY_CODE_REGEX = /^1/
+
+# Validate a given phone number
+#
+# Validate that a given phone number if valid by checking
+# it contains the correct number of digits.
+#
+# NOTE: This method only works with the North American Number plan,
+#   see https://en.wikipedia.org/wiki/North_American_Numbering_Plan
+#   for more details
+def valid_phone_number?(raw_phone_number)
+  number_of_digits =
+    raw_phone_number
+        .gsub(PHONE_NUMBER_SEPARATOR_REGEX, '')
+        .sub(COUNTRY_CODE_REGEX, '')
+        .length
+
+  number_of_digits == 7
+end
+```
+
+The method name, `valid_phone_number?` can give the impression that we are performing a more through validation than what is happening. We are also basing our rules about the separator character and country code on the practice in the United States. To warn future users and maintainers alike we added a method-level comment to include some information about this.
+
+We could explore updating out method name to be more correct (i.e., `valid_length_for_united_states_phone_number`) or keep our nicely public method and call out to a private method that is more intention revealing (e.g., `valid_number_length?`). These decisions will often be influence by what the future use of this method often have to be made on a case-by-case basis.
+
+Pick up here: balancing good and perfect, shipping something, using comments to make up for something that may not be completely figure out yet
 
 - Will often push for "why" comments versus "what" something is doing comments. Sometimes "how" makes sense
 - Brief introduction to method
