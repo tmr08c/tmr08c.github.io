@@ -136,9 +136,11 @@ def valid_phone_number?(raw_phone_number)
 end
 ```
 
-The method name, `valid_phone_number?` can give the impression that we are performing a more through validation than what is happening. We are also basing our rules about the separator character and country code on the practice in the United States. To warn future users and maintainers alike we added a method-level comment to include some information about this.
+The method name, `valid_phone_number?` can give the impression that we are performing a more thorough validation than what is happening. We are also basing our rules about the separator character and country code on the practice in the United States. To warn future users and maintainers alike we added a method-level comment to include some information about this.
 
 We could explore updating out method name to be more correct (i.e., `valid_length_for_united_states_phone_number`) or keep our nicely public method and call out to a private method that is more intention revealing (e.g., `valid_number_length?`). These decisions will often be influence by what the future use of this method often have to be made on a case-by-case basis.
+
+It's at this point we would likely want to think about how to balance shipping code and handling future change, the constant struggle in writing good software. When faced with the uncertainties that the future holds, I may delay my attempt to find a general abstraction and leave around code that is overly specific and coupled to my current implementation. I have found that I have begun to leverage comments as message-in-a-bottle to future team members (including myself) about the limitations of functionality or even thoughts on what could ease future changes. While arguments can be made to move this sort of commentary somewhere else (commit message, pull request), I have found a method-level comment to be an effective place for these sort of warnings - they pop up in an editor's documentation when consuming the method and they are in the face of developers working to edit the method.
 
 Pick up here: balancing good and perfect, shipping something, using comments to make up for something that may not be completely figure out yet
 
