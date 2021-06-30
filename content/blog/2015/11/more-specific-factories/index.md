@@ -1,16 +1,10 @@
 ---
 title: "Creating More Specific Factories with Inheritance"
-date: '2015-11-17T22:53:02.123Z'
-categories: ['testing', 'ruby']
+date: "2015-11-17T22:53:02.123Z"
+categories: ["testing", "ruby"]
 ---
 
-**Update (MM/YY)** Post has been updated to reflect rename from FactoryGirl to FactoryBot. I also have a new post where I discuss using traits instead of inheritance for creating more specific factories.
-
-TODO:
-
-* Update date
-* Link to post about FactoryBot rename
-* Link to new post
+**Update (6/21)** Post has been updated to reflect [rename from FactoryGirl to FactoryBot](https://thoughtbot.com/blog/factory_bot). I also have [a new post](/2021/06/more-specific-factories-with-traits/) where I discuss using traits instead of inheritance for creating more specific factories.
 
 As I have discussed in [previous posts](/2015/11/using-vim-to-drive-tdd/) I have been working to adopt TDD into my workflow. One of the ways I have aimed to improve my testing skills is to better utilize the testing tools I am using. One common testing tools in the Rails space is [FactoryBot](https://github.com/thoughtbot/factory_bot). FactoryBot provides an easy way to create sample records of models from your application in your specs.
 

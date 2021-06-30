@@ -1,6 +1,6 @@
 ---
 title: "Creating More Specific Factories with Traits"
-date: "2021-03-20T06:14:13.265Z"
+date: "2021-06-30T07:30:13.265Z"
 categories: ["testing", "ruby"]
 ---
 
