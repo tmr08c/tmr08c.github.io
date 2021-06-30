@@ -14,7 +14,7 @@ def memoized_value
 end
 ```
 
-##How `||=` works
+## How `||=` works
 
 The `||=` operator is equivalent to
 
@@ -59,11 +59,11 @@ Finished in 0.00151 seconds (files took 0.11127 seconds to load)
 1 example, 0 failures
 ```
 
-##How it helps
+## How it helps
 
 In the above example I am setting the instance variable equal to the value of some fictitious `long_running_value_getter` method. The name of the made up method is intentional. Memoization is useful as a way to cache the value of method that has the potential to take some significant amount of time to run.
 
-###A dramatized example
+### A dramatized example
 
 Let's say that this is the definition of our `long_running_value_getter` method
 
@@ -152,7 +152,7 @@ No memoization   0.000000   0.000000   0.000000 ( 10.012453)
 Memoization      0.000000   0.000000   0.000000 (  5.001990)
 ```
 
-The results are pretty obvious. Since, for the effect of having a long running process, we have a `sleep 5` in the `long_running_value_getter` method, the bulk of the time would be related to that five seconds of sleeping. The non-memoized` version had to do this twice and as a result has a runtime of about 10 seconds (2 calls * 5 seconds) while the memoized version only had to do this once so it has a run time of about 5 seconds.
+The results are pretty obvious. Since, for the effect of having a long running process, we have a `sleep 5` in the `long_running_value_getter` method, the bulk of the time would be related to that five seconds of sleeping. The non-memoized version had to do this twice and as a result has a runtime of about 10 seconds (2 calls * 5 seconds) while the memoized version only had to do this once so it has a run time of about 5 seconds.
 
 ### Potential Pitfalls
 
