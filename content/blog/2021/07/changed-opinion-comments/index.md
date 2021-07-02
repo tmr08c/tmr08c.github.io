@@ -142,12 +142,40 @@ We could explore updating out method name to be more correct (i.e., `valid_lengt
 
 It's at this point we would likely want to think about how to balance shipping code and handling future change, the constant struggle in writing good software. When faced with the uncertainties that the future holds, I may delay my attempt to find a general abstraction and leave around code that is overly specific and coupled to my current implementation. I have found that I have begun to leverage comments as messages-in-a-bottle to future team members (including myself) about the limitations of functionality or even thoughts on what could ease future changes. While arguments can be made to move this sort of commentary somewhere else (commit message, pull request), I have found a method-level comment to be an effective place for these sort of warnings - they pop up in an editor's documentation when consuming the method and they are in the face of developers working to edit the method.
 
-In the case of our `valid_phone_number?`method, I would likely leave things as they are - even though our validation is narrower in scope than the name may indicate, we don't know if there are other forms of validation we will need to do and the name does still provide an indication of what we are doing. For the purposes of example, let's introduce another requirement to further complicate things - we now want to validate that the area code given is a real area code.
+In the case of our `valid_phone_number?`method, I would likely leave things as they are - even though our validation is narrower in scope than the name may indicate, we don't know if there are other forms of validation we will need to do and the name does still provide an indication of what we are doing.
+
+For the purposes of example, let's introduce another requirement to further complicate things - we now want to validate that the area code given is a real area code.
 
 ```ruby
+PHONE_NUMBER_SEPARATOR_REGEX = /-/
+COUNTRY_CODE_REGEX = /^1/
+VALID_AREA_CODES = [] # list of area codes
 
-# code to check for area code
+# Validate a given phone number
+#
+# We will validate the following:
+#
+#   - Proper length
+#   - Valid (US) area code
+#
+# NOTE: This method only works with the North American Number plan,
+#   see https://en.wikipedia.org/wiki/North_American_Numbering_Plan
+#   for more details
+def valid_phone_number?(raw_phone_number)
+  phone_number =
+    raw_phone_number
+        .gsub(PHONE_NUMBER_SEPARATOR_REGEX, '')
+        .sub(COUNTRY_CODE_REGEX, '')
+
+  number_of_digits = phone_number.length
+
+  area_code = phone_number[0..2]
+  valid_area_code = VALID_AREA_CODES.include?(area_code)
+
+  number_of_digits == 7 && valid_area_code
 ```
+
+Our initial implementation follows some of our previously set practices for self-documenting code such as well named variables. Our method is now responsible for multiple things..
 
 - Will often push for "why" comments versus "what" something is doing comments. Sometimes "how" makes sense
 - Brief introduction to method
