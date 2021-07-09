@@ -168,14 +168,22 @@ def valid_phone_number?(raw_phone_number)
         .sub(COUNTRY_CODE_REGEX, '')
 
   number_of_digits = phone_number.length
+  valid_number_of_digits = number_of_digitis == 7
 
   area_code = phone_number[0..2]
   valid_area_code = VALID_AREA_CODES.include?(area_code)
 
-  number_of_digits == 7 && valid_area_code
+  valid_number_of_digits && valid_area_code
+end
 ```
 
-Our initial implementation follows some of our previously set practices for self-documenting code such as well named variables. Our method is now responsible for multiple things..
+Our initial implementation follows some of our previously set practices for self-documenting code such as well named variables. The variables help us to identify that our `valid_phone_number?` method is performing two different validations - it's checking for the number of digits (`valid_number_of_digits`) and whether the area code is valid (`valid_area_code`). In addition to the variable names, another clue that we are performing multiple validations is the line breaks. In the book, [_99 Bottles of OOP_](https://sandimetz.com/99bottles) the authors identify the _Blank Line &trade;_ code smell:
+
+> (...) contains a blank line. This suggests a change of topic, which in turn suggests that the method does more than one thing.
+
+Looking back at `valid_phone_number?` we leverage blank lines to separate (1) formatting the "raw" version of the phone number, (2) checking the number of digits in the phone number, (3) checking the area code, and (4) returning the result of our multiple validation checks.
+
+While we are leaning on the variable names to help document what the code is doing, even the best variable names can struggle to provide help under the weight of large, complex methods that do too much. Let's take a look at how we can extract new methods as a way to improve our ability to understand the code.
 
 - Will often push for "why" comments versus "what" something is doing comments. Sometimes "how" makes sense
 - Brief introduction to method
