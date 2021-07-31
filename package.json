@@ -9,6 +9,8 @@
     "develop": "gatsby develop",
     "dev": "yarn run develop",
     "start": "npm run develop",
+    "preprod": "npm run build",
+    "prod": "gatsby serve --open",
     "format": "prettier \"{,!(node_modules|public|coverage|.cache)/**/}*.{js,jsx,ts,tsx,json}\"",
     "format:check": "npm run format -- --check",
     "format:write": "npm run format -- --write",
