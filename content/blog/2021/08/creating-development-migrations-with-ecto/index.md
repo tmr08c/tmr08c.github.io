@@ -21,7 +21,7 @@ While we eventually got something that worked, it was brittle. It required using
 
 As I was about to call it "good enough for now," I found the post, [_Automatic and Manual Migrations_](https://dashbit.co/blog/automatic-and-manual-ecto-migrations) on the Dashbit blog. The post describes scenarios in which you may want to leverage Ecto's migrations but not have them automatically run as a part of your deployment. They accomplished this using the `--migrations-path` flag for `mix ecto.migrate`.
 
-The `--migrations-path` option enables you to look in a different directory for your migration. Thanks to [`ecto_sql` 3.4](https://github.com/elixir-ecto/ecto_sql/blob/master/CHANGELOG.md#v340-2020-03-24) we can use this flag multiple times to specify _multiple_ paths to search. Having the ability to utilize additional paths for migrations meant that, in production, we can limit our migrations to the default `priv/repo/migrations` path, but in development and testing we can look in an additional location (maybe even one that has a migration for creating extensions 🤔 ).
+The `--migrations-path` option enables you to look in a different directory for your migration. Thanks to [`ecto_sql` 3.4](https://github.com/elixir-ecto/ecto_sql/blob/master/CHANGELOG.md#v340-2020-03-24), this flag can be included multiple times to specify _multiple_ paths to search. Furthermore, we can utilize the flag differently in different environments. In production, we can limit our migrations to the default `priv/repo/migrations` path, and, in development and testing, we can look in an additional location (maybe even one that has a migration for creating extensions 🤔 ).
 
 Using this concept as the model, I generated a migration that would set up the extensions we needed and used the `--migrations-path` to specify an alternative location to store the new migration file (I chose `priv/repo/setup_migrations`).
 
@@ -31,7 +31,7 @@ mix ecto.gen.migration \
   create_necessary_extension
 ```
 
-Within the migration itself, I was able to use the same `CREATE EXTENTION IF NOT EXIST` syntax.
+Within the migration itself, I used the same `CREATE EXTENTION IF NOT EXIST` syntax.
 
 ```elixir
 defmodule MyApp.Repo.Migrations.CreateNecessaryExtension do
@@ -47,9 +47,9 @@ defmodule MyApp.Repo.Migrations.CreateNecessaryExtension do
 end
 ```
 
-_Note: because we had migrations that relied on the extension existing, I also had to update the generated migration to have a timestamp that came before the dependent migrations._
+_Note: because we had migrations that relied on the extension existing, I also had to update the generated migration to have a timestamp that was earlier than the dependent migrations._
 
-To run these migrations, I copied the paradigm set out in the blog post and added a `migrate_all` alias to our `mix.exs` aliases. I then updated our `setup` and `test` aliases to use this new `migrate_all` action.
+To run these migrations, I copied the blog post and added a `migrate_all` alias to our `mix.exs` aliases. I then updated our `setup` and `test` aliases to use this new `migrate_all` action.
 
 ```elixir
 # mix.exs
@@ -75,15 +75,13 @@ defp aliases
 end
 ```
 
-Since our `setup` script was already using `ecto.setup`, updating the alias to use `ecto.migrate_all` meant that it would now Just Work&trade;!
+Since our `setup` script was previously using `ecto.create` and `ecto.migrate`, I updated it to use the updated `ecto.setup` alias.
 
-I am optimistic about this solution. I think this achieves my goal of easy project setup and has little cost on long-term project maintenance.
-
-One potential pain point with this process is how infrequently it will be leveraged by the team. Since it will be uncommon to add setup migrations, I don't expect the team to make a habit of using `mix ecto.migrate_all` over the default `mix ecto.migrate`. This means that when we _do_ add a new setup migration, we may forget to run it in our local environments.
+Since it will be uncommon to add setup migrations, one concern I have is forgetting to use `mix ecto.migrate_all` over the default `mix ecto.migrate`. If we do not use the `migrate_all` alias, our development environments will not be updated with the necessary setup migration.
 
 A low-cost solution would be to communicate the need to run `mix ecto.migrate_all` to the team; this could be a note in the PR, a mention during standup, or a note in chat. While not ideal, I expect this will be rare enough to be sustainable.
 
-If you are following GitHub's [Script To Rule Them All](https://github.com/github/scripts-to-rule-them-all) (or something similar), another option could be to update the script(s) you have to run migrations to use `mix ecto.migrate_all`. Following GitHub's pattern, [`script/update`](https://github.com/github/scripts-to-rule-them-all#scriptupdate) is the suggested place to run migrations after pulling down new code. If your team already has a similar script, you should be able to transparently change from `mix ecto.migrate` to `mix ecto.migrate_all`.
+However, if you are following GitHub's [Script To Rule Them All](https://github.com/github/scripts-to-rule-them-all) (or something similar), you may have another option - you could update the script(s) you have to run migrations to use `mix ecto.migrate_all`. Following GitHub's pattern, [`script/update`](https://github.com/github/scripts-to-rule-them-all#scriptupdate) is the suggested place to run migrations after pulling down new code. If your team already has a similar script, you should be able to transparently change from `mix ecto.migrate` to `mix ecto.migrate_all`.
 
 ```{diff}
 # script/update
@@ -94,5 +92,7 @@ echo "==> Updating db..."
 - mix ecto.migrate
 + mix ecto.migrate_all
 ```
+
+Overall, I am optimistic about this solution. I think this achieves my goal of easy project setup while having low long-term project maintenance requirements.
 
 How does your team provide an easy setup (and environment maintenance) experience for everyone? While I am happy with the solution so far, we haven't onboarded enough people to claim success. Please reach out and share alternative options that would improve our new process.
