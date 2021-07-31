@@ -31,7 +31,7 @@
     "gatsby-plugin-google-fonts-v2": "^0.0.6",
     "gatsby-plugin-manifest": "^2.0.9",
     "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-postcss": "^2.1.18",
+    "gatsby-plugin-postcss": "^4.4.0",
     "gatsby-plugin-react-helmet": "^3.1.18",
     "gatsby-plugin-sharp": "^2.5.1",
     "gatsby-plugin-typescript": "^2.4.19",
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.4.0",
-    "@types/node": "^10.17.13",
+    "@types/node": "^16.4.8",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-helmet": "^5.0.14",
