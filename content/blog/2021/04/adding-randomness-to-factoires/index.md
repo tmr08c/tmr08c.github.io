@@ -1,14 +1,10 @@
 ---
-title: 'Adding Randomness to FactoryBot'
-date: '2021-04-20T06:14:13.265Z'
-categories: ['testing', 'ruby']
+title: "Adding Randomness to FactoryBot"
+date: "2021-04-20T06:14:13.265Z"
+categories: ["testing", "ruby"]
 ---
 
-Adding randomness to your tests can help you to build a more robust system. While this is true of tests in general, you are limited by the test cases and sample data used in your test suite. Adding randomness to your tests can help avoid these limitations. In this post, we will cover how to add randomness into your tests' sample data. 
-
-While the suggestion in this post will not be as robust as the idea of [propery-based testing](https://medium.com/criteo-engineering/introduction-to-property-based-testing-f5236229d237) introduced by [QuickCheck](https://users.cs.northwestern.edu/~robby/courses/395-495-2009-fall/quick.pdf), they are a low-cost step in the right direction. 
-
-The examples in the post will be centered around [FactoryBot](https://github.com/thoughtbot/factory_bot), but you should be able to apply them to [fixtures](https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures) or other testing strategies as well.
+While tests help improve the robustness of your system, you are limited by the test cases and sample data used in your test suite. In this post, we will cover how to add randomness to your test as a way to reduce some of these limitations. The examples in the post will be using [FactoryBot](https://github.com/thoughtbot/factory_bot), but you should be able to apply similar concepts to [Rails' fixtures](https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures) and other testing tools as well.
 
 ## Sequences
 
@@ -16,7 +12,7 @@ The examples in the post will be centered around [FactoryBot](https://github.com
 
 A commonly used form of randomness in FactoryBot is [sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). When defining a factory, you can use the `sequence` method to have a block of code run each time a particular attribute needs to be generated. These are known as [inline sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inline-sequences).
 
-A common use case for inline sequences is to avoid issues with uniqueness constraints. For example, if a `User` record requires unique `username`s, then you can leverage a sequence to append an ever-increasing number to the end of it.
+A common use case for inline sequences is to avoid issues with uniqueness constraints. For example, if a `User` record requires a unique `username`, then you can leverage a sequence to append an ever-increasing number to the end of it.
 
 ```ruby
 factory :user
@@ -36,7 +32,7 @@ Now, anytime we create a user, we will have a unique `username` attribute:
 
 ### Global
 
-FactoryBot also supports [global sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). These are named sequences that can be used in other factories. Global sequences can be useful for providing globally unique, valid data across your factories (e.g., email addresses), but they can also be an easy way to generate new data in general. For example, at work, we have a `string` sequence that returns the string, "string" with a number appended.
+FactoryBot also supports [global sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). These are named sequences that can be used in other factories. Global sequences can provide globally unique, valid data across your factories (e.g., email addresses) and also be an easy way to generate new data in general. For example, at work, we have a `string` sequence that returns the string, "string" with a number appended.
 
 ```ruby
 sequence :string do |n|
@@ -53,9 +49,11 @@ end
 => <User @first_name="string 5", @last_name="string 6">
 ```
 
+While this does not provide realistic data, it does provide an indication to the team that we don't care about the value of an attribute and just want a string value.
+
 ### Randomness
 
-While sequences generate similarly shaped data and aren't going to cover any particularly difficult-to-process data, they do introduce randomness into your system. Every time your tests run in a different order, your factory has a chance of generating a value at a different step in the sequence, resulting in slightly different attributes. This small amount of variation provides an easy starting point for introducing randomness into your system.
+Sequences provide an easy way to introduce randomness into your system. Every time your tests run in a different order, your factory has a chance of generating a value at a different step in the sequence, resulting in slightly different attributes. This small amount of variation provides an easy starting point for introducing randomness into your system but is limited. Let's explore a few other options that introduce more variation in our values.
 
 ## Sampling Options
 
@@ -104,9 +102,9 @@ This results in a different topping being chosen every time we use our factory t
 
 ### Random Amount of Random
 
-Often, when dealing with `enum`-like data, your attribute will only be a single value, and `Array#sample` is all you will need. However, in our example, we can have no toppings, one topping, or many toppings. Currently, our current factory is limited to always give us a `Pizza` with a single topping. 
+Often, when dealing with `enum`-like data, your attribute will only be a single value, and `Array#sample` is all you will need. However, in our example, we can have no toppings, one topping, or many toppings. Currently, our current factory is limited to always give us a `Pizza` with a single topping.
 
-Herein lies an issue with example-based testing - it relies on the examples you remember to include. We may think to test zero, one, and many toppings in a test case specifically dealing with presenting the list of toppings, but we may not think about it when writing more complicated higher-level tests. What if, instead, the factory always returned a random number of random toppings? This would add some variability to all tests that use this factory in our system. 
+Herein lies an issue with example-based testing - it relies on the examples you remember to include. We may think to test zero, one, and many toppings in a test case specifically dealing with presenting the list of toppings, but we may not think about it when writing more complicated higher-level tests. What if, instead, the factory always returned a random number of random toppings? This would add some variability to **all** tests that use this factory in our system.
 
 We can update the `toppings` attribute in our factory to build a random number of pizza toppings - some number between no toppings and the total number of available toppings. We can represent this with something like `Array.new(rand(0..Pizza::AVAILABLE_TOPPINGS.size))`. This will generate a random number between zero and the number of available toppings (`rand(0..Pizza::AVAILABLE_TOPPINGS.size)`) and create an `Array` of that size. We can leverage [`Array#new`](https://ruby-doc.org/core/Array.html#method-c-new)'s block argument to run some code to generate each entry in our new array. For generating entries, we will use the same code we had before, `Pizza::AVAILABLE_TOPPINGS.sample`. Putting this all together, our factory looks like the following:
 
@@ -144,7 +142,9 @@ Something to be careful of when dealing with randomness is the fact you could en
 <Pizza @toppings=["onions", "bacon", "peppers", "jalapenos", "pineapaple"]>
 ```
 
-Depending on your model, this may or may not matter (maybe people can order a quadruple serving of peppers if they want). If you want to guarantee uniqueness, you could add some additional logic to your factory that avoids duplication.
+Depending on your model, this may or may not matter (maybe people can order a quadruple serving of peppers if they want). Be warned that randomness isn't a silver bullet for catching validation errors. While adding randomness to your tests can result in invalid cases, it's not always the case that your application will result in a test failure when there is invalid data.
+
+In our case, we may validate the uniqueness of toppings in another test and want our factory to result in a valid record. To do this, we can update how we create the toppings list in our factory.
 
 ```ruby
 FactoryBot.define do
@@ -174,9 +174,9 @@ end
 
 ## Delegating Randomness
 
-The final suggestion for introducing randomness into your system relies on a gem, [Faker](https://github.com/faker-ruby/faker). Faker provides hundred of modules themed around different topics on which you can get fake data. 
+The final suggestion for introducing randomness into your system relies on a gem, [Faker](https://github.com/faker-ruby/faker). Faker provides hundred of modules themed around different topics on which you can get fake data.
 
-With Faker, you can get names, email addresses, physical addresses, quotes, and more. 
+With Faker, you can get names, email addresses, physical addresses, quotes, and more.
 
 ```ruby
 Faker::Name.name
@@ -199,4 +199,3 @@ Like all of our options so far, Faker does not provide the same level of scrutin
 ## Conclusion
 
 Adding some randomness into your tests can potentially help catch use cases that you were not thinking of when designing a solution. While there are different levels of randomness and chances of catching corner cases in your system, some of the options covered in this post are low-cost enough that I use them by default.
-
