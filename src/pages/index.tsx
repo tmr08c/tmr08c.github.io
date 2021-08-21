@@ -26,7 +26,7 @@ class IndexPage extends React.Component<{}, {}> {
               "phoenix",
               "software development",
               "engineering manager",
-              "code"
+              "code",
             ]}
           />
 
@@ -42,7 +42,7 @@ class IndexPage extends React.Component<{}, {}> {
 
             <Selfie />
 
-            <h2 className="text-xl lg:text-2xl font-hairline p-6">
+            <h2 className="text-xl lg:text-2xl font-thin p-6">
               I am a Software Developer &amp; Engineering Manager
             </h2>
           </div>

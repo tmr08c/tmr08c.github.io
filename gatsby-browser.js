@@ -6,4 +6,3 @@
 
 // You can delete this file if you're not using it
 import "./src/css/tailwind_setup.css";
-import "./src/css/post.css";

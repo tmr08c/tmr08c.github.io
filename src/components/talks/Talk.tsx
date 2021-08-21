@@ -6,8 +6,8 @@ interface TalkProps {
 
 const Talk: React.SFC<TalkProps> = ({ talk }) => {
   return (
-    <div className="mb-5">
-      <h3 className="text-xl mb-2">
+    <div className="mb-10">
+      <h3 className="text-xl mb-4">
         {talk.link ? (
           <a
             href={talk.link}
@@ -21,7 +21,7 @@ const Talk: React.SFC<TalkProps> = ({ talk }) => {
           <span>{talk.name}</span>
         )}
 
-        <span className="ml-1 text-sm text-gray-500 tracking-tighter">
+        <span className="ml-1 text-xs text-gray-400 tracking-tighter">
           {talk.presentationDate.month}/{talk.presentationDate.year}
         </span>
       </h3>

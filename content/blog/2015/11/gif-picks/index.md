@@ -12,7 +12,7 @@ categories: ['picks']
 
 As a result, you will need to look elsewhere for your gif fix (and some `img`s below are broken).
 
-# Original Post
+<hr />
 
 This week's picks are inspired by everyone's favorite image format, GIFs!
 

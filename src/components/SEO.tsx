@@ -15,58 +15,58 @@ const SEO: React.SFC<SEOProps> = ({
   lang,
   meta,
   keywords,
-  title
+  title,
 }): JSX.Element => (
   <StaticQuery
     query={detailsQuery}
-    render={data => {
+    render={(data) => {
       const metaDescription = description || data.site.siteMetadata.description;
       return (
         <Helmet
           htmlAttributes={{
-            lang
+            lang,
           }}
           title={title}
           titleTemplate={`%s | ${data.site.siteMetadata.title}`}
           meta={[
             {
               content: metaDescription,
-              name: "description"
+              name: "description",
             },
             {
               content: title,
-              property: "og:title"
+              property: "og:title",
             },
             {
               content: metaDescription,
-              property: "og:description"
+              property: "og:description",
             },
             {
               content: "website",
-              property: "og:type"
+              property: "og:type",
             },
             {
               content: "summary",
-              name: "twitter:card"
+              name: "twitter:card",
             },
             {
               content: data.site.siteMetadata.author,
-              name: "twitter:creator"
+              name: "twitter:creator",
             },
             {
               content: title,
-              name: "twitter:title"
+              name: "twitter:title",
             },
             {
               content: metaDescription,
-              name: "twitter:description"
-            }
+              name: "twitter:description",
+            },
           ]
             .concat(
               keywords.length > 0
                 ? {
                     content: keywords.join(", "),
-                    name: "keywords"
+                    name: "keywords",
                   }
                 : []
             )
@@ -80,7 +80,7 @@ const SEO: React.SFC<SEOProps> = ({
 SEO.defaultProps = {
   keywords: [],
   lang: "en",
-  meta: []
+  meta: [],
 };
 
 export default SEO;
