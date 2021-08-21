@@ -7,7 +7,7 @@ interface HomePageLinkProps {
 
 const HomePageLink: React.SFC<HomePageLinkProps> = ({
   destination,
-  displayText
+  displayText,
 }) => (
   <a
     href={destination}
