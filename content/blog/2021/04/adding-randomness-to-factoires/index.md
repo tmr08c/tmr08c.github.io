@@ -106,9 +106,9 @@ This results in a different topping every time we use our factory to create a ne
 
 Often, when dealing with `enum`-like data, your attribute will only be a single value and `Array#sample` is all you will need. However, in our pizza example, we can have no toppings, one topping, or many toppings. A limitation of our current factory is that it will always generate a `Pizza` with a single topping.
 
-Herein lies an issue with example-based testing - it relies on the examples you remember to include. We may think to test zero, one, and many toppings in a test case specifically dealing with presenting the list of toppings, but we may not think about it when writing more complicated higher-level tests. What if, instead, the factory always returned a random number of random toppings? This would add some variability to **all** tests that use this factory in our system.
+Herein lies an issue with example-based testing - it relies on the examples you remember to include. We may not think to test zero, one, and many toppings, and, even if we do, we may only do it in a single scenario. What if, instead, the factory always returned a random number of random toppings? That would add some variability to **all** tests that use this factory.
 
-We can update the `toppings` attribute in our factory to build a random number of pizza toppings - some number between no toppings and the total number of available toppings. We can represent this with something like `Array.new(rand(0..Pizza::AVAILABLE_TOPPINGS.size))`. This will generate a random number between zero and the number of available toppings (`rand(0..Pizza::AVAILABLE_TOPPINGS.size)`) and create an `Array` of that size. We can leverage [`Array#new`](https://ruby-doc.org/core/Array.html#method-c-new)'s block argument to run some code to generate each entry in our new array. For generating entries, we will use the same code we had before, `Pizza::AVAILABLE_TOPPINGS.sample`. Putting this all together, our factory looks like the following:
+We can update the `toppings` attribute in our factory to build a random number of pizza toppings - some number between no toppings and the total number of available toppings. We can represent this with the following.
 
 ```ruby
 FactoryBot.define do
@@ -122,7 +122,9 @@ FactoryBot.define do
 end
 ```
 
-Now, when we generate our `Pizza`s, we will have a different number of different toppings.
+`Array.new(rand(0..Pizza::AVAILABLE_TOPPINGS.size))` will generate a random number between zero and the number of available toppings (`rand(0..Pizza::AVAILABLE_TOPPINGS.size)`) and create an `Array` of that size. We then leverage [`Array#new`](https://ruby-doc.org/core/Array.html#method-c-new)'s block argument to run some code to generate each entry in our new array. For generating entries, we will use the same code we had before, `Pizza::AVAILABLE_TOPPINGS.sample`.
+
+Now, when we generate our `Pizza`s, we will have a different number of different toppings each time.
 
 ```ruby
 3.times { puts FactoryBot.build(:pizza).inspect }
