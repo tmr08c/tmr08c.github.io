@@ -104,7 +104,7 @@ This results in a different topping every time we use our factory to create a ne
 
 ### Random Amount of Random
 
-Often, when dealing with `enum`-like data, your attribute will only be a single value and `Array#sample` is all you will need. However, in our pizza example, we can have no toppings, one topping, or many toppings. A limitation of our current factory is that it will always generate a `Pizza` with a single topping.
+Often, when dealing with `enum`-like data, your attribute will be a single-value. In these cases, `Array#sample` is all you will need. However, in our pizza example, we can have no toppings, one topping, or many toppings. A limitation of our current factory is that it will always generate a `Pizza` with a single topping.
 
 Herein lies an issue with example-based testing - it relies on the examples you remember to include. We may not think to test zero, one, and many toppings, and, even if we do, we may only do it in a single scenario. What if, instead, the factory always returned a random number of random toppings? That would add some variability to **all** tests that use this factory.
 
@@ -136,7 +136,7 @@ Now, when we generate our `Pizza`s, we will have a different number of different
 
 ### Valid Amount of Random
 
-Something to be careful of when dealing with randomness is the fact you could end up with invalid data. Our current factory doesn't do anything to protect against having multiple entries of the same topping. Below is an example of what this could look like.
+Something to be careful of when dealing with randomness is that you could end up with invalid data. Our current factory doesn't do anything to protect against having multiple entries of the same topping. Below is an example of what this could look like.
 
 ```ruby
 3.times { puts FactoryBot.build(:pizza).inspect }
@@ -146,9 +146,9 @@ Something to be careful of when dealing with randomness is the fact you could en
 <Pizza @toppings=["onions", "bacon", "peppers", "jalapenos", "pineapaple"]>
 ```
 
-Depending on your model, this may or may not matter (maybe people can order a quadruple serving of peppers if they want). Be warned - if you're not careful, adding randomness to your tests can result in invalid objects. Sometimes, these invalid objects can help catch you catch bugs and improve your validations, but it's often not the case that your application will result in a test failure when there is invalid data.
+Depending on your model, this may or may not matter (maybe people can order a quadruple serving of peppers if they want). Be warned - if you're not careful, adding randomness to your tests can result in invalid objects. Sometimes, these invalid objects can help you catch bugs and improve your validations. Unfortunately, it's often the case that many forms of invalid data do not result in a test failure. In these cases, you will have passing tests with invalid data, not an ideal combination.
 
-In our case, let's say that we validate the uniqueness of toppings in another test and want our factory to result in a valid record. To do this, we can update how we create the toppings list in our factory.
+In our case, let's say that we want our factory to result in a unique list of toppings. To do this, we can update how we create the toppings list in our factory.
 
 ```ruby
 FactoryBot.define do
@@ -196,10 +196,12 @@ Faker::TvShows::SiliconValley.url
 => "http://raviga.com"
 ```
 
-Faker provides an advantage over our [sequences](#sequences) example in that you aren't pulling from the same basic template. Instead, you are pulling from a large list of possible values. Even better, most basic data types can generate fairly complex sample data. For example, looking at how [names](https://github.com/faker-ruby/faker/blob/master/lib/locales/en/name.yml) can be generated, there are prefixes, suffixes, and middle names; these additional variations could help potentially catch issues if you were not handling them.
+Faker provides an advantage over our [sequences](#sequences) example in that you aren't using the same basic template. Instead, you are pulling from a large list of possible values. Even better, most basic data types can generate fairly complex sample data. For example, looking at how [names](https://github.com/faker-ruby/faker/blob/master/lib/locales/en/name.yml) can be generated, there are prefixes, suffixes, and middle names; these additional variations could help potentially catch issues if you were not handling them.
 
-Like all of our options so far, Faker does not go as far as what a [property-based testing tool](https://dev.to/jdsteinhauser/intro-to-property-based-testing-2cj8) would provide. Its goal is to provide realistic data, so you will not have test data that looks like someone rolled their head on the keyboard. That said, its realistic data is likely to provide more variation and randomness than you would if left to your own devices.
+Like all of our options so far, Faker does not go as far as something like a [property-based testing tool](https://dev.to/jdsteinhauser/intro-to-property-based-testing-2cj8) would provide. Its goal is to provide realistic data, so you will not have test data that looks like someone rolled their head on the keyboard. That said, its realistic data will provide more variation and randomness than you would have if left to your own devices.
 
 ## Conclusion
 
-Adding some randomness into your tests can potentially help catch use cases that you were not thinking of when designing a solution. While there are different levels of randomness and chances of catching corner cases in your system, some of the options covered in this post are low-cost enough that I use them by default.
+Adding some randomness into your tests can potentially help catch bugs. By creating scenarios you may not have been thinking of when designing a solution, random data can result in tests that were passing with one set of data to fail with another. While there are different levels of randomness and chances of catching corner cases in your system, some of the options covered in this post are low-cost enough that I use them by default.
+
+I hope you can adopt the practices in this post to shine a light on some of the bugs in your applications.
