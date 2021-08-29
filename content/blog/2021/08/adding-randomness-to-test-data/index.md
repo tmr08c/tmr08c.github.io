@@ -1,6 +1,6 @@
 ---
-title: "Adding Randomness to FactoryBot"
-date: "2021-04-20T06:14:13.265Z"
+title: "Adding Randomness to Test Data"
+date: "2021-08-30T07:14:13.265Z"
 categories: ["testing", "ruby"]
 ---
 
