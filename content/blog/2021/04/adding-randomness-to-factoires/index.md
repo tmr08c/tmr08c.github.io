@@ -4,7 +4,7 @@ date: "2021-04-20T06:14:13.265Z"
 categories: ["testing", "ruby"]
 ---
 
-While tests can help improve the robustness of our applications, we are limited by the test cases and sample data we use in our test suite. In this post, we will cover reducing some of these limitations by adding randomness to your tests. The examples in the post will be using [FactoryBot](https://github.com/thoughtbot/factory_bot), but similar concepts are applicable with other testing tools such as [Rails' fixtures](https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures).
+While tests can help improve the robustness of our applications, there is a limitation inherent to example-based testing - the sample data we use as examples in our tests. In this post, we will cover reducing some of these limitations by adding randomness to our tests. The examples in the post will be using [FactoryBot](https://github.com/thoughtbot/factory_bot), but similar concepts are applicable with other testing tools such as [Rails' fixtures](https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures).
 
 ## Sequences
 
@@ -12,7 +12,7 @@ While tests can help improve the robustness of our applications, we are limited 
 
 A commonly used form of randomness in FactoryBot is [sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). When defining a factory, you can use the `sequence` method to have a block of code run when generating an attribute (as opposed to a hard-coded value). These are known as [inline sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#inline-sequences).
 
-Often, inline sequences are used to avoid triggering uniqueness constraints. For example, if a `User` record requires a unique `username` you can use a sequence to append an ever-increasing number to the end of the generated `username`.
+You may already be using inline sequences to avoid triggering uniqueness constraints. For example, if a `User` record requires a unique `username` you can use a sequence to append an ever-increasing number to the end of the generated `username`.
 
 ```ruby
 factory :user
@@ -32,7 +32,7 @@ Now, anytime we create a user, we will have a unique `username` attribute:
 
 ### Global
 
-FactoryBot also supports [global sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). These are named sequences that you can use reference in factories, providing globally unique, valid data across models and attributes. An example of this may be generating sample email addresses. However, global sequences can generate any type of data. For example, at work, we have a `string` sequence that returns the string, "string," with a number appended.
+FactoryBot also supports [global sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). These are named sequences that you can use reference across factories, providing globally unique, valid data between models and attributes. An example of this may be generating sample email addresses. However, global sequences can generate any type of data. For example, at work, we have a simple `string` sequence that returns the string, "string," with a number appended.
 
 ```ruby
 sequence :string do |n|
@@ -49,7 +49,7 @@ end
 => <User @first_name="string 5", @last_name="string 6">
 ```
 
-While this does not provide realistic data, it does add randomness to the objects you are creating. It also indicates to the team that we don't care about the value of an attribute and simply want _a_ string value.
+While this does not provide realistic data, it does add randomness to the objects you are creating. It also signals to the team that we do not care about the value of an attribute and simply want _a_ string value.
 
 ### Randomness
 
@@ -74,7 +74,7 @@ class Pizza
     pineapple
   ]
 
-  attr_writer :toppings
+  attr_accessor :toppings
 
   def initalize(toppings)
     @toppings = Array(toppings)
@@ -136,7 +136,7 @@ Now, when we generate our `Pizza`s, we will have a different number of different
 
 ### Valid Amount of Random
 
-Something to be careful of when dealing with randomness is that you could end up with invalid data. Our current factory doesn't do anything to protect against having multiple entries of the same topping. Below is an example of what this could look like.
+Something to be careful of when dealing with randomness is that you could end up with invalid data. As shown below, our current factory doesn't do anything to protect against having multiple entries of the same topping.
 
 ```ruby
 3.times { puts FactoryBot.build(:pizza).inspect }
@@ -198,7 +198,7 @@ Faker::TvShows::SiliconValley.url
 
 Faker provides an advantage over our [sequences](#sequences) example in that you aren't using the same basic template. Instead, you are pulling from a large list of possible values. Even better, most basic data types can generate fairly complex sample data. For example, looking at how [names](https://github.com/faker-ruby/faker/blob/master/lib/locales/en/name.yml) can be generated, there are prefixes, suffixes, and middle names; these additional variations could help potentially catch issues if you were not handling them.
 
-Like all of our options so far, Faker does not go as far as something like a [property-based testing tool](https://dev.to/jdsteinhauser/intro-to-property-based-testing-2cj8) would provide. Its goal is to provide realistic data, so you will not have test data that looks like someone rolled their head on the keyboard. That said, its realistic data will provide more variation and randomness than you would have if left to your own devices.
+Like all of our options so far, Faker does not go as far as something like a [property-based testing tool](https://dev.to/jdsteinhauser/intro-to-property-based-testing-2cj8) would provide. Its goal is to provide realistic data, so you will not have test data that looks like someone rolled their head on the keyboard. That said, its realistic data will likely provide more variation and randomness than you would have if left to your own devices.
 
 ## Conclusion
 
