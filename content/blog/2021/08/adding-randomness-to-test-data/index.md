@@ -32,7 +32,7 @@ Now, anytime we create a user, we will have a unique `username` attribute:
 
 ### Global
 
-FactoryBot also supports [global sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). These are named sequences that you can use reference across factories, providing globally unique, valid data between models and attributes. An example of this may be generating sample email addresses. However, global sequences can generate any type of data. For example, at work, we have a simple `string` sequence that returns the string, "string," with a number appended.
+FactoryBot also supports [global sequences](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#global-sequences). These are named sequences that you can reference across factories, providing globally unique, valid data between models and attributes. An example of this may be generating sample email addresses. However, global sequences can generate any type of data. For example, at work, we have a simple `string` sequence that returns the string, "string," with a number appended.
 
 ```ruby
 sequence :string do |n|
@@ -108,7 +108,7 @@ Often, when dealing with `enum`-like data, your attribute will be a single-value
 
 Herein lies an issue with example-based testing - it relies on the examples you remember to include. We may not think to test zero, one, and many toppings, and, even if we do, we may only do it in a single scenario. What if, instead, the factory always returned a random number of random toppings? That would add some variability to **all** tests that use this factory.
 
-We can update the `toppings` attribute in our factory to build a random number of pizza toppings - some number between no toppings and the total number of available toppings. We can represent this with the following.
+We can update the `toppings` attribute in our factory to build a random number of pizza toppings - some number between no toppings and the total number of available toppings.
 
 ```ruby
 FactoryBot.define do
@@ -146,9 +146,9 @@ Something to be careful of when dealing with randomness is that you could end up
 <Pizza @toppings=["onions", "bacon", "peppers", "jalapenos", "pineapaple"]>
 ```
 
-Depending on your model, this may or may not matter (maybe people can order a quadruple serving of peppers if they want). Be warned - if you're not careful, adding randomness to your tests can result in invalid objects. Sometimes, these invalid objects can help you catch bugs and improve your validations. Unfortunately, it's often the case that many forms of invalid data do not result in a test failure. In these cases, you will have passing tests with invalid data, not an ideal combination.
+Depending on your model, this may or may not matter (maybe people can order a quadruple serving of peppers if they want). Be warned - if you're not careful, adding randomness to your tests can result in invalid objects. Sometimes, these invalid objects can help you catch bugs and improve your validations. Unfortunately, it may also be the case that many forms of invalid data do not result in a test failure. In these cases, you will have passing tests with invalid data, not an ideal combination.
 
-In our case, let's say that we want our factory to result in a unique list of toppings. To do this, we can update how we create the toppings list in our factory.
+For our pizza example, let's say that we want our factory to result in a unique list of toppings. To do this, we can update how we create the toppings list in our factory to leverage a [`Set`](https://www.rubyguides.com/2018/08/ruby-set-class/).
 
 ```ruby
 FactoryBot.define do
@@ -178,7 +178,7 @@ end
 
 ## Delegating Randomness
 
-The final suggestion for introducing randomness into your system relies on a gem, [Faker](https://github.com/faker-ruby/faker). Faker provides hundred of modules themed around different topics on which you can get fake data.
+The final suggestion for introducing randomness into your system relies on a gem, [Faker](https://github.com/faker-ruby/faker). Faker provides hundred of modules themed around [different topics](https://github.com/faker-ruby/faker#generators) on which you can get fake data.
 
 With Faker, you can get names, email addresses, physical addresses, quotes, and more.
 
@@ -202,6 +202,6 @@ Like all of our options so far, Faker does not go as far as something like a [pr
 
 ## Conclusion
 
-Adding some randomness into your tests can potentially help catch bugs. By creating scenarios you may not have been thinking of when designing a solution, random data can result in tests that were passing with one set of data to fail with another. While there are different levels of randomness and chances of catching corner cases in your system, some of the options covered in this post are low-cost enough that I use them by default.
+Adding some randomness into your tests can potentially help catch bugs. By creating scenarios you may not have been thinking of when designing a solution, random data can reveal tests that pass with one set of data and fail with another. While there are different levels of randomness and chances of catching corner cases in your system, some of the options covered in this post are low-cost enough that I use them by default.
 
 I hope you can adopt the practices in this post to shine a light on some of the bugs in your applications.
