@@ -1,36 +1,43 @@
-import { Link } from "gatsby";
+import { Link, StaticQuery, graphql } from "gatsby";
 import * as React from "react";
 
-interface HeaderProps {
-  siteTitle?: string;
+function Header(): JSX.Element {
+  return (
+    <StaticQuery
+      query={graphql`
+        query SiteTitleQuery {
+          site {
+            siteMetadata {
+              title
+            }
+          }
+        }
+      `}
+      render={(data) => (
+        <nav className="flex items-center justify-between flex-wrap bg-green-800 px-6 py-12 mb-5 text-white">
+          <div className="flex flex-no-shrink">
+            <Link
+              to="/"
+              className="font-semibold text-4xl tracking-tighter hover:underline hover:animate-wiggle"
+            >
+              {data.site.siteMetadata.title}
+            </Link>
+          </div>
+          <div className="justify-end flex mr-4">
+            <div className="text-xl">
+              <Link to="/talks" className="mr-6 hover:text-black">
+                Talks
+              </Link>
+
+              <Link to="/blog" className="hover:text-black">
+                Blog
+              </Link>
+            </div>
+          </div>
+        </nav>
+      )}
+    />
+  );
 }
-
-const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
-  <nav className="flex items-center justify-between flex-wrap bg-living-coral-500 p-6 mb-5">
-    <div className="flex flex-no-shrink">
-      <Link
-        to="/"
-        className="font-semibold text-xl tracking-tighter text-black hover:text-white"
-      >
-        {siteTitle}
-      </Link>
-    </div>
-    <div className="justify-end flex mr-4">
-      <div className="text-xl">
-        <Link to="/talks" className="text-black hover:text-white mr-2">
-          Talks
-        </Link>
-
-        <Link to="/blog" className="text-black hover:text-white">
-          Blog
-        </Link>
-      </div>
-    </div>
-  </nav>
-);
-
-Header.defaultProps = {
-  siteTitle: "",
-};
 
 export default Header;

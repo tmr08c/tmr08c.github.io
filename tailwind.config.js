@@ -2,20 +2,30 @@ module.exports = {
   theme: {
     // Some useful comment
     extend: {
+      animation: {
+        wiggle: "wiggle 3s ease-in-out infinite",
+      },
       fontSize: {
         "8xl": "5rem",
       },
-      colors: {
-        // PAANTONE's 2019 Color of the Year
-        // https://www.pantone.com/color-intelligence/color-of-the-year/color-of-the-year-2019
-        "living-coral-500": "#FF6F61",
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "25%, 75%": { transform: "rotate(15deg)" },
+          "50%": { transform: "rotate(-15deg)" },
+        },
       },
-      typography: (_theme) => ({
+      typography: (theme) => ({
         DEFAULT: {
           css: {
             // turn off @tailwindcss/typography default `pre`
             // styling preferring remark gatsby plugin
             pre: false,
+            a: {
+              "&:hover": {
+                color: theme("colors.purple.400"),
+              },
+            },
           },
         },
       }),
@@ -24,6 +34,7 @@ module.exports = {
   variants: {
     textColor: ["responsive", "hover", "focus", "active", "group-hover"],
     borderStyle: ["responsive", "hover", "focus", "active", "group-hover"],
+    animation: ["responsive", "hover", "motion-safe", "motion-reduce"],
   },
   plugins: [require("@tailwindcss/typography")],
   // Using the built-in support for purging CSS
