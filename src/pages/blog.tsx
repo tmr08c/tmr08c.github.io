@@ -43,7 +43,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
             const title = node.frontmatter.title || node.fields.slug;
             return (
               <div className="post mb-10" key={node.fields.slug}>
-                <h3 className="text-3xl">
+                <h3 className="text-3xl hover:text-purple-400 duration-300 transition-colors">
                   <Link to={node.fields.slug}>{title}</Link>
                 </h3>
                 <small className="italic text-gray-600">
