@@ -16,17 +16,17 @@ function Header(): JSX.Element {
       render={(data) => (
         <nav className="flex items-center justify-between flex-wrap bg-green-800 px-6 py-12 mb-5 text-white">
           <div className="flex flex-no-shrink">
-            <Link to="/" className="font-semibold text-4xl tracking-tighter">
+            <Link to="/" className="font-semibold text-4xl tracking-tighter hover:underline hover:animate-wiggle">
               {data.site.siteMetadata.title}
             </Link>
           </div>
           <div className="justify-end flex mr-4">
             <div className="text-xl">
-              <Link to="/talks" className="mr-6">
+              <Link to="/talks" className="mr-6 hover:text-black">
                 Talks
               </Link>
 
-              <Link to="/blog">Blog</Link>
+              <Link to="/blog" className="hover:text-black">Blog</Link>
             </div>
           </div>
         </nav>
@@ -34,9 +34,5 @@ function Header(): JSX.Element {
     />
   );
 }
-
-Header.defaultProps = {
-  siteTitle: "STuff",
-};
 
 export default Header;
