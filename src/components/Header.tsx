@@ -5,15 +5,15 @@ function Header(): JSX.Element {
   return (
     <StaticQuery
       query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
+        query SiteTitleQuery {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-      render={data => (
+      `}
+      render={(data) => (
         <nav className="flex items-center justify-between flex-wrap bg-green-800 px-6 py-12 mb-5 text-white">
           <div className="flex flex-no-shrink">
             <Link to="/" className="font-semibold text-4xl tracking-tighter">
@@ -30,7 +30,8 @@ function Header(): JSX.Element {
             </div>
           </div>
         </nav>
-      )} />
+      )}
+    />
   );
 }
 
