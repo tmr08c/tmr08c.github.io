@@ -25,7 +25,7 @@ const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
 );
 
 Header.defaultProps = {
-  siteTitle: ""
+  siteTitle: "",
 };
 
 export default Header;

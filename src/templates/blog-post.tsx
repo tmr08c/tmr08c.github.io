@@ -38,7 +38,7 @@ interface PostInfo {
 
 const EditOnGitHubLink = ({
   repoLink,
-  postSlug
+  postSlug,
 }: {
   repoLink: string;
   postSlug: string;
@@ -73,7 +73,7 @@ const EditOnGitHubLink = ({
 
 const OtherPostsNav = ({
   previous,
-  next
+  next,
 }: {
   previous: PostInfo;
   next: PostInfo;

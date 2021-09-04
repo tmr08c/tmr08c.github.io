@@ -23,8 +23,8 @@ class TalksPage extends React.Component<TalkPageProps, {}> {
   render() {
     const {
       data: {
-        allTalksJson: { edges: talkListEdges }
-      }
+        allTalksJson: { edges: talkListEdges },
+      },
     } = this.props;
 
     return (

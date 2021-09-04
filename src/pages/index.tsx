@@ -26,7 +26,7 @@ class IndexPage extends React.Component<{}, {}> {
               "phoenix",
               "software development",
               "engineering manager",
-              "code"
+              "code",
             ]}
           />
 

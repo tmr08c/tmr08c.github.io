@@ -8,7 +8,7 @@ describe("Blog Posts", () => {
   describe("visiting index page", () => {
     it("lists posts", () => {
       cy.exec("find content/blog -type f -name index.md | wc -l").then(
-        result => {
+        (result) => {
           const numPosts = parseInt(result.stdout);
 
           assert.isTrue(numPosts > 0);
@@ -20,15 +20,13 @@ describe("Blog Posts", () => {
 
   describe("clicking on a post title", () => {
     it("takes you to the post", () => {
-      cy.get(".posts .post").each($post => {
+      cy.get(".posts .post").each(($post) => {
         const link = $post.find("a").first();
         const title = link.text();
 
         // Note: For CI we needed to add `"chromeWebSecurity": false` to get
         // visiting other pages to work
-        cy.visit(link.attr("href"))
-          .get("h1")
-          .should("contain.text", title);
+        cy.visit(link.attr("href")).get("h1").should("contain.text", title);
 
         cy.go("back");
       });
