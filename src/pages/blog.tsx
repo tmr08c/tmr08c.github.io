@@ -46,11 +46,11 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                 <h3 className="text-3xl hover:text-purple-400 duration-300 transition-colors">
                   <Link to={node.fields.slug}>{title}</Link>
                 </h3>
-                <small className="italic text-gray-600">
+                <small className="italic text-gray-600 dark:text-gray-400">
                   {node.frontmatter.date}
                 </small>
                 <p
-                  className="text-gray-700 mt-1"
+                  className="text-gray-700 mt-1 dark:text-gray-300"
                   dangerouslySetInnerHTML={{ __html: node.excerpt }}
                 />
               </div>

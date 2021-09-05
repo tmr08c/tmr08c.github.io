@@ -9,24 +9,24 @@
  *
  * @import "tailwindcss/base";
  */
- @tailwind base;
+@tailwind base;
 
- /**
+/**
   * This injects any component classes registered by plugins.
   *
   * If using `postcss-import`, use this import instead:
   *
   * @import "tailwindcss/components";
   */
- @tailwind components;
+@tailwind components;
 
- /**
+/**
   * Here you would add any of your custom component classes; stuff that you'd
   * want loaded *before* the utilities so that the utilities could still
   * override them.
   *
   * Example:
-  *
+
   * .btn { ... }
   * .form-input { ... }
   *
@@ -36,23 +36,23 @@
   * @import "components/forms";
   */
 
-  /* Custom styling for KBD element */
-  kbd {
-    @apply text-gray-800;
-    @apply text-sm;
+/* Custom styling for KBD element */
+kbd {
+  @apply text-gray-800;
+  @apply text-sm;
 
-    @apply bg-gray-100;
+  @apply bg-gray-100;
 
-    @apply border-gray-400;
-    @apply border;
-    @apply rounded-sm;
+  @apply border-gray-400;
+  @apply border;
+  @apply rounded-sm;
 
-    @apply shadow;
+  @apply shadow;
 
-    @apply px-1;
-  }
+  @apply px-1;
+}
 
- /**
+/**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.
   *
@@ -60,9 +60,9 @@
   *
   * @import "tailwindcss/utilities";
   */
- @tailwind utilities;
+@tailwind utilities;
 
- /**
+/**
   * Here you would add any custom utilities you need that don't come out of the
   * box with Tailwind.
   *

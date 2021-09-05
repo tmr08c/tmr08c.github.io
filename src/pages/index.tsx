@@ -10,7 +10,7 @@ class IndexPage extends React.Component<{}, {}> {
   render() {
     return (
       <>
-        <div className="object-cover min-h-screen bg-green-800">
+        <div className="object-cover min-h-screen bg-green-800 dark:bg-gray-800">
           <SEO
             title="Home"
             keywords={[
@@ -43,7 +43,7 @@ class IndexPage extends React.Component<{}, {}> {
             <Selfie />
 
             <h2 className="text-xl lg:text-2xl font-thin p-6">
-              I am a Software Developer &amp; Engineering Manager
+              Software Developer &amp; Engineering Manager
             </h2>
           </div>
         </div>

@@ -26,7 +26,7 @@ const Talk: React.SFC<TalkProps> = ({ talk }) => {
         </span>
       </h3>
       <div
-        className="text-gray-800"
+        className="text-gray-800 dark:text-gray-300"
         dangerouslySetInnerHTML={{ __html: talk.description }}
       />
     </div>
