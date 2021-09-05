@@ -43,7 +43,12 @@ module.exports = {
           {
             resolve: `gatsby-remark-vscode`,
             options: {
-              theme: `Tomorrow`,
+              theme: {
+                default: `Tomorrow`,
+                parentSelector: {
+                  "body.dark": "Tomorrow Night",
+                },
+              },
               extensions: [`elixir-ls`, `viml`, `vscode-themes/tomorrow`],
             },
           },
@@ -148,6 +153,16 @@ module.exports = {
             match: "^/blog/",
           },
         ],
+      },
+    },
+    {
+      resolve: "gatsby-plugin-use-dark-mode",
+      options: {
+        classNameDark: "dark",
+        classNameLight: "light",
+        storageKey: "darkMode",
+        element: "html",
+        minify: true,
       },
     },
   ],
