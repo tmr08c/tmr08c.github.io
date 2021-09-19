@@ -39,8 +39,14 @@ To start, we can turn to [dieting advice](https://www.washingtonpost.com/lifesty
 
 Since shifting to remote work, I have found a number of go-to tasks that fit well into a ten to fifteen minute break such as cleaning up a few dishes or starting a load of laundry. These small household tasks work well because they don't shift my deep work attention away to another hard problem, I don't really enjoy doing them so I'm not going take more time than necessary, and they contribute to the [positive psychological effects of cleanliness and organization](https://www.psychologytoday.com/us/blog/the-truisms-wellness/201607/the-powerful-psychology-behind-cleanliness). Those positive effects aside, my favorite of all of the break-time activities is getting outside and walking. Walking has [many benefits](https://www.hustleescape.com/productivity-benefits-of-walking/) and spending as little as [five minutes in nature can improve self-esteem and mood](https://www.bbc.com/worklife/article/20190304-why-walking-makes-you-a-better-worker), so it's not surprising I am happier when my day includes a walk.
 
+## Making Time
+
 If you are now bought into the idea of taking breaks and have some ideas of what you want to do on the break, we now come to the my retrospective takeawy: how do we keep up our break-taking habit, even (and especially) in times of stress?
 
-???
+### Understand the benefits
+
+The retro discussion still in my head, I found I had an old [topic card](https://github.com/tmr08c/tmr08c.github.io/issues/75) title "taking breaks" and thought I would resurrect that topic with the spin of having recently had a week with fewer breaks. However, as I began writing, I found I wanted to cite sources that backed the vauge notion in my head of "breaks are good" and "work harder not smarter." Finding this information has made these hand-wavy, feel-good ideas turn into something more scientific and "real." I acknowledge I am playing into [confirmation bias](https://en.wikipedia.org/wiki/Confirmation_bias) (I literally Googled phrases like "benefits of breaks"). Forutnately, in just now Googling "negative side effects work breaks," most first page results were about the negative effects of _not_ taking breaks and the only result that seemed to be about the bad effects of a break are when that break is a smoking break.
+
+This shifted away from the original topic card which was more about using "breaks" (really just, not sitting at the computer) to get through difficult problems
 
 And this takes us back to my answer of what I want to change. I don't want to fall on the wrong side of the Yerkes-Dodson curve due to stress and worry. I want to maintain a steady practice of deep break routines that allow me to not only be more productive, but also lead a healtheir and happier life.
