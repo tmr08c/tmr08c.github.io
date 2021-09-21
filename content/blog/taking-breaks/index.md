@@ -45,8 +45,16 @@ If you are now bought into the idea of taking breaks and have some ideas of what
 
 ### Understand the benefits
 
-The retro discussion still in my head, I found I had an old [topic card](https://github.com/tmr08c/tmr08c.github.io/issues/75) title "taking breaks" and thought I would resurrect that topic with the spin of having recently had a week with fewer breaks. However, as I began writing, I found I wanted to cite sources that backed the vauge notion in my head of "breaks are good" and "work harder not smarter." Finding this information has made these hand-wavy, feel-good ideas turn into something more scientific and "real." I acknowledge I am playing into [confirmation bias](https://en.wikipedia.org/wiki/Confirmation_bias) (I literally Googled phrases like "benefits of breaks"). Forutnately, in just now Googling "negative side effects work breaks," most first page results were about the negative effects of _not_ taking breaks and the only result that seemed to be about the bad effects of a break are when that break is a smoking break.
+For some people, knowing the benefits of their actions (or intended actions) can help them commit to their practices. You can use the benefits outlined above to help kickstart your break-taking routine and serve as a reminder to stay on track.
 
-This shifted away from the original topic card which was more about using "breaks" (really just, not sitting at the computer) to get through difficult problems
+### Implementation Intention
+
+[Implementation intention](https://jamesclear.com/implementation-intentions) is the idea of planning an action (an intention) at a particular time or situation (the implementation). It can be thought of as an `if` statement - if it is after stand up, then I will take a break.
+
+This pre-planning seems to be highly effective for getting people to stick to their goals and intentions.
+
+[Habit stacking](https://jamesclear.com/habit-stacking) is the idea of tying new habits onto existing habits. A special
+
+- timeblock planning
 
 And this takes us back to my answer of what I want to change. I don't want to fall on the wrong side of the Yerkes-Dodson curve due to stress and worry. I want to maintain a steady practice of deep break routines that allow me to not only be more productive, but also lead a healtheir and happier life.
