@@ -49,12 +49,28 @@ For some people, knowing the benefits of their actions (or intended actions) can
 
 ### Implementation Intention
 
-[Implementation intention](https://jamesclear.com/implementation-intentions) is the idea of planning an action (an intention) at a particular time or situation (the implementation). It can be thought of as an `if` statement - if it is after stand up, then I will take a break.
+[Implementation intention](https://jamesclear.com/implementation-intentions) is the idea of planning an action (an intention) at a particular time or situation (the implementation). It can be thought of as an `if` statement. In the post, James Clear suggests using the template
 
-This pre-planning seems to be highly effective for getting people to stick to their goals and intentions.
+```
+I will [BEHAVIOR] at [TIME] in [LOCATION]
+```
 
-[Habit stacking](https://jamesclear.com/habit-stacking) is the idea of tying new habits onto existing habits. A special
+We can use this template to plan when we want to take a daily break. As an example, I will take a 15 minute walking break at 12:30 in my neighborhood.
 
-- timeblock planning
+Being specific is a key aspect to this practice. From the article,
+
+> Many people think they lack motivation when what they really lack is clarity. It is not always obvious when and where to take action. (...) When the moment of action occurs, there is no need to make a decision. Simply follow your predetermined plan.
+
+#### Habit Stacking
+
+A special form of implementation intention is [habit stacking](https://jamesclear.com/habit-stacking). Habit stacking uses the idea of specifying your intention, but ties the _when_ aspect to an existing habit.
+
+While not a habit in the way we normally talk about them, meetings can provide excellent anchors for your habit stacking. Consider the following, "After I am done with stand up, I will take a 15 minute walking break."
+
+I like tying activities to meetings because I know I will already have context switched out of my coding project for the day. Breaking after a meeting can help clear out some of the attention residue as I begin getting into the problem headspace.
+
+#### Time-block Planning
+
+Inspired by [Cal Newport](https://www.calnewport.com/)'s release of a [time-block planner](https://www.timeblockplanner.com/), I have been experimenting with using his form of time-block planning.
 
 And this takes us back to my answer of what I want to change. I don't want to fall on the wrong side of the Yerkes-Dodson curve due to stress and worry. I want to maintain a steady practice of deep break routines that allow me to not only be more productive, but also lead a healtheir and happier life.
