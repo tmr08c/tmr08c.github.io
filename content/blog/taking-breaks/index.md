@@ -65,12 +65,25 @@ Being specific is a key aspect to this practice. From the article,
 
 A special form of implementation intention is [habit stacking](https://jamesclear.com/habit-stacking). Habit stacking uses the idea of specifying your intention, but ties the _when_ aspect to an existing habit.
 
-While not a habit in the way we normally talk about them, meetings can provide excellent anchors for your habit stacking. Consider the following, "After I am done with stand up, I will take a 15 minute walking break."
+[The Pomodoro&reg; Technique](https://francescocirillo.com/pages/pomodoro-technique) is a perfect example of this strategy. The general algorithm for the technique is:
 
-I like tying activities to meetings because I know I will already have context switched out of my coding project for the day. Breaking after a meeting can help clear out some of the attention residue as I begin getting into the problem headspace.
+1. I will choose some work to do
+1. After I choose some work, I will set a time
+1. After I set a timer, I will start working
+1. After the timer goes off, I will take a break
+
+Rather than determining an exact time for your work or break, you base your actions on the previous step you took (with the helpful guidance of a timer).
+
+While not a habit in the way we normally talk about them, meetings can also provide excellent anchors for your habit stacking. Consider the following, "After I am done with stand up, I will take a 15 minute walking break." I like tying activities to meetings because I know I will already have context switched out of my coding project for the day. Breaking after a meeting can help clear out some of the attention residue as I begin getting into the problem headspace.
 
 #### Time-block Planning
 
 Inspired by [Cal Newport](https://www.calnewport.com/)'s release of a [time-block planner](https://www.timeblockplanner.com/), I have been experimenting with using his form of time-block planning.
+
+Time-block planning leverages the psychological effects of implementation intentions by pre-scheduling your time for your entire working day. You can use your clear-headed planning brain to set good intentions for your frazzled, middle-of-the-day brain.
+
+One intention I have been trying to set for myself is a full, mid-day lunch break. Taking a break in the middle of the day can be difficult to time just right with habit stacking. This is where I have found time-block planning to shine. Knowing I plan to stop at a certain time will impact the decisions I make as the time draws nearer. Some days, this may mean I don't start a new task and break early and other days it could mean I move my break back to let me keep up with my flow state. Despite rearranging my schedule, I have found that I am taking full lunch breaks away from my desk more often.
+
+You don't have to go full time-block plannig to set an intention to take a regular lunch break. Thoughout my career I have come across many people that have a recurring lunchtime break on their calendar.
 
 And this takes us back to my answer of what I want to change. I don't want to fall on the wrong side of the Yerkes-Dodson curve due to stress and worry. I want to maintain a steady practice of deep break routines that allow me to not only be more productive, but also lead a healtheir and happier life.
