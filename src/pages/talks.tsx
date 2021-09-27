@@ -23,15 +23,15 @@ class TalksPage extends React.Component<TalkPageProps, {}> {
   render() {
     const {
       data: {
-        allTalksJson: { edges: talkListEdges }
-      }
+        allTalksJson: { edges: talkListEdges },
+      },
     } = this.props;
 
     return (
       <Layout>
         <SEO title="Talks" keywords={["programming", "conference talks"]} />
         <h1 className="text-center text-5xl font-bold mb-5">Talks</h1>
-        <div className="text-md text-gray-600 italic mb-8">
+        <div className="text-md text-gray-600 italic mb-8 dark:text-gray-400">
           Below are some talks that I have given over time. When possible, I
           have provided links to slides and/or code.
         </div>

@@ -13,16 +13,12 @@ describe("Homepage", () => {
 
   describe("navigation", () => {
     it("can navigate to blog posts", () => {
-      cy.get("nav")
-        .contains("Blog")
-        .click();
+      cy.get("nav").contains("Blog").click();
       cy.location("pathname").should("include", "blog");
     });
 
     it("can navigate to talks", () => {
-      cy.get("nav")
-        .contains("Talks")
-        .click();
+      cy.get("nav").contains("Talks").click();
       cy.location("pathname").should("include", "talks");
     });
   });

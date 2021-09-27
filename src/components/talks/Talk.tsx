@@ -13,7 +13,7 @@ const Talk: React.SFC<TalkProps> = ({ talk }) => {
             href={talk.link}
             target="_blank"
             rel="nofollow noopener noreferrer"
-            className="border-red-300 border-solid border-b-4"
+            className="border-solid border-b-4 hover:text-purple-400 duration-300 transition-colors"
           >
             {talk.name}
           </a>
@@ -26,7 +26,7 @@ const Talk: React.SFC<TalkProps> = ({ talk }) => {
         </span>
       </h3>
       <div
-        className="text-gray-800"
+        className="text-gray-800 dark:text-gray-300"
         dangerouslySetInnerHTML={{ __html: talk.description }}
       />
     </div>

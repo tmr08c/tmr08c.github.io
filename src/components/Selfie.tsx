@@ -29,7 +29,7 @@ const Selfie = () => {
           }
         }
       `}
-      render={data => (
+      render={(data) => (
         <Img
           className="rounded-lg w-1/2 max-w-sm mx-auto"
           fluid={data.placeholderImage.childImageSharp.fluid}

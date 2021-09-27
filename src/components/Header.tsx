@@ -1,36 +1,51 @@
-import { Link } from "gatsby";
+import { Link, StaticQuery, graphql } from "gatsby";
 import * as React from "react";
 
-interface HeaderProps {
-  siteTitle?: string;
+import DarkModeToggle from "./DarkModeToggle";
+
+function Header(): JSX.Element {
+  return (
+    <StaticQuery
+      query={graphql`
+        query SiteTitleQuery {
+          site {
+            siteMetadata {
+              title
+            }
+          }
+        }
+      `}
+      render={(data) => (
+        <nav className="flex items-center justify-between flex-wrap bg-green-800 px-6 py-12 mb-5 text-white dark:bg-gray-800 dark:border-b-4 dark:border-double dark:border-purple-400 dark:text-purple-400">
+          <div className="flex flex-no-shrink">
+            <Link
+              to="/"
+              className="font-semibold text-4xl tracking-tighter hover:underline hover:animate-wiggle"
+            >
+              {data.site.siteMetadata.title}
+            </Link>
+          </div>
+          <div className="justify-end flex mr-4 text-xl items-center">
+            <Link
+              to="/talks"
+              className="mr-6 hover:text-black dark:hover:text-white"
+            >
+              Talks
+            </Link>
+
+            <Link
+              to="/blog"
+              className="mr-6 hover:text-black dark:hover:text-white"
+            >
+              Blog
+            </Link>
+
+            <DarkModeToggle />
+          </div>
+        </nav>
+      )}
+    />
+  );
 }
-
-const Header: React.SFC<HeaderProps> = ({ siteTitle }) => (
-  <nav className="flex items-center justify-between flex-wrap bg-living-coral-500 p-6 mb-5">
-    <div className="flex flex-no-shrink">
-      <Link
-        to="/"
-        className="font-semibold text-xl tracking-tighter text-black hover:text-white"
-      >
-        {siteTitle}
-      </Link>
-    </div>
-    <div className="justify-end flex mr-4">
-      <div className="text-xl">
-        <Link to="/talks" className="text-black hover:text-white mr-2">
-          Talks
-        </Link>
-
-        <Link to="/blog" className="text-black hover:text-white">
-          Blog
-        </Link>
-      </div>
-    </div>
-  </nav>
-);
-
-Header.defaultProps = {
-  siteTitle: ""
-};
 
 export default Header;

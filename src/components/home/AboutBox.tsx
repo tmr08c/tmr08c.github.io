@@ -8,7 +8,7 @@ interface AboutBoxProps {
 const AboutBox: React.SFC<AboutBoxProps> = ({
   customStyle,
   sectionTitle,
-  children
+  children,
 }) => (
   <div
     style={customStyle}
