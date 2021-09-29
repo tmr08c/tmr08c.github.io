@@ -4,9 +4,9 @@ date: "2021-05-30T06:30:34.781Z"
 categories: ["postgresql", "databases"]
 ---
 
-For most of the database performance work I have been involved with, simply looking at the queries has been enough to identify the crux of the issue. However, I've always been tempted by the additional data provided by the `EXPLAIN` function. Unfortunately, I didn't understand the output of these queries and would inevitably go back to other avenues of debugging. I decided to change that and learn how to work with `EXPLAIN`.
+For most of the database performance work I have done, simply looking at the queries has been enough to identify the core issue. However, I've been intrigued by the additional data provided by the `EXPLAIN` function. Unfortunately, I didn't understand the output of these queries and would inevitably go back to other avenues of debugging. I decided to change that and learn how to work with `EXPLAIN`.
 
-While other database management systems provide the `EXPLAIN functionality, it is not SQL standard. I will be focusing on how it works with PostgreSQL since that is what I use most often; you will want to read the documentation for your DBMS of choice if you work with a different system.
+While other database management systems provide `EXPLAIN` functionality, it is not SQL standard. I will be focusing on how it works with PostgreSQL since that is what I use most often; you will want to read the documentation for your DBMS of choice if you work with a different system.
 
 ## What is EXPLAIN
 
@@ -40,25 +40,35 @@ Seq Scan on my_table  (cost=0.00..10.50 rows=50 width=1572)
 
 ## Reading from the Table
 
-Our query plan starts by letting us know how it's going to read the data from a given database table.
+Our query plan indicates which table we will be reading data from and the method used to read said data.
 
 ```sql
 Seq Scan on my_table
 ```
 
-In this example, we will be doing a sequential scan on `my_table`. A sequential scan means each row in the table will be read. It is not the only scanning method. Check out [this post](https://severalnines.com/database-blog/overview-various-scan-methods-postgresql) for more information on how the different table scans work.
+In this example, we will be doing a sequential scan on `my_table`. A sequential scan requires reading each row in the table, one by one. Check out [this post](https://severalnines.com/database-blog/overview-various-scan-methods-postgresql) for more information on the different types of table scans.
 
-## Cost
+## Statistics Tuple
+
+After the scan information, we have a tuple (`()`) of statistics. This includes `cost`, `rows`, and `width`.
+
+```sql
+(cost=0.00..10.50 rows=50 width=1572)
+```
+
+### Cost
+
+First in our tuple is `cost`.
 
 ```sql
 cost=0.00..10.50
 ```
 
-The `cost` is made up of two numbers; `0.00` and `10.50` in this case.
+The `cost` contains two numbers; `0.00` and `10.50` in this case.
 
-### Start-up
+#### Start-up
 
-The first number is the `estimated start-up cost`; this is the cumulative cost _before_ this step in the plan will run. In our example, the start-up cost is `0.00`. When a start-up cost is `0.00`, the step will be run at the beginning of the query execution. Since we only have a single step in our example, it makes sense that it will be run at the beginning of execution.
+The first number is the `estimated start-up cost`; this is the cumulative cost _before_ this step in the plan will run. In our example, the start-up cost is `0.00`. A start-up cost is `0.00` indicates that the step runs at the beginning of the query execution. Since we only have a single step in our example, it makes sense intuitively that it will run at the beginning of execution.
 
 Let's take a look at a slightly more complex query. In this example, our `WHERE` clause is filtering based on a subquery.
 
@@ -114,13 +124,13 @@ and we also have a sequential scan on the `users` table
 
 This is an indication we will start these two steps at the same time and run them in **parallel**.
 
-### Total
+#### Total
 
 The second number in `cost` is the `estimated total cost`, the accumulated cost _after_ the step completes.
 
 Together, the numbers in `cost` give us an idea of when the step will start and when it will end.
 
-### Nesting
+#### Nesting
 
 Let's use what we know about `cost` to explore a more complex query plan.
 
@@ -145,7 +155,7 @@ Through our understanding of the `cost` attribute, we have been able to piece to
 
 You may be wondering about the `Filter` line. Note that it isn't prefixed with `->`; this means that it isn't a separate step in our plan, rather it is a part of our scan on the `users` table. This means that `Seq Scan on users` is still our most nested step.
 
-### How Much?
+#### How Much?
 
 So far, we have covered what the two types of cost represent but not what the values are. While we've talked about the `cost` as a sort of time-like measurement, it isn't a representation of time. The unit used for `cost` is configurable but defaults to representing sequential page fetches. However, the units are arbitrary; what matters is the _relative_ costs. From the [postgreSQL documentation](https://www.postgresql.org/docs/current/runtime-config-query.html#RUNTIME-CONFIG-QUERY-CONSTANTS)
 
@@ -155,15 +165,17 @@ So far, we have covered what the two types of cost represent but not what the va
 
 So while you may want to track the cost in terms of sequential page fetches or base it on the CPU processing a tuple, what seems to be more important is comparing the numbers relative to other parts of the query plan (and other query plans).
 
-## Rows
+### Rows
+
+The next part of a query plan node is `rows`.
 
 ```sql
 Seq Scan on my_table  (cost=0.00..10.50 rows=50 width=1572)
 ```
 
-The next part of a query plan node is `rows`. This is the **estimated** number of rows that will be returned for a given step. Since `EXPLAIN` will not run the query, it cannot give exact numbers. This estimation can be a useful indication of how much data you're dealing with as well as the potential impact of filtering.
+This is the **estimated** number of rows that will be returned for a given step. Since `EXPLAIN` will not run the query, it cannot give exact numbers. This estimation can be a useful indication of how much data you're dealing with as well as the potential impact of filtering.
 
-## Width
+### Width
 
 The final element of the query plan node that we are going to cover is `width`. The `width` is the average width of the rows in bytes. This is more than just the number of columns selected, it gives you an idea of the average amount of data stored in those columns. Combined with `rows`, you can get a rough estimation of the amount of data the database will be pulling into memory for scanning.
 
