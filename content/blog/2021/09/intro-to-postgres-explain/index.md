@@ -1,6 +1,6 @@
 ---
 title: "Intro to Postgre EXPLAIN"
-date: "2021-05-30T06:30:34.781Z"
+date: "2021-09-30T20:05:34.781Z"
 categories: ["postgresql", "databases"]
 ---
 
