@@ -4,15 +4,15 @@ date: "2021-08-06T14:08:13.265Z"
 categories: ["productivity", "work-life balance"]
 ---
 
-I was recently invited to join a weekly "life retro" that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provided an opportunity to discuss how we were working as team, they have been using the retro format to discuss how their lives are going. Specifically, they ask "what went well that we want to keep doing" and "what went poorly that we want to do differently."
+I was recently invited to join a weekly "life retro" that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provided an opportunity to discuss how we were doing building software, they have been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well that we want to keep doing" and "what went poorly that we want to do differently."
 
-During my first session, my answer to what went poorly was I had a feeling of trying to overdo it at work the past week. I was feeling behind where I wanted to be on my initiative at work and I tried to "fix" the problem by spending more of my day working. This meant I took shorter lunch breaks (many of them at my desk) and avoided the periodic short dog walking breaks I get to take throughout the day.
+During my first session, my answer to what went poorly was I had a feeling of trying to overdo it at work the past week. I was feeling behind where I wanted to be on my initiative and I tried to "fix" the problem by working more. Primairily, this meant shorter lunch breaks (many of them at my desk) and fewer midday walks for the dogs.
 
-This is far from the first time I have tried taking this approach and, sadly, even though I am writing myself a blog post to remember to do otherwise, it probably will not be the last. Despite countless reminders to "work smarter not harder," when a deadline is approaching or things are not going according to plan, it is easy to fall into a mindset of throwing more time at the problem. Admittedly, there may be situations when this is necessary and, in short bursts, it can definitely work. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy.
+This is far from the first time I have tried taking the "work more" approach and, sadly, even though I am writing myself a blog post to remember to do otherwise, it probably will not be the last. Despite countless reminders to "work smarter not harder," when a deadline is approaching or things are not going according to plan, it is easy to fall into a mindset of throwing more time at the problem.
 
 ## The Right Amount of Pressure
 
-While I struggle with knowing where the line is, I believe there is some benefit to deadlines. If an occasional looming deadline causes me to cut back on some extraprofessional work activities or work a longer day or two, it can feel more rewarding to hit the goal. The key word here is "occasional." Continuous stress and strain is counterproductive - not only is the quality of work reduced, but the unhappiness I feel about my working environment seems to linger past when my brain has recovered.
+I acknowledge there may be situations when working more is necessary. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy. However, continuous stress and strain is counterproductive and reduces the quality of work. Additionally, I've found continued stress leads to an unhappiness about my working environment that lingers even after working conditions have normalized.
 
 While doing research for this post I cam across the [Yerkes-Dodson law](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) which seems to align with my feeling of there being a "line" between good and bad amounts of pressure.
 
@@ -30,9 +30,9 @@ Often represented as a bell curve, there appears to be peak-levels of arousal (s
     <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" title="Creative Commons Zero, Public Domain Dedication">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=34030428">Link</a>
 </i>
 
-While not scientifically measured, what I realize now is that during the retro I was expressing a feeling of moving beyond the peak of the curve and into suboptimal performance. This is where the second half of the "what went poorly" question and the topic of this post come in come in; what am I going to change?
+While not scientifically measured, what I realize now is that during the retro I was expressing a feeling of moving beyond the peak of the curve and into suboptimal performance. This is where the second half of the "what went poorly" question and the topic of this post come in come in.
 
-## Breaks
+## What am I going to change?
 
 In short, I want to make sure I take breaks. I am generally happy with my break-taking, so, more specifically, I want to make sure I continue to take breaks even when a deadline is near or I struggling with a problem.
 
