@@ -29,7 +29,7 @@ Benchee.run(%{
 With the addition of `Mix.install([:benchee])`, Elixir will fetch and build our benchee dependency on the first run.
 
 ```bash
-› elixir benchmark_example.exs
+› elixir my_test_benchmark.exs
 
 Resolving Hex dependencies...
 Dependency resolution completed:
