@@ -10,7 +10,7 @@ If you are interested in (micro) benchmarking, you may already be familiar with 
 
 Because benchee is a third-party library, we have to install it via [Hex](https://hex.pm/). While benchee is useful enough to include it as a dev-dependency in your project, you may no longer _have_ to with `Mix.install`.
 
-Let's take a look at an example ~stolen~ copied directly from the [benchee README](https://github.com/bencheeorg/benchee#benchee----)
+Let's take a look at an example ~~stolen~~ copied directly from the [benchee README](https://github.com/bencheeorg/benchee#benchee----)
 
 ```elixir
 # my_test_benchmark.exs
