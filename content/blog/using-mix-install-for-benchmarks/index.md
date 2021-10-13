@@ -4,11 +4,11 @@ date: "2021-08-06T14:08:13.265Z"
 categories: ["elixir"]
 ---
 
-In a previous post (ADD LINK), I discussed using [`Mix.install`](https://hexdocs.pm/mix/1.12/Mix.html#install/2) which was released as an experimental feature in Elixir [1.12](https://hexdocs.pm/elixir/1.12/changelog.html). In this post, I want to share a use case I have found for `Mix.install`: benchmarks.
+In a [previous post](2021/05/using-mix-install/), I covered using the [recently released](https://hexdocs.pm/elixir/1.12/changelog.html) function, [`Mix.install`](https://hexdocs.pm/mix/1.12/Mix.html#install/2). In this post, I cover how to use `Mix.install` for benchmarking.
 
 If you are interested in (micro) benchmarking, you may already be familiar with [benchee](https://github.com/bencheeorg/benchee). Benchee provides the ability to collect and compare metrics about speed (via iterations per second) and memory usage for your function calls.
 
-Because benchee is a third-party library, we have to install it via [hex](https://hex.pm/). Benchee is useful enough that it's useful to include it as a dev-dependency in your project, but, with `Mix.install`, you don't _have_ to. This can be useful for non-application specific benchmarks and providing a way to share your entire benchmark script with others.
+Because benchee is a third-party library, we have to install it via [hex](https://hex.pm/). While benchee is useful enough to include it as a dev-dependency in your project, you may no longer _have_ to with `Mix.install`.
 
 Let's take a look at an example ~stolen~ copied directly from the [benchee README](https://github.com/bencheeorg/benchee#benchee----)
 
@@ -28,7 +28,7 @@ Benchee.run(%{
 
 With the addition of `Mix.install([:benchee])`, Elixir will fetch and build our benchee dependency on the first run.
 
-```
+```bash
 › elixir benchmark_example.exs
 
 Resolving Hex dependencies...
@@ -46,9 +46,9 @@ Compiling 39 files (.ex)
 Generated benchee app
 ```
 
-Once this is complete, we will see the normal benchee benchmark results.
+Once this is complete, we will see our benchee's benchmark results.
 
-```
+```bash
 Operating System: macOS
 CPU Information: Intel(R) Core(TM) i7-4771 CPU @ 3.50GHz
 Number of Available Cores: 8
@@ -76,12 +76,8 @@ flat_map           2.50 K
 map.flatten        1.24 K - 2.01x slower +406.05 μs
 ```
 
-Because `Mix.install` caches our dependencies, subsequent runs will not need to rebuild the dependencies and will immediately start the benchmark.
+Because `Mix.install` caches our dependencies, subsequent runs will not need to rebuild the dependencies and immediately start the benchmark.
 
-I began using this strategy when testing alternatives to a function that did not require complex, application-specific set up. I copied and pasted the function I was benchmarking into my benchmark script and started working on writing up alternative implementations. While I could have written my alternative implementations in the existing module and tested them in a separate benchamark script that I ran with `mix run`, I found that by creating a benchmark script that contained the implementations I was able to share the entire benchmark script as a part my pull request when explaining the change I made. This made it easier for coworkers to try to replicate my results.
+We now have a single file benchmark script that we can easily re-run and share with others.
 
-A word of warning: a limitation of this approach is that you do not get your access to your application code like you would when running a script via `mix run`. It may be a bit of a stretch, but this may be a feature and not a bug. By having to pull the core functionality you want to benchmark away from the rest of your application, you may better avoid the noise and side effects that could come as a part of running other parts of your application.
-
-# TODO
-
-- [ ] previous post link
+A word of warning: a limitation of this approach is that you do not get access to your application code like you would when running a script via `mix run`. It may be a bit of a stretch, but this may be a feature and not a bug. By extracting the core functionality you want to benchmark away from the rest of your application, you may better avoid the noise and side effects that could come as a part of running other parts of your application.
