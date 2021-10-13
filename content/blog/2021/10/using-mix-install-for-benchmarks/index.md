@@ -1,10 +1,10 @@
 ---
 title: "Using Mix.install for Benchmarks"
-date: "2021-08-06T14:08:13.265Z"
+date: "2021-10-30T07:08:13.265Z"
 categories: ["elixir"]
 ---
 
-In a [previous post](2021/05/using-mix-install/), I covered using the [recently released](https://hexdocs.pm/elixir/1.12/changelog.html) function, [`Mix.install`](https://hexdocs.pm/mix/1.12/Mix.html#install/2). In this post, I cover how to use `Mix.install` for benchmarking.
+In a [previous post](/2021/05/using-mix-install/), I covered using the [recently released](https://hexdocs.pm/elixir/1.12/changelog.html) function, [`Mix.install`](https://hexdocs.pm/mix/1.12/Mix.html#install/2). In this post, I cover how to use `Mix.install` for benchmarking.
 
 If you are interested in (micro) benchmarking, you may already be familiar with [benchee](https://github.com/bencheeorg/benchee). Benchee provides the ability to collect and compare metrics about speed (via iterations per second) and memory usage for your function calls.
 
