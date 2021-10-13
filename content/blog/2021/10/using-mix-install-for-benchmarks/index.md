@@ -8,7 +8,7 @@ In a [previous post](/2021/05/using-mix-install/), I covered using the [recently
 
 If you are interested in (micro) benchmarking, you may already be familiar with [benchee](https://github.com/bencheeorg/benchee). Benchee provides the ability to collect and compare metrics about speed (via iterations per second) and memory usage for your function calls.
 
-Because benchee is a third-party library, we have to install it via [hex](https://hex.pm/). While benchee is useful enough to include it as a dev-dependency in your project, you may no longer _have_ to with `Mix.install`.
+Because benchee is a third-party library, we have to install it via [Hex](https://hex.pm/). While benchee is useful enough to include it as a dev-dependency in your project, you may no longer _have_ to with `Mix.install`.
 
 Let's take a look at an example ~stolen~ copied directly from the [benchee README](https://github.com/bencheeorg/benchee#benchee----)
 
