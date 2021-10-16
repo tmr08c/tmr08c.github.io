@@ -1,4 +1,10 @@
-Unlike lists, using an empty map in pattern matching does not only match empty lists.
+---
+title: "Pattern Matching Empty Maps with Elixir"
+date: "2021-11-28T07:01:13.265Z"
+categories: ["elixir"]
+---
+
+Unlike lists, using an empty map in pattern matching does not only match empty maps, but will match any size list.
 
 ```ex
 > [] = [1,2,3]
@@ -23,8 +29,6 @@ def my_fun(map) when map == %{}
 ```ex
 def my_fun(map) when map_size(map) == 0
 ```
-
-## Choosing
 
 When deciding which option to use you may follow [@gazler's](https://github.com/Gazler) [practice](https://stackoverflow.com/a/33253290) which is to prefer matching an empty map when that's the only guard you need and using `map_size` when you care about multiple sizes.
 
@@ -57,7 +61,7 @@ Benchee.run(
 
 This script will use [benchee](https://github.com/bencheeorg/benchee) to compare functions with `map_size` and `==` guard clauses on four different size maps.
 
-After a few runs with different times, I found the ten second benchmark revealed that the options were basically eqivalent speed-wise:
+After a few runs with different times, I found the options were basically equivalent speed-wise. Here is a sample result from a ten second benchmark.
 
 ```
 Operating System: macOS
@@ -126,3 +130,11 @@ These calls are both so quick that I would occasionally receive this warning fro
 > Warning: The function you are trying to benchmark is super fast, making measurements more unreliable!
 > This holds especially true for memory measurements.
 > See: https://github.com/PragTob/benchee/wiki/Benchee-Warnings#fast-execution-warning
+
+I suspect that this explain why the results flip-flop between runs.
+
+While I had expected that checking `map_size` would be slower overall and slow with input size, the benchmarks show this not to be the case. If I had read the [documentation for `map_size`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1) I could have saved myself some time.
+
+> This operation happens in constant time.
+
+Since both options appear to be essentially equivalent, I plan to default to using `map_size` since it provides the flexibility to check for more than just empty maps.
