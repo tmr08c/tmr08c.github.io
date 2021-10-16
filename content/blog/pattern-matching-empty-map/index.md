@@ -4,7 +4,7 @@ date: "2021-11-28T07:01:13.265Z"
 categories: ["elixir"]
 ---
 
-Unlike lists, using an empty map in pattern matching does not only match empty maps, but will match any size list.
+Unlike lists, using an empty map in pattern matching does not only match empty maps. Rather, it will match any both empty and populated maps.
 
 ```ex
 > [] = [1,2,3]
@@ -24,7 +24,7 @@ There appear to be two primary options for matching on an empty list.
 def my_fun(map) when map == %{}
 ```
 
-1. You can use [`map_size/1`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1) guard clause and compare it to `0`.
+2. You can use [`map_size/1`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1) guard clause and compare it to `0`.
 
 ```ex
 def my_fun(map) when map_size(map) == 0
