@@ -4,7 +4,7 @@ date: "2021-11-28T07:01:13.265Z"
 categories: ["elixir"]
 ---
 
-Unlike lists, using an empty map in pattern matching does not only match empty maps. Rather, it will match any both empty and populated maps.
+Unlike lists, using an empty map in pattern matching does not only match empty maps; it matches empty and populated maps.
 
 ```ex
 > [] = [1,2,3]
@@ -14,7 +14,7 @@ Unlike lists, using an empty map in pattern matching does not only match empty m
 %{a: 1, b: 2, c: 3}
 ```
 
-This was a bit of a surprise for me when attempting to match an empty list, so I wanted to share how you can pattern match an empty map (aka re-write the answers I found on [StackOverflow](https://stackoverflow.com/questions/33248816/pattern-match-function-against-empty-map)).
+This was a bit of a surprise for me when attempting to match an empty list, so I wanted to share how you can pattern match an empty map (aka re-write the answers I found on [this StackOverflow post](https://stackoverflow.com/questions/33248816/pattern-match-function-against-empty-map)).
 
 There appear to be two primary options for matching on an empty list.
 
@@ -24,13 +24,11 @@ There appear to be two primary options for matching on an empty list.
 def my_fun(map) when map == %{}
 ```
 
-2. You can use [`map_size/1`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1) guard clause and compare it to `0`.
+2. You can use the [`map_size/1`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1) guard clause and compare it to `0`.
 
 ```ex
 def my_fun(map) when map_size(map) == 0
 ```
-
-When deciding which option to use you may follow [@gazler's](https://github.com/Gazler) [practice](https://stackoverflow.com/a/33253290) which is to prefer matching an empty map when that's the only guard you need and using `map_size` when you care about multiple sizes.
 
 I was curious if there was a performance implication to either choice, so I wrote a benchmark script to compare the options.
 
@@ -61,7 +59,7 @@ Benchee.run(
 
 This script will use [benchee](https://github.com/bencheeorg/benchee) to compare functions with `map_size` and `==` guard clauses on four different size maps.
 
-After a few runs with different times, I found the options were basically equivalent speed-wise. Here is a sample result from a ten second benchmark.
+After a few runs with different times, I found the options were equivalent speed-wise. Here is a sample result from a ten-second benchmark.
 
 ```
 Operating System: macOS
@@ -131,9 +129,9 @@ These calls are both so quick that I would occasionally receive this warning fro
 > This holds especially true for memory measurements.
 > See: https://github.com/PragTob/benchee/wiki/Benchee-Warnings#fast-execution-warning
 
-I suspect that this explain why the results flip-flop between runs.
+I suspect that this explains why I would see the results flip-flop between runs.
 
-While I had expected that checking `map_size` would be slower overall and slow with input size, the benchmarks show this not to be the case. If I had read the [documentation for `map_size`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1) I could have saved myself some time.
+I had expected `map_size` would be slower and slow down more as the input size increased, but the benchmarks show otherwise. If I had read the [documentation for `map_size`](https://hexdocs.pm/elixir/1.12/Kernel.html#map_size/1), I could have saved myself some time.
 
 > This operation happens in constant time.
 
