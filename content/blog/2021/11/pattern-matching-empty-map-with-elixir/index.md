@@ -1,6 +1,6 @@
 ---
 title: "Pattern Matching Empty Maps with Elixir"
-date: "2021-11-28T07:01:13.265Z"
+date: "2021-11-30T17:31:13.265Z"
 categories: ["elixir"]
 ---
 
