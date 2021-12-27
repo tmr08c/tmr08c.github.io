@@ -189,16 +189,28 @@ Here are aggregate results:
 | open source                                   | 1     |
 | events                                        | 1     |
 
-### Takeaways - Aggregates
+### Takeaways
+
+I expected the aggregate of the data to be more useful than the individual, but, since I had to go through each record to categorize anyway I realized it was more impactful to read the actual entries. There were few enough entries that this was not a time-consuming task and I was observe trends without having to use my categories. Reading the actual entries also triggered memories of what was going on at the time - from big events (job hunting, the passing of my dog) to small highlights (picking up croissants for breakfast), I got a simple peak into the things that on my mind.
+
+Below are some of my major takeaways.
+
+- Overusing answers
 
 There were a number of go-to items on my list - my partner, being excited about an upcoming weekend (or grateful the past weekend was pleasant), and coffee to name a few. While I am grateful for these things, I am unsure if I am over-using them as easy answers. I suspect there may be value in finding gratitude in a wider variety of things, especially if this means taking more time out of the day to think about what I am grateful for.
 
-These last few years have been extremely difficult for much of the world. They have been especially difficult for those in marginalized group. I am torn by my "life / lucky / fortune" category (and some of the answer in my "ease of life" category). I hope that it is a good thing I am more aware of the fortunes of my life, but it also feels selfish.
+- Professional life
 
-I am lucky to include work on my list.
+I am lucky to include work on my list. While I joined a new team this year, I also had pre-new job entries about being grateful for my job. My switch to a new role was to have the opportunity to work in [Elixir](https://elixir-lang.org/). This is something I have wanted to do for years, so it's no surprise I have entries about being grateful for my new role, getting to work in Elixir, and Elixir (and the ecosystem) in general.
 
-### Takeaways - individual
+Truly, my gratitude goes out not only to everyone that makes Elixir possible, but also to all open source maintainers across languages. Open source software is amazing, but it still seems there is an opportunity to make it more sustainable for maintainers.
 
-I expected the aggregate of the data to be more useful than the individual, but, since I had to go through each record to categorize anyway I realized it was more impactful to read the actual entries.
+- Conflicted gratitude
+
+These last few years have been extremely difficult for much of the world. They have been especially difficult for those in marginalized groups. I am torn by my "life / lucky / fortune" category (and some of the answer in my "ease of life" category); I hope that it is a good thing I am more aware of the fortunes of my life and acknowledge my gratitude towards them, but I can't help but feel bad for others when I think of how lucky I am.
 
 ## Conclusion
+
+Taking time to reflect on the past year felt valuable. Despite taking the time to list what I am grateful for, I don't often think about what that means in the big picture. It had become another item on the TODO list that I simply want to check off. Reviewing the list not only helped me to take a step back and think about the past year, but it has also renewed my faith in the value of continuing this practice going forward.
+
+In addition to the value of reflection, I also found it valuable from a technical perspective. I do not spend nearly enough time attempting to write code for this sort of, one-off task and, when I do, often choose a more known path. Exploring new areas (elsip, Org Element API) and failing to come up with a first-pass solution is a valuable practice in personal-time coding. It was also great to end up with a `sed`-based solution; `sed` is one of those Unix, command-line tools that are useful to have a basic knowledge of.
