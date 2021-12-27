@@ -25,6 +25,7 @@
     "typescript"
   ],
   "dependencies": {
+    "Lisp": "mattn/vscode-lisp",
     "autoprefixer": "^10.3.6",
     "elixir-ls": "elixir-lsp/vscode-elixir-ls",
     "gatsby": "^2.20.2",
