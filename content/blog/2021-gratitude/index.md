@@ -10,7 +10,7 @@ In practice, I rarely look back at my daily entries and have never done any bulk
 
 ## First attempt - `Org Element`
 
-As you may guess from the project name, `org-roam` it is based on the popular Emacs package, [Org Mode](https://orgmode.org/). Org Mode works with `.org` files which use a "highly flexible structured plain text file format." If you are familiar with [markdown](https://daringfireball.net/projects/markdown/) Org formatting should look familiar.
+As you may guess from the project name, `org-roam` it is based on the popular Emacs package, [Org mode](https://orgmode.org/). Org mode works with `.org` files which use a "highly flexible structured plain text file format." If you are familiar with [markdown](https://daringfireball.net/projects/markdown/) Org formatting should look familiar.
 
 Because Org files can be structured (different heading levels, lists, etc.) and my daily files followed a template, I thought I would be able to lean on existing functionality from Org to extract the data I need.
 
@@ -87,7 +87,7 @@ Unfortunately, after a few hours of faking my way through `elisp` writing, I was
                     (print (org-element-contents item))))))))))))
 ```
 
-Not finding a straightforward "extract data from this subtree" function was a bit surprising. Since people do some amazing things with Org Mode, I am going to assume this is a limitation of my familiarity with Org and `elisp` in general.
+Not finding a straightforward "extract data from this subtree" function was a bit surprising. Since people do some amazing things with Org mode, I am going to assume this is a limitation of my familiarity with Org and `elisp` in general.
 
 ## Second Attempt - `sed`
 
