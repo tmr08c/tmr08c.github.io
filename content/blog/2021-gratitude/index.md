@@ -61,7 +61,7 @@ While most Org functions, understandably, expect to be called from within an Org
 
 Unfortunately, after a few hours of faking my way through `elisp` writing, I was unable to get something that worked. I am including my work-in-progress with the hopes an emacs wizard can grace me with some knowledge (or I can use it as a starting point in the future).
 
-```elisp
+```el
 (defun tr/extract-gratitude ()
   "WIP Function to extract gratitude section from org-dailies"
   ; make it so I can run the function using M-x
@@ -194,17 +194,17 @@ I expected the aggregate of the data to be more useful than the individual, but,
 
 Below are some of my major takeaways.
 
-- Overusing answers
+#### Overusing answers
 
 There were a number of go-to items on my list - my partner, being excited about an upcoming weekend (or grateful the past weekend was pleasant), and coffee were my top go-tos. While I am grateful for these things, I think I am over-using them as easy answers. I suspect there may be value in finding gratitude in a wider variety of things over the next year, especially if this means taking more time out of the day to think about what I am grateful for.
 
-- Professional life
+#### Professional life
 
 This year, I took on a new role to have the opportunity to work in [Elixir](https://elixir-lang.org/); something I have wanted to do for years! The result was multiple entries about being grateful for my new role, getting to work in Elixir, and Elixir (and the ecosystem) in general. I also had a few entries about my gratitude towards the recruiters that helped me learn about new opportunities. I know recruiters can sometimes get a bad rap, but I was able to learn about opportunities I would not have heard of otherwise and avoid the résumé inbox black hole. I 100% would not have my current job without the recruiter that I worked with.
 
 My gratitude goes out not only to everyone that makes Elixir possible, but also to all open source maintainers across languages. Open source software is amazing and maintainers are incredible people that often put in countless hours for little to no recognition. I am curious if [GitHub Sponsors](https://github.com/sponsors) is the best way to show proper gratitude for maintainers.
 
-- Conflicted gratitude
+#### Conflicted gratitude
 
 These last few years have been extremely difficult for much of the world. They have been especially difficult for those in marginalized groups. I am torn by my "life / lucky / fortune" category (and some of the answer in my "ease of life" category); I hope that it is a good thing I am more aware of the fortunes of my life and acknowledge my gratitude towards them, but I can't help but think about others that are not as fortunate as I am.
 
