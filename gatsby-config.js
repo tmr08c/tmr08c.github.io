@@ -49,7 +49,12 @@ module.exports = {
                   "body.dark": "Tomorrow Night",
                 },
               },
-              extensions: [`elixir-ls`, `viml`, `vscode-themes/tomorrow`],
+              extensions: [
+                `elixir-ls`,
+                `Lisp`,
+                `viml`,
+                `vscode-themes/tomorrow`,
+              ],
             },
           },
           `gatsby-remark-copy-linked-files`,
