@@ -107,7 +107,7 @@ sed -n -E \
 '/^\*+ Grateful or Excited About/,/\*+/{ s/^[[:digit:]]\.[[:blank:]]*(.*)$/\1/p; }'
 ```
 
-- The `-n` tells `sed` not to echo each line it reads (we will print our matches later).
+- The `-n` flag tells `sed` not to echo each line it reads (we will print our matches later).
 
 - The `-E` flag lets us use extended regular expressions; this doesn't require escaping special characters you may be used to with more modern RegEx engines. In particular, I added it when I started using match groups.
 
@@ -166,11 +166,11 @@ sed -n -E \
 2021-*.org > 2021-gratitude.csv
 ```
 
-After going through a few dozen entries, I began identifying common categories. Recognizing a lot of entries used similar wording, I created a match table that worked with a `LOOKUP` function to categorize many entries automatically.
+After going through a few dozen entries, I began identifying common categories. Recognizing a lot of entries used similar wording, I also created a match table that worked with a `LOOKUP` function to categorize many entries automatically.
 
 ![match-table-screenshot](./match-table.png)
 
-The `LOOKUP` function and existing categories provide a decent starting point. I hand-reviewed each entry, re-categorizing as needed.
+The `LOOKUP` function and existing categories provide a decent starting point. I then hand-reviewed each entry, re-categorizing as needed.
 
 ## Results
 
@@ -234,7 +234,7 @@ As I begin exploring how I can turn my gratitude outwards, I know I also need to
 
 ## Conclusion
 
-Simply reading through my gratitude entries has been valuable. Despite taking the time each day to write what I am grateful for, I don't often think about what that means in the big picture. It has become another item on the to-do list that I just want to check off. Reviewing the list not only helped me to take a step back and think about the past year, but it has also renewed my faith in the value of continuing this practice in the future.
+Despite taking the time each day to write what I am grateful for, I don't often think about what that means in the big picture. It has become another item on the to-do list that I just want to check off. Reviewing the list not only helped me to take a step back and think about the past year, but it has also renewed my faith in the value of continuing this practice in the future.
 
 In addition to the value of reflection, I also found it valuable from a technical perspective. I do not spend nearly enough time attempting to write code for one-off tasks like this and, when I do, I often choose a more known path. Exploring new areas (`elisp`, Org Element API) and failing on my first attempt is a valuable practice in personal-time coding.
 
