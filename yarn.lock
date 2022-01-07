@@ -5697,8 +5697,9 @@ elegant-spinner@^1.0.1:
   integrity sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=
 
 elixir-ls@elixir-lsp/vscode-elixir-ls:
-  version "0.6.5"
-  resolved "https://codeload.github.com/elixir-lsp/vscode-elixir-ls/tar.gz/b8453818f5988554c77d32776f82da6416238bcf"
+  version "0.9.0"
+  uid b9da68a595136a4d233fef791be90b43b5adda36
+  resolved "https://codeload.github.com/elixir-lsp/vscode-elixir-ls/tar.gz/b9da68a595136a4d233fef791be90b43b5adda36"
   dependencies:
     shelljs "^0.8.4"
     vscode-languageclient "^6.1.3"
