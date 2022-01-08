@@ -1,0 +1,482 @@
+# Telemetry
+
+## Intro
+
+The goal of this Livebook is to provide an introduction to working with the [telemetry](https://github.com/beam-telemetry/telemetry) package in Elixir. We will cover the basics of creating and consuming telemetry events as well as how to integrate with something like [Phoenix LiveDashboard](https://github.com/phoenixframework/phoenix_live_dashboard).
+
+## What is Telemetry
+
+From the [documentation](https://hexdocs.pm/telemetry/readme.html):
+
+> Telemetry is a lightweight library for dynamic dispatching of events, 
+> with a focus on metrics and instrumentation.
+
+With `telemetry`, you can generate events and attach data to those events. 
+While this event and data combination could be anything, it's mostly commony used for,
+well, telemetry data; data about your running system. An example of an event could be
+a page request and for data, we may want to attach how how long the request took.
+
+We cam think of this event, data pairing as a tuple of the event name paired
+with a map of related data:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+{:page_request, %{ duration: "250 ms"}}
+```
+
+<!-- livebook:{"break_markdown":true} -->
+
+While the `telemetry` library works similarly to other event generation libraries 
+it is not tied to a specific event or telemetry format. Instead, the focus of the 
+`telemetry` library is to be a level _below_ these format-specific tools.
+
+Rather than
+being tied to a data format or service, `telemetry` aims to provide a BEAM-wide mechanism for 
+creating (and consuming) events. If needed, these events can be consumed and converted to 
+be compliant with the data format for your tool or service of choice. Existing solutions include 
+[`telemetry_metrics_statsd`](https://github.com/beam-telemetry/telemetry_metrics_statsd) and 
+[`telemetry_metrics_prometheus](https://github.com/beam-telemetry/telemetry_metrics_prometheus).
+
+Choosing to be the underlying event generation layer allows library authors to all use `telemetry`
+without having to worry about their users expecting a differnt event format. Instead, library 
+consumers can choose to listen for any events they want to track and, if necessary, convert the 
+events into a format that works with their tool of choice. This choice has resulted in adoption
+across many popular libraries and package such as 
+[Ecto](https://hexdocs.pm/ecto/Ecto.Repo.html#module-telemetry-events),
+[Oban](https://hexdocs.pm/oban/Oban.Telemetry.html),
+[Phoenix](https://hexdocs.pm/phoenix/telemetry.html#phoenix-metrics),
+and [many more](https://hex.pm/packages?search=depends%3Ahexpm%3Atelemetry).
+
+## Setup
+
+With introductions out of the way, let's move on to some examples.
+
+Because `Mix.Install` can only be called once during a script run, we will be installing
+all of our required libraries up front.
+
+To get started, we will install the [`telemetry`](https://hex.pm/packages/telemetry) package.
+We will also install the 
+[`telemetry_metrics`](https://hex.pm/packages/telemetry_metrics)
+package which provides functions for aggregating `telemetry` events into different 
+metrics (e.g., counter, distribution).
+Finally, what would a Livebook demo be without some graphs?! For this, 
+we install `vega_lite` and `kino`.
+
+```elixir
+Mix.install([:telemetry, :telemetry_metrics, :vega_lite, :kino])
+```
+
+## Producing and Consuming Event
+
+There are two main aspects to `telemetry` – producing and consuming events.
+
+To produce an event, we can use 
+[`:telemetry.execute/3`](https://hexdocs.pm/telemetry/telemetry.html#execute/3) which takes
+
+* The `Event Name`, which is made up of a list of atoms (e.g., `[:my, :cool, :event]`).
+* The data, or `Measurements` which are provided via a map (e.g., `%{ duration: 100 }`)
+* And, optionally, a map of `Metadata` which can be used to provide tags or any other useful 
+  context. For Phoenix, this could be [the entire `conn` struct](https://hexdocs.pm/phoenix/telemetry.html#a-phoenix-example)
+  associatd with the given event.
+
+In the case of telemetry, if an event if create and no one is there to listen, it doesn't 
+really _do_ anything.
+
+```elixir
+:telemetry.execute(
+  [:falling, :tree],
+  %{fall_time: 2.72},
+  %{age: 289, type: "oak"}
+)
+```
+
+Evaluating our sample call to `execute` simply returns `:ok`. Our event was emitted, but
+we did not have any listeners around to receieve the event and do anything with it.
+
+To consume an event, we turn to
+[`:telemetry.attach/4`](https://hexdocs.pm/telemetry/telemetry.html#attach/4). The `attach`
+function allows us to attach a function handler to a given event. It's arguments are:
+
+* A `HandlerId` which is expected to be some for of unique identifier. Having a
+  unique `HandlerId` allows us to later [`detach`](https://hexdocs.pm/telemetry/telemetry.html#detach/1)
+  and event if needed. Behind the scenes, `telemetry` uses `ETS` to store and track our
+  event handlers.
+
+* The `EventName` we want to consume and take action on. Just like the `EventName` used
+  when creating an event, this should also be a list of atoms.
+
+* Our `HandlerFunction`, a four-arity function that is given the event we are listening for. 
+  The function receives the `event` in four pieces:
+
+  * `EventName`
+  * `EventMeasurements`
+  * `EventMetadata`
+  * `Config`
+
+  Most of these should be self-explanatory based on the arguments given to `execute/4`. The 
+   only argument that doesn't come from `execute` is `Config`. The `Config` is also the
+   fourth argument to `attach/4` – when attaching to an event, we can optionally pass 
+   in configuration that will be passed into our event handler.
+
+* As mentioned above, our final argument is any `Config` that we may want to pass into
+  our `HandlerFunction`.
+
+## Listening for an event
+
+Rather than having our events go into the void, let's create an event handler
+and and have it listen for the `[:falling, :tree]` event type we emitted before.
+Note: because we already emitted the previous `[:falling, :tree]` event we will **not**
+be able to get access to it with our new event handler. Telemeetry events are ephemeral, 
+so it is important register your event listeners before you start emitting the events you
+are listening for.
+
+For our first `HandlerFunction`, we  will simply log out the arguments we receive.
+
+```elixir
+:telemetry.attach(
+  # unique handler id
+  "my-first-handler",
+  # event name
+  [:falling, :tree],
+  # event handler function
+  fn event, measurements, metadata, config ->
+    IO.puts("My first handler recieved a new event!\n")
+    IO.inspect(event, label: "EventName")
+    IO.inspect(measurements, label: "EventMeasurement")
+    IO.inspect(metadata, label: "EventMetadata")
+    IO.inspect(config, label: "config")
+    IO.puts("\n-------------------------------------\n")
+  end,
+  # config to pass to our event handler
+  my: :config
+)
+```
+
+If you are following along in LiveBook and you executed the above cell for the first time,
+we should see the result of `:ok`. If you end up re-evaluating the cell, you may an 
+error tuple response, `{:error, :already_exists}`. As we mentioned above, our `HandlerID`
+must be unique; re-evaluating the cell attempted to re-register our same ID. If this is the
+case, no need to worry – our handler will already be registered. If you want to see the `:ok`
+response, you will need to reconnect to the LiveBook runtime.
+
+Regardless of whether this was the firs time registering the event handle or not, you 
+will see a warning about our `HandlerFunction` being a local function. The warning
+helpfully explains that using an anonymous function can have performance reasons. 
+For now, we do not need to worry about this, but we will address this in a future example.
+
+Before we emit any events, let's confirm that we properly attached our handler. As noted before,
+`telemetry` uses `ETS` tables to track event handlers. We can look up `telemetry`'s tracking
+table and make sure our `my-first-handler` is properly registered.
+
+```elixir
+:ets.whereis(:telemetry_handler_table)
+```
+
+If you evaluate the cell above, the result should be a single row that contains information
+about our event handler! 🥳
+
+Our handler seems to be registered, but does it actually handle events when we emit them? 
+Let's give it a try.
+
+We will emit an event similar to our previous `[:falling, :tree]` event, but with different
+`Measurements` and `Metadata` to make it clear this is a new event.
+
+```elixir
+:telemetry.execute(
+  [:falling, :tree],
+  %{fall_time: 1.49},
+  %{age: 232, type: "red maple"}
+)
+```
+
+This is the `telemetry` library in a nutshell. We can register
+functions (via `attach`) that can handle events that we emit (via `execute`). 
+That's it!
+
+## Compiled Event Handlers
+
+Before we move on let's make one small change to our `EventHandler` to avoid the warning
+message we were receiving before. Instead of passing in an anonymous function, we will
+pass in a Module.function capture.
+
+```elixir
+defmodule MorePerformantTelemetryHandler do
+  def handle_event(event, measurements, metadata, config) do
+    IO.puts("MorePerformantTelemetryHandler recieved a new event!\n")
+    IO.inspect(event, label: "EventName")
+    IO.inspect(measurements, label: "EventMeasurement")
+    IO.inspect(metadata, label: "EventMetadata")
+    IO.inspect(config, label: "config")
+    IO.puts("\n-------------------------------------\n")
+  end
+end
+
+:ok =
+  :telemetry.attach(
+    # new HandlerID to be unique
+    "more-performant-handler",
+    # we will listen for the same event
+    [:falling, :tree],
+    # use a capture function for our module-defined function above
+    &MorePerformantTelemetryHandler.handle_event/4,
+    # we don't care about any config
+    nil
+  )
+```
+
+After evaluating this cell, we should simply see the `:ok` return with no warning messages
+logged.
+
+Our new handler is listening for the same `[:falling, :tree]` events, so let's emit
+yet another event.
+
+```elixir
+:telemetry.execute(
+  [:falling, :tree],
+  %{fall_time: 0.76},
+  %{age: 812, type: "pine"}
+)
+```
+
+Since we are using the same `EventName`, emitting our most recent event resulted in output 
+from both `my-first-handler` **and** `more-performant-handler`!
+
+While the identifier for our handler is expected to be unique, the event that is is listening 
+for does not have to be. This means we can register multiple handlers to process events in a
+different way – you could have one handler for logging and another that handles sending 
+your data off to a service to be collected if you wanted.
+
+## Listening for Multiple Events
+
+In addition to having support for multiple handlers for a single event, you can also have
+a single handler listen for multiple events via 
+[`attach_many/4`](https://hexdocs.pm/telemetry/telemetry.html#attach_many/4).
+
+Just like `attach/4` covered above, the only difference is instead of a single list for 
+`EventName`, we can now pass in a list of `EventName` lists.
+
+```elixir
+:ok =
+  :telemetry.attach_many(
+    # unique handler id
+    "my-module-handler-2",
+    [
+      [:demo, :event, :count],
+      [:demo, :event, :time]
+    ],
+    &DemoTelemetryHandler.handle_event/4,
+    nil
+  )
+```
+
+```elixir
+:telemetry.execute(
+  [:demo, :event, :count],
+  %{demo_count: 1},
+  %{tag_one: :example, location: :third_example}
+)
+
+:telemetry.execute(
+  [:demo, :event, :first],
+  %{demo_count: 2},
+  %{tag_one: :example, location: :third_example}
+)
+
+:telemetry.execute(
+  [:demo, :event, :time],
+  %{duration: 123.456},
+  %{location: :third_example}
+)
+```
+
+## Telemetry.Metrics
+
+`Telemetry.Metrics` provides a `ConsoleReporter` that is similar to the loger we created above.
+
+```elixir
+Supervisor.start_link(
+  [
+    {Telemetry.Metrics.ConsoleReporter,
+     metrics: [
+       Telemetry.Metrics.last_value([:demo, :telemetry_metrics, :time, :duration]),
+       Telemetry.Metrics.counter([:demo, :telemetry_metrics, :count, :demo_count])
+     ]}
+  ],
+  strategy: :one_for_one
+)
+```
+
+```elixir
+:telemetry.execute(
+  [:demo, :telemetry_metrics, :count],
+  %{demo_count: 2},
+  %{}
+)
+
+:telemetry.execute(
+  [:demo, :telemetry_metrics, :time],
+  %{duration: 123.456},
+  %{location: :third_example}
+)
+```
+
+## LiveDashboard
+
+* LiveDashboard leverages `Telemetry.Metrics`
+* Phoenix apps already have this set up
+* LiveBook is a Phoenix app
+* Cannot add after, but we can send metrics that it's looking for
+
+Event
+
+* Phoenix uses Plug.Telemetry https://github.com/phoenixframework/phoenix/blob/41435470bc414b859497cd03a5b39e08da659368/installer/templates/phx_web/endpoint.ex#L39
+
+<!-- livebook:{"break_markdown":true} -->
+
+Current `LivebookWeb.Telemetry` module (https://github.com/livebook-dev/livebook/blob/main/lib/livebook_web/telemetry.ex)
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+  def metrics do
+    [
+      # Phoenix Metrics
+      summary("phoenix.endpoint.stop.duration",
+        unit: {:native, :millisecond}
+      ),
+      summary("phoenix.router_dispatch.stop.duration",
+        tags: [:route],
+        unit: {:native, :millisecond}
+      ),
+
+      # VM Metrics
+      summary("vm.memory.total", unit: {:byte, :kilobyte}),
+      summary("vm.total_run_queue_lengths.total"),
+      summary("vm.total_run_queue_lengths.cpu"),
+      summary("vm.total_run_queue_lengths.io")
+    ]
+  end
+```
+
+```elixir
+Supervisor.start_link(
+  [
+    {Telemetry.Metrics.ConsoleReporter,
+     metrics: [
+       Telemetry.Metrics.summary("phoenix.endpoint.stop.duration",
+         unit: {:native, :millisecond}
+       )
+     ]}
+  ],
+  strategy: :one_for_one
+)
+```
+
+```elixir
+:telemetry.execute(
+  [:phoenix, :endpoint, :stop],
+  %{duration: 8_897_129_000},
+  %{}
+)
+
+:telemetry.execute(
+  [:phoenix, :endpoint, :stop],
+  %{duration: 8_212_129_000},
+  %{}
+)
+
+:telemetry.execute(
+  [:phoenix, :endpoint, :stop],
+  %{duration: 9_897_129_000},
+  %{}
+)
+```
+
+When running Livebook in standalone mode, it spawns a new Node
+
+```elixir
+[livebook_node] = Node.list(:connected)
+```
+
+```elixir
+[88_971_129, 74_873_619, 85_445_795]
+|> Enum.each(fn duration ->
+  :rpc.call(livebook_node, :telemetry, :execute, [
+    [:phoenix, :endpoint, :stop],
+    %{duration: duration},
+    %{}
+  ])
+
+  Process.sleep(500)
+end)
+```
+
+You should now see some metrics
+
+## Storing Results
+
+```elixir
+defmodule Demo.StorageTelemetryHandler do
+  def handle_event(event, %{count: count}, %{timestamp: timestamp}, agent: agent) do
+    new_event = %{event: event, count: count, timestamp: timestamp}
+
+    Agent.get_and_update(agent, &{&1, [new_event | &1]})
+  end
+end
+```
+
+```elixir
+{:ok, agent} = Agent.start(fn -> [] end)
+```
+
+```elixir
+:ok =
+  :telemetry.attach(
+    # unique handler id
+    "my-storage-telemetry-handler",
+    [:demo, :storage, :event],
+    &Demo.StorageTelemetryHandler.handle_event/4,
+    agent: agent
+  )
+```
+
+```elixir
+:telemetry.execute([:demo, :storage, :event], %{count: 1}, %{timestamp: Time.utc_now()})
+:telemetry.execute([:demo, :storage, :event], %{count: 5}, %{timestamp: Time.utc_now()})
+:telemetry.execute([:demo, :storage, :event], %{count: 3}, %{timestamp: Time.utc_now()})
+```
+
+```elixir
+Agent.get(agent, & &1)
+```
+
+```elixir
+data =
+  Agent.get(agent, & &1)
+  |> Enum.reduce(%{count: [], timestamp: []}, fn %{count: count, timestamp: timestamp}, acc ->
+    %{
+      acc
+      | count: acc[:count] ++ [count],
+        timestamp: acc[:timestamp] ++ [DateTime.to_iso8601(timestamp)]
+    }
+  end)
+```
+
+```elixir
+alias VegaLite, as: Vl
+
+# Initialize the specification, optionally with some top-level properties
+Vl.new(width: 400, height: 400)
+# Specify data source for the graphic using one of the data_from_* functions
+|> Vl.data_from_series(data)
+# Pick a visual mark
+|> Vl.mark(:line)
+# Map data fields to visual properties of the mark, in this case point positions
+|> Vl.encode_field(:x, "timestamp", type: :ordinal)
+|> Vl.encode_field(:y, "count", type: :quantitative)
+```
+
+## Ideas
+
+* [ ] Show the ETS table that registers events?  https://github.com/beam-telemetry/telemetry/blob/v1.0.0/src/telemetry_handler_table.erl)
