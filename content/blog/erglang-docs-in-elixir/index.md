@@ -57,6 +57,8 @@ Returns, for a specified integer N >= 1, a random integer uniformly distributed
 in the value range 1 =< X =< N and updates the state in the process dictionary.
 ```
 
+Unfortunately, at this time, [ElixirLS does not](https://github.com/elixir-lsp/elixir-ls#known-issueslimitations) support Erlang documentation via your LSP plugin. Since [ElixirSense has (at least some) support](https://github.com/elixir-lsp/elixir_sense/pull/132), I suspect this is in our future.
+
 ## Installation
 
 ### Requirements
