@@ -212,17 +212,16 @@ defmodule MorePerformantTelemetryHandler do
   end
 end
 
-:ok =
-  :telemetry.attach(
-    # new HandlerID to be unique
-    "more-performant-handler",
-    # we will listen for the same event
-    [:falling, :tree],
-    # use a capture function for our module-defined function above
-    &MorePerformantTelemetryHandler.handle_event/4,
-    # we don't care about any config
-    nil
-  )
+:telemetry.attach(
+  # new HandlerID to be unique
+  "more-performant-handler",
+  # we will listen for the same event
+  [:falling, :tree],
+  # use a capture function for our module-defined function above
+  &MorePerformantTelemetryHandler.handle_event/4,
+  # we don't care about any config
+  nil
+)
 ```
 
 After evaluating this cell, we should simply see the `:ok` return with no warning messages
@@ -240,54 +239,279 @@ yet another event.
 ```
 
 Since we are using the same `EventName`, emitting our most recent event resulted in output 
-from both `my-first-handler` **and** `more-performant-handler`!
+from both `my-first-handler` **and** `more-performant-handler`.
 
 While the identifier for our handler is expected to be unique, the event that is is listening 
-for does not have to be. This means we can register multiple handlers to process events in a
-different way – you could have one handler for logging and another that handles sending 
-your data off to a service to be collected if you wanted.
+for does not have to be. This means we can register multiple handlers for processing events.
 
 ## Listening for Multiple Events
 
 In addition to having support for multiple handlers for a single event, you can also have
 a single handler listen for multiple events via 
 [`attach_many/4`](https://hexdocs.pm/telemetry/telemetry.html#attach_many/4).
+The API is similar to `attach/4` covered above, but accepts a list of lists for the
+`EventName` argument.
 
-Just like `attach/4` covered above, the only difference is instead of a single list for 
-`EventName`, we can now pass in a list of `EventName` lists.
+We will create a new event handler that processes events with our previously defined
+`MorePerformantTelemetryHandler.handle_event` function, but will listen for new `EvenName`s –
+`[:my_app, :request]` and `[:my_app, :query]`.
 
 ```elixir
-:ok =
-  :telemetry.attach_many(
-    # unique handler id
-    "my-module-handler-2",
-    [
-      [:demo, :event, :count],
-      [:demo, :event, :time]
-    ],
-    &DemoTelemetryHandler.handle_event/4,
-    nil
-  )
+:telemetry.attach_many(
+  # unique handler id
+  "my-app-event-handler",
+  [
+    [:my_app, :request],
+    [:my_app, :query]
+  ],
+  &MorePerformantTelemetryHandler.handle_event/4,
+  nil
+)
+```
+
+We can now emit both types of events.
+
+```elixir
+:telemetry.execute(
+  [:my_app, :request],
+  %{duration: 250},
+  %{route: "/", action: "GET"}
+)
+
+:telemetry.execute(
+  [:my_app, :query],
+  %{duration: 46},
+  %{table: "users"}
+)
+```
+
+With a small change in the arguments it handles `attach_many/4` provides us with a clean
+interface for listening for and processing multiple events in the same manner.
+
+## Storing Results
+
+So far, our event handling has been pretty boring; all we have done is print out the event. 
+Once the event is printed, it's gone. We may be able to scrape our logs to 
+get access to the event data if we wanted, but maybe there are other options.
+
+Instead of printing the event and moving on, let's instead **store** the information from the
+event that we care about.
+
+To do this, we can use an
+[`Agent`](https://hexdocs.pm/elixir/Agent.html), an 
+abstraction built out providing a simpe way to store state. Rather than having our handler
+print out information about the event, we can store the revelant data in our `Agent` process.
+Once in the `Agent`, we can retrieve our past event data as we need.
+
+Please note that, in practice, an `Agent` isn't the best long-term solution for storing
+our event data. Since it stores state
+in a process, in-memory the data would not persiste through crashes and restarts. If you
+want to keep your event data along long-term, you would like want to send it off to a 
+service built around managing this sort of data.
+
+<!-- livebook:{"break_markdown":true} -->
+
+Our new "persisted" telemetry will be faux web request data.
+
+* Our `EventName` will be `[:demo, :request, :complete]`.
+* Our `EventMeasurements` will represent the `duration` a request took.
+* Our `EventMetadata` will include information about the `route` requested 
+  an the `timestamp` at which the request took place.
+
+The resulting `telemetry.excute/3` call will look something like this:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+:telemetry.execute(
+  [:demo, :request, :complete],
+  %{duration: 223}, 
+  %{route: "/", timestamp: DateTime.utc_now()}
+)
+```
+
+<!-- livebook:{"break_markdown":true} -->
+
+Now that we have an idea of what our events will look like, we can define our
+handler function.
+
+The goal of this helper function is to take useful information from the event and store 
+it in an `Agent` to be retreived later.
+
+Our `event` will have useful data split across its measurements and metadata. To make 
+it easier to consume our data later, our handler will combine everything into a single 
+map entry before storing it in the `Agent`.
+
+To get access to the `Agent` we want to use, we can take advantage of the final `config` 
+argument provided by `:telemetry.attach/4`. At attachment-time, we will pass in the `PID`
+of the `Agent` we want to use. Simply passing in the `PID` isn't a robust solution as it
+would not survive the `Agent` being restarted. A more resilient soution would provide a
+way to _look up_ the `Agent` process via something like 
+[`Registry`](https://hexdocs.pm/elixir/Registry.html).
+
+Let's take a look at our handle function below.
+
+```elixir
+defmodule StorageTelemetryHandler do
+  def handle_event(
+        event,
+        %{duration: duration},
+        %{route: route, timestamp: timestamp},
+        agent: agent
+      ) do
+    new_event = %{event: event, duration: duration, route: route, timestamp: timestamp}
+
+    Agent.get_and_update(agent, &{&1, [new_event | &1]})
+  end
+end
+```
+
+Before registering our handler, we will start up the `Agent` process that we will
+be passing in via config.
+
+```elixir
+{:ok, agent} = Agent.start(fn -> [] end)
+```
+
+Now, we can register our handler of `[:demo, :request, :complete]` events with `:telemetry.attach/4`.
+
+```elixir
+:telemetry.attach(
+  "storage-telemetry-handler",
+  [:demo, :request, :complete],
+  &StorageTelemetryHandler.handle_event/4,
+  agent: agent
+)
+```
+
+We can now fire off some `[:demo, :request, :complete]` events.
+
+```elixir
+# I could investigate making this a bit more dynamic and random
+# - Range of Date for a longer stretch
+# - Random duration and route
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 223}, %{
+  route: "/",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 5212}, %{
+  route: "/reports",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 412}, %{
+  route: "/users",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 342}, %{
+  route: "/",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 322}, %{
+  route: "/",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 278}, %{
+  route: "/users",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 302}, %{
+  route: "/users",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 4123}, %{
+  route: "/reports",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 4712}, %{
+  route: "/reports",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 284}, %{
+  route: "/",
+  timestamp: DateTime.utc_now()
+})
+
+:telemetry.execute([:demo, :request, :complete], %{duration: 258}, %{
+  route: "/users",
+  timestamp: DateTime.utc_now()
+})
+```
+
+Our `StorageTelemetryHandler` does not print anything out when it receives a message, so
+creating our above events results in a simple `:ok` response. Instead of looking for output,
+we can check our `Agent`'s state to make sure it has our telemetry.
+
+```elixir
+Agent.get(agent, & &1)
+```
+
+Our above output should reveal a list of our combined telemetry event maps.
+
+<!-- livebook:{"break_markdown":true} -->
+
+For many of us, it can be difficult to get an idea of larger data trends by looking at 
+a large list of data.
+
+To make this easier (and get the chance to have more fun with LiveBook), let's use the 
+[VegaLite Elixir package](https://hexdocs.pm/vega_lite/VegaLite.html) to generate a 
+graph of our data over time.
+
+<!-- livebook:{"break_markdown":true} -->
+
+When storing new data in our `Agent` we were prepending our list of state. Since telemetry 
+data is expected to be emitted in order chronologiclaly, we should expect our list to 
+start with the most recent data and end with the oldest. This would probalby be unexpected
+in time series graph, so we will will want to reverse our data.
+
+Also, our `timestamp` is currently a `DateTime` struct. `VegaLite` doesn't handle this 
+particularlly well, so we will also convert to a format that plays better using 
+`DateTime.to_iso8601`.
+
+```elixir
+# Pick up here – changing to handle new telemetry shape
+data =
+  Agent.get(agent, & &1)
+  # |> Enum.map(fn %{timestamp: timestamp} = data ->
+  #   %{data | timestamp: DateTime.to_iso8601(timestamp)}
+  # end)
+  |> Enum.reverse()
+
+# |> Enum.reduce(
+#   %{duration: [], route: [], timestamp: []},
+#   fn %{duration: duration, route: route, timestamp: timestamp}, acc ->
+#     %{
+#       acc
+#       | duration: acc[:duration] ++ [duration],
+#         route: acc[:route] ++ [route],
+#         timestamp: acc[:timestamp] ++ [DateTime.to_iso8601(timestamp)]
+#     }
+#   end
+# )
 ```
 
 ```elixir
-:telemetry.execute(
-  [:demo, :event, :count],
-  %{demo_count: 1},
-  %{tag_one: :example, location: :third_example}
-)
+alias VegaLite, as: Vl
 
-:telemetry.execute(
-  [:demo, :event, :first],
-  %{demo_count: 2},
-  %{tag_one: :example, location: :third_example}
-)
-
-:telemetry.execute(
-  [:demo, :event, :time],
-  %{duration: 123.456},
-  %{location: :third_example}
-)
+# Initialize the specification, optionally with some top-level properties
+Vl.new(width: 400, height: 400)
+# Specify data source for the graphic using one of the data_from_* functions
+|> Vl.data_from_series(data)
+# Pick a visual mark
+|> Vl.mark(:line)
+# Map data fields to visual properties of the mark, in this case point positions
+|> Vl.encode_field(:x, "timestamp", type: :ordinal)
+|> Vl.encode_field(:y, "duration", type: :quantitative)
+|> Vl.encode_field(:color, "route", type: :nominal)
 ```
 
 ## Telemetry.Metrics
@@ -413,69 +637,6 @@ end)
 ```
 
 You should now see some metrics
-
-## Storing Results
-
-```elixir
-defmodule Demo.StorageTelemetryHandler do
-  def handle_event(event, %{count: count}, %{timestamp: timestamp}, agent: agent) do
-    new_event = %{event: event, count: count, timestamp: timestamp}
-
-    Agent.get_and_update(agent, &{&1, [new_event | &1]})
-  end
-end
-```
-
-```elixir
-{:ok, agent} = Agent.start(fn -> [] end)
-```
-
-```elixir
-:ok =
-  :telemetry.attach(
-    # unique handler id
-    "my-storage-telemetry-handler",
-    [:demo, :storage, :event],
-    &Demo.StorageTelemetryHandler.handle_event/4,
-    agent: agent
-  )
-```
-
-```elixir
-:telemetry.execute([:demo, :storage, :event], %{count: 1}, %{timestamp: Time.utc_now()})
-:telemetry.execute([:demo, :storage, :event], %{count: 5}, %{timestamp: Time.utc_now()})
-:telemetry.execute([:demo, :storage, :event], %{count: 3}, %{timestamp: Time.utc_now()})
-```
-
-```elixir
-Agent.get(agent, & &1)
-```
-
-```elixir
-data =
-  Agent.get(agent, & &1)
-  |> Enum.reduce(%{count: [], timestamp: []}, fn %{count: count, timestamp: timestamp}, acc ->
-    %{
-      acc
-      | count: acc[:count] ++ [count],
-        timestamp: acc[:timestamp] ++ [DateTime.to_iso8601(timestamp)]
-    }
-  end)
-```
-
-```elixir
-alias VegaLite, as: Vl
-
-# Initialize the specification, optionally with some top-level properties
-Vl.new(width: 400, height: 400)
-# Specify data source for the graphic using one of the data_from_* functions
-|> Vl.data_from_series(data)
-# Pick a visual mark
-|> Vl.mark(:line)
-# Map data fields to visual properties of the mark, in this case point positions
-|> Vl.encode_field(:x, "timestamp", type: :ordinal)
-|> Vl.encode_field(:y, "count", type: :quantitative)
-```
 
 ## Ideas
 
