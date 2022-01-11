@@ -468,51 +468,50 @@ graph of our data over time.
 
 <!-- livebook:{"break_markdown":true} -->
 
-When storing new data in our `Agent` we were prepending our list of state. Since telemetry 
-data is expected to be emitted in order chronologiclaly, we should expect our list to 
-start with the most recent data and end with the oldest. This would probalby be unexpected
-in time series graph, so we will will want to reverse our data.
+Before we can pass our `Agent`'s data into, we need to make a few small tweaks.
 
-Also, our `timestamp` is currently a `DateTime` struct. `VegaLite` doesn't handle this 
-particularlly well, so we will also convert to a format that plays better using 
-`DateTime.to_iso8601`.
+1. Our `timestamp` is currently a `DateTime` struct. `VegaLite` doesn't know how to handle
+   this, so we will also convert to a format that plays better using 
+   [`DateTime.to_iso8601`](https://hexdocs.pm/elixir/DateTime.html#to_iso8601/3).
+
+2. When storing new data in our `Agent` we were prepending our list of state. This 
+   results in our data being ordered reverse cronologically. Since telemetry 
+   data is generally expected to be viewed in cronological order, we will reverse
+   the order of our data.
 
 ```elixir
-# Pick up here – changing to handle new telemetry shape
 data =
   Agent.get(agent, & &1)
-  # |> Enum.map(fn %{timestamp: timestamp} = data ->
-  #   %{data | timestamp: DateTime.to_iso8601(timestamp)}
-  # end)
+  |> Enum.map(fn %{timestamp: timestamp} = data ->
+    %{data | timestamp: DateTime.to_iso8601(timestamp)}
+  end)
   |> Enum.reverse()
-
-# |> Enum.reduce(
-#   %{duration: [], route: [], timestamp: []},
-#   fn %{duration: duration, route: route, timestamp: timestamp}, acc ->
-#     %{
-#       acc
-#       | duration: acc[:duration] ++ [duration],
-#         route: acc[:route] ++ [route],
-#         timestamp: acc[:timestamp] ++ [DateTime.to_iso8601(timestamp)]
-#     }
-#   end
-# )
 ```
+
+We can now use the `VegaLite` package to generate our graph 📈 We will be graphing a route's 
+duration over time. To do this we will use a multi-line chart, giving us one line per route.
+
+* We use the [`data_from_values`](https://hexdocs.pm/vega_lite/VegaLite.html#data_from_values/3)
+  function to read in our `data`. This function support working with with a list of maps and 
+  will pick out the keys specify for a given field.
+* We indicate we want a `line` graph with the 
+  [`mark`](https://hexdocs.pm/vega_lite/VegaLite.html#mark/3) function.
+* We choose `timestamp` and `duration` for our `x` and `y` axes respectively
+* Using `encode_field` with the value of `:color`, we are able to to `VegaLite` to use
+  create a multi-line graph different colors for reach `route` value.
 
 ```elixir
 alias VegaLite, as: Vl
 
-# Initialize the specification, optionally with some top-level properties
 Vl.new(width: 400, height: 400)
-# Specify data source for the graphic using one of the data_from_* functions
-|> Vl.data_from_series(data)
-# Pick a visual mark
+|> Vl.data_from_values(data)
 |> Vl.mark(:line)
-# Map data fields to visual properties of the mark, in this case point positions
 |> Vl.encode_field(:x, "timestamp", type: :ordinal)
 |> Vl.encode_field(:y, "duration", type: :quantitative)
 |> Vl.encode_field(:color, "route", type: :nominal)
 ```
+
+With that, we now have a visual representation of our telemetry data.
 
 ## Telemetry.Metrics
 
