@@ -515,6 +515,20 @@ With that, we now have a visual representation of our telemetry data.
 
 ## Telemetry.Metrics
 
+So far we have been focused on emitting and consuming individual events. At some point, 
+there may become too many events for it to be useful to even chart them all. When you
+get to this point, you want to leverage different forms of aggregration to combine your
+events in a reasonable way. Many services and tools will provide you with different ways
+of aggregating your data based on your needs. Rather than using a service, we will 
+be using the
+[`Telemetry.Metrics`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html)
+library. We will also use this library's definitions of `metrics` to help differentiate 
+it with the telemetry events we have been working with so far.
+
+> Metrics are aggregations of Telemetry events with specific name, providing a view of the system's behaviour over time.
+
+<!-- livebook:{"break_markdown":true} -->
+
 `Telemetry.Metrics` provides a `ConsoleReporter` that is similar to the loger we created above.
 
 ```elixir
