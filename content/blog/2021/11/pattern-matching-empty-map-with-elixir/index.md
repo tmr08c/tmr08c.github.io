@@ -4,17 +4,34 @@ date: "2021-11-30T17:31:13.265Z"
 categories: ["elixir"]
 ---
 
-Unlike lists, using an empty map in pattern matching does not only match empty maps; it matches empty and populated maps.
+Unlike with lists, using an empty map in pattern matching matches both empty **and** populated lists.
 
 ```ex
-> [] = [1,2,3]
-** (MatchError) no match of right hand side value: [1, 2, 3]
+> [] = [1]
+** (MatchError) no match of right hand side value: [1]
 
 > %{} = %{a: 1, b: 2, c: 3}
 %{a: 1, b: 2, c: 3}
 ```
 
-This was a bit of a surprise for me when attempting to match an empty list, so I wanted to share how you can pattern match an empty map (aka re-write the answers I found on [this StackOverflow post](https://stackoverflow.com/questions/33248816/pattern-match-function-against-empty-map)).
+This behavior may be unexpected when attempting to define a function clause intended for empty maps.
+
+```ex
+defmodule MapChecker do
+  def empty_check(%{}) do
+    IO.puts("Empty")
+  end
+
+  def empty_check(map) do
+    IO.puts("No empty")
+  end
+end
+
+MapChecker.empty_check(%{a: 1})
+# => "Empty"
+```
+
+This post covers options for how you can pattern match an empty map (aka re-writes the answers I found on [this StackOverflow post](https://stackoverflow.com/questions/33248816/pattern-match-function-against-empty-map)).
 
 There appear to be two primary options for matching on an empty list.
 
