@@ -202,6 +202,7 @@ pass in a Module.function capture.
 
 ```elixir
 defmodule MorePerformantTelemetryHandler do
+  # call out `handle_events` is not a special name; just a function 
   def handle_event(event, measurements, metadata, config) do
     IO.puts("MorePerformantTelemetryHandler recieved a new event!\n")
     IO.inspect(event, label: "EventName")
@@ -243,6 +244,10 @@ from both `my-first-handler` **and** `more-performant-handler`.
 
 While the identifier for our handler is expected to be unique, the event that is is listening 
 for does not have to be. This means we can register multiple handlers for processing events.
+
+## TODO
+
+Show example of detaching anonymous version
 
 ## Listening for Multiple Events
 
@@ -654,3 +659,9 @@ You should now see some metrics
 ## Ideas
 
 * [ ] Show the ETS table that registers events?  https://github.com/beam-telemetry/telemetry/blob/v1.0.0/src/telemetry_handler_table.erl)
+* [ ] Telemetry.Metrics `keep?` (https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#keep_fun/2), not overflowing system, using with different backends
+* [ ] Staring a separte Phoenix server to get events? (https://gist.github.com/teamon/a964dd80bc5c6802e3a8548efdda9cff)
+* [ ] Architecture of telemetry (the library, within your app)
+* [ ] Why telemetry is valuable
+* [ ] Using StatsD reporter, Prometheus
+* [ ] optionally using reports; console reporters
