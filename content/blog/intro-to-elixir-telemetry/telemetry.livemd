@@ -36,7 +36,7 @@ being tied to a data format or service, `telemetry` aims to provide a BEAM-wide 
 creating (and consuming) events. If needed, these events can be consumed and converted to 
 be compliant with the data format for your tool or service of choice. Existing solutions include 
 [`telemetry_metrics_statsd`](https://github.com/beam-telemetry/telemetry_metrics_statsd) and 
-[`telemetry_metrics_prometheus](https://github.com/beam-telemetry/telemetry_metrics_prometheus).
+[`telemetry_metrics_prometheus`](https://github.com/beam-telemetry/telemetry_metrics_prometheus).
 
 Choosing to be the underlying event generation layer allows library authors to all use `telemetry`
 without having to worry about their users expecting a differnt event format. Instead, library 
