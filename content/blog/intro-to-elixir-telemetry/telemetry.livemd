@@ -113,11 +113,10 @@ function allows us to attach a function handler to a given event. It's arguments
   * `EventMeasurements`
   * `EventMetadata`
   * `Config`
-
-  Most of these should be self-explanatory based on the arguments given to `execute/4`. The 
-   only argument that doesn't come from `execute` is `Config`. The `Config` is also the
-   fourth argument to `attach/4` – when attaching to an event, we can optionally pass 
-   in configuration that will be passed into our event handler.
+    Most of these should be self-explanatory based on the arguments given to `execute/4`. The 
+    only argument that doesn't come from `execute` is `Config`. The `Config` is also the
+    fourth argument to `attach/4` – when attaching to an event, we can optionally pass 
+    in configuration that will be passed into our event handler.
 
 * As mentioned above, our final argument is any `Config` that we may want to pass into
   our `HandlerFunction`.
@@ -520,17 +519,45 @@ With that, we now have a visual representation of our telemetry data.
 
 ## Telemetry.Metrics
 
-So far we have been focused on emitting and consuming individual events. At some point, 
-there may become too many events for it to be useful to even chart them all. When you
-get to this point, you want to leverage different forms of aggregration to combine your
-events in a reasonable way. Many services and tools will provide you with different ways
-of aggregating your data based on your needs. Rather than using a service, we will 
-be using the
-[`Telemetry.Metrics`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html)
-library. We will also use this library's definitions of `metrics` to help differentiate 
-it with the telemetry events we have been working with so far.
+Thus far we have been focused on emitting and consuming specific event types. 
+As an example, our `StorageTelemetryHandler.handle_event` function pattern-matches on expected 
+measurements and metadata.
 
-> Metrics are aggregations of Telemetry events with specific name, providing a view of the system's behaviour over time.
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+def handle_event(
+  event,
+  %{duration: duration},
+  %{route: route, timestamp: timestamp},
+  agent: agent
+) 
+```
+
+This is great for understanding how things work, but isn't particularly flexible. If we 
+wanted to emit and store other telemetry events, we would likely not match on the specific
+`handle_event` clause that we currently have and need to define (a) new one(s).
+
+This is where a library like 
+[`Telemetry.Metrics`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html)
+comes into play. `Telemetry.Metrics` add standardization for extracting metrics from 
+telemetry events.
+
+So far we have talked about events, measurements, and metrics. In some cases, these may
+feel like they could be used interchangeably. Before we move on, let's make understand
+how they differ.
+
+`events` are what the create/emit with the `telemetry` library. `events` have `measurements` 
+(and `metadata`). `measurements` can be set by the emitter, but, defining a word with the 
+word itself, `measurements`, _tend_ to include data related to some measurment for the
+event (e.g., `duration` of an event for a request, `size` for an event related to system
+memeory usage). To define `metrics`, we will turn to the `Telemetry.Metrics` documentation:
+
+> Metrics are aggregations of Telemetry events with specific name, 
+> providing a view of the system's behaviour over time.
+
+`metrics` are an aggregation of `events`, and, generally, of a particular `measurement` of
+the `events`.
 
 <!-- livebook:{"break_markdown":true} -->
 
