@@ -547,17 +547,45 @@ So far we have talked about events, measurements, and metrics. In some cases, th
 feel like they could be used interchangeably. Before we move on, let's make understand
 how they differ.
 
-`events` are what the create/emit with the `telemetry` library. `events` have `measurements` 
-(and `metadata`). `measurements` can be set by the emitter, but, defining a word with the 
-word itself, `measurements`, _tend_ to include data related to some measurment for the
-event (e.g., `duration` of an event for a request, `size` for an event related to system
-memeory usage). To define `metrics`, we will turn to the `Telemetry.Metrics` documentation:
+* `events` are what the create/emit with the `telemetry` library.
+* `events` have `measurements` (and `metadata`).
+* `measurements` can be set by the emitter, but, defining a word with the 
+  word itself, `measurements`, _tend_ to include data related to some measurment for the
+  event (e.g., `duration` of an event for a request, `size` for an event related to system
+  memeory usage).
+
+To define `metrics`, we will turn to the `Telemetry.Metrics` documentation:
 
 > Metrics are aggregations of Telemetry events with specific name, 
 > providing a view of the system's behaviour over time.
 
 `metrics` are an aggregation of `events`, and, generally, of a particular `measurement` of
 the `events`.
+
+The `Telemetry.Metrics` library provides an API for describing the metrics you want to extract
+from your events. The API provides five different aggregation types:
+
+1. [`counter`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#counter/2) –
+   count the number of events. Counters increase by one for reach event, regardless of 
+   value of the event's measurement.
+2. [`distribution`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#distribution/2) –
+   groups and buckets the data to create a histogram.
+3. [`last_value`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#last_value/2) –
+   always return the value of the measurement from the most recent event.
+4. [`sum`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#sum/2) –
+   tracks the running total of the specified measurement across events.
+5. [`summary`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#summary/2) –
+   provides multiple statistics (e.g., `min`, `max`, `mean`),
+
+One important thing to note is that `Telemetry.Metrics` does **not actually
+do any of the aggregation**. Instead, these functions provide `Struct`s that can be relied
+upon when implementing a 
+[reporter](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#module-reporters).
+
+From the projct's 
+[rationale](https://hexdocs.pm/telemetry_metrics/rationale.html#content):
+
+> unlike most of the libraries available on the BEAM, it doesn't aggregate metrics itself, it merely defines what users should expect when using the reporters.
 
 <!-- livebook:{"break_markdown":true} -->
 
