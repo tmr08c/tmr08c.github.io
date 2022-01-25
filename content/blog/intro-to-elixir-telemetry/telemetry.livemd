@@ -578,14 +578,24 @@ from your events. The API provides five different aggregation types:
    provides multiple statistics (e.g., `min`, `max`, `mean`),
 
 One important thing to note is that `Telemetry.Metrics` does **not actually
-do any of the aggregation**. Instead, these functions provide `Struct`s that can be relied
-upon when implementing a 
-[reporter](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#module-reporters).
-
-From the projct's 
+do any of the aggregation**. From the projct's 
 [rationale](https://hexdocs.pm/telemetry_metrics/rationale.html#content):
 
 > unlike most of the libraries available on the BEAM, it doesn't aggregate metrics itself, it merely defines what users should expect when using the reporters.
+
+Instead, the library 
+[provides `Struct`s](https://github.com/beam-telemetry/telemetry_metrics/blob/8b8ce6a467dd87b6f9c1f4b5e45e93cb70f41788/mix.exs#L58-L64)
+that can be relied upon when implementing a 
+[reporter](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#module-reporters).
+Again, from the project's rationale:
+
+> If Telemetry.Metrics would aggregate metrics, the way those aggregations work would be imposed on the system where the metrics are published to. For example, counters in StatsD are reset on every flush and can be decremented, whereas counters in Prometheus are monotonically increasing. Telemetry.Metrics doesn't focus on those details - instead, it describes what the end user, operator, expects to see when using the metric of particular type.
+
+`Telemetry.Metrics` provides the API and structure to pass metrics along to existing systems 
+which are purpose built for metric collection and aggregation. Not only does this design
+choice prevent the need to re-implement highly performant aggregation logic, but it also
+allows you to avoid performance issues by keeping this aggregation logic out of your 
+application.
 
 <!-- livebook:{"break_markdown":true} -->
 
