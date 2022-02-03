@@ -519,8 +519,8 @@ With that, we now have a visual representation of our telemetry data.
 
 ## Telemetry.Metrics
 
-Thus far we have been focused on emitting and consuming specific event types. 
-As an example, our `StorageTelemetryHandler.handle_event` function pattern-matches on expected 
+So far we have been focused on emitting and consuming specific event types. 
+For example, our `StorageTelemetryHandler.handle_event` function pattern-matches on expected 
 measurements and metadata.
 
 <!-- livebook:{"force_markdown":true} -->
@@ -535,7 +535,8 @@ def handle_event(
 ```
 
 This is great for understanding how things work, but isn't particularly flexible. If we 
-wanted to emit and store other telemetry events, we would likely not match on the specific
+wanted to use our `StorageTelemetryHandler` to store other telemetry events,
+we would likely not match on the specific
 `handle_event` clause that we currently have and need to define (a) new one(s).
 
 This is where a library like 
@@ -543,11 +544,12 @@ This is where a library like
 comes into play. `Telemetry.Metrics` add standardization for extracting metrics from 
 telemetry events.
 
-So far we have talked about events, measurements, and metrics. In some cases, these may
+Up until this point, we have been working with events and measurements.
+We are now introducing the term metrics. In some cases, these may
 feel like they could be used interchangeably. Before we move on, let's make understand
 how they differ.
 
-* `events` are what the create/emit with the `telemetry` library.
+* `events` are what we create/emit with the `telemetry` library.
 * `events` have `measurements` (and `metadata`).
 * `measurements` can be set by the emitter, but, defining a word with the 
   word itself, `measurements`, _tend_ to include data related to some measurment for the
@@ -596,6 +598,12 @@ which are purpose built for metric collection and aggregation. Not only does thi
 choice prevent the need to re-implement highly performant aggregation logic, but it also
 allows you to avoid performance issues by keeping this aggregation logic out of your 
 application.
+
+### Next Steps
+
+* include links to sample reporters that work with different platforms
+* use the console reporter to different events and metrics for them
+* explore creating a custom reporter
 
 <!-- livebook:{"break_markdown":true} -->
 
