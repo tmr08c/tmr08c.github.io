@@ -521,7 +521,7 @@ With that, we now have a visual representation of our telemetry data.
 
 So far we have been focused on emitting and consuming specific event types. 
 For example, our `StorageTelemetryHandler.handle_event` function pattern-matches on expected 
-measurements and metadata.
+measurements (`duration`) and metadata (`route`, `timestamp`).
 
 <!-- livebook:{"force_markdown":true} -->
 
@@ -534,7 +534,8 @@ def handle_event(
 ) 
 ```
 
-This is great for understanding how things work, but isn't particularly flexible. If we 
+This exact matching is helpeful understanding how things work, but isn't
+particularly flexible. If we 
 wanted to use our `StorageTelemetryHandler` to store other telemetry events,
 we would likely not match on the specific
 `handle_event` clause that we currently have and need to define (a) new one(s).
@@ -551,7 +552,7 @@ how they differ.
 
 * `events` are what we create/emit with the `telemetry` library.
 * `events` have `measurements` (and `metadata`).
-* `measurements` can be set by the emitter, but, defining a word with the 
+* `measurements` are data included in our event. Defining a word with the 
   word itself, `measurements`, _tend_ to include data related to some measurment for the
   event (e.g., `duration` of an event for a request, `size` for an event related to system
   memeory usage).
@@ -565,7 +566,8 @@ To define `metrics`, we will turn to the `Telemetry.Metrics` documentation:
 the `events`.
 
 The `Telemetry.Metrics` library provides an API for describing the metrics you want to extract
-from your events. The API provides five different aggregation types:
+from your events (i.e., how you want to aggregate your measurements).
+The API provides five different aggregation types:
 
 1. [`counter`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#counter/2) –
    count the number of events. Counters increase by one for reach event, regardless of 
@@ -598,6 +600,78 @@ which are purpose built for metric collection and aggregation. Not only does thi
 choice prevent the need to re-implement highly performant aggregation logic, but it also
 allows you to avoid performance issues by keeping this aggregation logic out of your 
 application.
+
+In practice, this means you will often reach for a libary built ontop of `Telemetry.Metrics`, 
+one that is built to work with your particular metrics collection. Two popular example are
+[`TelemetryMetricsStatsd`](https://hexdocs.pm/telemetry_metrics_statsd/TelemetryMetricsStatsd.html) 
+and [`TelemetryMetricsPrometheus.Core`](https://hexdocs.pm/telemetry_metrics_prometheus_core/TelemetryMetricsPrometheus.Core.html),
+both maintained by the [`beam-telemetry` org on GitHub](https://github.com/beam-telemetry).
+
+Despite these services working differently (with StatsD you push metrics to a StatsD collector
+while Promethesus will periodically pull data from your application endpoint), by building 
+ontop of the `Telemetry.Metrics` abstraction you do not have to think about these differences 
+when setting up your metric collection. With both options, you use the `telemetry` library 
+to generate your events and a wrapper around the `Telemetry.Metrics` API to set up how you 
+want to covert the events in to metrics.
+
+To see just how similar set up is, let's take a look at the set up examples from both projects.
+
+**TelemetryMetricsPrometheus.Core**
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+def start(_type, _args) do
+  # List all child processes to be supervised
+  children = [
+    {TelemetryMetricsPrometheus.Core, [
+      metrics: [
+        counter("http.request.count"),
+        sum("http.request.payload_size", unit: :byte),
+        sum("websocket.connection.count", reporter_options: [prometheus_type: :gauge]),
+        last_value("vm.memory.total", unit: :byte)
+      ]
+    ]}
+  ]
+
+  opts = [strategy: :one_for_one, name: ExampleApp.Supervisor]
+  Supervisor.start_link(children, opts)
+end
+```
+
+and **TelemetryMetricsStatsd**
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+import Telemetry.Metrics
+
+TelemetryMetricsStatsd.start_link(
+  metrics: [
+    counter("http.request.count"),
+    sum("http.request.payload_size"),
+    last_value("vm.memory.total")
+  ]
+)
+```
+
+Most of the difference is from `TelemetryMetricsPrometheus.Core` using an example where they
+leverage the supervision tree and `TelemetryMetricsStatsd` showing a more basic `start_link`.
+
+The libraries are able to provide additional configuration to better suit their target system
+(you may have noticed the `prometheus_type` argument in our Prometheus example), but the core
+is the same. Metric libraries no longer need to implement every part of creating metrics (an API
+for creating events, an API for which events to listen to and send off, etc.). 
+The power comes from the abstractions defined by `Telemetry.Metrics`, specifically the 
+ability to process the events from `Telemetry.Metrics` through the concept of [reporters](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#module-reporters).
+The documentation summaries this nicely:
+
+> Reporters take metric definitions as an input, subscribe to relevant events and aggregate data when the events are emitted. Reporters may push metrics to StatsD, some time-series database, or exposing a HTTP endpoint for Prometheus to scrape. In a nutshell, `Telemetry.Metrics` defines only how metrics of particular type should behave and reporters provide the actual implementation for these aggregations.
+
+When first encountering `Telemetry.Metrics`, it may be off-putting trying to understand what it 
+actually _does_. Unlike many libraries you may pull into your application, `Telemetry.Metrics`
+is more akin to a specification than directly providing you with metrics (though it can do that
+too!).
 
 ### Next Steps
 
