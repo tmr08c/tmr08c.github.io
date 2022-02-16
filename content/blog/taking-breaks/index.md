@@ -6,19 +6,19 @@ categories: ["productivity", "work-life balance"]
 
 I was recently invited to join a weekly "life retro" that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provided an opportunity to discuss how we were doing building software, they have been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well that we want to keep doing" and "what went poorly that we want to do differently."
 
-During my first session, my answer to what went poorly was I had a feeling of trying to overdo it at work the past week. I was feeling behind where I wanted to be on my initiative and I tried to "fix" the problem by working more. Primairily, this meant shorter lunch breaks (many of them at my desk) and fewer midday walks for the dogs.
+During my first session, my answer to what went poorly was that I was feeling behind on my work tasks and I tried to "fix" the problem by working more. This meant shorter lunch breaks (many of them at my desk) and fewer walks for the dogs.
 
 This is far from the first time I have tried taking the "work more" approach and, sadly, even though I am writing myself a blog post to remember to do otherwise, it probably will not be the last. Despite countless reminders to "work smarter not harder," when a deadline is approaching or things are not going according to plan, it is easy to fall into a mindset of throwing more time at the problem.
 
 ## The Right Amount of Pressure
 
-I acknowledge there may be situations when working more is necessary. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy. However, continuous stress and strain is counterproductive and reduces the quality of work. Additionally, I've found continued stress leads to an unhappiness about my working environment that lingers even after working conditions have normalized.
+I acknowledge there may be situations when working more is necessary. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy. However, continuous stress and strain are counterproductive and reduce the quality of work. Additionally, I've found that continued stress leads to unhappiness about my working environment that lingers even after working conditions have normalized.
 
-While doing research for this post I cam across the [Yerkes-Dodson law](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) which seems to align with my feeling of there being a "line" between good and bad amounts of pressure.
+While doing research for this post I came across the [Yerkes-Dodson law](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) which seems to align with my feeling of there being a "line" between good and bad amounts of pressure.
 
 > The law dictates that performance increases with physiological or mental arousal, but only up to a point. When levels of arousal become too high, performance decreases.
 
-Often represented as a bell curve, there appears to be peak-levels of arousal (stress, pressure, excitement) beyond which your performance will decrease.
+Often represented as a bell curve, there appears to be a peak level of arousal (stress, pressure, excitement) beyond which your performance will decrease.
 
 <a href="https://commons.wikimedia.org/wiki/File:HebbianYerkesDodson.svg#/media/File:HebbianYerkesDodson.svg">
     <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/HebbianYerkesDodson.svg" alt="HebbianYerkesDodson.svg" height="435" width="765">
@@ -30,7 +30,7 @@ Often represented as a bell curve, there appears to be peak-levels of arousal (s
     <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" title="Creative Commons Zero, Public Domain Dedication">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=34030428">Link</a>
 </i>
 
-While not scientifically measured, what I realize now is that during the retro I was expressing a feeling of moving beyond the peak of the curve and into suboptimal performance. This is where the second half of the "what went poorly" question and the topic of this post come in come in.
+While not scientifically measured, what I realize now is that during the retro I was expressing a feeling of moving beyond the peak of the curve and into suboptimal performance. This is where the second half of the "what went poorly" question (and the topic of this post) comes in.
 
 ## What am I going to change?
 
@@ -42,31 +42,33 @@ To start, it can be useful to identify what a break is. To do this, I will turn 
 
 If you read the post about deep breaks, you may notice that it is less about what a deep break _is_ and more about what it _isn't_. The goal of this style of break is to avoid switching to tasks that will leave [attention residue](https://www.calnewport.com/blog/2016/09/06/a-productivity-lesson-from-a-classic-arcade-game/). Attention residue occurs when switching between tasks, especially cognitively demanding tasks. When you move your attention to a task some "residue" seems to stick around in your brain and make fully re-engaging with the first task more difficult, reducing your output.
 
-To avoid attention residue when taking a break, you want to avoid tasks that will capture and keep your brain's attention away from what you are working on. A trap I personally fall into is the "quick" check of my email inbox or chat notifications. While I may spend less than five minutes scanning my inbox, there is a high probability of there being at least one email that will gnaw at the back of my mind when I am resuming my original work.
+To avoid attention residue when taking a break, you want to avoid tasks that will capture and keep your brain's attention away from what you are working on. A common trap for me is the "quick" check of my email inbox or chat notifications. While I may spend less than five minutes scanning my inbox, there is a high probability of there being at least one email that my attention will linger on when I switch back to my original work.
 
-If you are already worried about getting enough work done, you may feel hamstrung by the idea of removing work-related tasks from your "break" time. While it may feel counterproductive, you should find this single-tasking strategy allows you to [produce better work, often at a faster rate](https://blog.rescuetime.com/single-tasking/). Remember, the goal is not to take a break from one task and work on another. Rather, the goal is to take a break away from work to come back to your original task with a renewed vigor.
+If you are already worried about getting enough work done, you may feel hamstrung by the idea of removing work-related tasks from your "break" time. While it may feel counterproductive, you should find this single-tasking strategy allows you to [produce better work, often at a faster rate](https://blog.rescuetime.com/single-tasking/). Remember, the goal is not to take a break from one task and work on another. Rather, the goal is to take a break away from work to come back to your original task with renewed vigor.
 
 ### ...then what _is_ in a break?
 
-When thinking about what to do during a break, we can turn to the [dieting advice](https://www.washingtonpost.com/lifestyle/food/to-lose-weight-dont-just-avoid-temptation-remove-it/2018/10/26/eeb48238-d87f-11e8-a10f-b51546b10756_story.html): "don't resist temptation, remove it." Knowing that we want to avoid context switching during our break, we should remove the work distractions brought on by our computer and step away. Once you are away from your computer there is a lot you can do, including nothing. It is perfectly valid to just sit in a chair and stare off for ten minutes.
+When thinking about what to do during a break, we can turn to the popular [dieting advice](https://www.washingtonpost.com/lifestyle/food/to-lose-weight-dont-just-avoid-temptation-remove-it/2018/10/26/eeb48238-d87f-11e8-a10f-b51546b10756_story.html): "don't resist temptation, remove it." Knowing that we want to avoid context switching during our break, we should remove the work distractions brought on by our computer and step away. Once you are away from your computer there is a lot you can do, including nothing. It is perfectly valid to just sit in a chair and stare off for ten minutes.
 
-Since shifting to remote work, I have found a number of go-to household tasks that fit well into a ten to fifteen minute break such as cleaning dishes or starting a load of laundry. These small household tasks work well because they don't shift my deep work attention away to another hard problem, I don't really enjoy doing them so I'm not going take more time than necessary, and they contribute to the [positive psychological effects of cleanliness and organization](https://www.psychologytoday.com/us/blog/the-truisms-wellness/201607/the-powerful-psychology-behind-cleanliness).
+Since shifting to remote work, I have found simple household tasks such as cleaning dishes or starting a load of laundry to be useful break activities. These small household tasks work well because they don't shift my deep work attention away to another hard problem, I don't enjoy doing them so I'm not going to take more time than necessary, and they contribute to the [positive psychological effects of cleanliness and organization](https://www.psychologytoday.com/us/blog/the-truisms-wellness/201607/the-powerful-psychology-behind-cleanliness).
 
 Regardless of where I am working, my favorite of all of the break-time activities is getting outside and walking. Walking has [many benefits](https://www.hustleescape.com/productivity-benefits-of-walking/) and spending as little as [five minutes in nature can improve self-esteem and mood](https://www.bbc.com/worklife/article/20190304-why-walking-makes-you-a-better-worker), so it's not surprising I am happier when my day includes a walk.
 
 ### Making Time
 
-If you are now bought into the idea of taking breaks and have some ideas of what you want to do on the break, we now come to the my retrospective goal: how do we keep up our break-taking habit, even (and especially) in times of stress?
+If you are now bought into the idea of taking breaks and have some ideas of what you want to do on the break, we now come to my retrospective goal: how do we keep up our break-taking habit, even (and especially) in times of stress?
 
 #### Understand the benefits
 
-For some people, knowing the benefits of their actions (or intended actions) can help them commit to their practices. When you see positive effects shared in the resources above, it should begin to feel counterproductive to _not_ take a break. Try to sow the seeds of these benefits into your mind as you look to establish a break time regimen. If you [_Start with Why_](https://en.wikipedia.org/wiki/Start_with_Why), you may find an increased ability to stick to your goals.
-
-Anecdotally, since beginning this post and reading the break-related research I have felt more secure in my need to take breaks which has reinforced the habit. I did slip when our next deadline week approached, but, rather than skipping a break altogether, I would decide to shorten it which is a step in the right direction.
+For some people, knowing the benefits of their actions (or intended actions) can help them commit to their practices. When you see the positive effects shared in the resources above, it should begin to feel counterproductive _not_ to take breaks. Try to sow the seeds of these benefits into your mind as you look to establish a break-time regimen. If you [_Start with Why_](https://en.wikipedia.org/wiki/Start_with_Why), you may find an increased ability to stick to your goals.
 
 #### Implementation Intention
 
-[Implementation intention](https://jamesclear.com/implementation-intentions) is the idea of planning an action (an intention) at a particular time or during a particular situation (the implementation). In the linked post, James Clear suggests using the template
+[Implementation intention](https://jamesclear.com/implementation-intentions) is the idea of planning an action (an intention) for a particular time or during a particular situation (the implementation). This concept has [proven](https://www.sciencedirect.com/science/article/abs/pii/S0065260106380021) to be effective across multiple domains:
+
+> Findings from 94 independent tests showed that implementation intentions had a positive effect of medium‐to‐large magnitude (d = .65) on goal attainment.
+
+In the linked post, [James Clear](https://jamesclear.com/about) suggests using the template
 
 ```
 I will [BEHAVIOR] at [TIME] in [LOCATION]
@@ -83,20 +85,16 @@ end
 We can use this template to plan when we want to take a daily break. As an example,
 
 ```
-I will [take a 15 minute walking break] at [12:30] in [my neighborhood]"
+I will [take a 15-minute walking break] at [12:30] in [my neighborhood]"
 ```
 
-Being specific is a key aspect to this practice. From the article,
+Being specific is a key aspect of this practice. From the article,
 
 > Many people think they lack motivation when what they really lack is clarity. It is not always obvious when and where to take action. (...) When the moment of action occurs, there is no need to make a decision. Simply follow your predetermined plan.
 
-This impact of implementation intentions has proven out in [research](https://www.sciencedirect.com/science/article/abs/pii/S0065260106380021) across multiple domains:
-
-> Findings from 94 independent tests showed that implementation intentions had a positive effect of medium‐to‐large magnitude (d = .65) on goal attainment.
-
 ##### Habit Stacking
 
-A special form of implementation intention is [habit stacking](https://jamesclear.com/habit-stacking). Habit stacking uses the idea of specifying your intention, but ties the _when_ aspect to an existing habit.
+A special form of implementation intention is [habit stacking](https://jamesclear.com/habit-stacking). Habit stacking builds on the idea of specifying your intention but ties the "when" aspect to an existing habit.
 
 [The Pomodoro&reg; Technique](https://francescocirillo.com/pages/pomodoro-technique) is a perfect example of this strategy. The general algorithm for the technique is:
 
@@ -104,10 +102,11 @@ A special form of implementation intention is [habit stacking](https://jamesclea
 1. After I choose some work, I will set a timer
 1. After I set a timer, I will start working
 1. After the timer goes off, I will take a break
+1. Repeat
 
 Rather than determining an exact time for your work or break, you base your actions on the previous step you took (with the helpful guidance of a timer).
 
-While not a habit in the way we normally talk about them, meetings can also provide anchors for habit stacking. Consider the following, "after I am done with stand up, I will take a 15 minute walking break." I like tying activities to meetings because I know I will already have context switched out of my coding project for the day. Breaking after a meeting can help clear out some of the attention residue as I begin getting into the problem headspace.
+While not a habit in the way we normally talk about them, I find meetings are excellent anchors for habit stacking. Consider the following, "after I am done with stand up, I will take a 15-minute walking break." I like tying activities to meetings because I know I will already have context switched away from my previous work. Breaking after a meeting can help clear out the attention residue built up during the meeting and reset your brain for other work.
 
 ##### Time-block Planning
 
@@ -117,9 +116,9 @@ Time-block planning leverages the psychological effects of implementation intent
 
 One intention I have been trying to set for myself is a full, mid-day lunch break. Taking a break in the middle of the day can be difficult to time just right with habit stacking. This is where I have found time-block planning to shine. Knowing I plan to stop at a certain time will impact the decisions I make as the time draws nearer. Some days, this may mean I don't start a new task and break early and other days it could mean I move my break back to let me keep up with my flow state. Despite sometimes rearranging my schedule, I have found that I am still more likely to take a full lunch break.
 
-You don't have to go full time-block planning to set an intention to take a regular lunch break. Thoughout my career I have come across many people that have a recurring lunchtime break on their work calendar; this provides the same intention settings and has the added bonus or preventing others from scheduling during your allotted break time.
+You don't have to dive into time-block planning fully to set an intention to take a regular lunch break. A simpler starting point is to schedule a recurring lunchtime break on your work calendar; this applies the foundations of intention setting and has the bonus effect of preventing others from scheduling during your allotted break time.
 
-# Conclusion
+## Conclusion
 
 Finding balance is difficult. It can be even more difficult on a day-to-day basis when you are focused on getting your work done.
 
