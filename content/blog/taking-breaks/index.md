@@ -4,17 +4,17 @@ date: "2021-08-06T14:08:13.265Z"
 categories: ["productivity", "work-life balance"]
 ---
 
-I was recently invited to join a weekly "life retro" that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provided an opportunity to discuss how we were doing building software, they have been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well that we want to keep doing" and "what went poorly that we want to do differently."
+I recently joined a weekly "life retro" group that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provided an opportunity to discuss how we are doing building software, they have been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well, that we want to keep doing" and "what went poorly, that we want to do differently."
 
-During my first session, my answer to what went poorly was that I was feeling behind on my work tasks and I tried to "fix" the problem by working more. This meant shorter lunch breaks (many of them at my desk) and fewer walks for the dogs.
+During my first session, my answer to what went poorly was a feeling of being behind on my work tasks. More accurately, it was my reaction to this feeling. I tried to "fix" the problem by working more; this meant staying later, taking shorter lunch breaks (many of them at my desk), and fewer/shorter walks for the dogs.
 
-This is far from the first time I have tried taking the "work more" approach and, sadly, even though I am writing myself a blog post to remember to do otherwise, it probably will not be the last. Despite countless reminders to "work smarter not harder," when a deadline is approaching or things are not going according to plan, it is easy to fall into a mindset of throwing more time at the problem.
+This is far from the first time I have tried taking the "work more" approach, and, sadly, even though I am writing myself a blog post to remember to do otherwise, it probably will not be the last. Despite countless reminders to "work smarter, not harder," when a deadline is approaching, it is easy to fall into a mindset of throwing more time at the problem.
 
 ## The Right Amount of Pressure
 
-I acknowledge there may be situations when working more is necessary. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy. However, continuous stress and strain are counterproductive and reduce the quality of work. Additionally, I've found that continued stress leads to unhappiness about my working environment that lingers even after working conditions have normalized.
+I acknowledge there are situations when working more is necessary. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy. However, continuous stress and strain are counterproductive and reduce the quality of work. Additionally, I've found that continued stress leads to unhappiness about my working environment that lingers even after working conditions have normalized.
 
-While doing research for this post I came across the [Yerkes-Dodson law](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) which seems to align with my feeling of there being a "line" between good and bad amounts of pressure.
+While doing research for this post, I came across the [Yerkes-Dodson law](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) which seems to align with my feeling of there being a "line" between good and bad amounts of pressure.
 
 > The law dictates that performance increases with physiological or mental arousal, but only up to a point. When levels of arousal become too high, performance decreases.
 
@@ -30,37 +30,49 @@ Often represented as a bell curve, there appears to be a peak level of arousal (
     <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" title="Creative Commons Zero, Public Domain Dedication">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=34030428">Link</a>
 </i>
 
-While not scientifically measured, what I realize now is that during the retro I was expressing a feeling of moving beyond the peak of the curve and into suboptimal performance. This is where the second half of the "what went poorly" question (and the topic of this post) comes in.
+While I expressed concerns with feeling behind on my work, what I was feeling was the result of passing the peak of the curve. I had not taken the steps to [self-regulate](https://en.wikipedia.org/wiki/Emotional_self-regulation) against work concerns; instead, I allowed the negative emotions to compound and hinder my ability to produce good work. With this new insight, I want to explore avoiding this situation in the future.
 
 ## What am I going to change?
 
-In short, I want to make sure I take breaks. I am generally happy with my break-taking, so, more specifically, I want to make sure I continue to take breaks even when a deadline is near or I am struggling with a problem.
+In short, I want to make sure I take breaks. More specifically, I want to make sure I continue to take breaks even when (**especially** when) I am struggling with difficult work or looming deadlines.
 
 ### What's not in a Break?
 
-To start, it can be useful to identify what a break is. To do this, I will turn to [Cal Newport](https://www.calnewport.com/) (like I do for most things related to productivity) and his [deep breaks](https://www.calnewport.com/blog/2016/09/14/on-deep-breaks/) concept.
+To start, let's identify what a break is. To do this, I will turn to [Cal Newport](https://www.calnewport.com/) (like I do for most things related to productivity) and his [deep breaks](https://www.calnewport.com/blog/2016/09/14/on-deep-breaks/) concept.
 
-If you read the post about deep breaks, you may notice that it is less about what a deep break _is_ and more about what it _isn't_. The goal of this style of break is to avoid switching to tasks that will leave [attention residue](https://www.calnewport.com/blog/2016/09/06/a-productivity-lesson-from-a-classic-arcade-game/). Attention residue occurs when switching between tasks, especially cognitively demanding tasks. When you move your attention to a task some "residue" seems to stick around in your brain and make fully re-engaging with the first task more difficult, reducing your output.
+If you read the post about deep breaks, you may notice that it is less about what a deep break _is_ and more about what it _isn't_. The goal of this style of break is to avoid switching to tasks that will leave [attention residue](https://www.calnewport.com/blog/2016/09/06/a-productivity-lesson-from-a-classic-arcade-game/). Attention residue occurs when switching between tasks. When you shift your attention to something else, "residue" seems to stick around in your brain and make fully re-engaging with your previous work more difficult. The result is an overall decrease in performance.
 
-To avoid attention residue when taking a break, you want to avoid tasks that will capture and keep your brain's attention away from what you are working on. A common trap for me is the "quick" check of my email inbox or chat notifications. While I may spend less than five minutes scanning my inbox, there is a high probability of there being at least one email that my attention will linger on when I switch back to my original work.
+An example of a high attention residue context switch that I struggle with is the "quick" check of my email inbox or chat notifications. While I may spend less than five minutes scanning my inbox, there is almost always something that catches my attention and lingers in my mind when I switch back to my original work.
 
-If you are already worried about getting enough work done, you may feel hamstrung by the idea of removing work-related tasks from your "break" time. While it may feel counterproductive, you should find this single-tasking strategy allows you to [produce better work, often at a faster rate](https://blog.rescuetime.com/single-tasking/). Remember, the goal is not to take a break from one task and work on another. Rather, the goal is to take a break away from work to come back to your original task with renewed vigor.
+To avoid attention residue when taking a break, you want to avoid tasks that will capture and keep your brain's attention away from your work.
+
+When thinking about what to do during a break, we can turn to the [dieting advice](https://www.washingtonpost.com/lifestyle/food/to-lose-weight-dont-just-avoid-temptation-remove-it/2018/10/26/eeb48238-d87f-11e8-a10f-b51546b10756_story.html): "don't resist temptation, remove it." Knowing that we want to avoid context switching during our break, we need to get away from attention-stealing situations. Namely, we need to get away from our computers (including our phones!). Don't test your ability to resist checking your email. Get away from your computer and all of the attention-sapping options it provides.
+
+If you are already worried about getting enough work done, you may feel hamstrung by the idea of removing work-related tasks from your "break" time. While it may feel counterproductive, you should find this single-tasking strategy allows you to [produce better work, often at a faster rate](https://blog.rescuetime.com/single-tasking/). Remember, the goal is not to take a break from one task and work on another. The goal is to take a break away from work so you can resume with renewed vigor. You are trying to step back from over-arousal and move back into peak territory on the Yerkes-Dodson curve.
 
 ### ...then what _is_ in a break?
 
-When thinking about what to do during a break, we can turn to the popular [dieting advice](https://www.washingtonpost.com/lifestyle/food/to-lose-weight-dont-just-avoid-temptation-remove-it/2018/10/26/eeb48238-d87f-11e8-a10f-b51546b10756_story.html): "don't resist temptation, remove it." Knowing that we want to avoid context switching during our break, we should remove the work distractions brought on by our computer and step away. Once you are away from your computer there is a lot you can do, including nothing. It is perfectly valid to just sit in a chair and stare off for ten minutes.
+There are plenty of break-time options that will not result in attention residue. High on the list is "nothing." It is perfectly okay to sit in a chair and stare off for ten minutes.
 
-Since shifting to remote work, I have found simple household tasks such as cleaning dishes or starting a load of laundry to be useful break activities. These small household tasks work well because they don't shift my deep work attention away to another hard problem, I don't enjoy doing them so I'm not going to take more time than necessary, and they contribute to the [positive psychological effects of cleanliness and organization](https://www.psychologytoday.com/us/blog/the-truisms-wellness/201607/the-powerful-psychology-behind-cleanliness).
+Since shifting to remote work, I have found simple household tasks such as washing dishes or starting a load of laundry rank high on my list of break-time activities. These small household tasks work well for a few reasons.
 
-Regardless of where I am working, my favorite of all of the break-time activities is getting outside and walking. Walking has [many benefits](https://www.hustleescape.com/productivity-benefits-of-walking/) and spending as little as [five minutes in nature can improve self-esteem and mood](https://www.bbc.com/worklife/article/20190304-why-walking-makes-you-a-better-worker), so it's not surprising I am happier when my day includes a walk.
+1. They don't shift my attention to cognitively demanding problems. I can truly let my brain rest.
+2. I don't particularly enjoy doing them; this means I'm not going to take more time than necessary
+3. They contribute to the [positive psychological effects of cleanliness and organization](https://www.psychologytoday.com/us/blog/the-truisms-wellness/201607/the-powerful-psychology-behind-cleanliness).
+
+Regardless of where I am working, my favorite break-time activity is getting outside and walking. Walking has [many benefits](https://www.hustleescape.com/productivity-benefits-of-walking/) and spending as little as [five minutes in nature can improve self-esteem and mood](https://www.bbc.com/worklife/article/20190304-why-walking-makes-you-a-better-worker), so it's not surprising I am happier when my day includes a walk.
 
 ### Making Time
 
-If you are now bought into the idea of taking breaks and have some ideas of what you want to do on the break, we now come to my retrospective goal: how do we keep up our break-taking habit, even (and especially) in times of stress?
+We now come to my retrospective goal: how do we keep up our break-taking habit, even (and especially) in times of stress?
 
 #### Understand the benefits
 
 For some people, knowing the benefits of their actions (or intended actions) can help them commit to their practices. When you see the positive effects shared in the resources above, it should begin to feel counterproductive _not_ to take breaks. Try to sow the seeds of these benefits into your mind as you look to establish a break-time regimen. If you [_Start with Why_](https://en.wikipedia.org/wiki/Start_with_Why), you may find an increased ability to stick to your goals.
+
+If you find yourself slipping with your breaking routine, consider a quick search to read about the benefits of breaks. Reenforce the benefits to help ease the concerns of not getting enough done.
+
+#### Understand the drawbacks
 
 #### Implementation Intention
 
