@@ -72,8 +72,6 @@ For some people, knowing the benefits of their actions (or intended actions) can
 
 If you find yourself slipping with your breaking routine, consider a quick search to read about the benefits of breaks. Reenforce the benefits to help ease the concerns of not getting enough done.
 
-#### Understand the drawbacks
-
 #### Implementation Intention
 
 [Implementation intention](https://jamesclear.com/implementation-intentions) is the idea of planning an action (an intention) for a particular time or during a particular situation (the implementation). This concept has [proven](https://www.sciencedirect.com/science/article/abs/pii/S0065260106380021) to be effective across multiple domains:
@@ -129,6 +127,10 @@ Time-block planning leverages the psychological effects of implementation intent
 One intention I have been trying to set for myself is a full, mid-day lunch break. Taking a break in the middle of the day can be difficult to time just right with habit stacking. This is where I have found time-block planning to shine. Knowing I plan to stop at a certain time will impact the decisions I make as the time draws nearer. Some days, this may mean I don't start a new task and break early and other days it could mean I move my break back to let me keep up with my flow state. Despite sometimes rearranging my schedule, I have found that I am still more likely to take a full lunch break.
 
 You don't have to dive into time-block planning fully to set an intention to take a regular lunch break. A simpler starting point is to schedule a recurring lunchtime break on your work calendar; this applies the foundations of intention setting and has the bonus effect of preventing others from scheduling during your allotted break time.
+
+#### Identify the warnings signs
+
+I believe reflection is a key part of maintaining a regular break routine. The issue at hand is that in stressful times, we often end up slipping into habits that aren't as good for us. Reflection provides time away from the stress to have a level-headed evaluation of your situation and reactions. If you have a chance to reflect on your day, you can hopefully catch rising stress levels of slipping break practices before they go too far. If you are able to catch the early warning signs of issues during your moments of reflection, you can more easily leverage the tools discussed above to get yourself back on track.
 
 ## Conclusion
 
