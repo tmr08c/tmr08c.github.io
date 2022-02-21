@@ -6,13 +6,13 @@ categories: ["productivity", "work-life balance"]
 
 I recently joined a weekly "life retro" group that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provided an opportunity for teams to discuss how they are doing building software, this group has been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well, that we want to keep doing" and "what went poorly, that we want to do differently."
 
-During my first session, my answer to what went poorly was a feeling of being behind on my work tasks. More accurately, it was my reaction to this feeling. I tried to "fix" the problem by working more; this meant staying later and taking fewer and shorter breaks.
+During my first session, my answer to what went poorly was a feeling of being behind on my work tasks. More accurately, it was my reaction to this feeling. I tried to "fix" the problem by working more; this meant staying later and taking fewer, shorter breaks.
 
 This is far from the first time I have tried taking the "work more" approach, and, sadly, even though I am writing myself a blog post to remember to do otherwise, it probably will not be the last. Despite countless reminders to "work smarter, not harder," when a deadline is approaching, it is easy to fall into a mindset of throwing more time at the problem.
 
 ## The Right Amount of Pressure
 
-I acknowledge there are situations when working more is necessary. I think because "burning the midnight oil" sporadically works (or at least appears to work, in that your hack-y code is at least demo-able), it can be tempting to reach for this strategy. However, continuous stress and strain are counterproductive and reduce the quality of work. Additionally, I've found that continued stress leads to unhappiness about my working environment that lingers even after working conditions have normalized.
+I acknowledge there are situations when working more is necessary. However, I believe these should be the exceptions, not the rule.
 
 While doing research for this post, I came across the [Yerkes-Dodson law](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) which seems to align with my feeling of there being a "line" between good and bad amounts of pressure.
 
@@ -30,11 +30,15 @@ Often represented as a bell curve, there appears to be a peak level of arousal (
     <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" title="Creative Commons Zero, Public Domain Dedication">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=34030428">Link</a>
 </i>
 
-While I expressed concerns with feeling behind on my work, what I was feeling was the result of falling down the peak of the curve. I had not taken the steps to [self-regulate](https://en.wikipedia.org/wiki/Emotional_self-regulation) against work concerns; instead, I allowed the negative emotions to compound and hinder my ability to produce good work. With this new insight, I want to explore avoiding this situation in the future.
+With the Yerkes-Dodson law in mind, it seems that my attempts to work more to combat my feelings of overwhelm were counterproductive. By compounding my stress, I was worsening the problem and sliding further over the edge of the productivity curve.
+
+I had not taken the steps to [self-regulate](https://en.wikipedia.org/wiki/Emotional_self-regulation) against work concerns; instead, I allowed the adverse feelings to compound and hinder my ability to produce good work. With this new insight, I want to explore avoiding this situation in the future.
 
 ## What am I going to change?
 
 In short, I want to make sure I take breaks. More specifically, I want to make sure I continue to take breaks even when (**especially** when) I am struggling with difficult work or looming deadlines.
+
+I believe taking breaks provides an outlet to periodically reduce mental strain, preventing me from becoming overstimulated and overwhelmed by my work.
 
 ### What's not in a Break?
 
@@ -120,7 +124,7 @@ Inspired by the aforementioned Cal Newport's release of a [time-block planner](h
 
 Time-block planning leverages the psychological effects of implementation intentions by pre-scheduling your time for your entire working day.
 
-One intention I have been trying to set for myself is a one-hour, mid-day lunch break. Taking a break in the middle of the day can be difficult to time just right with habit stacking. This is where I have found time-block planning to shine. Knowing I plan to stop at a certain time will impact the decisions I make as the time draws nearer. Some days, this may mean I don't start a new task and break early and other days it could mean I move my break back to let me keep up with my flow state. Despite sometimes rearranging my schedule, I have pre-committing an hour for lunch helps me to actually take the time.
+One intention I have been trying to set for myself is a one-hour, mid-day lunch break. Taking a break in the middle of the day can be difficult to time just right with habit stacking. This is where I have found time-block planning to shine. Knowing I plan to stop at a certain time will impact the decisions I make as the time draws nearer. Some days, this may mean I don't start a new task and break early and other days it could mean I move my break back to let me keep up with my flow state. Despite sometimes rearranging my schedule, pre-committing the time for lunch makes it easier to use this time.
 
 You don't have to dive into time-block planning fully to set an intention to take a regular lunch break. A simpler starting point is to schedule a recurring lunchtime break on your work calendar; this applies the foundations of intention setting and has the bonus effect of preventing others from scheduling during your allotted break time.
 
