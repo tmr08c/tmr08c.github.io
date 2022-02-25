@@ -40,7 +40,7 @@ I believe taking breaks provides an outlet to periodically reduce mental strain,
 
 To start, let's identify what a break is. To do this, I will turn to [Cal Newport](https://www.calnewport.com/) (like I do for most things related to productivity) and his [deep breaks](https://www.calnewport.com/blog/2016/09/14/on-deep-breaks/) concept.
 
-If you read his post about deep breaks, you may notice that it is less about what a deep break _is_ and more about what it _isn't_. The goal of this style of break is to avoid switching to tasks that will leave [attention residue](https://www.calnewport.com/blog/2016/09/06/a-productivity-lesson-from-a-classic-arcade-game/). Attention residue occurs when switching between tasks. When you shift your attention to something else, "residue" seems to stick around in your brain and make fully re-engaging with your previous work more difficult. The result is an overall decrease in performance.
+If you read his post about deep breaks, you may notice that it is less about what a deep break _is_ and more about what it _isn't_. The goal of this style of break is to avoid switching to tasks that will leave [attention residue](https://www.calnewport.com/blog/2016/09/06/a-productivity-lesson-from-a-classic-arcade-game/). When you shift your attention to something else, "residue" seems to stick around in your brain and make fully re-engaging with your previous work more difficult. The result is an overall decrease in performance.
 
 An example of a high attention residue context switch that I struggle with is the "quick" check of my email inbox or chat notifications. While I may spend less than five minutes scanning my inbox, there is almost always something that catches my attention and lingers in my mind when I switch back to my original work.
 
@@ -52,7 +52,7 @@ When thinking about what to do during a break, we can turn to the [dieting advic
 
 There are plenty of break-time options that will not result in attention residue. High on the list is "nothing." It is perfectly okay to sit in a chair and stare off for ten minutes.
 
-Since shifting to remote work, I have found simple household tasks such as washing dishes or starting a load of laundry rank high on my list of break-time activities, especially for short inter-task breaks. These small household tasks work well for a few reasons.
+Since shifting to remote work, I have found simple household tasks such as washing dishes or starting a load of laundry rank high on my list of break-time activities, especially for short intra-task breaks. These small household tasks work well for a few reasons.
 
 1. They don't shift my attention to cognitively demanding problems. I can truly let my brain rest.
 2. I don't particularly enjoy doing them; this means I'm not spending more time on them than necessary.
@@ -110,17 +110,17 @@ A special form of implementation intention is [habit stacking](https://jamesclea
 
 Rather than determining an exact time for your work or break, you base your actions on the previous step you took.
 
-Another example of habit stacking can be to plan around meetings. While not a habit in the way we normally talk about them, many of us have recurring meetings that we can stack habits on top of. Consider the following, "after I am done with stand up, I will take a 15-minute walking break." I like tying activities to meetings because I know I will already have context switched away from my previous work. Breaking after a meeting can help clear out the attention residue built up during the meeting and reset your brain for other work.
+Another example of habit stacking can be to plan around meetings. While not a habit in the way we traditionally talk about them, we commonly have recurring meetings. We can "stack" on these recurring meetings just like a habit. Consider the following, "after stand up, I will take a 15-minute walking break." Breaking after a meeting can help clear the build-up of attention residue and reset your brain for other work.
 
 #### Time-block Planning
 
-Inspired by the aforementioned Cal Newport's release of a [time-block planner](https://www.timeblockplanner.com/), I have been experimenting with using his form of time-block planning.
+Inspired by Cal Newport's release of a [time-block planner](https://www.timeblockplanner.com/), I have been experimenting with using his form of time-block planning.
 
 Time-block planning leverages the psychological effects of implementation intentions by pre-scheduling your time for your entire working day.
 
-One intention I have been trying to set for myself is a one-hour, mid-day lunch break. Taking a break in the middle of the day can be difficult to time just right with habit stacking. This is where I have found time-block planning to shine. Knowing I plan to stop at a certain time will impact the decisions I make as the time draws nearer. Some days, this may mean I don't start a new task and break early and other days it could mean I move my break back to let me keep up with my flow state. Despite sometimes rearranging my schedule, pre-committing the time for lunch makes it easier to use this time.
+One intention I have been trying to set for myself is a one-hour, mid-day lunch break. Writing down my intention to take this break shows myself I think this is important. I have also found knowing I have the rest of my day planned and accommodating a break eases my worry about not having enough time to get all of my work done.
 
-You don't have to dive into time-block planning fully to set an intention to take a regular lunch break. A simpler starting point is to schedule a recurring lunchtime break on your work calendar; this applies the foundations of intention setting and has the bonus effect of preventing others from scheduling during your allotted break time.
+You don't have to dive into time-block planning fully to set an intention to take a regular lunch break. A solid starting point is scheduling a recurring lunchtime break on your work calendar; this applies the foundations of intention setting and has the bonus effect of preventing others from scheduling during your allotted break time.
 
 ## Conclusion
 
