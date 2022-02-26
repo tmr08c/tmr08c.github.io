@@ -90,7 +90,7 @@ end
 > greet_friends "joey"
 => "Hello, joey"
 
-> greet_friends %w(joey ross rachel chandler phoebe monica)
+> greet_friends "joey", "ross", "rachel", "chandler", "phoebe", "monica"
 => "Hello, joey, ross, rachel, chandler, phoebe, monica"
 ```
 
@@ -199,7 +199,7 @@ greet("mort", greeting: "Hiya")
 In Ruby, you can leave off the `**` and it will default to allowing your last argument to be a hash (or not):
 
 ```ruby
-def greet_two(name, options)
+def greet_two(name, options={})
   greeting = options[:greeting] || "Hello"
 
   "#{greeting}, #{name}"
@@ -207,6 +207,9 @@ end
 
 greet_two("jimmy", greeting: "get out of here")
 => "get out of here, jimmy" 
+
+greet_two("johnny")
+=> "Hello, johnny" 
 ```
 
 you can also treat the last argument as _not_ a Hash
