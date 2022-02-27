@@ -1,10 +1,10 @@
 ---
 title: "Taking Breaks"
-date: "2022-02-27T14:08:13.265Z"
+date: "2022-02-27T18:08:13.265Z"
 categories: ["productivity", "work-life balance"]
 ---
 
-I recently joined a weekly "life retro" group that some former teammates have been running. Similar to how [sprint retros](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provide an opportunity for teams to discuss how they are doing building software, this group has been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well, that we want to keep doing" and "what went poorly, that we want to do differently."
+I recently joined a weekly "life retro" group that some former teammates have been running. Similar to how a [sprint retrospective](https://www.scrum.org/resources/what-is-a-sprint-retrospective) provides teams the opportunity to discuss how they are doing building software, this group has been using the retro format to discuss how they are doing building their lives. Specifically, they ask "what went well, that we want to keep doing" and "what went poorly, that we want to do differently."
 
 During my first session, my answer to what went poorly was a feeling of being behind on my work tasks. More accurately, it was my reaction to this feeling. I tried to "fix" the problem by working more; this meant staying later and taking fewer, shorter breaks.
 
@@ -31,7 +31,7 @@ Often represented as a bell curve, there appears to be a peak level of arousal (
     </figcaption>
 </figure>
 
-With the Yerkes-Dodson law in mind, it seems that my attempts to work more to combat my feelings of overwhelm were counterproductive. By compounding my stress, I was worsening the problem and sliding further over the edge of the productivity curve.
+With the Yerkes-Dodson law in mind, it seems that my attempts to work more to combat my feelings of overwhelm were counterproductive. Working more increased my arousal, worsening the problem and pushing me further over the edge of the productivity curve.
 
 I had not taken the steps to [self-regulate](https://en.wikipedia.org/wiki/Emotional_self-regulation) against work concerns; instead, I allowed the adverse feelings to compound and hinder my ability to produce good work. With this new insight, I want to explore avoiding this situation in the future.
 
@@ -57,7 +57,7 @@ There are plenty of break-time options that will not result in attention residue
 
 Since shifting to remote work, I have found simple household tasks such as washing dishes or starting a load of laundry rank high on my list of break-time activities. They work particularly well for short intra-task breaks. These small household tasks work well for a few reasons.
 
-1. They don't shift my attention to cognitively demanding problems; I am able to let my brain rest.
+1. They don't shift my attention to cognitively demanding problems; I can let my brain rest.
 2. I don't particularly enjoy doing them; this means I'm not spending more time on them than necessary.
 3. They contribute to the [positive psychological effects of cleanliness and organization](https://www.psychologytoday.com/us/blog/the-truisms-wellness/201607/the-powerful-psychology-behind-cleanliness).
 
@@ -127,4 +127,4 @@ You don't have to dive into time-block planning fully to set an intention to tak
 
 ## Conclusion
 
-Finding balance is difficult. It can be even more difficult on a daily basis when you are focused on getting your work done. Retrospectives can provide you with the opportunity to step back and better evaluate your ever-changing situation. In my case, I was able to realize I was fanning the flames of burnout. Talking about the issues I was facing helped me to learn more about productivity and pressure, the positive effects of breaks, and how to reinforce my break-taking habit.
+Finding balance is difficult. It can be even more difficult in the midst of your work week when you are focused on getting your work done. Retrospectives can provide you with the opportunity to step back and better evaluate your ever-changing situation. In my case, I realized I was fanning the flames of burnout. Talking about the issues I was facing triggered me to learn more about pressure and productivity, the positive effects of breaks, and how to reinforce my break-taking habit.
