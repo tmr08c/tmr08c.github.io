@@ -542,7 +542,7 @@ we would likely not match on the specific
 
 This is where a library like 
 [`Telemetry.Metrics`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html)
-comes into play. `Telemetry.Metrics` add standardization for extracting metrics from 
+comes into play. `Telemetry.Metrics` adds standardization for extracting metrics from 
 telemetry events.
 
 Up until this point, we have been working with events and measurements.
@@ -596,13 +596,14 @@ Again, from the project's rationale:
 > If Telemetry.Metrics would aggregate metrics, the way those aggregations work would be imposed on the system where the metrics are published to. For example, counters in StatsD are reset on every flush and can be decremented, whereas counters in Prometheus are monotonically increasing. Telemetry.Metrics doesn't focus on those details - instead, it describes what the end user, operator, expects to see when using the metric of particular type.
 
 `Telemetry.Metrics` provides the API and structure to pass metrics along to existing systems 
-which are purpose built for metric collection and aggregation. Not only does this design
+which are purpose-built for metric collection and aggregation. Not only does this design
 choice prevent the need to re-implement highly performant aggregation logic, but it also
 allows you to avoid performance issues by keeping this aggregation logic out of your 
 application.
 
 In practice, this means you will often reach for a libary built ontop of `Telemetry.Metrics`, 
-one that is built to work with your particular metrics collection. Two popular example are
+one that is built to work with your particular metrics collection technology stack.
+Two popular example are
 [`TelemetryMetricsStatsd`](https://hexdocs.pm/telemetry_metrics_statsd/TelemetryMetricsStatsd.html) 
 and [`TelemetryMetricsPrometheus.Core`](https://hexdocs.pm/telemetry_metrics_prometheus_core/TelemetryMetricsPrometheus.Core.html),
 both maintained by the [`beam-telemetry` org on GitHub](https://github.com/beam-telemetry).
