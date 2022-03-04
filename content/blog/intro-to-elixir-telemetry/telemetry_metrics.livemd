@@ -1,0 +1,135 @@
+# Telemetry.Metrics Custom Reporter
+
+## Setup
+
+```elixir
+Mix.install([:telemetry, :telemetry_metrics])
+```
+
+## Custom Reporter
+
+```elixir
+defmodule ETSReporter.Handler do
+  def handle_event(event_name, measurements, metadata, metrics: metrics, ets: ets) do
+    for metric <- metrics do
+      try do
+        update_entry(ets, event_name, metric, measurements)
+        # IO.inspect(metric, label: "Metric")
+        # IO.inspect(value, label: "Value")
+
+        IO.puts("Updates ETS table")
+        IO.inspec(ets)
+      rescue
+        e ->
+          Logger.error("Could not format metric #{inspect(metric)}")
+          Logger.error(Exception.format(:error, e, __STACKTRACE__))
+      end
+    end
+  end
+
+  defp update_entry(ets, event_name, %Telemetry.Metrics.Counter{} = metric, measurements) do
+    IO.puts("Counter")
+
+    IO.inspect(ets)
+    :ets.update_counter(ets, key(event_name, metric), {2, 1}, 0)
+  end
+
+  defp update_entry(ets, event_name, %Telemetry.Metrics.LastValue{} = metric, measurements) do
+    IO.puts("Last Value")
+  end
+
+  defp key(event_name, metric) do
+    (event_name ++ [metric.measurement]) |> List.to_tuple()
+  end
+end
+```
+
+## Reporter Process
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+defmodule ETSReporter.Server do
+  use GenServer
+
+  require Logger
+
+  def start_link(options \\ []) do
+    GenServer.start_link(__MODULE__, options)
+  end
+
+  @supported_metrics [Telemetry.Metrics.Counter, Telemetry.Metrics.LastValue]
+  def init(options) do
+    # Fetch our list of metrics
+    # While we would ideally support all metrics types, the docs suggest
+    # fitlering and warning if there are metrics types we do not support. 
+    # This also allows us to show what comes in from our `metrics` list.
+    metrics =
+      options
+      |> Keyword.fetch!(:metrics)
+      |> Enum.filter(fn
+        %metric_type{} when metric_type in @supported_metrics ->
+          true
+
+        %metric_type{} ->
+          Logger.warn("We do not current support #{metric_type} metrics")
+          false
+      end)
+
+    # Start our ets table that we will be writing to
+    ets = :ets.new(:telemetry, [:set, :public])
+
+    for {event, metrics} <- Enum.group_by(metrics, & &1.event_name) do
+      id = {__MODULE__, event, self()}
+      IO.inspect(event, label: "Event")
+      IO.inspect(metrics, label: "metrics")
+
+      :telemetry.attach(id, event, &ETSReporter.Handler.handle_event/4, metrics: metrics, ets: ets)
+    end
+
+    {:ok, metrics}
+  end
+end
+```
+
+## Start our Process
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+import Telemetry.Metrics
+
+metrics = [
+  counter("test.request.duration"),
+  last_value("test.request.duration"),
+  summary("test.will_be_ignored")
+]
+
+ETSReporter.Server.start_link(metrics: metrics)
+```
+
+## Sending Metrics
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 132},
+  %{}
+)
+
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 231},
+  %{}
+)
+```
+
+```elixir
+tab = :ets.new(:counter, [:set, :public])
+
+:ets.update_counter(tab, :one, 4, {1, 0})
+
+:ets.tab2list(tab)
+```
