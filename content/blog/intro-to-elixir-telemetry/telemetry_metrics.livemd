@@ -3,7 +3,7 @@
 ## Setup
 
 ```elixir
-Mix.install([:telemetry, :telemetry_metrics])
+Mix.install([:telemetry, :telemetry_metrics, :kino])
 ```
 
 ## Custom Reporter
@@ -12,13 +12,15 @@ Mix.install([:telemetry, :telemetry_metrics])
 defmodule ETSReporter.Handler do
   def handle_event(event_name, measurements, metadata, metrics: metrics, ets: ets) do
     for metric <- metrics do
+      IO.inspect(metric, label: "Processing metric")
+
       try do
         update_entry(ets, event_name, metric, measurements)
         # IO.inspect(metric, label: "Metric")
         # IO.inspect(value, label: "Value")
 
         IO.puts("Updates ETS table")
-        IO.inspec(ets)
+        # IO.inspec(ets)
       rescue
         e ->
           Logger.error("Could not format metric #{inspect(metric)}")
@@ -30,16 +32,19 @@ defmodule ETSReporter.Handler do
   defp update_entry(ets, event_name, %Telemetry.Metrics.Counter{} = metric, measurements) do
     IO.puts("Counter")
 
-    IO.inspect(ets)
-    :ets.update_counter(ets, key(event_name, metric), {2, 1}, 0)
+    :ets.update_counter(ets, key(event_name, metric), 1, {1, 0})
   end
 
   defp update_entry(ets, event_name, %Telemetry.Metrics.LastValue{} = metric, measurements) do
     IO.puts("Last Value")
+    IO.inspect(measurements)
+    value = Map.fetch!(measurements, metric.measurement)
+
+    :ets.insert(ets, {key(event_name, metric), value})
   end
 
-  defp key(event_name, metric) do
-    (event_name ++ [metric.measurement]) |> List.to_tuple()
+  defp key(event_name, %type{} = metric) do
+    (event_name ++ [metric.measurement, type]) |> List.to_tuple()
   end
 end
 ```
@@ -76,8 +81,7 @@ defmodule ETSReporter.Server do
           false
       end)
 
-    # Start our ets table that we will be writing to
-    ets = :ets.new(:telemetry, [:set, :public])
+    ets = Keyword.fetch!(options, :ets)
 
     for {event, metrics} <- Enum.group_by(metrics, & &1.event_name) do
       id = {__MODULE__, event, self()}
@@ -94,6 +98,11 @@ end
 
 ## Start our Process
 
+```elixir
+# Start our ets table that we will be writing to
+ets = :ets.new(:ets_reporter_store, [:set, :public])
+```
+
 <!-- livebook:{"reevaluate_automatically":true} -->
 
 ```elixir
@@ -101,11 +110,11 @@ import Telemetry.Metrics
 
 metrics = [
   counter("test.request.duration"),
-  last_value("test.request.duration"),
-  summary("test.will_be_ignored")
+  last_value("test.request.duration")
+  # summary("test.will_be_ignored")
 ]
 
-ETSReporter.Server.start_link(metrics: metrics)
+ETSReporter.Server.start_link(metrics: metrics, ets: ets)
 ```
 
 ## Sending Metrics
@@ -127,9 +136,16 @@ ETSReporter.Server.start_link(metrics: metrics)
 ```
 
 ```elixir
+Kino.ETS.new(ets)
+```
+
+```elixir
 tab = :ets.new(:counter, [:set, :public])
 
-:ets.update_counter(tab, :one, 4, {1, 0})
+:ets.update_counter(tab, :one, 4, {1, 3})
+
+:ets.insert(tab, {:two, 4})
+:ets.insert(tab, {:two, 6})
 
 :ets.tab2list(tab)
 ```
