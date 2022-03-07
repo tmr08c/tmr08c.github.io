@@ -63,10 +63,15 @@ defmodule ETSReporter.Server do
     GenServer.start_link(__MODULE__, options)
   end
 
+  def get_metrics(server) do
+    GenServer.call(server, :get_metrics)
+  end
+
   @supported_metrics [Telemetry.Metrics.Counter, Telemetry.Metrics.LastValue]
   def init(options) do
     # Fetch our list of metrics
-    # While we would ideally support all metrics types, the docs suggest
+    # While we would ideally support all metrics types, we are only implementing
+    # a few simple examples for demo purposes. The docs suggest
     # fitlering and warning if there are metrics types we do not support. 
     # This also allows us to show what comes in from our `metrics` list.
     metrics =
@@ -81,7 +86,9 @@ defmodule ETSReporter.Server do
           false
       end)
 
-    ets = Keyword.fetch!(options, :ets)
+    # ets = Keyword.fetch!(options, :ets)
+
+    ets = :ets.new(table_name(), [:set, :public])
 
     for {event, metrics} <- Enum.group_by(metrics, & &1.event_name) do
       id = {__MODULE__, event, self()}
@@ -91,17 +98,20 @@ defmodule ETSReporter.Server do
       :telemetry.attach(id, event, &ETSReporter.Handler.handle_event/4, metrics: metrics, ets: ets)
     end
 
-    {:ok, metrics}
+    {:ok, %{metrics: metrics, ets: ets}}
+  end
+
+  def handle_call(:get_metrics, _, %{ets: ets} = state) do
+    {:reply, ets, state}
+  end
+
+  defp table_name() do
+    "#{__MODULE__}_#{System.os_time(:second)}" |> String.downcase() |> String.to_atom()
   end
 end
 ```
 
 ## Start our Process
-
-```elixir
-# Start our ets table that we will be writing to
-ets = :ets.new(:ets_reporter_store, [:set, :public])
-```
 
 <!-- livebook:{"reevaluate_automatically":true} -->
 
@@ -114,7 +124,11 @@ metrics = [
   # summary("test.will_be_ignored")
 ]
 
-ETSReporter.Server.start_link(metrics: metrics, ets: ets)
+{:ok, server} = ETSReporter.Server.start_link(metrics: metrics)
+```
+
+```elixir
+ETSReporter.Server.get_metrics(server)
 ```
 
 ## Sending Metrics
@@ -127,16 +141,34 @@ ETSReporter.Server.start_link(metrics: metrics, ets: ets)
   %{duration: 132},
   %{}
 )
+```
+
+```elixir
+ETSReporter.Server.get_metrics(server)
+```
+
+```elixir
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 142},
+  %{}
+)
 
 :telemetry.execute(
   [:test, :request],
-  %{duration: 231},
+  %{duration: 186},
+  %{}
+)
+
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 159},
   %{}
 )
 ```
 
 ```elixir
-Kino.ETS.new(ets)
+ETSReporter.Server.get_metrics(server)
 ```
 
 ```elixir
@@ -148,4 +180,6 @@ tab = :ets.new(:counter, [:set, :public])
 :ets.insert(tab, {:two, 6})
 
 :ets.tab2list(tab)
+
+"#{Test}_#{System.os_time(:second)}" |> String.downcase() |> String.to_atom()
 ```
