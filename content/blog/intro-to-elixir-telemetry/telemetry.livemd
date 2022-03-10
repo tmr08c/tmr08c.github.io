@@ -534,7 +534,7 @@ def handle_event(
 ) 
 ```
 
-This exact matching is helpeful understanding how things work, but isn't
+This exact matching is helpeful for understanding how things work, but isn't
 particularly flexible. If we 
 wanted to use our `StorageTelemetryHandler` to store other telemetry events,
 we would likely not match on the specific
@@ -551,7 +551,7 @@ feel like they could be used interchangeably. Before we move on, let's make unde
 how they differ.
 
 * `events` are what we create/emit with the `telemetry` library.
-* `events` have `measurements` (and `metadata`).
+* `events` have `measurements` and `metadata`).
 * `measurements` are data included in our event. Defining a word with the 
   word itself, `measurements`, _tend_ to include data related to some measurment for the
   event (e.g., `duration` of an event for a request, `size` for an event related to system
@@ -600,6 +600,149 @@ which are purpose-built for metric collection and aggregation. Not only does thi
 choice prevent the need to re-implement highly performant aggregation logic, but it also
 allows you to avoid performance issues by keeping this aggregation logic out of your 
 application.
+
+## Telemetry.Metrics - ConsoleReporter
+
+Let's take a look at a simple 
+[reporter](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#module-reporters)
+that ships with `Telemetry.Metrics` itself, the
+[`ConsoleReporter`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.ConsoleReporter.html#content)
+This reporter should feel similar to the first even handler functions we wrote, like those
+functions the `ConsoleReporter` simply logs information about the even that was emitted.
+
+<!-- livebook:{"break_markdown":true} -->
+
+While not a requirement, reporters are often implmented using a process-based solution.
+This is the case for the `ConsoleReporter`.
+
+We will start up a `ConsoleReporter` process and tell it that we want to collect two metrics:
+
+1. The `last_value` for the event `[:demo, :telemetry_metrics, :time, :duration]`
+2. A running `counter` for the event `[:demo, :telemetry_metrics, :count, :demo_count]`
+
+```elixir
+metrics = [
+  Telemetry.Metrics.last_value([:demo, :telemetry_metrics, :time, :duration]),
+  Telemetry.Metrics.counter([:demo, :telemetry_metrics, :count, :demo_count])
+]
+
+Supervisor.start_link([{Telemetry.Metrics.ConsoleReporter, metrics: metrics}],
+  strategy: :one_for_one
+)
+```
+
+Now, we can use the `telemetry` library to emit both types of events.
+
+As a reminder, the `Telemetry.Metrics` library does not handle the metric aggregation itself. 
+This is off-loaded to the service metrics are being sent to. The `ConsoleReporter` is 
+implemented to simply log out the event it received and does not do any aggregation. This 
+means that we will not get an actual incrementing `counter`. Instead, both values will 
+behave like a `last_value` and give us information about hte most revent event.
+
+```elixir
+:telemetry.execute(
+  [:demo, :telemetry_metrics, :count],
+  %{demo_count: 2},
+  %{}
+)
+
+:telemetry.execute(
+  [:demo, :telemetry_metrics, :time],
+  %{duration: 123.456},
+  %{location: :third_example}
+)
+```
+
+After our events are emitted, we can see log messages from the `ConsoleReporter` 
+giving us information about our event!
+
+This is a fantastic tool for debugging your `telemetry` set up and the best part is, 
+the same metrics that you are collecting and debugging for your console reporters can be
+handled by other reporters that will send of the actual metrics using **the same code**.
+The only change you need to make is the reporter module you are using. Since our example
+had the `metrics` we want to collect in a variable, we could even pass the same list of
+metrics to the `ConsoleReporter` or our production-grade reporter based on our environment.
+
+## Telemetry.Metrics - Building a Reporter
+
+Now that we've set up our first metric collection and send metrics to the `ConsoleReporter`,
+let's get a better understanding of how reporters work and build our (very simple) one. 
+To show the flexibility provided by building ontop of `Telemetry.Metrics` and not writing
+our own custom handlers, we will re-visit using ETS for handlng event. However, this time,
+instead of storing every telemetry event, we will be storing the _metrics_.
+
+[The docs](https://hexdocs.pm/telemetry_metrics/writing_reporters.html#content) on how
+to write a reporter do a great job of giving you the basics for wiring things up and does
+a lot of our work for us. Our example will do the bare minimum to handle a few metrics types 
+and does not fully follow the specification (e.g., we will not have a `keep?` check). 
+If you want to build a real reporter, please take the time to read through the guide in the
+docs to ensure you implement something to spec.
+
+<!-- livebook:{"break_markdown":true} -->
+
+As mention above, it is a common practice to wrap reporters in a process.
+Therefore, our implementation will have two primary parts:
+
+1. A process that will attach to the events we want metrics
+   for and handle any other start-up work that we need (e.g., starting our
+   ETS table).)
+2. A module that has the logic for actually processing the events
+
+<!-- livebook:{"break_markdown":true} -->
+
+We will start with our handler module. This module has a single public function, 
+`handle_event`. If you went through the section on building our own
+`telemetry` event handler, this function should feel familiar familiar.
+
+As a reminder, let's take a look at the `handle_event` function we defined 
+for our `MorePerformantTelemetryHandler`:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+defmodule MorePerformantTelemetryHandler do
+  def handle_event(event, measurements, metadata, config)
+end
+```
+
+Our reporter handler will take in the same arguments for its `handle_event` 
+function. `metrics` are aggregations of `events` and you can have multiple
+aggregation types for a single event (for example,
+we may to have the `count` and the `last_value` for a given event).
+This means, for a given `event` we 
+will iterate over multiple metrics that we want to collect.
+
+```elixir
+defmodule ETSReporter.Handler do
+  def handle_event(event_name, measurements, _metadata, metrics: metrics, ets: ets) do
+    for metric <- metrics do
+      try do
+        update_entry(ets, event_name, metric, measurements)
+      rescue
+        e ->
+          Logger.error("Could not format metric #{inspect(metric)}")
+          Logger.error(Exception.format(:error, e, __STACKTRACE__))
+      end
+    end
+  end
+
+  defp update_entry(ets, event_name, %Telemetry.Metrics.Counter{} = metric, _measurements) do
+    :ets.update_counter(ets, key(event_name, metric), 1, {1, 0})
+  end
+
+  defp update_entry(ets, event_name, %Telemetry.Metrics.LastValue{} = metric, measurements) do
+    value = Map.fetch!(measurements, metric.measurement)
+
+    :ets.insert(ets, {key(event_name, metric), value})
+  end
+
+  defp key(event_name, %type{} = metric) do
+    (event_name ++ [metric.measurement, type]) |> List.to_tuple()
+  end
+end
+```
+
+## Telemetry.Metrics - Reporter Libraries
 
 In practice, this means you will often reach for a libary built ontop of `Telemetry.Metrics`, 
 one that is built to work with your particular metrics collection technology stack.
@@ -679,37 +822,6 @@ too!).
 * include links to sample reporters that work with different platforms
 * use the console reporter to different events and metrics for them
 * explore creating a custom reporter
-
-<!-- livebook:{"break_markdown":true} -->
-
-`Telemetry.Metrics` provides a `ConsoleReporter` that is similar to the loger we created above.
-
-```elixir
-Supervisor.start_link(
-  [
-    {Telemetry.Metrics.ConsoleReporter,
-     metrics: [
-       Telemetry.Metrics.last_value([:demo, :telemetry_metrics, :time, :duration]),
-       Telemetry.Metrics.counter([:demo, :telemetry_metrics, :count, :demo_count])
-     ]}
-  ],
-  strategy: :one_for_one
-)
-```
-
-```elixir
-:telemetry.execute(
-  [:demo, :telemetry_metrics, :count],
-  %{demo_count: 2},
-  %{}
-)
-
-:telemetry.execute(
-  [:demo, :telemetry_metrics, :time],
-  %{duration: 123.456},
-  %{location: :third_example}
-)
-```
 
 ## LiveDashboard
 

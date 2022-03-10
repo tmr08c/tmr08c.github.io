@@ -10,17 +10,10 @@ Mix.install([:telemetry, :telemetry_metrics, :kino])
 
 ```elixir
 defmodule ETSReporter.Handler do
-  def handle_event(event_name, measurements, metadata, metrics: metrics, ets: ets) do
+  def handle_event(event_name, measurements, _metadata, metrics: metrics, ets: ets) do
     for metric <- metrics do
-      IO.inspect(metric, label: "Processing metric")
-
       try do
         update_entry(ets, event_name, metric, measurements)
-        # IO.inspect(metric, label: "Metric")
-        # IO.inspect(value, label: "Value")
-
-        IO.puts("Updates ETS table")
-        # IO.inspec(ets)
       rescue
         e ->
           Logger.error("Could not format metric #{inspect(metric)}")
@@ -29,15 +22,11 @@ defmodule ETSReporter.Handler do
     end
   end
 
-  defp update_entry(ets, event_name, %Telemetry.Metrics.Counter{} = metric, measurements) do
-    IO.puts("Counter")
-
+  defp update_entry(ets, event_name, %Telemetry.Metrics.Counter{} = metric, _measurements) do
     :ets.update_counter(ets, key(event_name, metric), 1, {1, 0})
   end
 
   defp update_entry(ets, event_name, %Telemetry.Metrics.LastValue{} = metric, measurements) do
-    IO.puts("Last Value")
-    IO.inspect(measurements)
     value = Map.fetch!(measurements, metric.measurement)
 
     :ets.insert(ets, {key(event_name, metric), value})
