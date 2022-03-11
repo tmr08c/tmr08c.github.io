@@ -75,8 +75,6 @@ defmodule ETSReporter.Server do
           false
       end)
 
-    # ets = Keyword.fetch!(options, :ets)
-
     ets = :ets.new(table_name(), [:set, :public])
 
     for {event, metrics} <- Enum.group_by(metrics, & &1.event_name) do
@@ -84,7 +82,13 @@ defmodule ETSReporter.Server do
       IO.inspect(event, label: "Event")
       IO.inspect(metrics, label: "metrics")
 
-      :telemetry.attach(id, event, &ETSReporter.Handler.handle_event/4, metrics: metrics, ets: ets)
+      :telemetry.attach(
+        id,
+        event,
+        &ETSReporter.Handler.handle_event/4,
+        metrics: metrics,
+        ets: ets
+      )
     end
 
     {:ok, %{metrics: metrics, ets: ets}}

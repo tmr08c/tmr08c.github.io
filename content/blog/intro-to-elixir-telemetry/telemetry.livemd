@@ -690,7 +690,78 @@ Therefore, our implementation will have two primary parts:
 
 <!-- livebook:{"break_markdown":true} -->
 
-We will start with our handler module. This module has a single public function, 
+### Reporter Process
+
+<!-- livebook:{"break_markdown":true} -->
+
+For our reporter process, we will be using a `GenServer`. Our process will expect to be
+passed in a list of `metrics` to handle when starting up.
+
+```elixir
+defmodule ETSReporter.Server do
+  use GenServer
+
+  require Logger
+
+  def start_link(options \\ []) do
+    GenServer.start_link(__MODULE__, options)
+  end
+
+  def get_metrics(server) do
+    GenServer.call(server, :get_metrics)
+  end
+
+  @supported_metrics [Telemetry.Metrics.Counter, Telemetry.Metrics.LastValue]
+  def init(options) do
+    # Fetch our list of metrics
+    # While we would ideally support all metrics types, we are only implementing
+    # a few simple examples for demo purposes. The docs suggest
+    # fitlering and warning if there are metrics types we do not support. 
+    # This also allows us to show what comes in from our `metrics` list.
+    metrics =
+      options
+      |> Keyword.fetch!(:metrics)
+      |> Enum.filter(fn
+        %metric_type{} when metric_type in @supported_metrics ->
+          true
+
+        %metric_type{} ->
+          Logger.warn("We do not current support #{metric_type} metrics")
+          false
+      end)
+
+    ets = :ets.new(table_name(), [:set, :public])
+
+    for {event, metrics} <- Enum.group_by(metrics, & &1.event_name) do
+      id = {__MODULE__, event, self()}
+      IO.inspect(event, label: "Event")
+      IO.inspect(metrics, label: "metrics")
+
+      :telemetry.attach(
+        id,
+        event,
+        &ETSReporter.Handler.handle_event/4,
+        metrics: metrics,
+        ets: ets
+      )
+    end
+
+    {:ok, %{metrics: metrics, ets: ets}}
+  end
+
+  def handle_call(:get_metrics, _, %{ets: ets} = state) do
+    {:reply, ets, state}
+  end
+
+  defp table_name() do
+    "#{__MODULE__}_#{System.os_time(:second)}" |> String.downcase() |> String.to_atom()
+  end
+end
+```
+
+### Handler Module
+
+Let's look at our handler module. This module has a single public function, 
 `handle_event`. If you went through the section on building our own
 `telemetry` event handler, this function should feel familiar familiar.
 
@@ -706,11 +777,7 @@ end
 ```
 
 Our reporter handler will take in the same arguments for its `handle_event` 
-function. `metrics` are aggregations of `events` and you can have multiple
-aggregation types for a single event (for example,
-we may to have the `count` and the `last_value` for a given event).
-This means, for a given `event` we 
-will iterate over multiple metrics that we want to collect.
+function.
 
 ```elixir
 defmodule ETSReporter.Handler do
@@ -741,6 +808,15 @@ defmodule ETSReporter.Handler do
   end
 end
 ```
+
+A difference you may notice in our handler's `handle_event` function is that we 
+iterate over muliple `metrics` for each event we receive.
+
+`metrics` are aggregations of `events` and you can have multiple
+aggregation types for a single event (for example,
+we may to have the `count` and the `last_value` for a given event).
+This means, for a given `event` we 
+will iterate over multiple metrics that we want to collect.
 
 ## Telemetry.Metrics - Reporter Libraries
 
@@ -925,3 +1001,6 @@ You should now see some metrics
 * [ ] Why telemetry is valuable
 * [ ] Using StatsD reporter, Prometheus
 * [ ] optionally using reports; console reporters
+* [ ] Why are `Telemetry.Metrics` reporters usually processes?Guesses:
+  * start as a part of your application start up; can be restarted via supervisor
+  * statsd version looks like it can handle issues with UDP and re-establish the connection, hold connection pool that reporters can ask for
