@@ -4,17 +4,17 @@ date: 2021-02-28 13:15:02
 categories: ["elixir", "ecto", "database"]
 ---
 
-In a [previous post](/2021/09/intro-to-postgres-explain), I gave a brief introduction to understanding the results of an `EXPLAIN` query (from postgres, at least). After doing the research to write that post, I have become more comfortable reading `EXPLAIN` queries and find value in ocasionally reaching for them.
+In a [previous post](/2021/09/intro-to-postgres-explain), I gave a brief introduction to understanding the results of an `EXPLAIN` query (from postgres, at least). After writing that post and becoming more familiar with `EXPLAIN`, I have found myself using it more often to debug queries.
 
 My current project is a [Phoenix](https://www.phoenixframework.org/) application with which we are using [Ecto](https://hexdocs.pm/ecto/Ecto.html). In this post, I will cover how to use Ecto to generate an `EXPLAIN` query.
 
 ## Explaining
 
-Fortunately, Ecto provides an explain function, [`Ecto.Adapters.SQL.explain/4`](https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.html#explain/4). The function is provided in the adapters module because not all database management systems provide `EXPLAIN` capabilites. `explain/4` will leverage the [DBMS-specific adapter for generating the query](https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Connection.html#c:explain_query/4):
+Fortunately, Ecto provides an explain function, [`Ecto.Adapters.SQL.explain/4`](https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.html#explain/4). The function is provided in the adapters module because not all database management systems provide `EXPLAIN` capabilities. `explain/4` will leverage the [DBMS-specific adapter for generating the query](https://hexdocs.pm/ecto_sql/Ecto.Adapters.SQL.Connection.html#c:explain_query/4):
 
 > Executes an EXPLAIN statement or similar for the given query according to its kind and the adapter in the given repository.
 
-The first argument to `Ecto.Adapaters.SQL.explain/4` is the `Repo` module.
+The first argument to `Ecto.Adapters.SQL.explain/4` is the `Repo` module.
 There is also a `Repo.explain/3` function that is made available as a convenience and alleviates the need to pass in the `Repo`.
 
 ```ex
@@ -33,7 +33,7 @@ See Ecto.Adapters.SQL.explain/4 for more information.
 
 ### Set up
 
-To demonstrate, I create a Phoenix application to represent a blog. It has two schemas, `Post` and `Comment` which are in a one to many relationship.
+To demonstrate, we will create the schemas needed for a blog, `Post` and `Comment`, which are in a one-to-many relationship.
 
 #### Post Schema
 
@@ -59,7 +59,6 @@ defmodule SampleBlog.Blog.Post do
     |> validate_required([:title])
   end
 end
-
 ```
 
 #### Comment Schema
@@ -105,9 +104,9 @@ def posts_with_recent_activity() do
 end
 ```
 
-While the specific aren't too important, we are joining the posts with their comments and filtering based on the `inserted_at` field of both tables. To add more to our `EXPLAIN` results, we will also order the table.
+While the specifics aren't too important, we are joining the posts with their comments and filtering based on the `inserted_at` field of both tables. We are also ordering our results.
 
-Since `EXPLAIN` requires a query in its own right, we cannot simply append it to the end of our pipeline like we could with `IO.inspect`.
+The `explain` function expects to receive a query. This means we cannot simply append it to the end of our pipeline like we could with `IO.inspect` (rather than a query, we would be passing in the results).
 
 If we only care about the `EXPLAIN` results we could remove our call to `Repo.all` and pass our queryable to the `explain` function.
 
@@ -127,11 +126,11 @@ If we only care about the `EXPLAIN` results we could remove our call to `Repo.al
  end
 ```
 
-Because the result of `explain` is a string containing the `EXPLAIN` results, I `IO.puts` it. I reccommend `IO.puts` over `IO.inspect` because it will print the newlines and better format the result.
+Because the result of `explain` is a string containing the `EXPLAIN` results, I recommend `IO.puts` over `IO.inspect` because it will print the newlines and better format the result.
 
-In practice, making this change can be a bit of a pain. By no longer retruning the result of your query, you often break downstream work. If you are trying to `EXPLAIN` something that results from particular UI interactions, you may want the query to actually execute to avoid breaking things too much.
+In practice, making this change can be a bit of a pain. By no longer returning the result of your query, you will break the consumers of this function. If you need a quick peek into what the database is doing this is probably okay. However, if you are tuning the query, you may want to run this multiple times. Returning the query results may be preferable in this case as it will allow you to validate you haven't altered the results.
 
-To preserve the pipeline and avoid copying and pasting my query, I turn to [`Kernel.tap/2`](https://hexdocs.pm/elixir/main/Kernel.html#tap/2). Released in `1.12`, `tap/2` will pipe its first argument as the argument to the function you pass in as the second argument. Unlike [`Kernel.then/2`](https://hexdocs.pm/elixir/main/Kernel.html#then/2), `tap/2` ignores the result of your function and passes on the value unchanged. For our use, this allows us to pass in our query, explain it, and then pass it, unchanged, to our query function. Let's see what this actually looks like:
+To preserve the pipeline and avoid copying and pasting my query, I turn to [`Kernel.tap/2`](https://hexdocs.pm/elixir/main/Kernel.html#tap/2). Released in `1.12`, `tap/2` will pipe its first argument as the argument to the function you pass in as the second argument. Rather than passing on the result of the function, `tap/2` returns the original value. By preserving the value, we can pipe in the query, `explain` it, and then pass it, unchanged, to our query function. Let's see what this looks like:
 
 ```ex
 def posts_with_recent_activity() do
@@ -188,4 +187,4 @@ Result: [
 ]
 ```
 
-The [caveats of `EXPLAIN` aside](/2021/09/intro-to-postgres-explain/#caveats), I have found this workflow useful when tuning a query. I can continue to confirm the results of my query are correct while printing out the query plan along the way.
+The [caveats of `EXPLAIN` aside](/2021/09/intro-to-postgres-explain/#caveats), I have this to be a helpful tool when tuning a query. Thanks to the `tap` function, I can continue to confirm the results of my query are correct while printing out the query plan along the way.
