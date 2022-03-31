@@ -1,6 +1,6 @@
 ---
 title: "EXPLAIN Query with Ecto"
-date: 2021-02-28 13:15:02
+date: 2022-03-31 06:35:02
 categories: ["elixir", "ecto", "database"]
 ---
 
