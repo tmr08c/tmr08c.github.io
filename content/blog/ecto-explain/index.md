@@ -19,11 +19,11 @@ The first argument to `Ecto.Adapters.SQL.explain/4` is a `Repo` module. There is
 ```ex
 iex()> h Repo.explain/3
 
-                 def explain(operation, queryable, opts \\ [])
+     def explain(operation, queryable, opts \\ [])
 
-A convenience function for SQL-based repositories that executes an EXPLAIN
-statement or similar depending on the adapter to obtain statistics for the
-given query.
+A convenience function for SQL-based repositories that executes
+an EXPLAIN statement or similar depending on the adapter to obtain
+statistics for the given query.
 
 See Ecto.Adapters.SQL.explain/4 for more information.
 ```
@@ -92,12 +92,16 @@ The query we want to `EXPLAIN` will be fetching posts with recent activity. Our 
 
 ```ex
 def posts_with_recent_activity() do
-  recent = DateTime.now!("Etc/UTC") |> DateTime.add(-60 * 60 * 24, :second)
+  recent =
+    "Etc/UTC"
+    |> DateTime.now!()
+    |> DateTime.add(-60 * 60 * 24, :second)
 
   from(p in Post)
   |> join(:left, [p], c in assoc(p, :comments))
   |> preload([p, c], comments: c)
-  |> where([p, c], p.inserted_at > ^recent or c.inserted_at > ^recent)
+  |> where([p, c], p.inserted_at > ^recent or
+                   c.inserted_at > ^recent)
   |> order_by([p], desc: p.inserted_at)
   |> Repo.all()
 end
@@ -107,24 +111,31 @@ In this query, we `join` the `posts` with their `comments`. We also filter both 
 
 ### EXPLAIN versus IO.inspect
 
-A common debugging technique used in Elixir is to insert an `IO.inspect` in-between steps of a pipeline. Unfortunately, this does work for the `explain` function because it expects to receive a queryable (so it will not work at the very end of the pipeline) and returns a string instead of what was passed in (so we will lose our results or intermediate steps).
+A common debugging technique used in Elixir is to insert an `IO.inspect` in-between steps of a pipeline. Unfortunately, this does work for the `explain` function because it expects to receive a queryable (so it will not work at the end of the pipeline) and returns a string instead of what was passed in (so we break the pipeline or lose our results).
 
 If we only care about the `EXPLAIN` results we could remove our call to `Repo.all` and pass our queryable to the `explain` function.
 
 ```ex
- def posts_with_recent_activity() do
-   recent = DateTime.now!("Etc/UTC") |> DateTime.add(-60 * 60 * 24, :second)
+def posts_with_recent_activity() do
+  recent =
+    "Etc/UTC"
+    |> DateTime.now!()
+    |> DateTime.add(-60 * 60 * 24, :second)
 
-   queryable =
-     from(p in Post)
-     |> join(:left, [p], c in assoc(p, :comments))
-     |> preload([p, c], comments: c)
-     |> where([p, c], p.inserted_at > ^recent or c.inserted_at > ^recent)
-     |> order_by([p], desc: p.inserted_at)
 
-   Ecto.Adapters.SQL.explain(SampleBlog.Repo, :all, queryable)
-   |> IO.puts()
- end
+  queryable =
+    from(p in Post)
+    |> join(:left, [p], c in assoc(p, :comments))
+    |> preload([p, c], comments: c)
+    |> where([p, c], p.inserted_at > ^recent or
+                     c.inserted_at > ^recent)
+    |> order_by([p], desc: p.inserted_at)
+    # Note we no longer call Repo.all
+
+  SampleBlog.Repo
+  |> Ecto.Adapters.SQL.explain(:all, queryable)
+  |> IO.puts()
+end
 ```
 
 Since the result of `explain` is a string containing the `EXPLAIN` results, I recommend `IO.puts` over `IO.inspect` because it will print the newlines and better format the result.
@@ -137,14 +148,23 @@ To preserve the pipeline and avoid copying and pasting my query, I turn to [`Ker
 
 ```ex
 def posts_with_recent_activity() do
-  recent = DateTime.now!("Etc/UTC") |> DateTime.add(-60 * 60 * 24, :second)
+  recent =
+    "Etc/UTC"
+    |> DateTime.now!()
+    |> DateTime.add(-60 * 60 * 24, :second)
+
 
   from(p in Post)
   |> join(:left, [p], c in assoc(p, :comments))
   |> preload([p, c], comments: c)
-  |> where([p, c], p.inserted_at > ^recent or c.inserted_at > ^recent)
+  |> where([p, c], p.inserted_at > ^recent or
+                   c.inserted_at > ^recent)
   |> order_by([p], desc: p.inserted_at)
-  |> tap(fn query -> Ecto.Adapters.SQL.explain(Repo, :all, query) |> IO.puts() end)
+  |> tap(fn query ->
+    SampleBlog.Repo
+    |> Ecto.Adapters.SQL.explain(:all, query)
+    |> IO.puts()
+  end)
   |> Repo.all()
 end
 ```
@@ -156,8 +176,8 @@ Blog.posts_with_recent_activity()
 |> IO.inspect(label: "Result")
 ```
 
-```
-# explain statement
+```sql
+-- explain statement
 Sort  (cost=56.17..57.39 rows=489 width=604)
   Sort Key: b0.inserted_at DESC
   ->  Hash Right Join  (cost=13.15..34.32 rows=489 width=604)
@@ -166,7 +186,9 @@ Sort  (cost=56.17..57.39 rows=489 width=604)
         ->  Seq Scan on blog_comments b1  (cost=0.00..18.80 rows=880 width=64)
         ->  Hash  (cost=11.40..11.40 rows=140 width=540)
               ->  Seq Scan on blog_posts b0  (cost=0.00..11.40 rows=140 width=540)
+```
 
+```elixir
 # IO.inspect
 Result: [
   %SampleBlog.Blog.Post{
