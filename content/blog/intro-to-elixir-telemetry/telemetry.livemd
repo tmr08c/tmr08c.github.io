@@ -551,7 +551,7 @@ feel like they could be used interchangeably. Before we move on, let's make unde
 how they differ.
 
 * `events` are what we create/emit with the `telemetry` library.
-* `events` have `measurements` and `metadata`).
+* `events` have `measurements` (and `metadata`).
 * `measurements` are data included in our event. Defining a word with the 
   word itself, `measurements`, _tend_ to include data related to some measurment for the
   event (e.g., `duration` of an event for a request, `size` for an event related to system
@@ -607,8 +607,8 @@ Let's take a look at a simple
 [reporter](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.html#module-reporters)
 that ships with `Telemetry.Metrics` itself, the
 [`ConsoleReporter`](https://hexdocs.pm/telemetry_metrics/Telemetry.Metrics.ConsoleReporter.html#content)
-This reporter should feel similar to the first even handler functions we wrote, like those
-functions the `ConsoleReporter` simply logs information about the even that was emitted.
+This reporter should feel similar to the first event handler functions we wrote; like those
+functions, the `ConsoleReporter` simply logs information about the even that was emitted.
 
 <!-- livebook:{"break_markdown":true} -->
 
@@ -656,12 +656,31 @@ behave like a `last_value` and give us information about hte most revent event.
 After our events are emitted, we can see log messages from the `ConsoleReporter` 
 giving us information about our event!
 
-This is a fantastic tool for debugging your `telemetry` set up and the best part is, 
-the same metrics that you are collecting and debugging for your console reporters can be
-handled by other reporters that will send of the actual metrics using **the same code**.
-The only change you need to make is the reporter module you are using. Since our example
-had the `metrics` we want to collect in a variable, we could even pass the same list of
-metrics to the `ConsoleReporter` or our production-grade reporter based on our environment.
+This is a fantastic tool for debugging your `telemetry` setup. The best part is, 
+using the same `telemetry` code, the metrics that you are collecting and debugging
+with your console reporters can be configured to be consume by other reporters that can
+do much more than logging. The only change you need to make is the reporter module you are using. 
+Since our example had the `metrics` we want to collect in a variable, we could even pass 
+the same list of metrics to the `ConsoleReporter` or our production-grade reporter based 
+on our environment.
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+metrics = [
+  Telemetry.Metrics.last_value([:demo, :telemetry_metrics, :time, :duration]),
+  Telemetry.Metrics.counter([:demo, :telemetry_metrics, :count, :demo_count])
+]
+
+Supervisor.start_link([{Telemetry.Metrics.ConsoleReporter, metrics: metrics}],
+  strategy: :one_for_one
+)
+
+Supervisor.start_link([{SomePackage.MyCoolReporter, metrics: metrics}],
+  strategy: :one_for_one
+)
+
+```
 
 ## Telemetry.Metrics - Building a Reporter
 
