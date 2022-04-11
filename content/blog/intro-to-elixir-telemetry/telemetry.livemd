@@ -679,12 +679,11 @@ Supervisor.start_link([{Telemetry.Metrics.ConsoleReporter, metrics: metrics}],
 Supervisor.start_link([{SomePackage.MyCoolReporter, metrics: metrics}],
   strategy: :one_for_one
 )
-
 ```
 
 ## Telemetry.Metrics - Building a Reporter
 
-Now that we've set up our first metric collection and send metrics to the `ConsoleReporter`,
+Now that we've collected our first set of metrics using the `ConsoleReporter`,
 let's get a better understanding of how reporters work and build our (very simple) one. 
 To show the flexibility provided by building ontop of `Telemetry.Metrics` and not writing
 our own custom handlers, we will re-visit using ETS for handlng event. However, this time,
@@ -702,10 +701,11 @@ docs to ensure you implement something to spec.
 As mention above, it is a common practice to wrap reporters in a process.
 Therefore, our implementation will have two primary parts:
 
-1. A process that will attach to the events we want metrics
-   for and handle any other start-up work that we need (e.g., starting our
-   ETS table).)
-2. A module that has the logic for actually processing the events
+1. A process (via a `GenServer`). Our process will attach (using `:telemetry.attach` like we 
+   have in previous examples) to the events we want metrics
+   for. Our `init` callback and also be used to handle any other start-up work that we
+   may need; in our case, this will include creating our ETS table.
+2. A module that has the logic for actually processing the events.
 
 <!-- livebook:{"break_markdown":true} -->
 
@@ -714,7 +714,24 @@ Therefore, our implementation will have two primary parts:
 <!-- livebook:{"break_markdown":true} -->
 
 For our reporter process, we will be using a `GenServer`. Our process will expect to be
-passed in a list of `metrics` to handle when starting up.
+passed in a list of `metrics` to handle when starting up. We expect to be given a list
+`metrics` in the same format we saw above:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+metrics = [
+  Telemetry.Metrics.last_value([:demo, :telemetry_metrics, :time, :duration]),
+  Telemetry.Metrics.counter([:demo, :telemetry_metrics, :count, :demo_count])
+]
+```
+
+The `Telemetry.Metrics` functions return a struct of the specified metric type. As an example,
+`Telemetry.Metrics.last_value` will return the struct `%Telemetry.Metrics.LastValue`. We
+use the struct type to filter the list of metrics for those that we support (which, for our 
+example, is a subset of the available options).
+
+We will also use our `init` callback for creating the ETS table.
 
 ```elixir
 defmodule ETSReporter.Server do
@@ -749,8 +766,12 @@ defmodule ETSReporter.Server do
           false
       end)
 
+    # Create the ETS table we will use for storing our metric data
     ets = :ets.new(table_name(), [:set, :public])
 
+    # Attach an event listener for the events associated with the
+    # metrics we are collecting. The handler function is defined in
+    # a module we will cover next.
     for {event, metrics} <- Enum.group_by(metrics, & &1.event_name) do
       id = {__MODULE__, event, self()}
       IO.inspect(event, label: "Event")
@@ -781,10 +802,16 @@ end
 ### Handler Module
 
 Let's look at our handler module. This module has a single public function, 
-`handle_event`. If you went through the section on building our own
-`telemetry` event handler, this function should feel familiar familiar.
+`handle_event`.
 
-As a reminder, let's take a look at the `handle_event` function we defined 
+Note: while the function name `handle_event` may seem like a required name
+(like `handle_call`, `handle_cast`), it is not. `handle_event` seems to be a common
+choice for reporters (likely influenced by the `GenServer` callback functions), but is
+not a formal `Behaviour` callback.
+
+If you went through the section on building our own
+`telemetry` event handler, this function should look familiar.As a reminder,
+let's take a look at the `handle_event` function we defined 
 for our `MorePerformantTelemetryHandler`:
 
 <!-- livebook:{"force_markdown":true} -->
@@ -828,14 +855,26 @@ defmodule ETSReporter.Handler do
 end
 ```
 
-A difference you may notice in our handler's `handle_event` function is that we 
-iterate over muliple `metrics` for each event we receive.
+A difference you may notice in our handler's `handle_event` function is that one of our options
+is the list of `metrics` that we are listening for. This list was passed in during the
+`ETSReport.Server.init` callback.
 
 `metrics` are aggregations of `events` and you can have multiple
-aggregation types for a single event (for example,
-we may to have the `count` and the `last_value` for a given event).
-This means, for a given `event` we 
-will iterate over multiple metrics that we want to collect.
+aggregation types for a single event. For example,
+we may to have the `count` and the `last_value` for a given event.
+In order to support a single event handler for each event, our event handler function 
+must iterate over the list of `metrics` we are collecting for the event that we are handling.
+
+The handling is done in our `update_entry` functions. We leverage pattern matching to separate
+out the implementations for each metrics type that we support. _This_ is where the logic
+specific to our `Reporter` lives. Since our `Reporter` is using ETS to store the data, these
+functions udpate our ETS table based on the type of metric. If we were a StatsD reporter, we 
+would be sending the data to our StatsD collector.
+
+## Using our Reporter
+
+TODO - here we will show how to use our reporter. We will need to pull in code from our 
+other LiveBook.
 
 ## Telemetry.Metrics - Reporter Libraries
 
