@@ -873,8 +873,76 @@ would be sending the data to our StatsD collector.
 
 ## Using our Reporter
 
-TODO - here we will show how to use our reporter. We will need to pull in code from our 
-other LiveBook.
+Now that we have defined our handler module and reporter server, we can start up a process
+and send it events.
+
+We will send the same list of metrics to our `ETSReporter` that we did for the 
+`ConsoleReporter`. We will also add a `summary` metric to validate that we are probably 
+filtering any metric types that we do not support.
+
+```elixir
+metrics = [
+  Telemetry.Metrics.last_value([:test, :request, :duration]),
+  Telemetry.Metrics.counter([:test, :request, :duration]),
+  # Unsupported metric type
+  Telemetry.Metrics.summary([:test, :request, :duration])
+]
+```
+
+Just like we did with the `ConsoleReporter`, we will pass this `metrics` list into the 
+`start_link` call.
+
+Remember, we are expecting a warning mesage that the `Summary` metric is unsupported.
+
+```elixir
+{:ok, server} = ETSReporter.Server.start_link(metrics: metrics)
+```
+
+We will use our `ETSReporter.Server.get_metrics` function to validte that our ETS table has
+started up.
+
+```elixir
+ETSReporter.Server.get_metrics(server)
+```
+
+Since we haven't emitted any events, we should see the table name and "No data."
+
+Now, we will emit some events...
+
+```elixir
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 142},
+  %{}
+)
+
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 186},
+  %{}
+)
+
+:telemetry.execute(
+  [:test, :request],
+  %{duration: 159},
+  %{}
+)
+```
+
+...and check our metrics again.
+
+```elixir
+ETSReporter.Server.get_metrics(server)
+```
+
+We should see that our `Counter` has a value of `3` (for the three events that we sent), and
+the `LastValue` is properly set to `159`.
+
+<!-- livebook:{"break_markdown":true} -->
+
+### TODO
+
+* [ ] Summarlize this section
 
 ## Telemetry.Metrics - Reporter Libraries
 
