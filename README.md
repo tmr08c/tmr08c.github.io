@@ -2,7 +2,6 @@
 
 The personal blog of [@tmr08c](https://github.com/tmr08c/).
 
-
 ## Development
 
 ### Branching
