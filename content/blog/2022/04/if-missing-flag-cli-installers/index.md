@@ -37,4 +37,4 @@ Fortunately, the install scripts for the packages include an `--if-missing` flag
 06:53:23.520 [debug] Downloading esbuild from https://registry.npmjs.org/esbuild-darwin-64/-/esbuild-darwin-64-0.14.1.tgz
 ```
 
-For documentation on this and other install flags, you can check the project's "Mix Tasks" section in HexDocs. Here are the links for [`tailwind`](https://hexdocs.pm/tailwind/Mix.Tasks.Tailwind.Install.html#content),[`esbuild`](https://hexdocs.pm/esbuild/Mix.Tasks.Esbuild.Install.html#content), and [`dart_sass`](https://hexdocs.pm/dart_sass/Mix.Tasks.Sass.Install.html).
+For documentation on this and other install flags, you can check the project's "Mix Tasks" section in HexDocs. Here are the links for [`tailwind`](https://hexdocs.pm/tailwind/Mix.Tasks.Tailwind.Install.html#content), [`esbuild`](https://hexdocs.pm/esbuild/Mix.Tasks.Esbuild.Install.html#content), and [`dart_sass`](https://hexdocs.pm/dart_sass/Mix.Tasks.Sass.Install.html).
