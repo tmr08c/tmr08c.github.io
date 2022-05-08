@@ -1,0 +1,155 @@
+=mdls= learned about from https://unix.stackexchange.com/questions/501680/can-bash-read-the-date-added-of-a-file-directory
+
+
+#+begin_src elisp :session foo
+(defun tr/format-org-date (date)
+  (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
+
+(defun tr/time-stamp-to-org-timestamp (ts)
+  "Taken from `org-timestamp-from-time` - the original function used
+ `decode-time`, which doesn't work with our timestamp, so we use
+ `parse-time-string` instead"
+  (pcase-let ((`(,_ ,minute ,hour ,day ,month ,year . ,_) (parse-time-string ts)))
+    (org-element-create 'timestamp
+                        (list :type 'active
+                              :year-start year
+                              :month-start month
+                              :day-start day
+                              :hour-start hour
+                              :minute-start minute))))
+#+end_src
+
+#+begin_src elisp
+
+(parse-time-string (car (split-string "20210219212836-dailies.org" "-")))
+
+(file-name-base "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+
+(parse-time-string
+(replace-regexp-in-string
+ "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
+ "\\1-\\2-\\3 \\4:\\5:\\6"
+ "20210219212836-dailies.org"))
+
+;; (setq fpath  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+
+(defun tr/file-creation-time-from-name (fpath)
+  (let ((filename (file-name-base fpath)))
+    (tr/format-org-date
+     (tr/time-stamp-to-org-timestamp
+      (replace-regexp-in-string
+       "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
+       "\\1-\\2-\\3 \\4:\\5:\\6"
+       filename)))))
+
+;; (tr/file-creation-time-from-name fpath)
+#+end_src
+
+#+RESULTS:
+: tr/file-creation-time-from-name
+
+#+begin_src elisp :session foo
+;; (defun tr/file-creation-datetime-string (path)
+;;   "Use mdls to get the creation datetime from a file path"
+;;   (print "File Creation DateTime")
+;;   (shell-command-to-string (concat "mdls -raw -name kMDItemFSCreationDate " path)))
+
+;; (defun tr/file-change-datetime-string (path)
+;;   "Use mdls to get the creation datetime from a file path"
+;;   (shell-command-to-string (concat "mdls -raw -name kMDItemFSContentChangeDate " path)))
+
+(defun tr/modification-timestamp (fpath)
+  "Use file-attributes to get the modification time of a file and convert to an org-timestamp"
+  (org-timestamp-from-time (file-attribute-modification-time (file-attributes fpath))))
+
+;; (tr/modification-timestamp  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+#+end_src
+
+#+RESULTS:
+: tr/modification-timestamp
+
+#+begin_src elisp :session foo
+(defun tr/file-datetime-info (filepath)
+  "Get a list contrianing a file's creation and change datetime"
+  (list (tr/file-creation-time-from-name filepath)
+        (tr/file-change-datetime-string filepath)))
+#+end_src
+
+#+RESULTS:
+: tr/file-datetime-info
+
+#+begin_src elisp
+(defun tr/add-time-stamp (fpath)
+  "Append `created` and `last_modified` timemstamps to org efiles"
+  (message (format "Checking file %s" fpath))
+  (setq case-fold-search t)
+  (find-file-other-window fpath)
+  (goto-char (point-min))
+  ;; don't add if we already have `created_at'
+  (unless (search-forward "#+created_at" 'nil t)
+    (progn
+      (pcase-let ((`(,created-time ,modified-time) (tr/file-datetime-info fpath)))
+        (goto-char (point-min))
+        (search-forward "#+title")
+        (end-of-line)
+        (newline)
+        (insert (format "#+created_at: %s\n#+last_modified: %s" created-time modified-time))
+        (write-file fpath))))
+  (other-window 1))
+#+end_src
+
+#+RESULTS:
+: tr/add-time-stamp
+
+#+begin_src elisp
+;; (let ((filepath (car (directory-files org-roam-directory 'full ".org"))))
+;;   (progn
+;;     (print (format "Checking file %s" filepath))
+;;     (tr/add-time-stamp filepath)))
+;;     ;; (pcase-let ((`(,created-time ,modified-time) (tr/file-datetime-info filepath)))
+;;     ;;   (list created-time modified-time))))
+
+;; (let ((files (directory-files org-roam-directory 'full ".org")))
+;;   (mapc 'tr/add-time-stamp (butlast files (- (length files) 7))))
+
+;; (butlast files (- (length files) 11))
+(let ((files (directory-files org-roam-directory 'full ".org")))
+  (dolist (file files) (tr/add-time-stamp file)))
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src elisp
+(defun tr/add-time-stamp (fpath)
+  "Append `created` and `last_modified` timemstamps to org efiles"
+  )
+
+(org-timestamp-format
+ (pcase-let ((`(,_ ,minute ,hour ,day ,month ,year . ,_)
+  (parse-time-string
+   (shell-command-to-string
+    (concat "mdls -raw -name kMDItemFSCreationDate "
+            (car (directory-files org-roam-directory 'full ".org")))))))
+    (org-element-create 'timestamp
+        		(list :type 'active
+        		      :year-start year
+        		      :month-start month
+        		      :day-start day
+        		      :hour-start hour
+        		      :minute-start minute)))
+ "\[%Y-%02m-%02d %3a %02H:%02M\]")
+
+  ;; (pcase-let ((`(,_ ,minute ,hour ,day ,month ,year . ,_) (decode-time time)))
+  ;;   (org-element-create 'timestamp
+  ;;       		(list :type (if inactive 'inactive 'active)
+  ;;       		      :year-start year
+  ;;       		      :month-start month
+  ;;       		      :day-start day
+  ;;       		      :hour-start (and with-time hour)
+  ;;       		      :minute-start (and with-time minute)))))
+
+#+end_src
+
+#+RESULTS:
+: [2021-02-20 Sat 02:33]
