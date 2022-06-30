@@ -1,7 +1,7 @@
 ---
-title: "GH Newsfeed"
-date: "2022-02-27T18:08:13.265Z"
-categories: []
+title: "Using the new GitHub feed"
+date: "2022-06-30T18:08:13.265Z"
+categories: ["github", "tools"]
 ---
 
 In this post, I want to share how some of my usage patterns in GitHub has changed along with how GitHub itself has changed to reinforce these patterns. These changes are not related to coding or the project management aspect of GitHub, but instead are related to the "social" aspects. By "social" aspect of GitHub, I mean following other users and starring projects.
