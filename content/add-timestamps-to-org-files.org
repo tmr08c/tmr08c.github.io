@@ -1,3 +1,42 @@
+#title: Add Timestamps to org-roam Files
+
+In this post, I cover adding timestamps to track creation and update times in org-roam files as well as how I updated my exiting nodes to include these timestamps.
+
+** Adding the time stamps
+
+To start, let's make sure any newly create node includes properties our timestamp fields. I decided ot use =created_at= and =last_modified=.
+
+#+begin_src elisp
+(setq org-roam-capture-templates
+      '(("d" "default" plain "%?" :target
+         (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
+         :unnarrowed t)))
+#+end_src
+
+This template is based on the [[https://github.com/org-roam/org-roam/blob/c3867619147175faf89ed8f3e90a1e67a4fd9655/org-roam-capture.el#L41-L45][default in org-roam]] and only added our two new properties.
+
+#+begin_src diff
+ '(("d" "default" plain "%?" :target
+-(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
++(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+ :unnarrowed t))
+#+end_src
+
+
+** Updating the time stamps
+
+The goal of the =last_modified= field is to be updated when I have modified a file. To do this, we need a bit of emacs-lisp.
+
+#+begin_src elisp
+(after! org
+  (setq time-stamp-active t
+        time-stamp-start "#\\+last_modified: [\t]*"
+        time-stamp-end "$"
+        time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+  (add-hook 'before-save-hook 'time-stamp))
+#+end_src
+
+* Pending
 =mdls= learned about from https://unix.stackexchange.com/questions/501680/can-bash-read-the-date-added-of-a-file-directory
 
 
