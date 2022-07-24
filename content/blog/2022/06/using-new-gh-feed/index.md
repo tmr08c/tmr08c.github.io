@@ -41,7 +41,7 @@ The self-reinforcing nature of the changes raises a slight alarm in my mind. Is 
 
 Maybe?
 
-The social aspect of GitHub is not new. In the early days, [their tagline was "Social Coding"](https://1000logos.net/github-logo/). Social media was big then; people even used to admit to using Facebook. Jokes aside, the tagline made sense. GitHub made it easier to work on code with other people. Not only could you share access to code, but they also supported following other users and even used to have the [ability to DM people](https://stackoverflow.com/a/12687679)).
+The social aspect of GitHub is not new. In the early days, [their tagline was "Social Coding"](https://1000logos.net/github-logo/). Social media was big then; people even used to admit to using Facebook. Jokes aside, the tagline made sense. GitHub made it easier to work on code with other people. Not only could you share access to code, but they also supported following other users and even used to have the [ability to DM people](https://stackoverflow.com/a/12687679).
 
 While [the open-source community has had a positive impact on me](/2022/04/open-source-open-eyes/) I definitely [do not want GitHub to become a full-blown social media platform](https://www.calnewport.com/blog/2018/08/23/a-brief-summary-of-the-social-media-reform-movement/).
 
