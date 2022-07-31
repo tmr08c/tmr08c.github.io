@@ -26,6 +26,7 @@ This template is based on the [[https://github.com/org-roam/org-roam/blob/c38676
 
 Now, when we create a new node with =org-roam=, we will have our timestamp keywords set with the current datetime. Since the goal of the =last_modified= field is to be updated when we have modified a file, we will need add a bit of emacs-lisp to our config.
 
+TODO - does this end up adding the =before-save-hook= to /all/ buffers after =org= is loaded?
 #+begin_src elisp
 (after! org
   (setq time-stamp-active t
