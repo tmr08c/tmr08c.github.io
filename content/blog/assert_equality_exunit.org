@@ -1,0 +1,67 @@
+#+title: Assert Equality Exunit
+
+#+begin_src elixir
+ExUnit.start(auto_run: false, color: false)
+
+defmodule EqualityComparisonTest do
+  use ExUnit.Case, async: false, color: false
+
+  test "simple pattern match - success" do
+    assert 1 = 1
+  end
+
+  test "simple pattern match - fail" do
+    assert 1 = 2
+  end
+
+  test "simple equality - success" do
+    assert 1 == 1
+  end
+
+  test "simple equality - fail" do
+    assert 1 == 2
+  end
+
+  test "map pattern match fail" do
+    %{}
+  end
+end
+
+ExUnit.run()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+[33mwarning: [0mredefining module EqualityComparisonTest (current version defined in memory)
+  iex:3
+
+
+
+  1) test simple pattern match - fail (EqualityComparisonTest)
+     [1m[30miex:10[0m
+     [31mmatch (=) failed[0m
+     [36mcode:  [0massert 1 = 2
+     [36mleft:  [0m[31m1[0m
+     [36mright: [0m[32m2[0m
+     [36mstacktrace:[0m
+       iex:11: (test)
+
+[32m.[0m[32m.[0m
+
+  2) test simple equality - fail (EqualityComparisonTest)
+     [1m[30miex:18[0m
+     [31mAssertion with == failed[0m
+     [36mcode:  [0massert 1 == 2
+     [36mleft:  [0m[31m1[0m
+     [36mright: [0m[32m2[0m
+     [36mstacktrace:[0m 
+       iex:19: (test)
+
+[32m.[0m
+
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+[31m5 tests, 2 failures[0m
+
+Randomized with seed 368161
+%{excluded: 0, failures: 2, skipped: 0, total: 5}
+#+end_example
