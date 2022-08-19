@@ -36,9 +36,38 @@ TODO - does this end up adding the =before-save-hook= to /all/ buffers after =or
   (add-hook 'before-save-hook 'time-stamp))
 #+end_src
 
-* Pending
-=mdls= learned about from https://unix.stackexchange.com/questions/501680/can-bash-read-the-date-added-of-a-file-directory
+** Backfilling Data
 
+At this point, my new =org-roam= files will be created with =created_at= and =last_modified= keywords set to the current time and the =last_modified= field will be updated on save. This will have no impact on my existing node database though. This next section covers processing my previous nodes to backfill =created_at= and =last_modified= values.
+
+Please note that I am sure this is not the best =emacs-lisp= to solve this problem. I used this as a chance to learn some =emacs-lisp=. Only after the fact did I realize I should have referenced something like [[https://github.com/org-roam/org-roam/blob/main/org-roam-migrate.el][org-roam-migrate.el]] for better practices. That said, it does work which isn't bad for one-time-use code.
+
+*** Getting Dates
+
+To start, we need to determine how we are going to determine when a node was created and last modified.
+
+Since I am leveraging org-roam's [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam-capture.el#L43][default filename capture template]]
+
+#+begin_src elisp
+(defcustom org-roam-capture-templates
+  '(("d" "default" plain "%?"
+     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                        "#+title: ${title}\n")
+#+end_src
+
+I had access to the canonical node creation time right in the file name.
+
+#+begin_src elisp :session foo
+(defun tr/file-creation-time-from-name (fpath)
+  "Extract a timestamp from the file name. Relies on files having the format 'YYYYMMDDHHMMSS-*' (the default org-roam node filename)."
+  (let ((filename (file-name-base fpath)))
+    (tr/format-org-date
+     (tr/time-stamp-to-org-timestamp
+      (replace-regexp-in-string
+       "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
+       "\\1-\\2-\\3 \\4:\\5:\\6"
+       filename)))))
+#+end_src
 
 #+begin_src elisp :session foo
 (defun tr/format-org-date (date)
@@ -58,64 +87,23 @@ TODO - does this end up adding the =before-save-hook= to /all/ buffers after =or
                               :minute-start minute))))
 #+end_src
 
-#+begin_src elisp
-
-(parse-time-string (car (split-string "20210219212836-dailies.org" "-")))
-
-(file-name-base "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
-
-(parse-time-string
-(replace-regexp-in-string
- "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
- "\\1-\\2-\\3 \\4:\\5:\\6"
- "20210219212836-dailies.org"))
-
-;; (setq fpath  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
-
-(defun tr/file-creation-time-from-name (fpath)
-  (let ((filename (file-name-base fpath)))
-    (tr/format-org-date
-     (tr/time-stamp-to-org-timestamp
-      (replace-regexp-in-string
-       "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
-       "\\1-\\2-\\3 \\4:\\5:\\6"
-       filename)))))
-
-;; (tr/file-creation-time-from-name fpath)
-#+end_src
-
-#+RESULTS:
-: tr/file-creation-time-from-name
 
 #+begin_src elisp :session foo
-;; (defun tr/file-creation-datetime-string (path)
-;;   "Use mdls to get the creation datetime from a file path"
-;;   (print "File Creation DateTime")
-;;   (shell-command-to-string (concat "mdls -raw -name kMDItemFSCreationDate " path)))
-
-;; (defun tr/file-change-datetime-string (path)
-;;   "Use mdls to get the creation datetime from a file path"
-;;   (shell-command-to-string (concat "mdls -raw -name kMDItemFSContentChangeDate " path)))
-
 (defun tr/modification-timestamp (fpath)
   "Use file-attributes to get the modification time of a file and convert to an org-timestamp"
-  (org-timestamp-from-time (file-attribute-modification-time (file-attributes fpath))))
-
-;; (tr/modification-timestamp  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+  (tr/format-org-date
+   (org-timestamp-from-time
+    (file-attribute-modification-time (file-attributes fpath)))))
 #+end_src
-
-#+RESULTS:
-: tr/modification-timestamp
 
 #+begin_src elisp :session foo
 (defun tr/file-datetime-info (filepath)
   "Get a list contrianing a file's creation and change datetime"
   (list (tr/file-creation-time-from-name filepath)
-        (tr/file-change-datetime-string filepath)))
-#+end_src
+        (tr/modification-timestamp filepath)))
 
-#+RESULTS:
-: tr/file-datetime-info
+(tr/file-datetime-info  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+#+end_src
 
 #+begin_src elisp
 (defun tr/add-time-stamp (fpath)
@@ -137,27 +125,34 @@ TODO - does this end up adding the =before-save-hook= to /all/ buffers after =or
   (other-window 1))
 #+end_src
 
-#+RESULTS:
-: tr/add-time-stamp
-
 #+begin_src elisp
-;; (let ((filepath (car (directory-files org-roam-directory 'full ".org"))))
-;;   (progn
-;;     (print (format "Checking file %s" filepath))
-;;     (tr/add-time-stamp filepath)))
-;;     ;; (pcase-let ((`(,created-time ,modified-time) (tr/file-datetime-info filepath)))
-;;     ;;   (list created-time modified-time))))
-
-;; (let ((files (directory-files org-roam-directory 'full ".org")))
-;;   (mapc 'tr/add-time-stamp (butlast files (- (length files) 7))))
-
-;; (butlast files (- (length files) 11))
 (let ((files (directory-files org-roam-directory 'full ".org")))
   (dolist (file files) (tr/add-time-stamp file)))
 #+end_src
 
-#+RESULTS:
 
+* Dropping (I think)
+=mdls= learned about from https://unix.stackexchange.com/questions/501680/can-bash-read-the-date-added-of-a-file-directory
+
+
+#+begin_src elisp
+
+(parse-time-string (car (split-string "20210219212836-dailies.org" "-")))
+
+(file-name-base "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+
+(parse-time-string
+(replace-regexp-in-string
+ "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
+ "\\1-\\2-\\3 \\4:\\5:\\6"
+ "20210219212836-dailies.org"))
+
+;; (setq fpath  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+
+
+
+;; (tr/file-creation-time-from-name fpath)
+#+end_src
 
 #+begin_src elisp
 (defun tr/add-time-stamp (fpath)
@@ -189,6 +184,3 @@ TODO - does this end up adding the =before-save-hook= to /all/ buffers after =or
   ;;       		      :minute-start (and with-time minute)))))
 
 #+end_src
-
-#+RESULTS:
-: [2021-02-20 Sat 02:33]
