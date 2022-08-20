@@ -46,7 +46,7 @@ Please note that I am sure this is not the best =emacs-lisp= to solve this probl
 
 To start, we need to determine how we are going to determine when a node was created and last modified.
 
-Since I am leveraging org-roam's [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam-capture.el#L43][default filename capture template]]
+Since I am leveraging org-roam's [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam-capture.el#L43][default filename capture template]], I had access to the canonical node creation time right in the file name.
 
 #+begin_src elisp
 (defcustom org-roam-capture-templates
@@ -55,11 +55,12 @@ Since I am leveraging org-roam's [[https://github.com/org-roam/org-roam/blob/7f4
                         "#+title: ${title}\n")
 #+end_src
 
-I had access to the canonical node creation time right in the file name.
+With this format in mind, I could use a regular expression to match on the datetime format of the file name.
 
 #+begin_src elisp :session foo
 (defun tr/file-creation-time-from-name (fpath)
-  "Extract a timestamp from the file name. Relies on files having the format 'YYYYMMDDHHMMSS-*' (the default org-roam node filename)."
+  "Extract a timestamp from the file name. Relies on files having the format
+  'YYYYMMDDHHMMSS-*' (the default org-roam node filename)."
   (let ((filename (file-name-base fpath)))
     (tr/format-org-date
      (tr/time-stamp-to-org-timestamp
@@ -69,10 +70,11 @@ I had access to the canonical node creation time right in the file name.
        filename)))))
 #+end_src
 
-#+begin_src elisp :session foo
-(defun tr/format-org-date (date)
-  (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
+Once I have the datetime extracted into a string, I use two helper functions to convert it into an org-friendly date.
 
+First, I used a modified version of =org-timestamp-from-time= that can parse the datetime string we created and convert it into an =org-timestamp=.
+
+#+begin_src elisp :session foo
 (defun tr/time-stamp-to-org-timestamp (ts)
   "Taken from `org-timestamp-from-time` - the original function used
  `decode-time`, which doesn't work with our timestamp, so we use
@@ -87,27 +89,48 @@ I had access to the canonical node creation time right in the file name.
                               :minute-start minute))))
 #+end_src
 
+I then format the =org-timestamp= /back/ into a string, but formatted the same as the timestamp used when we create a new file.
+
+#+begin_src elisp :session foo
+(defun tr/format-org-date (date)
+  (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
+#+end_src
+
+
+To fetch the =last_modified= value, we are able to the =file-attributes= function from =emacs= itself. After we grab the modification time from our file attributes, we able to use the function to cribbed from above (=org-timestamp-from-time=) and reuse our formatting function.
 
 #+begin_src elisp :session foo
 (defun tr/modification-timestamp (fpath)
-  "Use file-attributes to get the modification time of a file and convert to an org-timestamp"
+  "Use file-attributes to get the modification time of a file and convert to an
+  org-timestamp"
   (tr/format-org-date
    (org-timestamp-from-time
     (file-attribute-modification-time (file-attributes fpath)))))
 #+end_src
 
-#+begin_src elisp :session foo
-(defun tr/file-datetime-info (filepath)
-  "Get a list contrianing a file's creation and change datetime"
-  (list (tr/file-creation-time-from-name filepath)
-        (tr/modification-timestamp filepath)))
+Since I knew I would want both values for every file I was updating, I wrote a function that calls both helpers and wraps them in a list.
 
-(tr/file-datetime-info  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
+#+begin_src elisp :session foo
+(defun tr/file-datetime-info (fpath)
+  "Get a list contrianing a file's creation and change datetime"
+  (list (tr/file-creation-time-from-name fpath)
+        (tr/modification-timestamp fpath)))
 #+end_src
+
+*** Updating files
+
+Now that, for a given file, we are able to get our two timestamps, we can use our =tr/file-datetime-info= function to add these values into our files. To do this I:
+
+1. Open the given file in another window
+2. Go to the top of the file
+3. Check if the =create_at= field exists before moving on. Since I had created some new files using my new template and was debugging my code as I went, this allowed me to skip files I may have already updated.
+4. Insert the two datetimes after the =title= keyword, matching our new file template above
+
+I don't know if it was necessary to open the file in another window, but, during development, it was helpful to have the file I was manipulating already open. When running this in bulk, neither the =message= nor the other window provided much feedback because files were bring processed so quickly.
 
 #+begin_src elisp
 (defun tr/add-time-stamp (fpath)
-  "Append `created` and `last_modified` timemstamps to org efiles"
+  "Add `created_at` and `last_modified` timemstamps keywords to file"
   (message (format "Checking file %s" fpath))
   (setq case-fold-search t)
   (find-file-other-window fpath)
@@ -125,62 +148,15 @@ I had access to the canonical node creation time right in the file name.
   (other-window 1))
 #+end_src
 
+*** Updating all the files
+
+Now that we have all of the pieces in place to update a single file, updating all nodes is simple. We can leverage [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam.el#L115-L119][=org-roam-directory=]] to find all of our =org-roam-files= and call =tr/add-time-stamp= for each.
+
 #+begin_src elisp
 (let ((files (directory-files org-roam-directory 'full ".org")))
   (dolist (file files) (tr/add-time-stamp file)))
 #+end_src
 
+** Conclusion
 
-* Dropping (I think)
-=mdls= learned about from https://unix.stackexchange.com/questions/501680/can-bash-read-the-date-added-of-a-file-directory
-
-
-#+begin_src elisp
-
-(parse-time-string (car (split-string "20210219212836-dailies.org" "-")))
-
-(file-name-base "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
-
-(parse-time-string
-(replace-regexp-in-string
- "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
- "\\1-\\2-\\3 \\4:\\5:\\6"
- "20210219212836-dailies.org"))
-
-;; (setq fpath  "/Users/troyrosenberg/Dropbox/Notes/org/roam/20210219212836-dailies.org")
-
-
-
-;; (tr/file-creation-time-from-name fpath)
-#+end_src
-
-#+begin_src elisp
-(defun tr/add-time-stamp (fpath)
-  "Append `created` and `last_modified` timemstamps to org efiles"
-  )
-
-(org-timestamp-format
- (pcase-let ((`(,_ ,minute ,hour ,day ,month ,year . ,_)
-  (parse-time-string
-   (shell-command-to-string
-    (concat "mdls -raw -name kMDItemFSCreationDate "
-            (car (directory-files org-roam-directory 'full ".org")))))))
-    (org-element-create 'timestamp
-        		(list :type 'active
-        		      :year-start year
-        		      :month-start month
-        		      :day-start day
-        		      :hour-start hour
-        		      :minute-start minute)))
- "\[%Y-%02m-%02d %3a %02H:%02M\]")
-
-  ;; (pcase-let ((`(,_ ,minute ,hour ,day ,month ,year . ,_) (decode-time time)))
-  ;;   (org-element-create 'timestamp
-  ;;       		(list :type (if inactive 'inactive 'active)
-  ;;       		      :year-start year
-  ;;       		      :month-start month
-  ;;       		      :day-start day
-  ;;       		      :hour-start (and with-time hour)
-  ;;       		      :minute-start (and with-time minute)))))
-
-#+end_src
+ While I don't yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling packages configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
