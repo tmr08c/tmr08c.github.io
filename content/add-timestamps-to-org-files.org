@@ -1,6 +1,6 @@
 #title: Add Timestamps to org-roam Files
 
-In this post, I cover adding timestamps to track creation and modification times in [[https://github.com/org-roam/org-roam][=org-roam=]] files as well as how backfilling your existing nodes to include these timestamps.
+In this post, I cover adding timestamps to track creation and modification times in [[https://github.com/org-roam/org-roam][=org-roam=]] files as well as updating existing nodes to include these timestamps.
 
 ** Adding the time stamps
 
@@ -26,29 +26,11 @@ This template is based on the [[https://github.com/org-roam/org-roam/blob/c38676
 
 If you have multiple capture templates, you will need to update them all.
 
-** Updating the time stamps
-
-In order to update our =last_modified= value when the file is modified, we will leverage a =before-save-hook=. Based on [[https://org-roam.discourse.group/t/update-a-field-last-modified-at-save/321/18][this post]], the hook leverages the built-in [[https://www.emacswiki.org/emacs/TimeStamp][=time-stamp= module]] to find and update the timestamp after our =last_modified= keyword.
-
-#+begin_src elisp
-(after! org
-  (setq time-stamp-active t
-        time-stamp-start "#\\+last_modified: [\t]*"
-        time-stamp-end "$"
-        time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
-  (add-hook 'before-save-hook 'time-stamp))
-#+end_src
-
-Two things to note:
-
-1. The =after!= keyword is [[https://github.com/doomemacs/doomemacs/blob/c44bc81a05f3758ceaa28921dd9c830b9c571e61/lisp/doom-lib.el#L496][defined in Doom]]. If you are not using Doom, you may need to adjust if you want this to only load for =org-mode= files.
-2. This hook will run in all  in all of your org files. I have not noticed a performance concern when saving, but if you do, you may want to investigate limiting the scope of the hook. 
-
 ** Backfilling Data
 
-At this point, my new =org-roam= files will be created with =created_at= and =last_modified= keywords set to the current time and the =last_modified= field will be updated on save. This will have no impact on my existing node database though. This next section covers processing my previous nodes to backfill =created_at= and =last_modified= values.
+At this point, *new* =org-roam= files will include the =created_at= and =last_modified= keywords . This section covers updating all of our existing files to include these keywords as well.
 
-Please note that I am sure this is not the best =emacs-lisp= to solve this problem. I used this as a chance to learn some =emacs-lisp=. Only after the fact did I realize I should have referenced something like [[https://github.com/org-roam/org-roam/blob/main/org-roam-migrate.el][org-roam-migrate.el]] for better practices. That said, it does work which isn't bad for one-time-use code.
+/Please note that I am sure this is not the best =emacs-lisp= to solve this problem. I used this as a chance to learn some =emacs-lisp=. Only after the fact did I realize I should have referenced something like [[https://github.com/org-roam/org-roam/blob/main/org-roam-migrate.el][org-roam-migrate.el]] for better practices. That said, it does work which isn't bad for one-time-use code./
 
 *** Getting Dates
 
@@ -104,8 +86,7 @@ I then format the =org-timestamp= /back/ into a string, but formatted the same a
   (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
 #+end_src
 
-
-To fetch the =last_modified= value, we are able to the =file-attributes= function from =emacs= itself. After we grab the modification time from our file attributes, we able to use the function to cribbed from above (=org-timestamp-from-time=) and reuse our formatting function.
+To fetch the =last_modified= value, we are able to the =file-attributes= function from =emacs= itself. After we grab the modification time from our file attributes, we able to use the function we cribbed from above (=org-timestamp-from-time=) and reuse our formatting function.
 
 #+begin_src elisp :session foo
 (defun tr/modification-timestamp (fpath)
@@ -125,7 +106,7 @@ Since I knew I would want both values for every file I was updating, I wrote a f
         (tr/modification-timestamp fpath)))
 #+end_src
 
-*** Updating files
+*** Adding timestamps to a file
 
 Now that, for a given file, we are able to get our two timestamps, we can use our =tr/file-datetime-info= function to add these values into our files. To do this I:
 
@@ -164,6 +145,26 @@ Now that we have all of the pieces in place to update a single file, updating al
 (let ((files (directory-files org-roam-directory 'full ".org")))
   (dolist (file files) (tr/add-time-stamp file)))
 #+end_src
+
+** Updating the time stamps
+
+Now that all of our files have our new keywords, our final step in keeping our =last_modified= value up to date.  To do this,  we can leverage a =before-save-hook= to update the value just before we save it.
+
+Based on [[https://org-roam.discourse.group/t/update-a-field-last-modified-at-save/321/18][this post]], the hook leverages the built-in [[https://www.emacswiki.org/emacs/TimeStamp][=time-stamp= module]] to find and update the timestamp after our =last_modified= keyword.
+
+#+begin_src elisp
+(after! org
+  (setq time-stamp-active t
+        time-stamp-start "#\\+last_modified: [\t]*"
+        time-stamp-end "$"
+        time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+  (add-hook 'before-save-hook 'time-stamp))
+#+end_src
+
+Two things to note:
+
+1. The =after!= keyword is [[https://github.com/doomemacs/doomemacs/blob/c44bc81a05f3758ceaa28921dd9c830b9c571e61/lisp/doom-lib.el#L496][defined in Doom]]. If you are not using Doom, you may need to adjust if you want this to only load for =org-mode= files.
+2. This hook will run in all  in all of your org files. I have not noticed a performance concern when saving, but, if you do, you may want to investigate limiting the scope of the hook.
 
 ** Conclusion
 
