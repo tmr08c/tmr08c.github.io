@@ -1,16 +1,16 @@
 ---
 title: "Add Timestamps to org-roam Files"
 date: "2022-08-31T18:08:13.265Z"
-categories: ["emacs", "org-roam", "emacs-lisp", "note taking"]
+categories: ["emacs", "org-roam", "emacs-lisp", "note-taking"]
 ---
 
-In this post, I cover adding timestamps to track creation and modification times in [`org-roam`](https://github.com/org-roam/org-roam) files as well as updating existing nodes to include these timestamps.
+In this post, I cover adding timestamps to track creation and modification times in [`org-roam`](https://github.com/org-roam/org-roam) files and how to update existing nodes to include these timestamps.
 
 ## Adding the timestamps
 
-We will track our creation and modification timestamps with [keywords](https://orgmode.org/worg/dev/org-syntax.html#Keywords). I decided to use `created_at` and `last_modified`.
+We will track our creation and modification timestamps with [keywords](https://orgmode.org/worg/dev/org-syntax.html#Keywords). This post uses `created_at` and `last_modified`, but you can choose alternatives as you see fit.
 
-To start, let's make sure any newly create node includes our timestamp fields by updating our capture templates.
+We will begin by ensuring newly created nodes include our timestamp fields. We do this by updating our capture templates.
 
 ```emacs-lisp
 (setq org-roam-capture-templates
@@ -47,7 +47,7 @@ Since I am leveraging `org-roam`'s [default filename capture template](https://g
                         "#+title: ${title}\n")
 ```
 
-With this format in mind, I use a regular expression to match on the datetime format of the file name.
+With this format in mind, I use a regular expression to match the datetime format of the file name.
 
 ```emacs-lisp
 (defun tr/file-creation-time-from-name (fpath)
@@ -81,18 +81,18 @@ First, I used a modified version of `org-timestamp-from-time` that can parse the
                               :minute-start minute))))
 ```
 
-I then format the `org-timestamp` _back_ into a string, but formatted the same as the timestamp used when we create a new file.
+I then format the `org-timestamp` _back_ into a string but formatted the same as the timestamp used when we create a new file.
 
 ```emacs-lisp
 (defun tr/format-org-date (date)
   (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
 ```
 
-To fetch the `last_modified` value, we are able to the `file-attributes` function from `Emacs` itself. After we grab the modification time from our file attributes, we able to use the function we cribbed from above (`org-timestamp-from-time`) and reuse our formatting function.
+To fetch the `last_modified` value, we can use the `file-attributes` function from `Emacs` itself. After we grab the modification time from our file attributes, we can pass it into the function we cribbed from above (`org-timestamp-from-time`) and reuse our formatting function.
 
 ```emacs-lisp
 (defun tr/modification-timestamp (fpath)
-  "Use file-attributes to get the modification time of a file and convert to an
+  "Use file-attributes to get the modification time of a file and convert it to an
   org-timestamp"
   (tr/format-org-date
    (org-timestamp-from-time
@@ -103,14 +103,14 @@ Knowing I want to use both values together, I wrote a function that calls both h
 
 ```emacs-lisp
 (defun tr/file-datetime-info (fpath)
-  "Get a list contrianing a file's creation and change datetime"
+  "Get a list containing a file's creation and change datetime"
   (list (tr/file-creation-time-from-name fpath)
         (tr/modification-timestamp fpath)))
 ```
 
 ### Adding timestamps to a file
 
-Now that, for a given file, we are able to get our two timestamps, we can use our `tr/file-datetime-info` function to add these values into our files. using the following function.
+Now that, for a given file, we can get our two timestamps, we can use our `tr/file-datetime-info` function to insert these values into our files. using the following function.
 
 ```emacs-lisp
 (defun tr/add-time-stamp (fpath)
@@ -140,7 +140,7 @@ This function will:
 3.  Check if the `create_at` field exists before moving on. Since I had created some new files using my new template and was debugging my code as I went, this allowed me to skip files I may have already updated.
 4.  Insert the two datetimes after the `title` keyword, matching our new file template above
 
-I don't know if it was necessary to open the file in another window, but, during development, it was helpful to have the file I was manipulating already open. When running this in bulk, neither the `message` nor the other window provided much feedback because files were bring processed so quickly.
+I don't know if it was necessary to open the file in another window, but, during development, it was helpful to have the file I was manipulating already open. Also, when running this in bulk, neither the `message` nor the other window provided much feedback because files were processed so quickly.
 
 ### Updating all the files
 
@@ -169,8 +169,8 @@ Based on [this post](https://org-roam.discourse.group/t/update-a-field-last-modi
 Two things to note:
 
 1.  The `after!` keyword is [defined in Doom](https://github.com/doomemacs/doomemacs/blob/c44bc81a05f3758ceaa28921dd9c830b9c571e61/lisp/doom-lib.el#L496). If you are not using Doom, you may need to adjust if you want this to only load for `org-mode` files.
-2.  This hook will run in all in all of your org files. I have not noticed a performance concern when saving, but, if you do, you may want to investigate limiting the scope of the hook.
+2.  This hook will run in all of your org files. I have not noticed a performance concern when saving, but, if you do, you may want to investigate limiting the scope of the hook.
 
 ## Conclusion
 
-While I don't yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling packages configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
+While I don't yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling package configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
