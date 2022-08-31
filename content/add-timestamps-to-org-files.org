@@ -2,7 +2,7 @@
 
 In this post, I cover adding timestamps to track creation and modification times in [[https://github.com/org-roam/org-roam][=org-roam=]] files as well as updating existing nodes to include these timestamps.
 
-** Adding the time stamps
+** Adding the timestamps
 
 We will track our creation and modification timestamps with [[https://orgmode.org/worg/dev/org-syntax.html#Keywords][keywords]]. I decided to use =created_at= and =last_modified=.
 
@@ -30,13 +30,11 @@ If you have multiple capture templates, you will need to update them all.
 
 At this point, *new* =org-roam= files will include the =created_at= and =last_modified= keywords . This section covers updating all of our existing files to include these keywords as well.
 
-/Please note that I am sure this is not the best =emacs-lisp= to solve this problem. I used this as a chance to learn some =emacs-lisp=. Only after the fact did I realize I should have referenced something like [[https://github.com/org-roam/org-roam/blob/main/org-roam-migrate.el][org-roam-migrate.el]] for better practices. That said, it does work which isn't bad for one-time-use code./
+/Please note that I used this as a chance to learn some =emacs-lisp=, so it may not be following best practices. Only after the fact did I realize I should have referenced something like [[https://github.com/org-roam/org-roam/blob/main/org-roam-migrate.el][org-roam-migrate.el]] for a more robust solution. That said, it does work which isn't bad for one-time-use code./
 
 *** Getting Dates
 
-To start, we need to determine how we are going to determine when a node was created and last modified.
-
-Since I am leveraging org-roam's [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam-capture.el#L43][default filename capture template]], I had access to the canonical node creation time right in the file name.
+Since I am leveraging =org-roam='s [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam-capture.el#L43][default filename capture template]], I have access to the canonical node creation time right in the file name.
 
 #+begin_src elisp
 (defcustom org-roam-capture-templates
@@ -45,9 +43,9 @@ Since I am leveraging org-roam's [[https://github.com/org-roam/org-roam/blob/7f4
                         "#+title: ${title}\n")
 #+end_src
 
-With this format in mind, I could use a regular expression to match on the datetime format of the file name.
+With this format in mind, I use a regular expression to match on the datetime format of the file name.
 
-#+begin_src elisp :session foo
+#+begin_src elisp
 (defun tr/file-creation-time-from-name (fpath)
   "Extract a timestamp from the file name. Relies on files having the format
   'YYYYMMDDHHMMSS-*' (the default org-roam node filename)."
@@ -64,7 +62,7 @@ Once I have the datetime extracted into a string, I use two helper functions to 
 
 First, I used a modified version of =org-timestamp-from-time= that can parse the datetime string we created and convert it into an =org-timestamp=.
 
-#+begin_src elisp :session foo
+#+begin_src elisp
 (defun tr/time-stamp-to-org-timestamp (ts)
   "Taken from `org-timestamp-from-time` - the original function used
  `decode-time`, which doesn't work with our timestamp, so we use
@@ -81,14 +79,14 @@ First, I used a modified version of =org-timestamp-from-time= that can parse the
 
 I then format the =org-timestamp= /back/ into a string, but formatted the same as the timestamp used when we create a new file.
 
-#+begin_src elisp :session foo
+#+begin_src elisp
 (defun tr/format-org-date (date)
   (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
 #+end_src
 
-To fetch the =last_modified= value, we are able to the =file-attributes= function from =emacs= itself. After we grab the modification time from our file attributes, we able to use the function we cribbed from above (=org-timestamp-from-time=) and reuse our formatting function.
+To fetch the =last_modified= value, we are able to the =file-attributes= function from =Emacs= itself. After we grab the modification time from our file attributes, we able to use the function we cribbed from above (=org-timestamp-from-time=) and reuse our formatting function.
 
-#+begin_src elisp :session foo
+#+begin_src elisp
 (defun tr/modification-timestamp (fpath)
   "Use file-attributes to get the modification time of a file and convert to an
   org-timestamp"
@@ -97,9 +95,9 @@ To fetch the =last_modified= value, we are able to the =file-attributes= functio
     (file-attribute-modification-time (file-attributes fpath)))))
 #+end_src
 
-Since I knew I would want both values for every file I was updating, I wrote a function that calls both helpers and wraps them in a list.
+Knowing I want to use both values together, I wrote a function that calls both helpers and wraps them in a list.
 
-#+begin_src elisp :session foo
+#+begin_src elisp
 (defun tr/file-datetime-info (fpath)
   "Get a list contrianing a file's creation and change datetime"
   (list (tr/file-creation-time-from-name fpath)
@@ -108,14 +106,7 @@ Since I knew I would want both values for every file I was updating, I wrote a f
 
 *** Adding timestamps to a file
 
-Now that, for a given file, we are able to get our two timestamps, we can use our =tr/file-datetime-info= function to add these values into our files. To do this I:
-
-1. Open the given file in another window
-2. Go to the top of the file
-3. Check if the =create_at= field exists before moving on. Since I had created some new files using my new template and was debugging my code as I went, this allowed me to skip files I may have already updated.
-4. Insert the two datetimes after the =title= keyword, matching our new file template above
-
-I don't know if it was necessary to open the file in another window, but, during development, it was helpful to have the file I was manipulating already open. When running this in bulk, neither the =message= nor the other window provided much feedback because files were bring processed so quickly.
+Now that, for a given file, we are able to get our two timestamps, we can use our =tr/file-datetime-info= function to add these values into our files. using the following function.
 
 #+begin_src elisp
 (defun tr/add-time-stamp (fpath)
@@ -137,6 +128,15 @@ I don't know if it was necessary to open the file in another window, but, during
   (other-window 1))
 #+end_src
 
+This function will:
+
+1. Open the given file in another window
+2. Go to the top of the file
+3. Check if the =create_at= field exists before moving on. Since I had created some new files using my new template and was debugging my code as I went, this allowed me to skip files I may have already updated.
+4. Insert the two datetimes after the =title= keyword, matching our new file template above
+
+I don't know if it was necessary to open the file in another window, but, during development, it was helpful to have the file I was manipulating already open. When running this in bulk, neither the =message= nor the other window provided much feedback because files were bring processed so quickly.
+
 *** Updating all the files
 
 Now that we have all of the pieces in place to update a single file, updating all nodes is simple. We can leverage [[https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam.el#L115-L119][=org-roam-directory=]] to find all of our =org-roam-files= and call =tr/add-time-stamp= for each.
@@ -146,9 +146,9 @@ Now that we have all of the pieces in place to update a single file, updating al
   (dolist (file files) (tr/add-time-stamp file)))
 #+end_src
 
-** Updating the time stamps
+** Updating the timestamps
 
-Now that all of our files have our new keywords, our final step in keeping our =last_modified= value up to date.  To do this,  we can leverage a =before-save-hook= to update the value just before we save it.
+Our final step is keeping our =last_modified= value up-to-date.  To do this,  we can leverage a =before-save-hook=.
 
 Based on [[https://org-roam.discourse.group/t/update-a-field-last-modified-at-save/321/18][this post]], the hook leverages the built-in [[https://www.emacswiki.org/emacs/TimeStamp][=time-stamp= module]] to find and update the timestamp after our =last_modified= keyword.
 
@@ -168,4 +168,4 @@ Two things to note:
 
 ** Conclusion
 
- While I don't yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling packages configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
+While I don't yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling packages configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
