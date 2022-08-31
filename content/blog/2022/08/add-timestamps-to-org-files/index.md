@@ -14,9 +14,9 @@ To start, let's make sure any newly create node includes our timestamp fields by
 
 ```emacs-lisp
 (setq org-roam-capture-templates
-        '(("d" "default" plain "%?" :target
-        (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
-        :unnarrowed t)))
+  '(("d" "default" plain "%?" :target
+  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
+  :unnarrowed t)))
 ```
 
 This template is based on the [default in org-roam](https://github.com/org-roam/org-roam/blob/c3867619147175faf89ed8f3e90a1e67a4fd9655/org-roam-capture.el#L41-L45), and simply adds our two new keywords.
@@ -173,4 +173,4 @@ Two things to note:
 
 ## Conclusion
 
-While I don';t yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling packages configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
+While I don't yet know if the decision to add these timestamps will prove to provide value or simply satisfy a curiosity, this work may be an example of getting more from the journey than the destination. My journey has taken me a step deeper into the world of Emacs and the power it provides in enabling packages configuration (updating my templates), editor behavior (adding save hooks), and bulk editing files.
