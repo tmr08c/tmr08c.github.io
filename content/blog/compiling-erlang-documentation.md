@@ -6,7 +6,7 @@ categories: ["erlang", "elixir", "asdf", "documentation"]
 
 If you install Erlang with `kerl` (which `asdf` does), you can configure it to build its documentation by setting the environment variable `KERL_BUILD_DOCS` to `yes`.
 
-By default, `kerl` will build HTML docs (configurable via `KERL_INSTALL_HTMLDOCS`), Man pages (configurable via `KERL_INSTALL_MANPAGES`) and, thanks to [EEP 48](https://www.erlang.org/eeps/eep-0048) (requiring OTP 23+), embedded documentation that you can access via the REPL (`erl`, and even `iex` for Elixir). For Elixirists, we can now use the [`h/1`](https://hexdocs.pm/iex/IEx.Helpers.html#h/1) IEx helper on Erlang modules and functions.
+By default, `kerl` will build HTML docs (configurable via `KERL_INSTALL_HTMLDOCS`), Man pages (configurable via `KERL_INSTALL_MANPAGES`) and, thanks to [EEP 48](https://www.erlang.org/eeps/eep-0048) (requiring OTP 23+), embedded documentation that you can access via the REPL (`erl`, and even `iex` for Elixir) and LSP. For Elixirists, we can now use the [`h/1`](https://hexdocs.pm/iex/IEx.Helpers.html#h/1) IEx helper on Erlang modules and functions.
 
 ```
 iex> h :ets.insert
