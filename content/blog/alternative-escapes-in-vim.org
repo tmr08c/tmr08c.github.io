@@ -1,0 +1,19 @@
+#+title: Change Opinions: Alternative Escapes In Vim
+
+In this post I provide a brief background on using alternatives to the <kbd>ESC</kdbd> key in Vim (and Vim-like emulators) as well as how my opinion as recently changed on one of the options.
+
+When using Vi(m) (out of habit, I will be using Vim throughout this post, but I believe everything also applies to its predecessor, Vi), you will inevitably wonder, "why did they choose the escape key?" As a modal editor, you constantly switch modes during your editing sessions and, to go back into normal mode, the default key is <kbd>ESC</kdbd>.  On modern QWERTY-style keyboards, the <kbd>ESC</kdbd> in located at the top-left of the keyboard, a stretch that, for my hands, requires my left-hand away from the home row to reach. As a keyboard-driven environment, the requirement to move so far away from the home row is not ideal.
+
+** Why did they choose the  <kbd>ESC</kdbd> key?
+According to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][Vim wiki]], the choice of the escape key was due to the keyboard layout used with the AMD-3A terminal, the terminal Vi was originally written on. With this layout, the <kbd>ESC</kdbd> key located there <kbd>TAB</kdb> is on a QWERTY keybord, a more easily accessible location.
+
+<a title="No machine-readable author provided. StuartBrady assumed (based on copyright claims)., CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KB_Terminal_ADM3A.svg"><img width="512" alt="KB Terminal ADM3A" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/KB_Terminal_ADM3A.svg/512px-KB_Terminal_ADM3A.svg.png"></a>
+** What I've used
+History lesson aside, I was fortunate enough to be exposed to ways to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][avoid the escape key]] fairly early on in my Vim usage.
+** Changed opinions
+
+* TODO Pick up
+- ~C-[~ as the esc /sequence/
+  - remapping control
+  - emacs pinky?
+- [ ] find reference to ~jk~ key mapping in DOOM
