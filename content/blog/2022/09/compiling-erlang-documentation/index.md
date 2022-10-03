@@ -1,6 +1,6 @@
 ---
 title: "Compiling Erlang Documentation"
-date: "2022-08-31T18:08:13.265Z"
+date: "2022-09-30T08:51:13.265Z"
 categories: ["erlang", "elixir", "asdf", "documentation"]
 ---
 
