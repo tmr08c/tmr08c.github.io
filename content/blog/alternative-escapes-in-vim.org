@@ -1,17 +1,33 @@
 #+title: Change Opinions: Alternative Escapes In Vim
 
-In this post I provide a brief background on using alternatives to the <kbd>ESC</kdbd> key in Vim (and Vim-like emulators) as well as how my opinion as recently changed on one of the options.
+In this post I provide a brief background on using alternatives to the <kbd>ESC</kbd> key in Vim (and Vim-like emulators) as well as how my opinion as recently changed on one of the options.
 
-When using Vi(m) (out of habit, I will be using Vim throughout this post, but I believe everything also applies to its predecessor, Vi), you will inevitably wonder, "why did they choose the escape key?" As a modal editor, you constantly switch modes during your editing sessions and, to go back into normal mode, the default key is <kbd>ESC</kdbd>.  On modern QWERTY-style keyboards, the <kbd>ESC</kdbd> in located at the top-left of the keyboard, a stretch that, for my hands, requires my left-hand away from the home row to reach. As a keyboard-driven environment, the requirement to move so far away from the home row is not ideal.
+** Why did they choose the  <kbd>ESC</kbd> key?
+When using Vim (out of habit, I will be using Vim throughout this post, but I believe everything also applies to its predecessor, Vi), you will inevitably wonder, "why did they choose the escape key?" As a modal editor, you constantly switch modes during your editing sessions and, to go back into normal mode, the default key is <kbd>ESC</kbd>.  On modern QWERTY-style keyboards, the <kbd>ESC</kbd> in located at the top-left of the keyboard, a stretch that, for my hands, requires moving my left-hand away from the home row to reach. As a keyboard-driven environment, the requirement to move so far away from the home row is not ideal.
 
-** Why did they choose the  <kbd>ESC</kdbd> key?
-According to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][Vim wiki]], the choice of the escape key was due to the keyboard layout used with the AMD-3A terminal, the terminal Vi was originally written on. With this layout, the <kbd>ESC</kdbd> key located there <kbd>TAB</kdb> is on a QWERTY keybord, a more easily accessible location.
+According to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][Vim wiki]], the choice of the escape key was due to the keyboard layout used with the AMD-3A terminal, the terminal Vi was originally written on. With this layout, the <kbd>ESC</kbd> key located there <kbd>TAB</kdb> is on a QWERTY keybord, a more easily accessible location.
 
 <a title="No machine-readable author provided. StuartBrady assumed (based on copyright claims)., CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KB_Terminal_ADM3A.svg"><img width="512" alt="KB Terminal ADM3A" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/KB_Terminal_ADM3A.svg/512px-KB_Terminal_ADM3A.svg.png"></a>
 ** What I've used
 History lesson aside, I was fortunate enough to be exposed to ways to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][avoid the escape key]] fairly early on in my Vim usage.
-** Changed opinions
 
+I was also to the concept of updaitng <kbd>Caps Lock</kbd> to be <kbd>Control</kbd>. This advice seems to be more common in the Emacs community as a way to [[https://www.emacswiki.org/emacs/MovingTheCtrlKey][avoid "Emacs pinky,"]] but has proven to be generally useful as <kbd>Control</kbd> is a common modifier across macOS as shortcuts like <kbd>Control</kbd> <kdb>a</kbd> (move to start of line) work across applications.
+
+Moving <kbd>Control</kbd> is relevant my epxerience with alternative Vim escape sequence because, on American English keyboards, <kbd>Control</kbd> <kbd>[</kdb> will send the <kbd>ESC</kbd> sequence to the operating system, making it equivalent to <kbd>ESC</kbd>.  This is even noted in the [[https://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-\[][Vim manual]]:
+
+#+begin_quote
+<Esc> or CTRL-[ End insert or Replace mode, go back to Normal mode.  Finish
+                abbreviation.
+                Note: If your <Esc> key is hard to hit on your keyboard, train
+                yourself to use CTRL-[.
+#+end_quote
+
+While initially seeing the combination  <kbd>Control</kbd> <kbd>]</kbd> may seem unintunitive, trying it out with a remapped <kbd>Caps Lock</kbd> will reveal it requires only a small movement of both pinky fingers.
+
+This combination has been, and continues to be, the primary way I change into normal mode within Vim.
+
+** Changed opinions
+We now come to a change opinon. As mentioned above,  <kbd>Control</kbd><kbd>[</kbd> continues to be my go-to method of changing modes. However, there are other common strategies that I used to think were unnecessary or could even potentially get in the way, that I have begun using as well.
 * TODO Pick up
 - ~C-[~ as the esc /sequence/
   - remapping control
