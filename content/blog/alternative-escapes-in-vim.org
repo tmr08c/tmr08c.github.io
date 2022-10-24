@@ -9,36 +9,28 @@ According to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][Vim wiki]], the
 
 <a title="No machine-readable author provided. StuartBrady assumed (based on copyright claims)., CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KB_Terminal_ADM3A.svg"><img width="512" alt="KB Terminal ADM3A" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/KB_Terminal_ADM3A.svg/512px-KB_Terminal_ADM3A.svg.png"></a>
 ** What I've used
-History lesson aside, I was fortunate enough to be exposed to ways to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][avoid the escape key]] fairly early on in my Vim usage.
-
-I was also exposed to the concept of updating <kbd>Caps Lock</kbd> to be <kbd>Control</kbd>. This advice seems to be more common in the Emacs community as a way to [[https://www.emacswiki.org/emacs/MovingTheCtrlKey][avoid "Emacs pinky,"]] but has proven to be generally useful as <kbd>Control</kbd> is a common modifier across macOS as shortcuts like <kbd>Control</kbd> <kdb>a</kbd> (move to start of line) work across applications.
+History lesson aside, I was fortunate enough to be exposed to ways to [[https://vim.fandom.com/wiki/Avoid_the_escape_key][avoid the escape key]] fairly early on in my Vim usage. I was also exposed to the concept of updating <kbd>Caps Lock</kbd> to be <kbd>Control</kbd>. This advice seems to be more common in the Emacs community as a way to [[https://www.emacswiki.org/emacs/MovingTheCtrlKey][avoid "Emacs pinky,"]] but has proven to be generally useful as <kbd>Control</kbd> is a common modifier across UNIX-like systems as shortcuts like <kbd>Control</kbd> <kdb>a</kbd> (move to start of line) work across applications.
 
 Moving <kbd>Control</kbd> is relevant to my experience with alternative Vim escape sequence because, on American English keyboards, <kbd>Control</kbd> <kbd>[</kdb> will send the <kbd>ESC</kbd> sequence to the operating system, making it equivalent to <kbd>ESC</kbd>.  Not only is this mentioned in the [[https://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-\[][Vim manual]], it is recommend as an easier-to-hit alternative:
 
-#+begin_quote
+#+begin_src
 <Esc> or CTRL-[ End insert or Replace mode, go back to Normal mode.  Finish
                 abbreviation.
                 Note: If your <Esc> key is hard to hit on your keyboard, train
                 yourself to use CTRL-[.
-#+end_quote
+#+end_src
 
-While initially seeing the combination  <kbd>Control</kbd> <kbd>]</kbd> may seem unintunitive, trying it out with a remapped <kbd>Caps Lock</kbd> will reveal it requires only a small movement of both pinky fingers.
+While initially seeing the combination  <kbd>Control</kbd> <kbd>]</kbd> may seem unintuitive, trying it out with a remapped <kbd>Caps Lock</kbd> will reveal it requires only a small movement of both pinky fingers.
 
 This combination has been, and continues to be, the primary way I change into normal mode within Vim.
 
 ** Changed opinions
-We now come to a change opinion. As mentioned above, <kbd>Control</kbd><kbd>[</kbd> continues to be my go-to method of changing modes. However, there are other [[https://vim.fandom.com/wiki/Avoid_the_escape_key#Mappings][mapping strategies]] that I used to think were unnecessary or could even potentially get in the way, that I have begun using as well. These mapping suggest using two keys such as =jj=, =jk=, or =kj=. The mapping is set such that, if typed in rapid succession, they will map to the <kbd>ESC</kdb> key, taking you into normal moral. However, if the time between letters exceeds the [[https://vimdoc.sourceforge.net/htmldoc/options.html#'timeout'][timeout]], they can be inserted normally.
+We now come to a change opinion. As mentioned above, <kbd>Control</kbd><kbd>[</kbd> continues to be my go-to method of changing modes. However, there are other [[https://vim.fandom.com/wiki/Avoid_the_escape_key#Mappings][mapping strategies]] that I used to think were unnecessary or could even potentially harmful, that I have begun using as well. These mapping suggest using two keys such as =jj=, =jk=, or =kj=. The mapping is set such that, if typed in rapid succession, they will map to the <kbd>ESC</kdb> key, taking you into normal moral. However, if the time between letters exceeds the [[https://vimdoc.sourceforge.net/htmldoc/options.html#'timeout'][timeout]], they can be inserted normally.
 
 My concern with using these mappings is the I worried I would regularly need to type these keyboard combinations and be frustrated by the need to intentionally pause. This changed when I realized [[https://github.com/doomemacs/doomemacs/blame/61d7200e649d005ce80df0b74a6ee47b4db0a9d0/modules/editor/evil/config.el#L326][DOOM has been shipping with =jk= mapped ever since I have started using it]]. The fact that I did not know or realize this mapping was up proved that it was an unintrusive choice.
 
-After becoming aware that the mapping was already set up for me and hadn't gotten in the way, I decided to start using it. While I have found <kbd>Control</kbd><kbd>[</kbd> convenient, I could see the appeal of =jk=: I wouldn't have to move my fingers from the home row (of would move my fingers /back/ into home row position as a part of moving into normal mode).
+After becoming aware that the mapping was already set up for me and hadn't gotten in the way, I decided to start using it. While I have found <kbd>Control</kbd><kbd>[</kbd> convenient, I could see the appeal of =jk=: I wouldn't have to move my fingers from the home row (or would move my fingers /back/ into home row position as a part of transitioning into normal mode).
 
 I now have three ways to enter normal mode:  <kbd>ESC</kbd>,  <kbd>Control</kbd><kbd>[</kbd>, and <kbd>j</kbd><kbd>k</kbd> and my fingers can choose based on whatever is most convenient for their current positions. Rather than being a landmine waiting to move me into normal mode at inopportune times,  <kbd>j</kbd><kbd>k</kbd> has provided an additional time- and finger-saving mapping to enhance my editing experience.
 
-/Full transparency: in writing this post, I did have +one+ a few instances where typing =jk= put me into normal mode when trying to type it. I think this post is an exceptional case and it hasn't changed my opinon back./
-
-* TODO Pick up
-- ~C-[~ as the esc /sequence/
-  - remapping control
-  - emacs pinky?
-- [ ] find reference to ~jk~ key mapping in DOOM
+/Full transparency: in writing this post, I did have +one+ a few instances where typing =jk= put me into normal mode when trying to type it. I think this post is an exceptional case and it hasn't changed my opinion back./
