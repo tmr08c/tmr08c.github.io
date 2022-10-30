@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check formatting
         # if this gets annoying consider trying something like
         # https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
@@ -22,12 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Tell Cypress to use our custom test script
           command: yarn test:e2e:ci
-
