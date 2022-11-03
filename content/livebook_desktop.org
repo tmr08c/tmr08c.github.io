@@ -1,0 +1,25 @@
+#+title: Livebook Desktop
+
+A few months ago, the Livebook team [[https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu][announced]] the Livebook Desktop app. Based on the name alone, I thought they may have built a native version of Livebook itself (fortunately, all hope is not yet lost on [[https://native.live/][this dream]]). Instead Livebook Desktop could be seen as more of a launcher . The application will bundle everything necessary for someone to run the Livebook server, including Elixir. While not yet [[https://github.com/livebook-dev/livebook/tree/b911bd71ed7dc7e59407af570b9c7d2e884acb66/app_bundler][extracted from LiveView iteself]], it's great to know this is possible in the Elixir ecosystem. As noted in the announcement post, this bundling provides a low friction way to get folks exposed to Elixir:
+
+#+begin_quote
+But imagine someone who's not an Elixir developer. They had to either install Docker or Elixir before getting started with Livebook. And if they are in their first steps as developers, even using a terminal could be demanding.
+
+That's why we built Livebook desktop. It's the simplest way to install Livebook on your machine.
+#+end_quote
+
+As noted in the announcement, if you already have Elixir installed, getting Livebook installed is easy, so I thought I may not be among the target audience of Livebook Desktop.
+
+#+begin_quote
+Before this release, installing Livebook on your machine could be considered easy, especially if you already had Elixir installed.
+#+end_quote
+
+While arguably, I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
+
+
+
+* Original notes
+- don’t have to manage terminal
+- don’t have to worry about different elixir/erlang versions
+
+announcement post: https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu
