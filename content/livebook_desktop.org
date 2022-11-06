@@ -14,9 +14,16 @@ As noted in the announcement, if you already have Elixir installed, getting Live
 Before this release, installing Livebook on your machine could be considered easy, especially if you already had Elixir installed.
 #+end_quote
 
+** Becoming a convert
 While arguably, I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
 
 
+*** I don't have to manage a terminal tab
+Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed, on macOS, via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
+
+While fairly superficial, this has made it significantly easier to mange running a Livebook server. Rather than having to babysit a terminal tab with your running process, I can launch Livebook Desktop and its there if I need it.
+*** Keeping in sync with Elixir and Erlang versions
+Because Livebook Desktop is packaged with its own version of Elixir, it is manage separately from the various versions of Elixir I have installed via ~asdf~. Like the last time, this is minor, but a quality of life improvement nonetheless.
 
 * Original notes
 - don’t have to manage terminal
