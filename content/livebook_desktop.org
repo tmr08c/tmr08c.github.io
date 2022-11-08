@@ -1,6 +1,6 @@
 #+title: Livebook Desktop
 
-A few months ago, the Livebook team [[https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu][announced]] the Livebook Desktop app. Based on the name alone, I thought they may have built a native version of Livebook itself (fortunately, all hope is not yet lost on [[https://native.live/][this dream]]). Instead Livebook Desktop could be seen as more of a launcher . The application will bundle everything necessary for someone to run the Livebook server, including Elixir. While not yet [[https://github.com/livebook-dev/livebook/tree/b911bd71ed7dc7e59407af570b9c7d2e884acb66/app_bundler][extracted from LiveView iteself]], it's great to know this is possible in the Elixir ecosystem. As noted in the announcement post, this bundling provides a low friction way to get folks exposed to Elixir:
+A few months ago, the Livebook team [[https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu][announced]] the Livebook Desktop app which bundles everything necessary to run the Livebook server, including Elixir. As noted in the announcement post, this bundling provides a low friction way to get folks exposed to Elixir:
 
 #+begin_quote
 But imagine someone who's not an Elixir developer. They had to either install Docker or Elixir before getting started with Livebook. And if they are in their first steps as developers, even using a terminal could be demanding.
@@ -8,25 +8,41 @@ But imagine someone who's not an Elixir developer. They had to either install Do
 That's why we built Livebook desktop. It's the simplest way to install Livebook on your machine.
 #+end_quote
 
-As noted in the announcement, if you already have Elixir installed, getting Livebook installed is easy, so I thought I may not be among the target audience of Livebook Desktop.
+Also mentioned in the announcement is the idea that, if you already have Elixir installed, getting Livebook installed is easy.
 
 #+begin_quote
 Before this release, installing Livebook on your machine could be considered easy, especially if you already had Elixir installed.
 #+end_quote
 
+After reading  the announcement and installing it (~brew instal livebook~) it anyway, I agreed with the announcement — it was easy enough for me to install Livebook as is, so I may not be the target audience.
+
 ** Becoming a convert
 While arguably, I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
 
+*** It's always there
+I have Livebook Desktop set up on my machine, but found I didn't really use it for a while. However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—there are a number of blog posts that can be run in Livebook or show off a new feature and at work it has served well as a tool for demonstrating back-end heavy features.
 
 *** I don't have to manage a terminal tab
 Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed, on macOS, via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
 
 While fairly superficial, this has made it significantly easier to mange running a Livebook server. Rather than having to babysit a terminal tab with your running process, I can launch Livebook Desktop and its there if I need it.
 *** Keeping in sync with Elixir and Erlang versions
-Because Livebook Desktop is packaged with its own version of Elixir, it is manage separately from the various versions of Elixir I have installed via ~asdf~. Like the last time, this is minor, but a quality of life improvement nonetheless.
+Because Livebook Desktop is packaged with its own version of Elixir, it is manage separately from the various versions of Elixir I have installed via ~asdf~. This allows me to switch between projects and versions of Elixir/Erlang and always be able to launch Livebook.
+
+Being packaged with Elixir also allows me to keep up with the latest version of Livebook even if I am working on something that is not on the latest version of Elixir. At the time of writing, trying to install Livebook using Elixir 1.13 will fail:
+
+#+begin_src bash
+\** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
+#+end_src
+
+By using Livebook Desktop, the Livebook team can use the latest Elixir features and I can use the latest Livebook.
+
+** Conclusion
+While there are situations in which you may prefer a different install method or are unable to use Livebook Desktop (sorry Linux users), if you are an Elixir user and haven't installed Livebook Desktop, I would suggest doing so. This is a low-cost experiment that reduces some of the friction in being able to use a great tool.
 
 * Original notes
 - don’t have to manage terminal
 - don’t have to worry about different elixir/erlang versions
+- run in livebook button and desktop button
 
 announcement post: https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu
