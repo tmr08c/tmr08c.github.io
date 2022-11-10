@@ -20,8 +20,13 @@ After reading  the announcement and installing it (~brew instal livebook~) it an
 While arguably, I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
 
 *** It's always there
-I have Livebook Desktop set up on my machine, but found I didn't really use it for a while. However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—there are a number of blog posts that can be run in Livebook or show off a new feature and at work it has served well as a tool for demonstrating back-end heavy features.
+I have Livebook Desktop set up on my machine, but found I didn't really use it for a while. However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—some blog posts have begun to include a  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we have leverage Livebook as a tool for both demonstrations as well as validation. As my usage has increased I found Livebook Desktop running in the background increasingly convenient.
+*** Ecosystem support
+As mentioned above, the Livebook team have created [[https://livebook.dev/badge][badges]] that allow you link others to open your ~livemd~ file in their own Livebook server. The team has updated the open page to support easily opening files in Livebook instances managed by Livebook Desktop.
 
+[[file:badge-launch-page.png][open in Livebook Desktop opion on Run in Livebook page]]
+
+This save managing ports and allows the Run in Livebook page to quickly find your running Livebook server.
 *** I don't have to manage a terminal tab
 Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed, on macOS, via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
 
