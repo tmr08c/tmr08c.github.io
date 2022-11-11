@@ -14,40 +14,40 @@ Also mentioned in the announcement is the idea that, if you already have Elixir 
 Before this release, installing Livebook on your machine could be considered easy, especially if you already had Elixir installed.
 #+end_quote
 
-After reading  the announcement and installing it (~brew instal livebook~) it anyway, I agreed with the announcement — it was easy enough for me to install Livebook as is, so I may not be the target audience.
+After reading  the announcement and installing it anyway (~brew instal livebook~), I agreed with the announcement—it was easy enough for me to install Livebook as is, so I would continue to use the version I installed through Hex and run the server myself.
 
-** Becoming a convert
-While arguably, I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
+However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—[[https://www.strangeleaflet.com/strange-leaflet-about-elixir-page1][blog posts]] have begun to include links to ~livemd~ files or leverage the  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we began using Livebook as a tool for both demonstrations as well as validation. As my usage has increased, I found managing Livebook the "old way" becoming more tedious. While I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
 
-*** It's always there
-I have Livebook Desktop set up on my machine, but found I didn't really use it for a while. However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—some blog posts have begun to include a  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we have leverage Livebook as a tool for both demonstrations as well as validation. As my usage has increased I found Livebook Desktop running in the background increasingly convenient.
-*** Ecosystem support
-As mentioned above, the Livebook team have created [[https://livebook.dev/badge][badges]] that allow you link others to open your ~livemd~ file in their own Livebook server. The team has updated the open page to support easily opening files in Livebook instances managed by Livebook Desktop.
+This conversion has not come from a "killer feature," but rather though a coalescing of conveniences.
 
-[[file:badge-launch-page.png][open in Livebook Desktop opion on Run in Livebook page]]
+- **I don't have to manage a terminal tab**
 
-This save managing ports and allows the Run in Livebook page to quickly find your running Livebook server.
-*** I don't have to manage a terminal tab
-Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed, on macOS, via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
+    Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed, on macOS, via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
 
-While fairly superficial, this has made it significantly easier to mange running a Livebook server. Rather than having to babysit a terminal tab with your running process, I can launch Livebook Desktop and its there if I need it.
-*** Keeping in sync with Elixir and Erlang versions
-Because Livebook Desktop is packaged with its own version of Elixir, it is manage separately from the various versions of Elixir I have installed via ~asdf~. This allows me to switch between projects and versions of Elixir/Erlang and always be able to launch Livebook.
+    This has made it significantly easier to mange running a Livebook server. Rather than having to babysit a terminal tab with your running process, you can launch Livebook Desktop and its there when you need it.
 
-Being packaged with Elixir also allows me to keep up with the latest version of Livebook even if I am working on something that is not on the latest version of Elixir. At the time of writing, trying to install Livebook using Elixir 1.13 will fail:
+- **Ecosystem support**
 
-#+begin_src bash
-\** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
-#+end_src
+    As mentioned above, the Livebook team have created [[https://livebook.dev/badge][badges]] that allow folks to link others to open ~livemd~ file with their own Livebook server. The team has updated the open page to support easily opening files in Livebook instances managed by Livebook Desktop.
 
-By using Livebook Desktop, the Livebook team can use the latest Elixir features and I can use the latest Livebook.
+    <center>
+    [[file:badge-launch-page.png][open in Livebook Desktop opion on Run in Livebook page]]
+    </center>
 
-** Conclusion
+    This allows the Run in Livebook page to quickly find your running Livebook server.
+
+- **Keeping in sync with Elixir and Erlang versions**
+
+    Because Livebook Desktop is packaged with its own version of Elixir, it is manage separately from the various versions of Elixir I have installed via ~asdf~. This allows me to switch between projects and versions of Elixir/Erlang and always be able to launch Livebook.
+
+    Being packaged with Elixir also allows me to keep up with the latest version of Livebook even if I am working on something that is not on the latest version of Elixir. At the time of writing, trying to install Livebook using Elixir 1.13 will fail:
+
+    #+begin_src bash
+    \** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
+    #+end_src
+
+    By using Livebook Desktop, the Livebook team can use the latest Elixir features and I can use the latest Livebook, regardless of the version of Elixir my current project is running.
+
+While not a single "killer feature," combined, these attributes result in a low maintenance tool that is always available when you need it. The result is a tool that you are more likely to use, and I have.
+
 While there are situations in which you may prefer a different install method or are unable to use Livebook Desktop (sorry Linux users), if you are an Elixir user and haven't installed Livebook Desktop, I would suggest doing so. This is a low-cost experiment that reduces some of the friction in being able to use a great tool.
-
-* Original notes
-- don’t have to manage terminal
-- don’t have to worry about different elixir/erlang versions
-- run in livebook button and desktop button
-
-announcement post: https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu
