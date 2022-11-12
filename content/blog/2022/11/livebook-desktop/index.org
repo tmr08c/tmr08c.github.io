@@ -1,6 +1,6 @@
 #+title: Livebook Desktop
 
-A few months ago, the Livebook team [[https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu][announced]] the Livebook Desktop app which bundles everything necessary to run the Livebook server, including Elixir. As noted in the announcement post, this bundling provides a low friction way to get folks exposed to Elixir:
+A few months ago, the Livebook team [[https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu][announced]] the Livebook Desktop app which bundles everything necessary to run the Livebook server. As noted in the announcement post, this bundling provides a low friction way to get folks exposed to Elixir:
 
 #+begin_quote
 But imagine someone who's not an Elixir developer. They had to either install Docker or Elixir before getting started with Livebook. And if they are in their first steps as developers, even using a terminal could be demanding.
@@ -8,7 +8,7 @@ But imagine someone who's not an Elixir developer. They had to either install Do
 That's why we built Livebook desktop. It's the simplest way to install Livebook on your machine.
 #+end_quote
 
-Also mentioned in the announcement is the idea that, if you already have Elixir installed, getting Livebook installed is easy.
+The announcement also notes that, for folks already using Elixir on a day-to-day basis, this bundling may not provide quite the same level of value as installing Livebook if you already have your Elixir tooling in place is not difficult.
 
 #+begin_quote
 Before this release, installing Livebook on your machine could be considered easy, especially if you already had Elixir installed.
@@ -16,15 +16,19 @@ Before this release, installing Livebook on your machine could be considered eas
 
 After reading  the announcement and installing it anyway (~brew instal livebook~), I agreed with the announcement—it was easy enough for me to install Livebook as is, so I would continue to use the version I installed through Hex and run the server myself.
 
-However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—[[https://www.strangeleaflet.com/strange-leaflet-about-elixir-page1][blog posts]] have begun to include links to ~livemd~ files or leverage the  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we began using Livebook as a tool for both demonstrations as well as validation. As my usage has increased, I found managing Livebook the "old way" becoming more tedious. While I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
+However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—[[https://www.strangeleaflet.com/strange-leaflet-about-elixir-page1][blog posts]] have begun to include links to ~livemd~ files or leverage the  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we began using Livebook as a tool for both demonstrations and for some system validation work. As my usage has increased, I found managing Livebook the "old way" becoming more tedious. While I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
 
 This conversion has not come from a "killer feature," but rather though a coalescing of conveniences.
 
 - **I don't have to manage a terminal tab**
 
-    Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed, on macOS, via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
+    Livebook desktop will launch a standalone instance of the Livebook server on your machine in the background. Your Livebook server can be managed (on macOS) via a toolbar icon that allows you to open a browser window pointing at the running server or stop the server.
 
-    This has made it significantly easier to mange running a Livebook server. Rather than having to babysit a terminal tab with your running process, you can launch Livebook Desktop and its there when you need it.
+    <center>
+    [[file:livebook-desktop-macos-toolbar.png][Livebook Desktop macOS toolbar]]
+    </center>
+
+    This has made managing a Livebook server easier. Rather than having to babysit a terminal tab with your running process, you can launch Livebook Desktop and its there when you need it.
 
 - **Ecosystem support**
 
@@ -34,7 +38,7 @@ This conversion has not come from a "killer feature," but rather though a coales
     [[file:badge-launch-page.png][open in Livebook Desktop opion on Run in Livebook page]]
     </center>
 
-    This allows the Run in Livebook page to quickly find your running Livebook server.
+    This allows the Run in Livebook page to quickly find your running Livebook server and launch the Livebook you want to run.
 
 - **Keeping in sync with Elixir and Erlang versions**
 
@@ -48,6 +52,4 @@ This conversion has not come from a "killer feature," but rather though a coales
 
     By using Livebook Desktop, the Livebook team can use the latest Elixir features and I can use the latest Livebook, regardless of the version of Elixir my current project is running.
 
-While not a single "killer feature," combined, these attributes result in a low maintenance tool that is always available when you need it. The result is a tool that you are more likely to use, and I have.
-
-While there are situations in which you may prefer a different install method or are unable to use Livebook Desktop (sorry Linux users), if you are an Elixir user and haven't installed Livebook Desktop, I would suggest doing so. This is a low-cost experiment that reduces some of the friction in being able to use a great tool.
+While not a single "killer feature," combined, these attributes result in a low maintenance tool that is always available when you need it. The result is a tool that you are more likely to use, and I have. If you are an Elixir user and haven't installed Livebook Desktop, I would suggest doing so. This is a low-cost experiment that reduces some of the friction in being able to use a great tool.
