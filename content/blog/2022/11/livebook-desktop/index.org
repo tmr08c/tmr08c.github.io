@@ -8,17 +8,9 @@ But imagine someone who's not an Elixir developer. They had to either install Do
 That's why we built Livebook desktop. It's the simplest way to install Livebook on your machine.
 #+end_quote
 
-The announcement also notes that, for folks already using Elixir on a day-to-day basis, this bundling may not provide quite the same level of value as installing Livebook if you already have your Elixir tooling in place is not difficult.
+The announcement also notes that, for folks already using Elixir on, this bundling may not provide the same level of value since installing Livebook is easy if you already have the Elixir tooling in place. After installing it anyway (~brew install livebook~), I agreed with the announcement—it was easy enough for me to install Livebook as is, so I would continue to use the version I installed through Hex and run the server myself.
 
-#+begin_quote
-Before this release, installing Livebook on your machine could be considered easy, especially if you already had Elixir installed.
-#+end_quote
-
-After reading  the announcement and installing it anyway (~brew instal livebook~), I agreed with the announcement—it was easy enough for me to install Livebook as is, so I would continue to use the version I installed through Hex and run the server myself.
-
-However, as Livebook fever has spread through the Elixir ecosystem, I found more needs to reach for Livebook—[[https://www.strangeleaflet.com/strange-leaflet-about-elixir-page1][blog posts]] have begun to include links to ~livemd~ files or leverage the  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we began using Livebook as a tool for both demonstrations and for some system validation work. As my usage has increased, I found managing Livebook the "old way" becoming more tedious. While I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even for someone that gets to work in Elixir already.
-
-This conversion has not come from a "killer feature," but rather though a coalescing of conveniences.
+However, as Livebook fever has spread through the Elixir ecosystem, I find myself reaching for Livebook more often—[[https://www.strangeleaflet.com/strange-leaflet-about-elixir-page1][blog posts]] have begun to include links to ~livemd~ files or leverage the  "Run in Livebook" [[https://livebook.dev/badge][badge]] to follow along and at work we began using Livebook as a tool for both demonstrations and for some system validation work. As my usage increased, I found managing Livebook the "old way" becoming more tedious. While I may still not be among the (original) target audience, I have become a convert to the value proposition of Livebook Desktop, even as someone that gets to work in Elixir already. This conversion has not come from a "killer feature," but rather though a coalescing of conveniences.
 
 - **I don't have to manage a terminal tab**
 
@@ -32,7 +24,7 @@ This conversion has not come from a "killer feature," but rather though a coales
 
 - **Ecosystem support**
 
-    As mentioned above, the Livebook team have created [[https://livebook.dev/badge][badges]] that allow folks to link others to open ~livemd~ file with their own Livebook server. The team has updated the open page to support easily opening files in Livebook instances managed by Livebook Desktop.
+    As mentioned earlier, the Livebook team have created [[https://livebook.dev/badge][badges]] that allow folks to link others to open ~livemd~ file with their own Livebook server. The team has updated the open page to support easily opening files in Livebook instances managed by Livebook Desktop.
 
     <center>
     [[file:badge-launch-page.png][open in Livebook Desktop opion on Run in Livebook page]]
