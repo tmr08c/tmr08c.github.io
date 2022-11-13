@@ -42,7 +42,9 @@ Because Livebook Desktop is packaged with its own version of Elixir, it is manag
 
 Being packaged with Elixir also allows me to keep up with the latest version of Livebook even if I am working on something that is not on the latest version of Elixir. At the time of writing, trying to install Livebook using Elixir 1.13 will fail:
 
-      \** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
+```
+** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
+```
 
 By using Livebook Desktop, the Livebook team can use the latest Elixir features and I can use the latest Livebook, regardless of the version of Elixir my current project is running.
 
