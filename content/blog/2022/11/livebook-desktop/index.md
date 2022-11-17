@@ -28,7 +28,7 @@ Rather than babysitting a terminal tab with your running process, you can launch
 
 ### Ecosystem support
 
-As mentioned earlier, the Livebook team has created [badges](https://livebook.dev/badge) that allow folks to provide an easy way for others to run a Livebook from their own Livebook instance. The team has updated the open page to support opening files in Livebook instances managed by Livebook Desktop.
+As mentioned above, the Livebook team has created [badges](https://livebook.dev/badge) that allow folks to provide an easy way for others to run a Livebook from their own Livebook instance. The team has updated the open page to support opening files in Livebook instances managed by Livebook Desktop.
 
   <center>
     <img src="./badge-launch-page.png" alt="open in Livebook Desktop option on Run in Livebook page" lazy />
@@ -40,7 +40,7 @@ Now, the Run in Livebook page can find your running Livebook Desktop server and 
 
 Livebook Desktop comes packaged with Elixir. The result is Livebook Desktop's version of Elixir is managed separately from the various versions of Elixir you may already have installed on your system. This separation allows you to switch between versions of Elixir/Erlang without having to install or upgrade your Livebook version.
 
-Being packaged with Elixir also allows you to keep up with the latest version of Livebook, even if you are not yet on the latest version of Elixir. At the time of writing, trying to install Livebook using Elixir 1.13 will fail:
+Being packaged with Elixir also allows you to keep up with the latest version of Livebook, even if you are not yet on the latest version of Elixir. At the time of writing, trying to install the latest Livebook (`0.7.2`) using Elixir `1.13` will fail:
 
 ```
 ** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
