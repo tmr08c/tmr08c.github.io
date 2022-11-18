@@ -4,13 +4,13 @@ date: "2022-11-30T07:08:13.265Z"
 categories: ["elixir", "livebook", "changed opinion"]
 ---
 
-A few months ago, the Livebook team [announced](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) the Livebook Desktop app, which bundles everything necessary to run the Livebook server. This bundling provides a low-friction way to get folks exposed to Elixir. From the announcement:
+A few months ago, the Livebook team [announced](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) the Livebook Desktop app, which bundles everything necessary to run [Livebook](https://livebook.dev/) locally. This bundling provides a low-friction way to get folks exposed to Elixir. From the announcement:
 
 > But imagine someone who's not an Elixir developer. They had to either install Docker or Elixir before getting started with Livebook. And if they are in their first steps as developers, even using a terminal could be demanding.
 >
 > That's why we built Livebook desktop. It's the simplest way to install Livebook on your machine.
 
-The announcement also notes that, folks already using Elixir may not find the same level of value since installing Livebook is easy if you already have the Elixir tooling in place. After installing it anyway (`brew install livebook`), I agreed with the announcement—it was easy enough for me to install Livebook as is, so I would continue to use the version I installed through Hex and run the server myself.
+The announcement also notes that folks already using Elixir may not find as much value since installing Livebook is easy if you already have the Elixir tooling setup. After installing it anyway (`brew install livebook`), I agreed with the announcement—it was easy enough for me to install Livebook as is, so I would continue to use the version I installed through Hex and run the server myself.
 
 ## Becoming a Convert
 
@@ -34,7 +34,7 @@ As mentioned above, the Livebook team has created [badges](https://livebook.dev/
     <img src="./badge-launch-page.png" alt="open in Livebook Desktop option on Run in Livebook page" lazy />
   </center>
 
-Now, the Run in Livebook page can find your running Livebook Desktop server and launch the Livebook you want to run without configuration.
+Now, the Run in Livebook page can find your running Livebook Desktop server and launch the Livebook you want to run without needing the exact URL.
 
 ### Keeping in sync with Elixir and Erlang versions
 
@@ -46,10 +46,10 @@ Being packaged with Elixir also allows you to keep up with the latest version of
 ** (Mix) You're trying to run :livebook on Elixir v1.13.4 but it has declared in its mix.exs file it supports only Elixir ~> 1.14
 ```
 
-You do not have this problem with Livebook Desktop since it has a compatible Elixir (i.e., `~> 1.14`). By using Livebook Desktop, the Livebook team can use the latest Elixir features, and you can use the latest Livebook, regardless of the version of Elixir your current project is running.
+You do not have this problem with Livebook Desktop since it comes with a compatible Elixir (i.e., `~> 1.14`). By using Livebook Desktop, the Livebook team can use the latest Elixir features, and you can use the latest Livebook, regardless of the version of Elixir your current project is running.
 
 ## Conclusion
 
-While not a single "killer feature," when combined, these attributes result in a low-maintenance, readily-available tool. The result is a product you will finding yourself reaching for more often.
+While not a single "killer feature," when combined, these attributes result in a low-maintenance, readily-available tool. The result is a product you will find yourself reaching for more often.
 
 If you are an Elixir user and haven't installed Livebook Desktop, I suggest doing so; it is a low-cost experiment that reduces some of the friction in being able to use a great tool.
