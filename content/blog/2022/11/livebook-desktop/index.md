@@ -31,7 +31,7 @@ Rather than babysitting a terminal tab with your running process, you can launch
 As mentioned above, the Livebook team has created [badges](https://livebook.dev/badge) that allow folks to provide an easy way for others to run a Livebook from their own Livebook instance. The team has updated the open page to support opening files in Livebook instances managed by Livebook Desktop.
 
   <center>
-    <img src="./badge-launch-page.png" alt="open in Livebook Desktop option on Run in Livebook page" lazy />
+    <img src="./badge-launch-page.png" alt="open in Livebook Desktop option from Run in Livebook page" lazy />
   </center>
 
 Now, the Run in Livebook page can find your running Livebook Desktop server and launch the Livebook you want to run without needing the exact URL.
