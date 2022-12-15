@@ -29,13 +29,19 @@
 
 (progn
   (find-file-other-window "~/Dropbox/Notes/org/roam/daily/2022-11-18.org")
-  (let ((lists (org-element-map (org-element-parse-buffer) 'plain-list
-                 (lambda (list)
-                   (map-do (lambda (element) print element) list)
-                   ))))
-       (other-window 2)
-       (goto-char (point-max))
-       (insert (format "%s" org-ast))))
+  (let ((lists
+         (org-element-map (org-element-parse-buffer) 'plain-list
+           ;; TODO also fiter on parent headling
+           ;; alternatively, I may be able to get the headline first and then get the children content
+           (lambda (list) (and
+                      (string-equal (org-element-property :type list) 'ordered)
+                      list)))))
+    (print lists)
+        )
+    ;; (other-window 2)
+    ;; (goto-char (point-max))
+    ;; (insert (format "%s" org-ast))
+    )
 
-(provide 'gratitude)
+  (provide 'gratitude)
 ;;; gratitude.el ends here
