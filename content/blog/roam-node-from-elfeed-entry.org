@@ -1,0 +1,18 @@
+#+title: Roam Node From Elfeed Entry
+
+I had a very Emacs-y day, yesterday. It started with using [[https://github.com/skeeto/elfeed][elfeed]] to read articles in my RSS feed. After coming across an article I wanted to take some notes on, I stayed within Emacs to use my note-taking tool of choice, [[https://www.orgroam.com/][org-roam]].  This is a regular occurrence for me and a process I do "by hand." Yesterday, knowing I had an open afternoon, I embarked on the most Emacs-y part of the day—attempting to find a way automate part of this process.
+
+My current process for creating a new ~node~ from an ~elfeed~ entry isn't particular cumbersome:
+
+1. I will use the shortcut to create a new org-roam ~node~.
+2. I will set the title to the title used in the entry. I don't have an elegant way to do this, and end up copying the full entry line from the ~elfeed-search~ buffer. This capture the title, author, and tags I may have added. I will just past this and delete everything but the tile.
+3. I store a link to the ~elfeed~ entry using ~org-store-link~ (some magic from DOOM or elfeed or something else makes this just work&trade;).
+4. I paste the ~elfeed~ link into capture pane for the node.
+5. I write some notes.
+
+This requires some diligence on my part (using the right title, remembering to include the link), some window jumping, and text clean-up, but isn't a time-consuming process.
+
+
+* Pending
+** Should I expand my process to crate nodes for the feeds?
+I should be able to get information about the feed. I could create nodes for the feed and include them in the template as the =author=.
