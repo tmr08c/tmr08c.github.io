@@ -27,7 +27,7 @@ My current process for creating a new `node` from an `elfeed` entry isn't partic
     </video>
 </center>
 
-This manual process requires diligence (using the correct title, remembering to include the link), window jumping, and text clean-up, but, as the video above shows, is not overly time-consuming. However, because I had some time off, I decided to use this as an opportunity to improve my skills with customizing Emacs to my liking and explore writing a function to more quickly create and pre-populate an Org-roam `node` based on the current `elfeed` entry I am viewing.
+This manual process requires diligence (using the correct title, remembering to include the link), window jumping, and text clean-up, but, as the video above shows, is not overly time-consuming. However, because I had some time off, I wanted to see if I could speed up the process, improving my Emacs skills along the way.
 
 ## My target flow
 
@@ -68,7 +68,7 @@ Since we know what we want our template to look like, let's start there. I've up
            :unnarrowed t))))
 ```
 
-To remain consistent across our capture templates, we define the variables `file-name` and `properties`. With only two templates, these variables may be overkill. If you find you want to [add new, default properties to your capture templates](/2022/08/add-timestamps-to-org-files/) or use [multiple slipboxex](https://jethrokuan.github.io/org-roam-guide/), variables like these should make your configuration easier to read and keep consistent.
+To remain consistent across our capture templates, we define the variables `file-name` and `properties`. With only two templates, these variables may be overkill. If you find you want to [add new, default properties to your capture templates](/2022/08/add-timestamps-to-org-files/) or use [multiple slipboxes](https://jethrokuan.github.io/org-roam-guide/), variables like these should make your configuration easier to read and keep consistent.
 
 Our new entry, "elfeed," is set to the key `"e"` (we will reference this later). It uses the same file naming scheme as the default template but expands upon the properties by adding `filetags`. We also set some text to be used in the body, `link :: ${link}`, leveraging a [substitution syntax supported by `Org-roam`](https://github.com/org-roam/org-roam/blob/c3867619147175faf89ed8f3e90a1e67a4fd9655/org-roam-capture.el#L271-L275).
 
@@ -76,7 +76,7 @@ Our new entry, "elfeed," is set to the key `"e"` (we will reference this later).
 > node (see the org-roam-node). If the property does not exist, the user will be
 > prompted to fill in the string value.
 
-If we manually invoke this capture template, we will be prompted to provide a `link` at capture time. However, when creating a template form a function, this substition enables us to _pass in_ the `link` for use at creation time. Let's see how to do this now.
+If we manually invoke this capture template, we will be prompted to provide a `link` at capture time. However, when creating a template from a function, this substition enables us to _pass in_ the `link` for use at creation time. Let's see how to do this now.
 
 ## A function to create our node
 
