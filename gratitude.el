@@ -52,9 +52,9 @@
                        (lambda (headline)
                          (print headline)
                          (and
-                         (print (org-element-property :raw-value headline))
-                         (string-equal (org-element-property :raw-value headline) "Grateful or Excited About")
-                         list)))
+                          (print (org-element-property :raw-value headline))
+                          (string-equal (org-element-property :raw-value headline) "Grateful or Excited About")
+                          list)))
                      ;; (print (org-element-property :parent list))
                      list))))))
          (print "hum..")
@@ -67,7 +67,7 @@
 
 (defun gratitude-from-headline () "Get gratitude section of daily files."
        (find-file-other-window "~/Dropbox/Notes/org/roam/daily/2022-11-18.org")
-       (let ((lists
+       (let* ((lists
               (org-element-map (org-element-parse-buffer) 'headline
                 ;; TODO also fiter on parent headling
                 ;; alternatively, I may be able to get the headline first and then get the children content
@@ -75,32 +75,34 @@
                   ;; (print list)
                   ;; (print (length list))
                   ;; (cl-destructuring-bind (type plist . children) headline
-                    ;; (print "TYPE:")
-                    ;; (print type)
-                    ;; (print "==============================")
-                    ;; (print "PLIST:")
-                    ;; (print plist)
-                    ;; (print "==============================")
-                    ;; (print "CHILDREN:")
-                    ;; (print children)
-                    ;; (print "==============================")
-                    (and
-                     (string-equal (org-element-property :raw-value headline) "Grateful or Excited About")
-                     (org-element-map headline 'plain-list
-                       (lambda (list)
-                         (and
-                          (string-equal (org-element-property :type list) 'ordered)
-                          list
-                          )))
-                     ;; (print (org-element-property :parent list))
-                     )))))
+                  ;; (print "TYPE:")
+                  ;; (print type)
+                  ;; (print "==============================")
+                  ;; (print "PLIST:")
+                  ;; (print plist)
+                  ;; (print "==============================")
+                  ;; (print "CHILDREN:")
+                  ;; (print children)
+                  ;; (print "==============================")
+                  (and
+                   (string-equal (org-element-property :raw-value headline) "Grateful or Excited About")
+                   (org-element-map headline 'plain-list
+                     (lambda (list)
+                       (and
+                        (string-equal (org-element-property :type list) 'ordered)
+                        list
+                        )))
+                   ;; (print (org-element-property :parent list))
+                   ))))
+             (items (flatten-list (org-element-map lists 'item
+                      (lambda (item) (org-element-map (org-element-contents item) 'paragraph
+                                  (lambda (p) (string-trim (org-no-properties (car (org-element-contents p)))))))))))
          ;; )
-         (print (org-element-map lists 'item
-           (lambda (item) (org-element-map (org-element-contents item) 'paragraph
-                       (lambda (p) (format "%s" (org-element-normalize-contents p)))))))
+
          (print "hmm..")
          ;; (print lists)
-         (print (format "list has %s elements" (length lists)))
+         (print (format "list has %s elements" (length items)))
+         (print items)
          )
        ;; (other-window 2)
        ;; (goto-char (point-max))
