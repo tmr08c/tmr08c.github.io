@@ -27,8 +27,15 @@
 (require 'org)
 (require 'org-element)
 
-(defun gratitude () "Get gratitude section of daily files."
-       (find-file-other-window "~/Dropbox/Notes/org/roam/daily/2022-11-18.org")
+;; START write out each entity somewhere
+;;   - tmp buffer?
+;;   - simply list, one line per entry?
+;;     Ideally, this becomes simple to re-fetch and re-format, so if I want to
+;;     say, format it in some way, I can re-run the function. This means I
+;;     shouldn't stress too much about this.
+
+(defun extract-gratitude-entries (file) "Get gratitude section of daily files."
+       (find-file-other-window file)
        (let* (
               (lists (org-element-map (org-element-parse-buffer) 'headline
                        (lambda (headline)
@@ -41,15 +48,18 @@
               (items (flatten-list (org-element-map lists 'item
                                      (lambda (item) (org-element-map (org-element-contents item) 'paragraph
                                                  (lambda (p) (string-trim (org-no-properties (car (org-element-contents p)))))))))))
+         items))
 
-         (print (format "list has %s elements" (length items)))
-         (print items)
-         )
-       ;; (other-window 2)
-       ;; (goto-char (point-max))
-       ;; (insert (format "%s" org-ast))
-       )
 
-(gratitude)
+;; todo
+;; - [ ] try updating window management
+;;   - split window ahead of time
+;;   - try changing from find-file-other-window
+;;   - close the buffer of the file after I read it
+(let ((files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022-01-1.+\.org")))
+  (dolist (file files)
+    (dolist (entry (extract-gratitude-entries file))
+      (switch-to-buffer "*gratitude*")
+      (insert entry "\n"))))
 ;; (provide 'gratitude)
 ;;; gratitude.el ends here
