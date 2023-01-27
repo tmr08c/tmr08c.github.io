@@ -35,7 +35,7 @@
 ;;     shouldn't stress too much about this.
 
 (defun extract-gratitude-entries (file) "Get gratitude section of daily files."
-       (find-file-other-window file)
+       (find-file file)
        (let* (
               (lists (org-element-map (org-element-parse-buffer) 'headline
                        (lambda (headline)
@@ -53,13 +53,18 @@
 
 ;; todo
 ;; - [ ] try updating window management
-;;   - split window ahead of time
-;;   - try changing from find-file-other-window
-;;   - close the buffer of the file after I read it
+;;   - [x] split window ahead of time
+;;   - [x] try changing from find-file-other-window
+;;   - [ ] close the buffer of the file after I read it
 (let ((files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022-01-1.+\.org")))
+  (split-window)
+  (other-window 1)
+  (set-buffer  "*gratitude*")
+  (erase-buffer)
   (dolist (file files)
     (dolist (entry (extract-gratitude-entries file))
-      (switch-to-buffer "*gratitude*")
-      (insert entry "\n"))))
+      (set-buffer "*gratitude*")
+      (insert entry "\n")))
+  (switch-to-buffer "*gratitude*"))
 ;; (provide 'gratitude)
 ;;; gratitude.el ends here
