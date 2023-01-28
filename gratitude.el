@@ -27,13 +27,6 @@
 (require 'org)
 (require 'org-element)
 
-;; START write out each entity somewhere
-;;   - tmp buffer?
-;;   - simply list, one line per entry?
-;;     Ideally, this becomes simple to re-fetch and re-format, so if I want to
-;;     say, format it in some way, I can re-run the function. This means I
-;;     shouldn't stress too much about this.
-
 (defun extract-gratitude-entries (file) "Get gratitude section of daily files."
        (find-file file)
        (let* (
@@ -48,23 +41,49 @@
               (items (flatten-list (org-element-map lists 'item
                                      (lambda (item) (org-element-map (org-element-contents item) 'paragraph
                                                  (lambda (p) (string-trim (org-no-properties (car (org-element-contents p)))))))))))
+         (kill-buffer)
          items))
 
+(defun tr/format-org-date (date)
+  (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
 
-;; todo
-;; - [ ] try updating window management
-;;   - [x] split window ahead of time
-;;   - [x] try changing from find-file-other-window
-;;   - [ ] close the buffer of the file after I read it
+(defun tr/time-stamp-to-org-timestamp (ts)
+  "Taken from `org-timestamp-from-time` - the original function used
+     `decode-time`, which doesn't work with our timestamp, so we use
+     `parse-time-string` instead"
+  (pcase-let ((`(,_ ,minute ,hour ,day ,month ,year . ,_) (parse-time-string ts)))
+    (org-element-create 'timestamp
+                        (list :type 'active
+                              :year-start year
+                              :month-start month
+                              :day-start day
+                              :hour-start hour
+                              :minute-start minute))))
+
+(defun tr/file-creation-time-from-name (fpath)
+  "Extract a timestamp from the file name. Relies on files having the format
+      'YYYYMMDDHHMMSS-*' (the default org-roam node filename)."
+  (let ((filename (file-name-base fpath)))
+    (tr/format-org-date
+     (tr/time-stamp-to-org-timestamp
+      (replace-regexp-in-string
+       "\\([[:digit:]]\\{4\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)\\([[:digit:]]\\{2\\}\\)-.*"
+       "\\1-\\2-\\3 \\4:\\5:\\6"
+       filename)))))
+
 (let ((files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022-01-1.+\.org")))
   (split-window)
   (other-window 1)
   (set-buffer  "*gratitude*")
   (erase-buffer)
+  (insert "|Date|Message|Category|\n")
   (dolist (file files)
-    (dolist (entry (extract-gratitude-entries file))
-      (set-buffer "*gratitude*")
-      (insert entry "\n")))
-  (switch-to-buffer "*gratitude*"))
+    (let ((date (tr/file-creation-time-from-name file)))
+          (dolist (entry (extract-gratitude-entries file))
+            (set-buffer "*gratitude*")
+            (insert "|" date "|" entry "|" "|\n"))))
+    (switch-to-buffer "*gratitude*")
+    (org-mode)
+    (org-table-align))
 ;; (provide 'gratitude)
 ;;; gratitude.el ends here
