@@ -39,8 +39,13 @@
                                    (string-equal (org-element-property :type list) 'ordered)
                                    list)))))))
               (items (flatten-list (org-element-map lists 'item
-                                     (lambda (item) (org-element-map (org-element-contents item) 'paragraph
-                                                 (lambda (p) (string-trim (org-no-properties (car (org-element-contents p)))))))))))
+                                     (lambda (item)
+                                       (org-element-map (org-element-contents item) 'paragraph
+
+                                         ;; https://www.reddit.com/r/orgmode/comments/7qwmbo/comment/dstsmpw/?utm_source=reddit&utm_medium=web2x&context=3
+                                         ;; I wish I knew about interpret sooner
+                                                   ;; (string-trim (org-no-properties (car (org-element-contents p))))
+                                                 (lambda (p) (string-trim (org-element-interpret-data p)))))))))
          (kill-buffer)
          items))
 
