@@ -56,9 +56,7 @@ Like last year, after extracting all of the entries into a single place, I revie
 | kindness of others    |       1 |
 | holiday               |       1 |
 
-
 ** Comparing with last year
-
 *** Overusing answers
 One of my takeaways from last year was that I had a number of "go-to" entries (i.e., repeated). I realized that these were likely examples of me trying to write something down and move on, and not examples of me truly seeking out gratitude in life. From my last post:
 
@@ -95,28 +93,57 @@ Looking ahead, I think I should do more than write a single sentence about being
 All year I had a project in my task manager to start sponsoring people on GitHub. It took until I started reviewing my entries from this year for me to actually do it. If you look at my [[https://github.com/tmr08c?tab=sponsoring][sponsor list]] you can see just how last-minute I was with this. If anyone is reading this post and has been putting off sponsoring people, go do it. If you commit to sponsoring at least one person for some amount ($1? $5?), I think you will be grateful. You can check out the [[https://github.com/sponsors/explore][explore page]] for suggestions or look to see who people you follow sponsor. Sort of like [[https://jamesclear.com/small-habits][building a habit]], I found I basically just needed to start. I realized I kept putting it off, worried about right the right amount was or who the right people were, but these were just excuses. Now that I am set up, I can easily change who I sponsor and for how much.
 
 ***** Am I making a goals list?
-I wrote last year's post hoping to reflect on the year, but in my reflection came up with a few areas of improvement for myself. While I didn't track these ideas, having something to go back to and read, realizing I felt the same way a year later, finally pushed me to take action. This is an unexpected bonus of last year's post and motivates me to take this year's post seriously; it may give me the push I need to do something valuable.
+I wrote last year's post hoping to reflect on the year, but in my reflection came up with a few areas of improvement for myself. While I didn't track these ideas with rigor, having something to go back to and read, realizing I felt the same way a year later, finally pushed me to take action. This is an unexpected bonus of last year's post and motivates me to take this year's post seriously; it may give me the push I need to do something valuable.
 
 *** Conflicted gratitude
 #+begin_quote
 These last few years have been extremely difficult for much of the world.
 #+end_quote
 
+Unfortunately, this trend has continued with COVID spikes, the war in Ukraine, inflation, layoffs...
+
 #+begin_quote
 I think the next step for me here is to identify ways to leverage my good fortune in ways that can help others.
 #+end_quote
 
+I have made a slight improvement here, making donations [[/2022/04/open-source-open-eyes/][towards supporting Ukraine]], but I am not doing nearly enough. 2023 Troy, I hope that you make some progress.
 
 *** Maintaining self
 #+begin_quote
 As I begin exploring how I can turn my gratitude outwards, I know I also need to continue my focus on maintaining (and improving) my physical and mental health through diet, exercise, meditation, and work-life balance. It is easier to help others when I find myself in a good state.
 #+end_quote
 
-** Takeaways
+I had a large number of entries related to exercise, meditation, and other positive influences of mental and physical health. "Health" was my top category (including ideas like a gratitude for life or, stealing from meditation exercises, being grateful for breathing)  and "mental health" came in at number four. I feel a lot of gratitude towards practices such as running, meditation, and stretching. If you saw the raw data, you would know they have not been a panacea, but I believe they have helped.
+
+** Looking at this year
+
 *** Reading the result more useful (again)
-*** I think I did better on my goal of overusing answers
-*** Important my morning routine
-*** Important of nature
+Like last year, I am finding more value in the actual entries than the aggregations. The process of categorizing the entries is a valuable forcing function to interpret my entries, but I find more of my takeaways come from the nuance of reading the entries.
+
+*** Mental health
+While I am super comfortable writing about it, the state of my mental health is tied into my entries. An entry categorized as "family" could be a general expression of love and happiness or gratitude for the support of my partner when I was feeling down.  Below are some of the categories that seemed to help when I wasn't feeling my best.
+
+**** Working from home
+Working from home is a bit of a go-to entry for me, but there is some nuance into why I wrote about it. While some entries were of gratitude for flexibility around breakfast with my partner and traveling and working, most were about how much easier managing any anxiety is when working from home.
+**** Morning routine
+An example of my categorization inconsistency, my morning routine involves items which may have their own tags such as exercise and meditation. While I have not as the book suggests, I have found the basic framework suggested in [[https://www.robinsharma.com/book/the-5am-club][The 5AM Club]] to be valuable (warning, the book itself isn't great; you are probably served well enough by a summary). Of particular note is the suggest to do some form of exercise first, citing it [[https://www.healthline.com/health/depression/exercise#What-are-the-mental-health-benefits-of-exercise?][helps reduce cortisol]] which can reduce stress and anxiety.
+**** Nature
+I think even the most basic sentiment analysis algorithm could catch the positivity associated with my entries about blue skies, warming weather, and lush, green nature (I like the Fall's reprieve from the heat too!). I do better when I get outside and move and this seems to happen more in warmer months.
+**** Support
+In times where I am not feeling 100%, I am fortunate to have a loving and understanding partner. I have many entries being grateful for my partner's efforts to take on more when I am stressed or be understanding if I have a crabby day.
+*** Podcasts
+I love podcasts. Whether educational or fun, podcasts bring me motivation, value, and joy. This year I started listening to [[https://maximumfun.org/podcasts/dr-gameshow/][Dr. Gameshow]]. If you want a podcast to listen to for fun, give it a try!
+*** rhi new job
+*** "things" don't show up much
+*** Do more fun things
+I've been thinking about how I can bring more fun into my life. I have a lot of focus on self improvement which brings my satisfaction and happiness, but I wonder if I am trying to over-do it. This is a new thought after reading /[[https://www.oliverburkeman.com/books][Four Thousand Weeks: Time Management for Mortals]]/. I am in no way thinking I have nothing left to improve (far from it), but I'm starting to wonder if a life focused on productivity and improvement will be a happy one.
+
+Entries about going out for good food, going to the movies with my partner, and reading entertaining fiction bring back positive memories, so these are areas I can look to first should I seek out more fun this year.
+*** Getting to travel more (maybe kill?)
+We had a few trips this year, a great increase after travel restrictions. Traveling again remind me that not all traveling is equal. As can be expected, I reflect more fondly on the long-weekend getaway to the cabin in the woods with my partner than on the work trip. Even for our fun trips, travel bring some stress-the finances, worry about our dogs (whether the join us or stay), staying healthy, and more. I want to track my relationship with travel over the coming years and see if
+*** things the piqued my interest
+**** emacs
+**** note teaking
 
 ** Looking to next year
 
@@ -299,37 +326,7 @@ As I begin exploring how I can turn my gratitude outwards, I know I also need to
 | family                | My home and partner                                                                                                                                                      | [2022-03-17 Thu 00:00] |
 | food                  | Dinner at Bartaco this weekend                                                                                                                                           | [2022-03-18 Fri 00:00] |
 | work                  | Getting to work on some UI stuff for the new sandbox app                                                                                                                 | [2022-03-18 Fri 00:00] |
-| recognition           | Positive feedback from bookclub yesterday                                                                                                                                | [2022-03-18 Fri 00:00] |
-| relaxation            | I had a wonderful, relaxing weekend where I was able to enjoy the beautiful weather                                                                                      | [2022-03-21 Mon 00:00] |
-| nature                | I had a wonderful, relaxing weekend where I was able to enjoy the beautiful weather                                                                                      | [2022-03-21 Mon 00:00] |
-| world health          | COVID cases seem to be better under control                                                                                                                              | [2022-03-21 Mon 00:00] |
-| family work           | I feel like I am able to help Rhi prepare for interview                                                                                                                  | [2022-03-21 Mon 00:00] |
-| work                  | Tailwind CSS and the design system from Guiceworks                                                                                                                       | [2022-03-22 Tue 00:00] |
-| open source           | Tailwind CSS and the design system from Guiceworks                                                                                                                       | [2022-03-22 Tue 00:00] |
-| work                  | Transparency and guidance from Mike                                                                                                                                      | [2022-03-22 Tue 00:00] |
-| advice                | Transparency and guidance from Mike                                                                                                                                      | [2022-03-22 Tue 00:00] |
-| health                | I am live and have my physical abilities                                                                                                                                 | [2022-03-22 Tue 00:00] |
-| food                  | Trade coffee and our ability to try different small roasters                                                                                                             | [2022-03-23 Wed 00:00] |
-| modern conveniences   | Trade coffee and our ability to try different small roasters                                                                                                             | [2022-03-23 Wed 00:00] |
-| educational resources | Stevey's Tech Talk podcast and the ability to get insight into big tech companies                                                                                        | [2022-03-23 Wed 00:00] |
-| work                  | My current work is enabling me to grow my HTML and CSS skill                                                                                                             | [2022-03-23 Wed 00:00] |
-| upskilling            | My current work is enabling me to grow my HTML and CSS skill                                                                                                             | [2022-03-23 Wed 00:00] |
-| nature                | While rainy weather can make me tired and after a while feel a bit sad, I am grateful that we are not living in an area that struggles with droughts.                    | [2022-03-24 Thu 00:00] |
-| modern conveniences   | I live in a time where I can search Google for basically anything and there are answers. In my field, there are often existing libraries or packages covering the thing I want. | [2022-03-24 Thu 00:00] |
-| friends               | Tyler shared his time with me                                                                                                                                            | [2022-03-24 Thu 00:00] |
-| work                  | I have a career and profession in which I want to continue to grow                                                                                                       | [2022-03-25 Fri 00:00] |
-| work                  | A team of people that help me learn, grow, and improve                                                                                                                   | [2022-03-25 Fri 00:00] |
-| family work           | Rhiannon is feeling better about job opportunities                                                                                                                       | [2022-03-25 Fri 00:00] |
-| relaxation            | I am able to enjoy the weekend however I want                                                                                                                            | [2022-03-28 Mon 00:00] |
-| educational resources | The knowledge and exposure I am able to gain from podcasts                                                                                                               | [2022-03-28 Mon 00:00] |
-| mental health         | The free guided meditations that I am able to get access to                                                                                                              | [2022-03-28 Mon 00:00] |
-| health                | My toes/foot are starting to feel better                                                                                                                                 | [2022-03-29 Tue 00:00] |
-| family                | Rhiannon's understanding of wanting to work later yesterday                                                                                                              | [2022-03-29 Tue 00:00] |
-| upskilling            | I continue to get opportunities to learn and grow                                                                                                                        | [2022-03-29 Tue 00:00] |
-| work                  | I was able to find a job that I enjoyed                                                                                                                                  | [2022-03-30 Wed 00:00] |
-| family                | Rhiannon has been understanding of my needs                                                                                                                              | [2022-03-30 Wed 00:00] |
-| educational resources | How podcasts are able to give me access to smart people and I can start my mornings with either fun things to calm my nerves or episodes that motivate and inspire me    | [2022-03-30 Wed 00:00] |
-| entertainment         | How podcasts are able to give me access to smart people and I can start my mornings with either fun things to calm my nerves or episodes that motivate and inspire me    | [2022-03-30 Wed 00:00] |
+| recognition           | Pow podcasts are able to give me access to smart people and I can start my mornings with either fun things to calm my nerves or episodes that motivate and inspire me    | [2022-03-30 Wed 00:00] |
 | family health         | Rhiannon's mom was able to finally get a room in the hospital last night                                                                                                 | [2022-03-31 Thu 00:00] |
 | family work           | Rhiannon has some interviews lined up                                                                                                                                    | [2022-03-31 Thu 00:00] |
 | work                  | We are at a pretty good place with the API Sandbox in terms of demoing                                                                                                   | [2022-03-31 Thu 00:00] |
