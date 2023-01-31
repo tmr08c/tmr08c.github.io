@@ -1,3 +1,127 @@
+#+title: 2022 Gratitude
+
+Following on last year's post in which I reviewed entries into my (week) daily gratitude entries, I have decided to do the same again this year. My "gratitude journal" practices (i.e., entering data into org-roam dailies) has essentially been the same, so I will spare the details of my templates and suggest you check THIS SECTION of the last post. Last year, I did note my failed attempt to use emacs-lisp to extract the data (falling back to ~sed~). This year I was able to get something working using emacs-lisp and the [[https://orgmode.org/worg/dev/org-element-api.html][Org Element API]].  I will cover this in a follow-up post.
+
+** Categorizing
+
+Like last year, after extracting all of the entries into a single place, I reviewed them and assigned them to a category. This year I strove to stay within Emacs and ~org-mode~, so, rather than doing any sort of ~LOOKUP~ table, I assigned a category to each row by hand. I did this (mostly) in a single pass which I'm sure led to some inconsistencies (like sometimes being okay with multiple categories and sometimes not), but, overall, I think this led to putting more thought into the entries than speeding up the process. With that, here are my aggregate results.
+
+** My aggregate results
+
+| Category              | count() |
+|-----------------------+---------|
+| health                |      71 |
+| family                |      57 |
+| work                  |      54 |
+| mental health         |      49 |
+| nature                |      49 |
+| educational resources |      48 |
+| food                  |      44 |
+| relaxation            |      40 |
+| working from home     |      30 |
+| finances              |      26 |
+| family health         |      25 |
+| entertainment         |      18 |
+| family work           |      18 |
+| travel                |      18 |
+| modern conveniences   |      17 |
+| morning routine       |      17 |
+| time flexibility      |      15 |
+| productivity          |      14 |
+| application/tool      |      13 |
+| friends               |      12 |
+| career                |      12 |
+| safety                |      11 |
+| thing                 |      10 |
+| open source           |       9 |
+| community             |       9 |
+| upskilling            |       9 |
+| home                  |       8 |
+| exercise              |       6 |
+| side projects         |       5 |
+| having enough         |       4 |
+| family safety         |       4 |
+| recognition           |       3 |
+| life                  |       3 |
+| process               |       2 |
+| advice                |       2 |
+| time                  |       1 |
+| world health          |       1 |
+| work opportunity      |       1 |
+| empathy and exposure  |       1 |
+| clarity               |       1 |
+| motivation            |       1 |
+| opportunity           |       1 |
+| morning routines      |       1 |
+| kindness of others    |       1 |
+| holiday               |       1 |
+
+
+** Comparing with last year
+
+*** Overusing answers
+One of my takeaways from last year was that I had a number of "go-to" entries (i.e., repeated). I realized that these were likely examples of me trying to write something down and move on, and not examples of me truly seeking out gratitude in life. From my last post:
+
+#+begin_quote
+ I suspect there may be value in striving for more unique entries over the next year.
+ I predict this limitation will force me to spend more time in a headspace of gratefulness as I search the wider expanse of my gratitude.
+#+end_quote
+
+While I am far from perfect, I did make an effort to be more varied and the effort had an impact. This year I came up with 45 categories versus the 25 I had last year. More importantly my top entry, "health" had a count of 71. This is fewer than each of the top three entries I had last year (162, 96, and 72).
+
+My top answers from last year all still made an appearance (possibly under new, separate categories this year in the case of "breaks / flexibility / ease of life / weekend"), *but*, even when reaching for a go-to answer from last year (e.g., my partner or the weekend) my answers this year included more details. I wouldn't simply writing my partner's name down, but cite something specific that I was grateful for.
+
+I am grateful for making this observation last year and that it stuck in my head enough to do something about (unlike some of my other takeaways, unfortunately). I hope to see this trend continue. I have so much to be grateful for and it's embarrassing that some mornings I struggle to come up with something better than "coffee." Part of the value of the value of gratitude journaling is making the effort to realize all that I have and get the chance to express my gratefulness for it.
+
+*** Professional life
+**** New job excitement
+
+In the second half of 2021, I started in a new role, working in Elixir.
+
+#+begin_quote
+This year, I took on a new role to have the opportunity to work in [[https://elixir-lang.org/][Elixir]], something I have wanted to do for years. The result was multiple entries about being grateful for my new role and getting to work in Elixir (and the Elixir ecosystem as a whole).
+#+end_quote
+
+This excitement continued into 2022, but had two different forms. For the first half of the year, my excitement was that of an individual contributor. I was excited for learning and growing my skills to build cool things in a space I felt good about. In the second half of the year, I was transitioned into an leadership position. After this, my gratitude shifted towards my company (for the opportunity) and team (for working with me during the transition).
+
+**** Open Source
+
+I had more open source related entries this year than last, and across different technologies (Elixir, Emacs, and even front-end tech like TailwindCSS). Unfortunately, my takeaway from last year has still mostly applied:
+
+#+begin_quote
+Looking ahead, I think I should do more than write a single sentence about being grateful for open-source maintainers. I am curious if [[https://github.com/sponsors][GitHub Sponsors]] is the preferred way to show proper gratitude for maintainers.
+#+end_quote
+
+All year I had a project in my task manager to start sponsoring people on GitHub. It took until I started reviewing my entries from this year for me to actually do it. If you look at my [[https://github.com/tmr08c?tab=sponsoring][sponsor list]] you can see just how last-minute I was with this. If anyone is reading this post and has been putting off sponsoring people, go do it. If you commit to sponsoring at least one person for some amount ($1? $5?), I think you will be grateful. You can check out the [[https://github.com/sponsors/explore][explore page]] for suggestions or look to see who people you follow sponsor. Sort of like [[https://jamesclear.com/small-habits][building a habit]], I found I basically just needed to start. I realized I kept putting it off, worried about right the right amount was or who the right people were, but these were just excuses. Now that I am set up, I can easily change who I sponsor and for how much.
+
+***** Am I making a goals list?
+I wrote last year's post hoping to reflect on the year, but in my reflection came up with a few areas of improvement for myself. While I didn't track these ideas, having something to go back to and read, realizing I felt the same way a year later, finally pushed me to take action. This is an unexpected bonus of last year's post and motivates me to take this year's post seriously; it may give me the push I need to do something valuable.
+
+*** Conflicted gratitude
+#+begin_quote
+These last few years have been extremely difficult for much of the world.
+#+end_quote
+
+#+begin_quote
+I think the next step for me here is to identify ways to leverage my good fortune in ways that can help others.
+#+end_quote
+
+
+*** Maintaining self
+#+begin_quote
+As I begin exploring how I can turn my gratitude outwards, I know I also need to continue my focus on maintaining (and improving) my physical and mental health through diet, exercise, meditation, and work-life balance. It is easier to help others when I find myself in a good state.
+#+end_quote
+
+** Takeaways
+*** Reading the result more useful (again)
+*** I think I did better on my goal of overusing answers
+*** Important my morning routine
+*** Important of nature
+
+** Looking to next year
+
+* Data
+** Raw
 
 #+NAME: gratitude
 | Category              | Message                                                                                                                                                                  | Date                   |
@@ -745,6 +869,7 @@
 | nature                | Being able to take a nice long (CBD-enhanced) walk yesterday                                                                                                             | [2022-12-28 Wed 00:00] |
 | relaxation            | Feeling relaxed and disconnected                                                                                                                                         | [2022-12-28 Wed 00:00] |
 
+** Aggregate
 #+begin_src emacs-lisp
 (straight-use-package '(orgaggregate :type git :host github :repo "tbanel/orgaggregate"))
 #+end_src
@@ -801,6 +926,7 @@
 | kindness of others    |       1 |
 | holiday               |       1 |
 #+END:
+
 # Local Variables:
 # org-table-automatic-realign: nil
 # End:
