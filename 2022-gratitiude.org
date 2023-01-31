@@ -1,12 +1,10 @@
 #+title: 2022 Gratitude
 
-Following on last year's post in which I reviewed entries into my (week) daily gratitude entries, I have decided to do the same again this year. My "gratitude journal" practices (i.e., entering data into org-roam dailies) has essentially been the same, so I will spare the details of my templates and suggest you check THIS SECTION of the last post. Last year, I did note my failed attempt to use emacs-lisp to extract the data (falling back to ~sed~). This year I was able to get something working using emacs-lisp and the [[https://orgmode.org/worg/dev/org-element-api.html][Org Element API]].  I will cover this in a follow-up post.
+Following on last year's post in which I reviewed entries into my daily gratitude entries, I have decided to do the same again this year.
 
-** Categorizing
+My "gratitude journal" practices (i.e., entering data into org-roam dailies) has essentially been the same, so I will spare the details of my templates and suggest you check THIS SECTION of last year's post.
 
-Like last year, after extracting all of the entries into a single place, I reviewed them and assigned them to a category. This year I strove to stay within Emacs and ~org-mode~, so, rather than doing any sort of ~LOOKUP~ table, I assigned a category to each row by hand. I did this (mostly) in a single pass which I'm sure led to some inconsistencies (like sometimes being okay with multiple categories and sometimes not), but, overall, I think this led to putting more thought into the entries than speeding up the process. With that, here are my aggregate results.
-
-** My aggregate results
+Last year, I noted my failed attempt at using ~emacs-lisp~ to extract the data having to fallback to using ~sed~. This year I was able to get something working using ~emacs-lisp~ and the [[https://orgmode.org/worg/dev/org-element-api.html][Org Element API]], but I will be covering it in a follow-up post. One change I will note cover here is how I set the categories. Like last year, after extracting all of the entries into a single place, I reviewed them and assigned them to a category. This year I strove to stay within Emacs and ~org-mode~, so, rather than using a spreadsheet program and a ~LOOKUP~ table, I assigned a category to each row by hand. I did this (mostly) in a single pass which I'm sure led to some inconsistencies (like sometimes being okay with multiple categories and sometimes not), but, overall, I think this led to putting more thought into the entries than speeding up the process. With that, here are my aggregate results.
 
 | Category              | count() |
 |-----------------------+---------|
@@ -20,9 +18,9 @@ Like last year, after extracting all of the entries into a single place, I revie
 | relaxation            |      40 |
 | working from home     |      30 |
 | finances              |      26 |
-| family health         |      25 |
+| family (health)       |      25 |
 | entertainment         |      18 |
-| family work           |      18 |
+| family (work)         |      18 |
 | travel                |      18 |
 | modern conveniences   |      17 |
 | morning routine       |      17 |
@@ -58,14 +56,13 @@ Like last year, after extracting all of the entries into a single place, I revie
 
 ** Comparing with last year
 *** Overusing answers
-One of my takeaways from last year was that I had a number of "go-to" entries (i.e., repeated). I realized that these were likely examples of me trying to write something down and move on, and not examples of me truly seeking out gratitude in life. From my last post:
+One of my takeaways from last year was that I had a number of "go-to" entries. I realized that these were likely examples of me trying to quickly finish the process rather than truly taking the time to think about what I am grateful for in life. From my last post:
 
 #+begin_quote
- I suspect there may be value in striving for more unique entries over the next year.
- I predict this limitation will force me to spend more time in a headspace of gratefulness as I search the wider expanse of my gratitude.
+I suspect there may be value in striving for more unique entries over the next year. I predict this limitation will force me to spend more time in a headspace of gratefulness as I search the wider expanse of my gratitude.
 #+end_quote
 
-While I am far from perfect, I did make an effort to be more varied and the effort had an impact. This year I came up with 45 categories versus the 25 I had last year. More importantly my top entry, "health" had a count of 71. This is fewer than each of the top three entries I had last year (162, 96, and 72).
+While far from perfect, my results are more varied and I have fewer instances of go-to entries. This year I came up with 45 categories versus the 25 I had last year. More importantly my top category (health) had a count of 71 entries. This is fewer than each of the top three entries I had last year (which had 162, 96, and 72, respectively).
 
 My top answers from last year all still made an appearance (possibly under new, separate categories this year in the case of "breaks / flexibility / ease of life / weekend"), *but*, even when reaching for a go-to answer from last year (e.g., my partner or the weekend) my answers this year included more details. I wouldn't simply writing my partner's name down, but cite something specific that I was grateful for.
 
@@ -132,7 +129,12 @@ I think even the most basic sentiment analysis algorithm could catch the positiv
 **** Support
 In times where I am not feeling 100%, I am fortunate to have a loving and understanding partner. I have many entries being grateful for my partner's efforts to take on more when I am stressed or be understanding if I have a crabby day.
 *** Podcasts
-I love podcasts. Whether educational or fun, podcasts bring me motivation, value, and joy. This year I started listening to [[https://maximumfun.org/podcasts/dr-gameshow/][Dr. Gameshow]]. If you want a podcast to listen to for fun, give it a try!
+I love podcasts. Whether educational or fun, podcasts bring me motivation, value, and joy. This year (sometime at or before 1/7/22 apparently) I started listening to [[https://maximumfun.org/podcasts/dr-gameshow/][Dr. Gameshow]]. If you want a podcast to listen to for fun, give it a try!
+
+#+begin_quote
+Podcasts, both productive and not. Examples: ChooseFI podcast and their free content and community building. I haven't listened in a while, but it was great to catch up over a few episodes and feel the excitment they help build within me. I also started listening to a new comedy podcast, Dr. Gameshow and really enjoyed it.
+#+end_quote
+
 *** rhi new job
 *** "things" don't show up much
 *** Do more fun things
@@ -141,11 +143,13 @@ I've been thinking about how I can bring more fun into my life. I have a lot of 
 Entries about going out for good food, going to the movies with my partner, and reading entertaining fiction bring back positive memories, so these are areas I can look to first should I seek out more fun this year.
 *** Getting to travel more (maybe kill?)
 We had a few trips this year, a great increase after travel restrictions. Traveling again remind me that not all traveling is equal. As can be expected, I reflect more fondly on the long-weekend getaway to the cabin in the woods with my partner than on the work trip. Even for our fun trips, travel bring some stress-the finances, worry about our dogs (whether the join us or stay), staying healthy, and more. I want to track my relationship with travel over the coming years and see if
-*** things the piqued my interest
-**** emacs
-**** note teaking
+*** Things the piqued my interest
+There were two topics of interest that came up in various forms (e.g., gratitude for educational resources about a topic): Emacs and note-taking, which, for my note-taking system (~org-roam~) means Emacs and note-taking in Emacs ;).
+
+I have slight concerns that both of these are potential black holes of exploring and tinkering. I want to make sure I don't get too lost in the darkness and leverage the topics as tools to provide value (or maybe I just acknowledge these fall into my "do more fun things" bucket).
 
 ** Looking to next year
+I plan to continue my daily gratitude journaling practice and to continue this reflective process of reviewing my entries. After finding a few hidden goals in last year's entry, I think there may be value in revisiting this post throughout the year as I may goals, plans, and priorities.
 
 * Data
 ** Raw
