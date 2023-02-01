@@ -100,7 +100,7 @@ It took until I started reviewing my entries from this year for me to actually d
 
 ##### Am I making a goals list?
 
-I wrote last year's post hoping to reflect on the year, but end up with a few areas of improvement for myself. While I didn't track these ideas, having something to go back to and read realizing I felt the same way a year later, finally pushed me to take action. This is an unexpected bonus from last year's post and motivates me to take this year's post seriously; it may give me the push I need to do something valuable.
+I wrote last year's post hoping to reflect on the year but ended up with a few areas of improvement. While I didn't track these ideas, realizing my inaction a year later finally pushed me to do something. This is an unexpected bonus from last year's post and motivates me to take this year's post seriously; it may give me the push I need to do something valuable.
 
 ### Conflicted gratitude
 
@@ -110,13 +110,13 @@ Unfortunately, this trend has continued with COVID spikes, the war in Ukraine, i
 
 > I think the next step for me here is to identify ways to leverage my good fortune in ways that can help others.
 
-I have made a slight improvement here, making donations [towards supporting Ukraine](/2022/04/open-source-open-eyes/), but I am not doing nearly enough. 2023 Troy, do better.
+I have made a slight improvement here, making donations [towards supporting Ukraine](/2022/04/open-source-open-eyes/), but I am not doing enough. 2023 Troy, do better.
 
 ### Maintaining self
 
 > As I begin exploring how I can turn my gratitude outwards, I know I also need to continue my focus on maintaining (and improving) my physical and mental health through diet, exercise, meditation, and work-life balance. It is easier to help others when I find myself in a good state.
 
-I had a large number of entries related to exercise, meditation, and other positive influences on mental and physical health. "Health" was my top category (this includes entries like being grateful for my breath or performing some exercise) and "mental health" came in at number four. I feel a lot of gratitude towards practices such as running, meditation, and stretching. If you saw the raw data, you would know they have not been a panacea (more on this [below](#mental-health)), but I believe they have helped.
+I had a number of entries related to exercise, meditation, and other positive influences on mental and physical health. "Health" was my top category (this includes entries like being grateful for my breath or performing some exercise), and "mental health" came in at number four. I feel a lot of gratitude towards practices such as running, meditation, and stretching. If you saw the raw data, you would know they have not been a panacea (more on this [below](#mental-health)), but I believe they have helped.
 
 ## Looking at this year
 
@@ -126,13 +126,13 @@ I cover a few areas of interest or highlights of the year below.
 
 ### Mental health
 
-While I am not super comfortable writing about it, the state of my mental health comes through in my entries. An entry categorized as "family" could be a general expression of love and happiness or gratitude for the support of my partner when I was feeling down. Reading through all of the entries togther shone a light on the ups and downs felt throughout the year.
+While I am not super comfortable writing about it, the state of my mental health comes through in my entries. An entry categorized as "family" could be a general expression of love and happiness or gratitude for the support of my partner when I was feeling down. Reading through all of the entries together shone a light on the ups and downs felt throughout the year.
 
-Below are some of the categories that seemed to help when I wasn't feeling my best.
+Below are the categories that seemed to help when I wasn't feeling my best.
 
 #### Working from home
 
-Working from home was definitely a go-to entry for me, but there is some nuance to why I wrote about it. While some entries were of gratitude for flexibility around breakfast with my partner or the ability to travel and still work, most were about how much easier emotional regulation and management can be when working from home.
+Working from home was definitely a go-to entry for me, but there is some nuance to why I wrote about it. While some entries expressed gratitude for flexibility (e.g., having breakfast with my partner, working while traveling), most were about how much easier emotional regulation and management can be when working from home.
 
 #### Morning routine
 
@@ -144,7 +144,7 @@ Even the most basic sentiment analysis algorithm could catch the positivity asso
 
 #### Support
 
-When I am not feeling 100%, I am fortunate to have a loving and understanding partner. I have many entries expressing gratitude for my partner's efforts to take on more when I am stressed or be understanding if I have a crabby day.
+When I am not feeling 100%, I am fortunate to have a loving and understanding partner. I have many entries expressing gratitude for my partner's efforts to take on more when I am stressed or their understanding after I have a crabby day.
 
 ### Podcasts
 
@@ -152,7 +152,7 @@ I love podcasts. Whether educational or fun, podcasts bring me motivation, value
 
 > Podcasts, both productive and not. Examples: ChooseFI podcast and their free content and community building. I haven't listened in a while, but it was great to catch up over a few episodes and feel the excitement they help build within me. I also started listening to a new comedy podcast, Dr. Gameshow, and really enjoyed it.
 
-This entry was early in the year (1/7/22), and a year later, I can confidently recommend [Dr. Gameshow](https://maximumfun.org/podcasts/dr-gameshow/) if you are looking for a podcast to listen to for fun!
+This entry was early in the year (1/7/22), and a year later, I can confidently recommend [Dr. Gameshow](https://maximumfun.org/podcasts/dr-gameshow/) if you are looking for a podcast to listen to for fun.
 
 ### My partner's new job
 
@@ -164,20 +164,20 @@ The lack of gratitude towards many material possessions makes me think I may hav
 
 ### Do more fun things
 
-I've been thinking about how I can bring more fun into my life. I focus a lot on self-improvement. While it brings me satisfaction and happiness, I worry if I am trying to overdo it. This is a new thought after reading [_Four Thousand Weeks: Time Management for Mortals_](https://www.oliverburkeman.com/books). I am in no way thinking I have nothing left to improve (far from it), but I'm starting to wonder if a life focused on productivity and improvement will be a happy one.
+I've been thinking about how I can bring more fun into my life. I focus a lot on self-improvement. While it brings me satisfaction and happiness, I worry that I am trying to overdo it. This is a new thought after reading [_Four Thousand Weeks: Time Management for Mortals_](https://www.oliverburkeman.com/books). In no way do I think I have nothing left to improve (far from it), but I'm beginning to wonder if a life so focused on productivity and improvement can be a happy one.
 
-Entries about going out for good food, going to the movies with my partner, and reading entertaining fiction bring back positive memories, so these are areas I can look to first should I seek out more fun this year.
+Entries about eating good food, going to the movies with my partner, and reading entertaining fiction bring back positive memories, so these are areas I can look to first should I seek out more fun this year.
 
 ### Travel
 
-We had a few trips this year, a great increase after travel restrictions. Traveling again reminded me that not all traveling is equal. I reflect more fondly on the long-weekend getaway to a cabin in the woods with my partner than on the work trip. Even for our fun trips, travel brings some stress–the finances, worry about our dogs (whether they join us or stay), staying healthy, and more. I want to track my relationship with travel over the coming years to see how I can make it easier and if it's something I enjoy or enjoy the _idea_ of.
+We had a few trips this year, a noticable increase after travel restrictions. Traveling again reminded me that not all traveling is equal. I reflect more fondly on the long-weekend getaway to a cabin in the woods with my partner than on the work trip. Even for our fun trips, travel brings some stress–the finances, worry about our dogs (whether they join us or stay), staying healthy, and more. I want to track my relationship with travel over the coming years to see how I can make it easier and if it's something I enjoy or enjoy the _idea_ of.
 
 ### Things that piqued my interest
 
 Two topics of interest came up in various forms: Emacs and note-taking, which, for my note-taking system (`org-roam`) means Emacs and note-taking in Emacs ;).
 
-I have slight concerns that both of these are potential black holes of exploring and tinkering. I want to make sure I don't get too lost in the darkness and leverage the topics as tools to provide value (or maybe I just acknowledge these fall into my "do more fun things" bucket).
+I am slightly concerned that both interests are potential black holes of exploring and tinkering. I want to avoid getting too lost to lose sight that these are tools intened to provide value. ...or I acknowledge learning about and tinkering with my tools falls into my "do more fun things" bucket.
 
 ## Looking to next year
 
-I plan to continue my daily gratitude journaling practice and continue this reflective process of reviewing my entries. As mentioned above, after finding a few hidden goals in last year's entry, I think this post can serve as a reminder of important, but non-urgent efforts I am interested in. Regardless, both writing and reading the entries give me the chance to slow down and appreciate the life I'm living.
+I plan to continue my daily gratitude journaling practice and this end-of-year reflective process. As mentioned above, after finding a few hidden goals in last year's entry, I think this post can serve as a reminder of the important, but non-urgent efforts I am interested in. Regardless of my progress, writing and reading the entries forces me to slow down and more fully appreciate life.
