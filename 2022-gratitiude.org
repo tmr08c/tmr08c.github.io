@@ -66,28 +66,28 @@ While far from perfect, my results are more varied and I have fewer instances of
 
 My top answers from last year all still made an appearance (possibly under new, separate categories this year in the case of "breaks / flexibility / ease of life / weekend"), *but*, even when reaching for a go-to answer from last year (e.g., my partner or the weekend) my answers this year included more details. I wouldn't simply writing my partner's name down, but cite something specific that I was grateful for.
 
-I am grateful for making this observation last year and that it stuck in my head enough to do something about (unlike some of my other takeaways, unfortunately). I hope to see this trend continue. I have so much to be grateful for and it's embarrassing that some mornings I struggle to come up with something better than "coffee." Part of the value of the value of gratitude journaling is making the effort to realize all that I have and get the chance to express my gratefulness for it.
+I think my observation and intention-setting from last year were valuable.  I have so much to be grateful for and it's embarrassing that some mornings I struggle to come up with something better than "coffee." Part of the value of the value of gratitude journaling is making the effort to realize all that I have and get the chance to express my gratefulness for it.
 
 *** Professional life
 **** New job excitement
-
 In the second half of 2021, I started in a new role, working in Elixir.
 
 #+begin_quote
 This year, I took on a new role to have the opportunity to work in [[https://elixir-lang.org/][Elixir]], something I have wanted to do for years. The result was multiple entries about being grateful for my new role and getting to work in Elixir (and the Elixir ecosystem as a whole).
 #+end_quote
 
-This excitement continued into 2022, but had two different forms. For the first half of the year, my excitement was that of an individual contributor. I was excited for learning and growing my skills to build cool things in a space I felt good about. In the second half of the year, I was transitioned into an leadership position. After this, my gratitude shifted towards my company (for the opportunity) and team (for working with me during the transition).
+This excitement continued into 2022, but had two different forms. For the first half of the year, my excitement was that of an individual contributor. I was excited for learning and growing my skills to build cool things in a space I felt good about. In the second half of the year, I transitioned into a leadership position. After this role change, my gratitude shifted towards my company (for the opportunity) and team (for working with me during the transition).
+
+My love of Elixir has not wavered, only grown.
 
 **** Open Source
-
-I had more open source related entries this year than last, and across different technologies (Elixir, Emacs, and even front-end tech like TailwindCSS). Unfortunately, my takeaway from last year has still mostly applied:
+I had more open source related entries this year than last, but, unfortunately, my takeaway from last year still applied (until now!):
 
 #+begin_quote
 Looking ahead, I think I should do more than write a single sentence about being grateful for open-source maintainers. I am curious if [[https://github.com/sponsors][GitHub Sponsors]] is the preferred way to show proper gratitude for maintainers.
 #+end_quote
 
-All year I had a project in my task manager to start sponsoring people on GitHub. It took until I started reviewing my entries from this year for me to actually do it. If you look at my [[https://github.com/tmr08c?tab=sponsoring][sponsor list]] you can see just how last-minute I was with this. If anyone is reading this post and has been putting off sponsoring people, go do it. If you commit to sponsoring at least one person for some amount ($1? $5?), I think you will be grateful. You can check out the [[https://github.com/sponsors/explore][explore page]] for suggestions or look to see who people you follow sponsor. Sort of like [[https://jamesclear.com/small-habits][building a habit]], I found I basically just needed to start. I realized I kept putting it off, worried about right the right amount was or who the right people were, but these were just excuses. Now that I am set up, I can easily change who I sponsor and for how much.
+All year I had a project in my task manager to start sponsoring people on GitHub. It took until I started reviewing my entries from this year for me to actually do it (if you look at my [[https://github.com/tmr08c?tab=sponsoring][sponsor list]] you can see just how last-minute I was in writing this post). If anyone is reading this post and has been putting off sponsoring people, go do it. If you commit to sponsoring at least one person for an amount that feels small and easy to mange for you ($1? $5?), I think you will be grateful. You can check out the [[https://github.com/sponsors/explore][explore page]] for suggestions or look to see who people you follow sponsor. Sort of like [[https://jamesclear.com/small-habits][building a habit]], I found I basically just needed to start. I realized I kept putting it off, worried about right the right amount was or who the right people were, but these were just excuses. Now that I am set up, I can easily change who I sponsor and for how much.
 
 ***** Am I making a goals list?
 I wrote last year's post hoping to reflect on the year, but in my reflection came up with a few areas of improvement for myself. While I didn't track these ideas with rigor, having something to go back to and read, realizing I felt the same way a year later, finally pushed me to take action. This is an unexpected bonus of last year's post and motivates me to take this year's post seriously; it may give me the push I need to do something valuable.
@@ -103,53 +103,59 @@ Unfortunately, this trend has continued with COVID spikes, the war in Ukraine, i
 I think the next step for me here is to identify ways to leverage my good fortune in ways that can help others.
 #+end_quote
 
-I have made a slight improvement here, making donations [[/2022/04/open-source-open-eyes/][towards supporting Ukraine]], but I am not doing nearly enough. 2023 Troy, I hope that you make some progress.
+I have made a slight improvement here, making donations [[/2022/04/open-source-open-eyes/][towards supporting Ukraine]], but I am not doing nearly enough. 2023 Troy, do better.
 
 *** Maintaining self
 #+begin_quote
 As I begin exploring how I can turn my gratitude outwards, I know I also need to continue my focus on maintaining (and improving) my physical and mental health through diet, exercise, meditation, and work-life balance. It is easier to help others when I find myself in a good state.
 #+end_quote
 
-I had a large number of entries related to exercise, meditation, and other positive influences of mental and physical health. "Health" was my top category (including ideas like a gratitude for life or, stealing from meditation exercises, being grateful for breathing)  and "mental health" came in at number four. I feel a lot of gratitude towards practices such as running, meditation, and stretching. If you saw the raw data, you would know they have not been a panacea, but I believe they have helped.
+I had a large number of entries related to exercise, meditation, and other positive influences of mental and physical health. "Health" was my top category (this includes entries like being grateful for my breath or perform some exercise)  and "mental health" came in at number four. I feel a lot of gratitude towards practices such as running, meditation, and stretching. If you saw the raw data, you would know they have not been a panacea (more on this below), but I believe they have helped.
 
 ** Looking at this year
-
-*** Reading the result more useful (again)
 Like last year, I am finding more value in the actual entries than the aggregations. The process of categorizing the entries is a valuable forcing function to interpret my entries, but I find more of my takeaways come from the nuance of reading the entries.
 
+I cover a few areas of interest or highlights of the year below.
+
 *** Mental health
-While I am super comfortable writing about it, the state of my mental health is tied into my entries. An entry categorized as "family" could be a general expression of love and happiness or gratitude for the support of my partner when I was feeling down.  Below are some of the categories that seemed to help when I wasn't feeling my best.
+While I am not super comfortable writing about it, the state of my mental health comes through in my entries. An entry categorized as "family" could be a general expression of love and happiness or gratitude for the support of my partner when I was feeling down. Reading through all of the entries together revealed the ups-and-downs felt throughout the yera.
+
+Below are some of the categories that seemed to help when I wasn't feeling my best.
 
 **** Working from home
-Working from home is a bit of a go-to entry for me, but there is some nuance into why I wrote about it. While some entries were of gratitude for flexibility around breakfast with my partner and traveling and working, most were about how much easier managing any anxiety is when working from home.
+Working from home was definitely a go-to entry for me, but there is some nuance into why I wrote about it. While some entries were of gratitude for flexibility around breakfast with my partner or the ability to travel and still work, most were about how much easier emotional regulation and managemnet can be when working from home.
 **** Morning routine
-An example of my categorization inconsistency, my morning routine involves items which may have their own tags such as exercise and meditation. While I have not as the book suggests, I have found the basic framework suggested in [[https://www.robinsharma.com/book/the-5am-club][The 5AM Club]] to be valuable (warning, the book itself isn't great; you are probably served well enough by a summary). Of particular note is the suggest to do some form of exercise first, citing it [[https://www.healthline.com/health/depression/exercise#What-are-the-mental-health-benefits-of-exercise?][helps reduce cortisol]] which can reduce stress and anxiety.
+An example of my categorization inconsistency, my morning routine involves items which may have their own tags such as exercise and meditation. I have found the basic framework suggested in [[https://www.robinsharma.com/book/the-5am-club][The 5AM Club]] to be valuable, despite not hitting the 5AM target start time. Of particular note is the suggest to do some form of exercise first, citing it [[https://www.healthline.com/health/depression/exercise#What-are-the-mental-health-benefits-of-exercise?][helps reduce cortisol]] which can reduce stress and anxiety.
 **** Nature
 I think even the most basic sentiment analysis algorithm could catch the positivity associated with my entries about blue skies, warming weather, and lush, green nature (I like the Fall's reprieve from the heat too!). I do better when I get outside and move and this seems to happen more in warmer months.
 **** Support
-In times where I am not feeling 100%, I am fortunate to have a loving and understanding partner. I have many entries being grateful for my partner's efforts to take on more when I am stressed or be understanding if I have a crabby day.
+In times where I am not feeling 100%, I am fortunate to have a loving and understanding partner. I have many entries expressing gratitude for my partner's efforts to take on more when I am stressed or be understanding if I have a crabby day.
 *** Podcasts
-I love podcasts. Whether educational or fun, podcasts bring me motivation, value, and joy. This year (sometime at or before 1/7/22 apparently) I started listening to [[https://maximumfun.org/podcasts/dr-gameshow/][Dr. Gameshow]]. If you want a podcast to listen to for fun, give it a try!
+I love podcasts. Whether educational or fun, podcasts bring me motivation, value, and happiness.
 
 #+begin_quote
 Podcasts, both productive and not. Examples: ChooseFI podcast and their free content and community building. I haven't listened in a while, but it was great to catch up over a few episodes and feel the excitment they help build within me. I also started listening to a new comedy podcast, Dr. Gameshow and really enjoyed it.
 #+end_quote
 
-*** rhi new job
-*** "things" don't show up much
+This entry was early in the year, 1/7/22, and, a year later, I can confidently recommend [[https://maximumfun.org/podcasts/dr-gameshow/][Dr. Gameshow]] if you are looking for a podcast to listen to for fun!
+
+*** My partner's new job
+I wanted to shout out my partner getting a new job! Reading the entries brought back memories of how stressful job hunting can be. I am happy that they found a job that they have been enjoying and producing great work in.
+*** "Things" don't show up much
+The lack of gratitude towards many material possessions makes me think I may have a chance of being a [[https://www.mrmoneymustache.com/2012/09/18/is-it-convenient-would-i-enjoy-it-wrong-question/][Mustachian]].
 *** Do more fun things
-I've been thinking about how I can bring more fun into my life. I have a lot of focus on self improvement which brings my satisfaction and happiness, but I wonder if I am trying to over-do it. This is a new thought after reading /[[https://www.oliverburkeman.com/books][Four Thousand Weeks: Time Management for Mortals]]/. I am in no way thinking I have nothing left to improve (far from it), but I'm starting to wonder if a life focused on productivity and improvement will be a happy one.
+I've been thinking about how I can bring more fun into my life. I have a lot of focus on self improvement which brings me satisfaction and happiness, but I wonder if I am trying to over-do it. This is a new thought after reading /[[https://www.oliverburkeman.com/books][Four Thousand Weeks: Time Management for Mortals]]/. I am in no way thinking I have nothing left to improve (far from it), but I'm starting to wonder if a life focused on productivity and improvement will be a happy one.
 
 Entries about going out for good food, going to the movies with my partner, and reading entertaining fiction bring back positive memories, so these are areas I can look to first should I seek out more fun this year.
 *** Getting to travel more (maybe kill?)
-We had a few trips this year, a great increase after travel restrictions. Traveling again remind me that not all traveling is equal. As can be expected, I reflect more fondly on the long-weekend getaway to the cabin in the woods with my partner than on the work trip. Even for our fun trips, travel bring some stress-the finances, worry about our dogs (whether the join us or stay), staying healthy, and more. I want to track my relationship with travel over the coming years and see if
+We had a few trips this year, a great increase after travel restrictions. Traveling again remind me that not all traveling is equal. I reflect more fondly on the long-weekend getaway to a cabin in the woods with my partner than on the work trip. Even for our fun trips, travel bring some stress-the finances, worry about our dogs (whether the join us or stay), staying healthy, and more. I want to track my relationship with travel over the coming years to see how I can make it easier and if it's something I enjoy or enjoy the /idea/ of.
 *** Things the piqued my interest
 There were two topics of interest that came up in various forms (e.g., gratitude for educational resources about a topic): Emacs and note-taking, which, for my note-taking system (~org-roam~) means Emacs and note-taking in Emacs ;).
 
 I have slight concerns that both of these are potential black holes of exploring and tinkering. I want to make sure I don't get too lost in the darkness and leverage the topics as tools to provide value (or maybe I just acknowledge these fall into my "do more fun things" bucket).
 
 ** Looking to next year
-I plan to continue my daily gratitude journaling practice and to continue this reflective process of reviewing my entries. After finding a few hidden goals in last year's entry, I think there may be value in revisiting this post throughout the year as I may goals, plans, and priorities.
+I plan to continue my daily gratitude journaling practice and to continue this reflective process of reviewing my entries. As mentioned above, after finding a few hidden goals in last year's entry, I think this post can server as a reminder of important, but non-urgent efforts I am interested in. Regardless, both writing and reading the entries give me the chance to slow down and appreciate the life I'm living.
 
 * Data
 ** Raw
