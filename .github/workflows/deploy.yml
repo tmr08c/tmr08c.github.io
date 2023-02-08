@@ -1,10 +1,10 @@
 # https://github.com/actions/starter-workflows/blob/main/pages/gatsby.yml
-name: Deploy Gatsby site to Pages
+name: Deploy
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [$default-branch]
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
