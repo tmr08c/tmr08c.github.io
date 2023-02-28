@@ -3,7 +3,7 @@
 * Intro
 In my last post (ADD LINK), I reflected on the entries in my gratitude journal and my takeaways from the year. I had a similar post in 2021 (ADD LINK). In that post, I also included some details of how I got access to all of my entries (both how I attempted (ADD LINK) and how I /actually/ got it to work (ADD LINK)). This year I decided to cover how I accessed in a separate post.
 
-I am using org-roam's dailies (ADD LINK) feature as a place to write down three things for which I am grateful for or excited about each day. I enter them as an ordred list under the same header, something like:
+I am using org-roam's dailies (ADD LINK) feature as a place to write down three things for which I am grateful for or excited about each day. I enter them as an ordered list under the same header, something like:
 
 #+begin_src org-mode
 \* Grateful or Excited About
@@ -169,3 +169,4 @@ Last year's =sed= version took less than a tenth of a second:
 
 Winner: *sed*
 * Takeaways
+While the time spent working on the =emacs-lisp= version will pay dividends over my lifetime as an Emacs user, I think next year I will use the =sed= version again. As noted above, I suspect there are more Emacs-y ways to get this data in a way that would be more performance, but, at least as of right now, I think the time and effort in exploring those alternatives is better spent elsewhere.
