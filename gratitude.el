@@ -41,11 +41,9 @@
               (items (flatten-list (org-element-map lists 'item
                                      (lambda (item)
                                        (org-element-map (org-element-contents item) 'paragraph
-
                                          ;; https://www.reddit.com/r/orgmode/comments/7qwmbo/comment/dstsmpw/?utm_source=reddit&utm_medium=web2x&context=3
                                          ;; I wish I knew about interpret sooner
-                                                   ;; (string-trim (org-no-properties (car (org-element-contents p))))
-                                                 (lambda (p) (string-trim (org-element-interpret-data p)))))))))
+                                         (lambda (p) (string-trim (org-element-interpret-data p)))))))))
          (kill-buffer)
          items))
 
@@ -76,6 +74,7 @@
        "\\1-\\2-\\3 \\4:\\5:\\6"
        filename)))))
 
+(message (benchmark-run
 (let ((output-buffer "*gratitude*")
       (files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022.+\.org")))
   (split-window)
@@ -93,5 +92,6 @@
   (switch-to-buffer output-buffer)
   (org-mode)
   (org-table-align))
+))
 ;; (provide 'gratitude)
 ;;; gratitude.el ends here
