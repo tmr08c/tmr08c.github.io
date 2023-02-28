@@ -4,8 +4,6 @@ date: 2023-02-28 20:00:00
 categories: ["emacs-lisp"]
 ---
 
-## Intro
-
 In my [last post](/2023/01/2022-gratitude), I reflected on the entries in my gratitude journal and my takeaways from the year. I had a [similar post in 2021](/2021/12/2021-gratitude/). In that post, I also included some details of how I got access to all of my entries (both how I [attempted](2021/12/2021-gratitude/#first-attempt---org-element) ) and how I [*actually* got it to work](/2021/12/2021-gratitude/#second-attempt---sed)). This year I decided to cover how I accessed in a separate post.
 
 I am using [`org-roam`'s dailies](https://www.orgroam.com/manual.html#org_002droam_002ddailies) feature as a place to write down three things for which I am grateful for or excited about each day. I enter them as an ordered list under the same header, something like:
@@ -22,10 +20,6 @@ What are 3 things I am grateful for or excited about.
 ```
 
 In my 2021 post, I tried using the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html), but ended up instead using `sed`. Wanting to put my `elisp` skills to the test a year later, I investigated the org-elements route again this year. This time, successfully.
-
-## Script
-
-### Full script
 
 Here is all of the code used to extract my gratitude entries from my 2022 daily files:
 
@@ -104,7 +98,7 @@ At some point in the development, I decided to put the results into an `org-mode
 `org-mode` date and timestamp management aside, there are two main aspects to the code: (1) the &ldquo;main&rdquo; function which manages finding the files and collecting the entries and (2) the `extract-gratitude-entries` function which uses `org-element` to extract my gratitude entries from an org file.
 
 
-#### The main function
+### The main function
 
 The &ldquo;main&rdquo; function is our coordinator.
 
@@ -136,7 +130,7 @@ The &ldquo;main&rdquo; function is our coordinator.
 This seems it is fairly straightforward `emacs-lisp` —it is focused on finding files and managing buffers. The more unique functionality is handled in `extract-gratitude-entries`, which we can cover next.
 
 
-#### `extract-gratitude-entries`
+### `extract-gratitude-entries`
 
 The `extract-gratitude-entries` function leverages the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html) to parse our `org-mode` file (`org-element-parse-buffer`) in an AST and then traverse the AST to find our gratitude entries.
 
@@ -171,20 +165,21 @@ The Org Element API provides the ability iterate over elements of a given type (
 
 Once we have collected our list of items we kill the buffer and return them.
 
-1.  Misuing the Element API?
+####  Potential Element API Misuse
 
-    I don&rsquo;t know if this is an intended use of the Org Element API. It felt a bit too low-level for what I was trying to do.
-    
-    While working on this two alternative approaches came to mind:
-    
-    1.  Using headlines
-        More of a &ldquo;maybe next time&rdquo; approach, `org-mode` seems to work well with quickly collecting and presenting headlines (Org Agenda, [org-ql](https://github.com/alphapapa/org-ql)). I suspect if I used sub-heading for my gratitude entries, I would have had a much easier time.
-    2.  Searching
-        I am a novice emacs-lisper, but have noticed that examples do not shy away from opening buffers and searching for text. Similar to last year&rsquo;s `sed` approach, I wonder if I would have been better of searching for the proper header and yanking all text until the next header.
+I don&rsquo;t know if this is an intended use of the Org Element API. It felt a bit too low-level for what I was trying to do.
+
+While working on this two alternative approaches came to mind:
+
+1.  Using headlines
+
+    More of a &ldquo;maybe next time&rdquo; approach, `org-mode` seems to work well with quickly collecting and presenting headlines (Org Agenda, [org-ql](https://github.com/alphapapa/org-ql)). I suspect if I used sub-heading for my gratitude entries, I would have had a much easier time.
+2.  Searching
+
+    I am a novice emacs-lisper, but have noticed that examples do not shy away from opening buffers and searching for text. Similar to last year&rsquo;s `sed` approach, I wonder if I would have been better of searching for the proper header and yanking all text until the next header.
 
 
 ## Comparing with last year
-
 
 ### Code comparison
 
@@ -194,7 +189,6 @@ Last year&rsquo;s `sed` version is a one-liner. While terse and requiring an und
 
 Winner: **sed**
 
-
 ### Performance
 
 Using `benchmark-run`, our new emacs-version averages a run time of 48 seconds (35.688539, 47.857797, 61.151746).
@@ -202,9 +196,12 @@ Using `benchmark-run`, our new emacs-version averages a run time of 48 seconds (
 Last year&rsquo;s `sed` version took less than a tenth of a second:
 
 ```bash
-    $ time sed -n -E '/^\*+ Grateful or Excited About/,/\*+/{ s/^[[:digit:]]\.[[:blank:]]*(.*)$/\1/p; }' 2022-*.org > 2022-gratitude.csv
-    
-    0.03s user 0.01s system 97% cpu 0.041 total
+$ time \
+sed -n -E \
+'/^\*+ Grateful or Excited About/,/\*+/{ s/^[[:digit:]]\.[[:blank:]]*(.*)$/\1/p; }' \
+2022-*.org > 2022-gratitude.csv
+
+0.03s user 0.01s system 97% cpu 0.041 total
 ```
 
 Winner: **sed**
