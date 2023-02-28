@@ -4,9 +4,9 @@ date: 2023-02-28 20:00:00
 categories: ["emacs-lisp"]
 ---
 
-In my [last post](/2023/01/2022-gratitude), I reflected on the entries in my gratitude journal and my takeaways from the year. I had a [similar post in 2021](/2021/12/2021-gratitude/). In that post, I also included some details of how I got access to all of my entries (both how I [attempted](2021/12/2021-gratitude/#first-attempt---org-element) ) and how I [*actually* got it to work](/2021/12/2021-gratitude/#second-attempt---sed)). This year I decided to cover how I accessed in a separate post.
+In my [last post](/2023/01/2022-gratitude), I reflected on the entries in my gratitude journal and my takeaways from the year. I had a [similar post in 2021](/2021/12/2021-gratitude/). In that post, I also included some details of how I got access to all of my entries, both how I [attempted](2021/12/2021-gratitude/#first-attempt---org-element) and how I [actually got it to work](/2021/12/2021-gratitude/#second-attempt---sed). In my 2021 post, I tried using the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html), but ended up instead using `sed`. Wanting to put my `elisp` skills to the test a year later, I investigated the org-elements route again this year. This time, successfully.
 
-I am using [`org-roam`'s dailies](https://www.orgroam.com/manual.html#org_002droam_002ddailies) feature as a place to write down three things for which I am grateful for or excited about each day. I enter them as an ordered list under the same header, something like:
+For some background, I am using [`org-roam`'s dailies](https://www.orgroam.com/manual.html#org_002droam_002ddailies) feature as a place to write down three things for which I am grateful for or excited about each day. I enter them as an ordered list under the same header, something like:
 
 ```org-mode
 \* Grateful or Excited About
@@ -19,9 +19,7 @@ What are 3 things I am grateful for or excited about.
 3. Thing 3
 ```
 
-In my 2021 post, I tried using the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html), but ended up instead using `sed`. Wanting to put my `elisp` skills to the test a year later, I investigated the org-elements route again this year. This time, successfully.
-
-Here is all of the code used to extract my gratitude entries from my 2022 daily files:
+The goal was to find all of my `org-roam` dailies created in 2022, parse out the three items I listed, and combine them in a way to manually evaluate them. Here is what the final code ended up looking like: 
 
 ```emacs-lisp
  (require 'org)
@@ -41,8 +39,6 @@ Here is all of the code used to extract my gratitude entries from my 2022 daily 
                (items (flatten-list (org-element-map lists 'item
                                       (lambda (item)
                                         (org-element-map (org-element-contents item) 'paragraph
-                                          ;; https://www.reddit.com/r/orgmode/comments/7qwmbo/comment/dstsmpw/?utm_source=reddit&utm_medium=web2x&context=3
-                                          ;; I wish I knew about interpret sooner
                                           (lambda (p) (string-trim (org-element-interpret-data p)))))))))
           (kill-buffer)
           items))
@@ -97,7 +93,6 @@ At some point in the development, I decided to put the results into an `org-mode
 
 `org-mode` date and timestamp management aside, there are two main aspects to the code: (1) the &ldquo;main&rdquo; function which manages finding the files and collecting the entries and (2) the `extract-gratitude-entries` function which uses `org-element` to extract my gratitude entries from an org file.
 
-
 ### The main function
 
 The &ldquo;main&rdquo; function is our coordinator.
@@ -126,9 +121,6 @@ The &ldquo;main&rdquo; function is our coordinator.
 -   We find all daily files for the year using the `org-roam-directory` and `org-roam-dailies-directory` variables.
 -   We format the gratitude entries as rows in an `org-mode` table and write them into our `*gratitude*` buffer, `(insert "|" date "|" entry "||\n")`.
 -   We then switch to our output buffer, set it be an `org-mode` buffer, and align the table.
-
-This seems it is fairly straightforward `emacs-lisp` —it is focused on finding files and managing buffers. The more unique functionality is handled in `extract-gratitude-entries`, which we can cover next.
-
 
 ### `extract-gratitude-entries`
 
@@ -178,7 +170,6 @@ While working on this two alternative approaches came to mind:
 
     I am a novice emacs-lisper, but have noticed that examples do not shy away from opening buffers and searching for text. Similar to last year&rsquo;s `sed` approach, I wonder if I would have been better of searching for the proper header and yanking all text until the next header.
 
-
 ## Comparing with last year
 
 ### Code comparison
@@ -209,4 +200,3 @@ Winner: **sed**
 ## Takeaways
 
 While the time spent working on the `emacs-lisp` version will pay dividends over my lifetime as an Emacs user, I think next year I will use the `sed` version again. As noted above, I suspect there are more Emacs-y ways to get this data in a way that would be more performance, but, at least as of right now, I think the time and effort in exploring those alternatives is better spent elsewhere.
-
