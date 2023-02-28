@@ -1,4 +1,5 @@
 #+title: Getting Gratitude Entries
+#+OPTIONS: toc:nil
 
 * Intro
 In my last post (ADD LINK), I reflected on the entries in my gratitude journal and my takeaways from the year. I had a similar post in 2021 (ADD LINK). In that post, I also included some details of how I got access to all of my entries (both how I attempted (ADD LINK) and how I /actually/ got it to work (ADD LINK)). This year I decided to cover how I accessed in a separate post.
