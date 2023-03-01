@@ -22,24 +22,24 @@ What are 3 things I am grateful for or excited about.
 The goal was to find all of my `org-roam` dailies created in 2022, parse out the three items I listed, and combine them in a way to manually evaluate them. Here is what the final code ended up looking like: 
 
 ```emacs-lisp
- (require 'org)
- (require 'org-element)
- 
- (defun extract-gratitude-entries (file) "Get gratitude section of daily files."
-        (find-file file)
-        (let* (
-               (lists (org-element-map (org-element-parse-buffer) 'headline
-                        (lambda (headline)
-                          (and (string-equal (org-element-property :raw-value headline) "Grateful or Excited About")
-                               (org-element-map headline 'plain-list
-                                 (lambda (list)
-                                   (and
-                                    (string-equal (org-element-property :type list) 'ordered)
-                                    list)))))))
-               (items (flatten-list (org-element-map lists 'item
-                                      (lambda (item)
-                                        (org-element-map (org-element-contents item) 'paragraph
-                                          (lambda (p) (string-trim (org-element-interpret-data p)))))))))
+(require 'org)
+(require 'org-element)
+
+(defun extract-gratitude-entries (file) "Get gratitude section of daily files."
+       (find-file file)
+       (let* (
+              (lists (org-element-map (org-element-parse-buffer) 'headline
+                       (lambda (headline)
+                         (and (string-equal (org-element-property :raw-value headline) "Grateful or Excited About")
+                              (org-element-map headline 'plain-list
+                                (lambda (list)
+                                  (and
+                                   (string-equal (org-element-property :type list) 'ordered)
+                                   list)))))))
+              (items (flatten-list (org-element-map lists 'item
+                                     (lambda (item)
+                                       (org-element-map (org-element-contents item) 'paragraph
+                                         (lambda (p) (string-trim (org-element-interpret-data p)))))))))
           (kill-buffer)
           items))
  
@@ -98,23 +98,23 @@ At some point in the development, I decided to put the results into an `org-mode
 The &ldquo;main&rdquo; function is our coordinator.
 
 ```emacs-lisp
-    (let ((output-buffer "*gratitude*")
-          (files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022.+\.org")))
-      (split-window)
-      (other-window 1)
-      (generate-new-buffer output-buffer)
-      (set-buffer output-buffer)
-      (erase-buffer)
-      (insert "|Date|Message|Category|\n|-|-|-|\n")
-      (dolist (file files)
-        (let ((date (tr/file-creation-time-from-name file)))
-          (let ((entries (extract-gratitude-entries file)))
-            (set-buffer output-buffer)
-            (dolist (entry entries)
-              (insert "|" date "|" entry "||\n")))))
-      (switch-to-buffer output-buffer)
-      (org-mode)
-      (org-table-align))
+(let ((output-buffer "*gratitude*")
+      (files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022.+\.org")))
+  (split-window)
+  (other-window 1)
+  (generate-new-buffer output-buffer)
+  (set-buffer output-buffer)
+  (erase-buffer)
+  (insert "|Date|Message|Category|\n|-|-|-|\n")
+  (dolist (file files)
+    (let ((date (tr/file-creation-time-from-name file)))
+      (let ((entries (extract-gratitude-entries file)))
+        (set-buffer output-buffer)
+        (dolist (entry entries)
+          (insert "|" date "|" entry "||\n")))))
+  (switch-to-buffer output-buffer)
+  (org-mode)
+  (org-table-align))
 ```
 
 -   We set up the buffer we write our results to, `*gratitude* by including creating it (`generate-new-buffer`), and resetting the contents if necessary (`set-buffer` and `erase-buffer`).
