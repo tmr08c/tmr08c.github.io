@@ -12,7 +12,7 @@ We will track our creation and modification timestamps with [keywords](https://o
 
 We will begin by ensuring newly created nodes include our timestamp fields. We do this by updating our capture templates.
 
-```emacs-lisp
+```el
 (setq org-roam-capture-templates
   '(("d" "default" plain "%?" :target
   (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
@@ -21,10 +21,10 @@ We will begin by ensuring newly created nodes include our timestamp fields. We d
 
 This template is based on the [default in org-roam](https://github.com/org-roam/org-roam/blob/c3867619147175faf89ed8f3e90a1e67a4fd9655/org-roam-capture.el#L41-L45), and simply adds our two new keywords.
 
-```diff
+```el {diff}
 '(("d" "default" plain "%?" :target
-  -(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-  +(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
+-   (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
++   (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created_at: %U\n#+last_modified: %U\n\n\n")
     :unnarrowed t))
 ```
 
@@ -40,7 +40,7 @@ _Please note that I used this as a chance to learn some `emacs-lisp`, so it may 
 
 Since I am leveraging `org-roam`'s [default filename capture template](https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam-capture.el#L43), I have access to the canonical node creation time right in the file name.
 
-```emacs-lisp
+```el
 (defcustom org-roam-capture-templates
   '(("d" "default" plain "%?"
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -49,7 +49,7 @@ Since I am leveraging `org-roam`'s [default filename capture template](https://g
 
 With this format in mind, I use a regular expression to match the datetime format of the file name.
 
-```emacs-lisp
+```el
 (defun tr/file-creation-time-from-name (fpath)
   "Extract a timestamp from the file name. Relies on files having the format
       'YYYYMMDDHHMMSS-*' (the default org-roam node filename)."
@@ -66,7 +66,7 @@ Once I have the datetime extracted into a string, I use two helper functions to 
 
 First, I used a modified version of `org-timestamp-from-time` that can parse the datetime string we created and convert it into an `org-timestamp`.
 
-```emacs-lisp
+```el
 (defun tr/time-stamp-to-org-timestamp (ts)
   "Taken from `org-timestamp-from-time` - the original function used
      `decode-time`, which doesn't work with our timestamp, so we use
@@ -83,14 +83,14 @@ First, I used a modified version of `org-timestamp-from-time` that can parse the
 
 I then format the `org-timestamp` _back_ into a string but formatted the same as the timestamp used when we create a new file.
 
-```emacs-lisp
+```el
 (defun tr/format-org-date (date)
   (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
 ```
 
 To fetch the `last_modified` value, we can use the `file-attributes` function from `Emacs` itself. After we grab the modification time from our file attributes, we can pass it into the function we cribbed from above (`org-timestamp-from-time`) and reuse our formatting function.
 
-```emacs-lisp
+```el
 (defun tr/modification-timestamp (fpath)
   "Use file-attributes to get the modification time of a file and convert it to an
   org-timestamp"
@@ -101,7 +101,7 @@ To fetch the `last_modified` value, we can use the `file-attributes` function fr
 
 Knowing I want to use both values together, I wrote a function that calls both helpers and wraps them in a list.
 
-```emacs-lisp
+```el
 (defun tr/file-datetime-info (fpath)
   "Get a list containing a file's creation and change datetime"
   (list (tr/file-creation-time-from-name fpath)
@@ -112,7 +112,7 @@ Knowing I want to use both values together, I wrote a function that calls both h
 
 Now that, for a given file, we can get our two timestamps, we can use our `tr/file-datetime-info` function to insert these values into our files. using the following function.
 
-```emacs-lisp
+```el
 (defun tr/add-time-stamp (fpath)
   "Add `created_at` and `last_modified` timemstamps keywords to file"
   (message (format "Checking file %s" fpath))
@@ -146,7 +146,7 @@ I don't know if it was necessary to open the file in another window, but, during
 
 Now that we have all of the pieces in place to update a single file, updating all nodes is simple. We can leverage [`org-roam-directory`](https://github.com/org-roam/org-roam/blob/7f453f3fffb924ca4ae3f8d34cabc03fbcae0127/org-roam.el#L115-L119) to find all of our `org-roam-files` and call `tr/add-time-stamp` for each.
 
-```emacs-lisp
+```el
  (let ((files (directory-files org-roam-directory 'full ".org")))
    (dolist (file files) (tr/add-time-stamp file)))
 ```
@@ -157,7 +157,7 @@ Our final step is keeping our `last_modified` value up-to-date. To do this, we c
 
 Based on [this post](https://org-roam.discourse.group/t/update-a-field-last-modified-at-save/321/18), the hook leverages the built-in [`time-stamp` module](https://www.emacswiki.org/emacs/TimeStamp) to find and update the timestamp after our `last_modified` keyword.
 
-```emacs-lisp
+```el
 (after! org
   (setq time-stamp-active t
         time-stamp-start "#\\+last_modified: [\t]*"
