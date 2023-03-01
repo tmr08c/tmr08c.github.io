@@ -4,7 +4,7 @@ date: 2023-02-28 20:00:00
 categories: ["emacs-lisp"]
 ---
 
-Following a [post from 2021](/2021/12/2021-gratitude/), my [last post](/2023/01/2022-gratitude) reflected on the entries in my gratitude journal and my takeaways from the year. 
+Following a [post from 2021](/2021/12/2021-gratitude/), my [last post](/2023/01/2022-gratitude) reflected on the entries in my gratitude journal and my takeaways from the year.
 
 In the 2021 version of the same post, I included the details of my [attempt](/2021/12/2021-gratitude/#first-attempt---org-element) at using the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html) as well as my ultimate [`sed`-based solutions](/2021/12/2021-gratitude/#second-attempt---sed). Wanting to evalute my `elisp` skills a year later, I attempted using the Org Elements API again; this post is the result of that investigation.
 
@@ -21,9 +21,9 @@ What are 3 things I am grateful for or excited about.
 3. Thing 3
 ```
 
-To write my reflection post, I wanted to find all of my `org-roam` dailies created in 2022, parse out the three items I listed, and combine them in a way that allows me to review them together. Below is what the final code ended up looking like: 
+To write my reflection post, I wanted to find all of my `org-roam` dailies created in 2022, parse out the three items I listed, and combine them in a way that allows me to review them together. Below is what the final code ended up looking like:
 
-```emacs-lisp
+```el
 (require 'org)
 (require 'org-element)
 
@@ -44,7 +44,7 @@ To write my reflection post, I wanted to find all of my `org-roam` dailies creat
                                          (lambda (p) (string-trim (org-element-interpret-data p)))))))))
           (kill-buffer)
           items))
- 
+
  (defun tr/format-org-date (date)
    (org-timestamp-format date "\[%Y-%02m-%02d %3a %02H:%02M\]"))
 
@@ -90,6 +90,7 @@ To write my reflection post, I wanted to find all of my `org-roam` dailies creat
   (org-mode)
   (org-table-align))
 ```
+
 There are two main aspects to the code:
 
 1. The "main" function, which finds the files and collects the entries.
@@ -99,7 +100,7 @@ There are two main aspects to the code:
 
 The &ldquo;main&rdquo; function is our coordinator.
 
-```emacs-lisp
+```el
 (let ((output-buffer "*gratitude*")
       (files (directory-files (concat org-roam-directory org-roam-dailies-directory) 'full "2022.+\.org")))
   (split-window)
@@ -119,10 +120,10 @@ The &ldquo;main&rdquo; function is our coordinator.
   (org-table-align))
 ```
 
--   We set up the buffer we write our results to, `*gratitude*`; creating it (`generate-new-buffer`) and resetting the contents if necessary (`set-buffer` and `erase-buffer`).
--   We find all daily files for the year using the `org-roam-directory` and `org-roam-dailies-directory` variables.
--   We format the gratitude entries as rows in an `org-mode` table and write them into our `*gratitude*` buffer, `(insert "|" date "|" entry "||\n")`.
--   We then switch to our output buffer, set its major mode to `org-mode`, and align the table.
+- We set up the buffer we write our results to, `*gratitude*`; creating it (`generate-new-buffer`) and resetting the contents if necessary (`set-buffer` and `erase-buffer`).
+- We find all daily files for the year using the `org-roam-directory` and `org-roam-dailies-directory` variables.
+- We format the gratitude entries as rows in an `org-mode` table and write them into our `*gratitude*` buffer, `(insert "|" date "|" entry "||\n")`.
+- We then switch to our output buffer, set its major mode to `org-mode`, and align the table.
 
 At some point during development, I decided to put the results into an `org-mode` table and include the date of the entry, resulting in copying ~30 lines of code from [last time I worked with org-mode dates](/2022/08/add-timestamps-to-org-files/#getting-dates).
 
@@ -134,7 +135,7 @@ Since reviewing my gratitude entries is mostly a chance to walk down memory lane
 
 As previously mentioned, the `extract-gratitude-entries` function leverages the Org Element API to parse our `org-mode` file (`org-element-parse-buffer`) into an AST and then traverse the AST to find our gratitude entries.
 
-```emacs-lisp
+```el
 (defun extract-gratitude-entries (file) "Get gratitude section of daily files."
        (find-file file)
        (let* (
@@ -158,21 +159,21 @@ The Org Element API provides functions to iterate over elements of a given type 
 
 1. Look for our gratitude header
 
-    We use `org-element-map` to fetch all headers and then check the contents (`(org-element-property :raw-value)`) to see if it matches our gratitude header's text ("Grateful or Excited About").
+   We use `org-element-map` to fetch all headers and then check the contents (`(org-element-property :raw-value)`) to see if it matches our gratitude header's text ("Grateful or Excited About").
 
 2. Find the list of entries under the header
 
-    Similar to our previous step, we first fetch, this time nested, elements of a type (`plain-list`) and then refining that list, time looking for ordered lists.
+   Similar to our previous step, we first fetch, this time nested, elements of a type (`plain-list`) and then refining that list, time looking for ordered lists.
 
-    In practice, I probably didn&rsquo;t have to do the extra check to ensure the item is an ordered list since I only have my gratitude entries under the header.
+   In practice, I probably didn&rsquo;t have to do the extra check to ensure the item is an ordered list since I only have my gratitude entries under the header.
 
 3. Get the contents of each item in the list
 
-    I struggled to get the contents in a useful format until [this Reddit comment](https://www.reddit.com/r/orgmode/comments/7qwmbo/comment/dstsmpw/?utm_source=reddit&utm_medium=web2x&context=3) brought `org-element-interpret-data` only my radar. This function will convert the Org Element AST structure into what would be displayed in the buffer.
+   I struggled to get the contents in a useful format until [this Reddit comment](https://www.reddit.com/r/orgmode/comments/7qwmbo/comment/dstsmpw/?utm_source=reddit&utm_medium=web2x&context=3) brought `org-element-interpret-data` only my radar. This function will convert the Org Element AST structure into what would be displayed in the buffer.
 
 Once we have collected our list of items, we kill the buffer and return.
 
-####  Potential Element API Misuse
+#### Potential Element API Misuse
 
 I don&rsquo;t know if this is an intended use of the Org Element API; it felt a bit too low-level for what I was trying to do.
 
@@ -180,11 +181,11 @@ While working on this, two alternative approaches came to mind:
 
 1. Using headlines
 
-    `org-mode` seems to work well with quickly collecting and presenting headlines (Org Agenda, [org-ql](https://github.com/alphapapa/org-ql)). If I use headings instead of list items for my gratitude entries, I expect I could more easily collect the entries.
+   `org-mode` seems to work well with quickly collecting and presenting headlines (Org Agenda, [org-ql](https://github.com/alphapapa/org-ql)). If I use headings instead of list items for my gratitude entries, I expect I could more easily collect the entries.
 
 2. Searching
 
-    I am a novice emacs-lisper, but I have noticed that examples do not shy away from opening buffers and searching for text. Similar to last year&rsquo;s `sed` approach, I wonder if I would have been better off searching for the proper heading and yanking all text until the one.
+   I am a novice emacs-lisper, but I have noticed that examples do not shy away from opening buffers and searching for text. Similar to last year&rsquo;s `sed` approach, I wonder if I would have been better off searching for the proper heading and yanking all text until the one.
 
 ## Comparing with last year
 

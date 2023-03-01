@@ -56,7 +56,7 @@ Since we know what we want our template to look like, let's start there. I've up
 
 `Org-roam` ships with [a single capture template](https://github.com/org-roam/org-roam/blob/c3867619147175faf89ed8f3e90a1e67a4fd9655/org-roam-capture.el#L41-L45), set via `org-roam-capture-templates`. The default template simply sets the title property and is otherwise empty. Our ideal template expands upon this by adding (1) the file tags property and (2) the link to our article.
 
-```emacs-lisp
+```el
 (let* ((file-name "%<%Y%m%d%H%M%S>-${slug}.org")
        (properties "#+title: ${title}\n"))
   (setq org-roam-capture-templates
@@ -82,7 +82,7 @@ If we manually invoke this capture template, we will be prompted to provide a `l
 
 Now that we have a capture template for our `elfeed`-based `Org-roam` entry, we can write a function to create a node based on that template, populating it with data from an `elfeed` entry. Here's what we will end up with:
 
-```emacs-lisp
+```el
 (defun tr/elfeed--create-roam-node ()
     "Create roam node from current elfeed entry"
     (interactive)
