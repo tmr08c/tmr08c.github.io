@@ -6,7 +6,7 @@ categories: ["emacs", "org-mode", "org-roam", "elfeed"]
 
 I had a very Emacs-y day while on PTO recently.
 
-It began with starting up [`elfeed`](https://github.com/skeeto/elfeed) to read articles in my RSS feed. After coming across an article I wanted to take notes on, I turned to my note-taking tool of choice, [`Org-roam`](https://www.orgroam.com/). This RSS to note-taking workflow is a regular occurrence for me and a process I do "by hand." Knowing I had an open afternoon, I embarked on the most Emacs-y part of the day—attempting to find a way to automate part of this process.
+It began with starting up [`elfeed`](https://github.com/skeeto/elfeed) to read articles in my RSS feed. After coming across an article I wanted to take notes on, I turned to my note-taking tool of choice, [`Org-roam`](https://www.orgroam.com/). This RSS to note-taking workflow is a regular occurrence for me and a process I do "by hand." Knowing I had an open afternoon, I embarked on the most Emacs-y part of the day: attempting to find a way to automate part of this process.
 
 This post covers how I wrote a function to create a new `Org-roam` note based on the `elfeed` entry I am currently viewing.
 
@@ -15,7 +15,7 @@ This post covers how I wrote a function to create a new `Org-roam` note based on
 My current process for creating a new `node` from an `elfeed` entry isn't particularly cumbersome:
 
 1. I use the shortcut to create a new Org-roam `node`.
-2. I add a `filetags` property to my node and add the tag `article` to the list. I am not sure this part of my workflow will stay, but I have been experimenting with tags such as `video` and `article` for content I have consumed, thinking may make it easier to find in the future.
+2. I add a `filetags` property to my node and add the tag `article` to the list. I am not sure this part of my workflow will stay, but I have been experimenting with tags such as `video` and `article` for content I have consumed, thinking they may make it easier to find the note in the future (for example, I may recall watching a video about a topic, but not the full talk title).
 3. I set the `node`'s title to the title associated with the entry. I don't have an elegant way to do this, so I copy the full entry line from the `elfeed-search` buffer, capturing the title, author, and tags. When creating the entry, I paste the full line, deleting everything but the title.
 4. I store a link to the `elfeed` entry using `org-store-link` (some magic from DOOM or `elfeed` or something else makes this just work&trade;).
 5. I paste the `elfeed` link into the capture pane for the `node`.
