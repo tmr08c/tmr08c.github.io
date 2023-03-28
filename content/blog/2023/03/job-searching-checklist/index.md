@@ -12,35 +12,35 @@ My first few tasks are similar to my normal, working-mode morning checklist: cre
 
 - Create new daily roam node
 
-  My daily file serves multiple purposes, included being a [gratitude journal](file:///2021/12/2021-gratitude/), a todo list, and a holding area for notes. Keeping this task in my daily list ensure I keep up with my gratitude practice and help me track the top tasks for the day.
+  My daily file serves multiple purposes, including being a [gratitude journal](/2021/12/2021-gratitude/), a to-do list, and a holding area for notes. Keeping this task on my daily list ensures I keep up with my gratitude practice and help me track the top tasks for the day.
 
 - Clear inbox
 
-  Clearing the inbox is a GTD-standard. I capture tasks throughout the day and use this time to properly process them such as adding due dates or tags and putting into the proper project.
+  Clearing the inbox is a standard GTD practice. I capture tasks throughout the day and use this time to properly process them such as adding due dates or tags and putting them into the proper project.
 
 ## Identify what to do
 
-My next batch of tasks are around identifying what is important to do for the day. These tasks were hyper-focused around two goals: handling offboarding from my old job and looking for a new job.
+My next batch of tasks is around identifying what is important to do for the day. These tasks were hyper-focused around two goals: handling offboarding from my old job and looking for a new job.
 
 - Check `waiting` tag
 
-  This is another carry-over from my normal morning checklist and another core concept in the GTD space. The idea is that you track any &ldquo;open loops&rdquo; in which you are waiting on someone else. Examples include: waiting for HR to send information on how to rollover a 401(k) or waiting for a recruiter to share information about a company they are working with.
+  This is another carry-over from my normal morning checklist and another core concept in the GTD space. The idea is that you track any "open loops" in which you are waiting on someone else. Examples include: waiting for HR to send information on how to roll over a 401(k) or waiting for a recruiter to share information about a company they are working with.
 
 - Review “unemployment” perspective
 
-  The use of &ldquo;perspective&rdquo; comes from using [OmniFocus](https://www.omnigroup.com/omnifocus/) as my task manager. Perspectives are saved filters, so this is basically saying &ldquo;show me all tasks in my &lsquo;unemployment&rsquo; folder.&rdquo;
+  The use of "perspective" comes from using [OmniFocus](https://www.omnigroup.com/omnifocus/) as my task manager. Perspectives are saved filters; this one essentially is, "show me all tasks in my unemployment folder."
 
-  This included projects such as rolling over my 401(k), figuring out insurance, submitting coding exercies, and keeping up with my teammates that were also laid off.
+  This included projects such as rolling over my 401(k), figuring out insurance, submitting coding exercises, and keeping up with my teammates that were also laid off.
 
 - Review “offboarding with old job” project file
 
-  Somewhat redundant with the previous task, I had a file in which I was collecting useful information related to offboarding with my old job. While my task manager had the task I needed to do, this file would include the details of _how_ to do it.
+  Somewhat redundant with the previous task, I had a file in which I was collecting useful information related to offboarding from my old job. While my task manager had the task I needed to do, this file would include the details of _how_ to do it.
 
-  For example, for my 401(k) roll over project, my task manager has tasks such as &ldquo;figure out if I can do a direct roll over&rdquo; and &ldquo;send checks into IRA account&rdquo; and my project file includes links to resources about roll overs, notes from calls with the 401(k) management company, and account numbers.
+  For example, for my 401(k) rollover project, my task manager has tasks such as "figure out if I can do a direct rollover" and "send checks into IRA account" and my project file includes links to resources about rollovers, notes from calls with the 401(k) management company, and account numbers.
 
-- Review “new CPower job search” project file
+- Review “new job search” project file
 
-  Similar to above, I found my task manager wasn&rsquo;t ideal for tracking my application process on its own, so I leveraged an Org mode file for tracking where I&rsquo;ve applied, including notes on interviews and a top-level table tracking the next important date.
+  Similar to above, I found my task manager wasn&rsquo;t ideal for tracking the application process on its own, so I leveraged an Org mode file for tracking where I applied. In addition to tracking the status of my applications, each company had an entry with information such as interview notes and company values.
 
   I would review this file in the morning and:
 
@@ -50,21 +50,21 @@ My next batch of tasks are around identifying what is important to do for the da
 
   - update my application status
 
-        I had top-level table tracking the &ldquo;status&rdquo; of my application with each company. I would update this to the current status (e.g., waiting for feedback after an interview)
+        I had a top-level table tracking the status of my application with each company. I would update this to the current status (e.g., waiting for feedback after an interview)
 
-Org mode is definitely not necessary; I was essentially doing a text-file-based version of [Trello](https://trello.com/).
+Org mode is not necessary and, for most, would be more of a hindrance. I was essentially doing a text-file-based version of [Trello](https://trello.com/) which would be a great tool choice for this problem.
 
 - Check `jobs` tag in elfeed
 
-  I found a few RSS feeds that I could use to track new job opportunities. I would use Elfeed, an Emacs RSS reader, to check for new posts form these sources.
+  I found a few RSS feeds that I could use to track new job opportunities. I would use Elfeed, an Emacs RSS reader, to check for new posts from these sources.
 
-  Because I was specifically searching for roles in the Elixir-space, these are not widely useful, but I&rsquo;ll share them here for other Elixirists:
+  Because I was specifically searching for roles in the Elixir space, these are not widely useful, but I'll share them here for other Elixirists:
 
   - [ElixirJobs Board](https://elixirjobs.net/rss)
   - [Elixir Forum - Jobs Board](https://elixirforum.com/c/work/elixir-jobs/16.rss)
 
 ## Conclusion
 
-I hope these tasks and some of the practices I used can be helpful for others in the job-searching process. Please reach out if there are any aspects of the process that you would like to learn more about. Best of luck to everyone job searching!
+I hope these tasks and some of the practices I used can be helpful to others in the job-searching process. Please reach out if there are any aspects of the process that you would like to learn more about. Best of luck to every one job searching!
 
 <sup><a id="fn.1" href="#fnr.1">1</a></sup> <https://news.crunchbase.com/startups/tech-layoffs/>
