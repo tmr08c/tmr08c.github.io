@@ -1,5 +1,5 @@
 ---
-title: "Job Searching Checklist"
+title: "Job Search Checklist"
 date: 2023-03-28 15:00:00
 categories: ["career"]
 ---
