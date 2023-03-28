@@ -4,7 +4,7 @@ date: 2023-03-28 15:00:00
 categories: ["career"]
 ---
 
-Last month, I became one of the more than 100,000 U.S-based technology workers laid off in late 2022/early 2023<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. As a fan of resources like [Getting Things Done](https://www.goodreads.com/book/show/1633.Getting_Things_Done) and [The Checklist Manifesto](https://www.goodreads.com/book/show/6667514-the-checklist-manifesto), when faced with important projects like finding a new job, I quickly turn to strategies such having a daily checklist. In this post, I share the daily checklist I created for my job search. Hopefully, it can be helpful to others in a similar situation.
+Last month, I became one of the more than 100,000 U.S-based technology workers laid off in 2023<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. As a fan of resources like [Getting Things Done](https://www.goodreads.com/book/show/1633.Getting_Things_Done) and [The Checklist Manifesto](https://www.goodreads.com/book/show/6667514-the-checklist-manifesto), when faced with important projects like finding a new job, I quickly turn to strategies such having a daily checklist. In this post, I share the daily checklist I created for my job search. Hopefully, it can be helpful to others in a similar situation.
 
 ## Starting the day
 
