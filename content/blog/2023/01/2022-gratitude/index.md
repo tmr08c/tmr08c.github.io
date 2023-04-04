@@ -8,7 +8,7 @@ Following [last year's post](/2021/12/2021-gratitude/) in which I reviewed entri
 
 My "gratitude journal" practices (i.e., entering data into [`org-roam` dailies](https://www.orgroam.com/manual.html#org_002droam_002ddailies)) have stayed the same, so I will spare the details of my templates and suggest you check [this section](/2021/12/2021-gratitude/#getting-access) of last year's post.
 
-Last year, I noted my failed attempt at using `emacs-lisp` to extract the data having to fall back to using `sed`. This year, I got something working using `emacs-lisp` and the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html) and will be covering it in a follow-up post.
+Last year, I noted my failed attempt at using `emacs-lisp` to extract the data having to fall back to using `sed`. This year, I got something working using `emacs-lisp` and the [Org Element API](https://orgmode.org/worg/dev/org-element-api.html) and will be covering it in a [follow-up post](/2023/02/extracting-2022-gratitude-entries/).
 
 One change I will cover here is how I set the categories. Like last year, after extracting the entries into a single place, I reviewed them and assigned them to a category. This year, however, I strove to stay within Emacs. Rather than using a spreadsheet program and a `LOOKUP` table, I assigned a category to each row by hand. I did this (mostly) in a single pass which I know led to some inconsistencies (like sometimes being okay with multiple categories and sometimes not), but also led to more thought per entry. With that, here are my aggregate results.
 
