@@ -4,15 +4,17 @@ date: 2023-04-30 15:00:00
 categories: ["career"]
 ---
 
-Continuing on the [theme of sharing resources for job-searching](/2023/03/job-search-checklist/), I want to share my collected list of questions to ask during interviews. Most of these questions have come from someone else. Unfortunately, for my initial set, I did a poor job of collecting attribution. However, for resources I _have_ tracked down, I have a [resources section at the bottom](#resources).
+Continuing on the [theme of sharing resources for job-searching](/2023/03/job-search-checklist/), I want to share my collected list of go-to questions to ask during interviews. Most of these questions have come from someone else. Unfortunately, when starting this list, I did not track sources for attribution. For resources I _have_ tracked down, I have a [resources section at the bottom](#resources).
 
-My workflow has been that, as a part of preparing for an interview I will review the list of questions and pull out questions that make sense for the person I am interviewing with and the current stage of the interview I am in. While my questions are grouped into categories, I found the interview context greatly impacted the question I chose (e.g., I wouldn&rsquo;t want to ask in-the-weeds technical questions on a phone screen). As such, I have started to copy some questions (this could be a good argument for leveraging something like tags to group ad hoc) into a new list, grouping by stage or interviewer; I have included that section as well.
+My workflow has been that, as a part of preparing for an interview, I will review the list of questions and pull out questions that make sense for the person I am interviewing with and the current stage of the interview I am in.
+
+While my questions are grouped into categories, I found the interview context greatly impacted which questions I chose (e.g., I wouldn't want to ask in-the-weeds technical questions on a phone screen). As such, I have copied some questions into a new list, grouping by stage or interviewer into a new [section](#by-stage-or-interviewer).
 
 Some additional considerations:
 
-- Many of these questions are quite standard. Hopefully, the reasoning behind them makes sense. I have annotated some of the questions with my motivation behind adding them if they felt specific to something I was looking for in a role.
-- I only end up asking a small fraction of these questions. This is due to not having that much time for questions and a preference for more topical or company-specific questions. However, having a large list helps avoid looking unprepared and offers a sense of security for interviewers that quickly turn to me for questions.
-- While there may be answers I would _like_ to hear for some of these questions, I find that there are so many aspects to deciding where to work, that these rarely act as complete blockers. Instead, they simply offer a bit more insight into the company.
+- Many of these questions are quite standard (i.e., basic). Hopefully, the reasoning behind them makes sense. I have annotated some questions that felt more specifically tied to my goals if I thought it would help. Please reach out if I can do this for other questions.
+- I only end up asking a small fraction of these questions. The primary factor in not getting to ask many questions is that there often isn't that much time for questions. Additionally, I prefer to ask more topical or company-specific questions with the time that I do have. Regardless, having a go-to list is an easy win that helps you avoid looking unprepared and offers a sense of security for the periodic short interviews.
+- While there may be answers I would _like_ to hear for some of these questions, there are so many aspects to deciding where to work that these rarely act as complete blockers. Instead, they offer a bit more clarity into the large picture.
 
 ## By Category
 
@@ -38,7 +40,9 @@ Some additional considerations:
 
 - What tech stack are you on?
 - How has the chosen tech stack helped?
-  I have specifically been looking for Elixir roles. This question helped get a sense of their feelings for Elixir and whether they are doing Elixir-y things (i.e., deeply leveraging the features of OTP) or have a more basic CRUD/API type of application.
+
+  I have specifically been looking for Elixir roles. This question helped get a sense of their feelings for Elixir and whether they are doing Elixir-y things (e.g., are they doing fun stuff with OTP) or have a more basic CRUD/API type of application.
+
 - Most exciting project you’ve worked on?
 - What are some frustrations you’ve experienced recently?
 - Do you have on-call? What’s being on-call like?
@@ -120,18 +124,20 @@ For some of these questions, you can benefit by showing initiative in doing some
 
 ### Personal Connection
 
-I strove to always make my last question one of these. Even if I only had time for one question, I would choose one of these. I wanted to try to end on a more personal high note, ideally leaving the interviewer with a good "taste" in their mouth.
+I strive to make my last question one of these. Even if I only have time for one question, I would choose one of these. My intention is to end on a more personal, ligher note, ideally leaving the interviewer with a good feeling about interacting with me.
 
 - Can you share a highlight of the job/company for you?
 - What do you do for fun? Hobbies?
 - If you could wave a magic wand and change one thing?
-  A generally applicable question (feedback questions, interviews, one-on-ones), stolen from my [fantastic former co-worker](https://github.com/c-saunders).
+
+  This is a wonderful, generally applicable question (product feedback session, interviews, one-on-ones), stolen from my [fantastic former co-worker](https://github.com/c-saunders).
+
 - What's something interesting you recently learned?
 - What book are you reading? Show are you watching?
 
 ## By stage or interviewer
 
-As mentioned above, I've found that some questions are much better equipped for different stages of the process. I haven't fully fleshed this out, but do have a section for the phone screen and another list of questions specific to the hiring manager.
+As mentioned above, I've found that some questions are better equipped for specific stages of the interview process. I haven't fully fleshed this out, but do have a section for the phone screen and another list of questions specific to the hiring manager.
 
 In writing this post, I realized I may benefit from restructuring how I am tracking my questions. I may be able to leverage tags to group questions in useful ways.
 
@@ -144,7 +150,7 @@ In writing this post, I realized I may benefit from restructuring how I am track
 - How many people have you hired for the company?
 - How long has the last person you hired been at the company? How are they doing?
 
-### Questions for the hiring manager <code>[0/4]</code>
+### Questions for the hiring manager
 
 - How will I fail?
 
