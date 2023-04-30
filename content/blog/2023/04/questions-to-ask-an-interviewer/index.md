@@ -1,6 +1,6 @@
 ---
-title: "Job Search Checklist"
-date: 2023-03-28 15:00:00
+title: "Questions to Ask an Interviewer"
+date: 2023-04-30 15:00:00
 categories: ["career"]
 ---
 
@@ -11,19 +11,22 @@ My workflow has been that, as a part of preparing for an interview I will review
 Some additional considerations:
 
 - Many of these questions are quite standard. Hopefully, the reasoning behind them makes sense. I have annotated some of the questions with my motivation behind adding them if they felt specific to something I was looking for in a role.
-- I found I usually get through a fraction of the questions and end up with more company-specific questions as I go. However, having a large list helps avoid looking unprepared and offers a sense of security for interviewers that quckly turn to me for questions.
-- While there may be answers I would _like_ to hear for some these questions, I find that there are so many aspects to making a decision of where to work, that these rarely act as complete blockers, but instead simply give me a larger picture.
+- I only end up asking a small fraction of these questions. This is due to not having that much time for questions and a preference for more topical or company-specific questions. However, having a large list helps avoid looking unprepared and offers a sense of security for interviewers that quickly turn to me for questions.
+- While there may be answers I would _like_ to hear for some of these questions, I find that there are so many aspects to deciding where to work, that these rarely act as complete blockers. Instead, they simply offer a bit more insight into the company.
 
-## By category
+## By Category
 
 ### Culture
 
 - In general terms, how would you describe the work culture?
 - What kind of traits do people who do well here possess?
-- What’s work life balance like?
+- What’s work-life balance like?
+
   If you get a vague answer or are catching red flags, the following can push for getting specific:
+
   - What time do you get in/out?
   - Do you work on the weekends?
+
 - How do you communicate with team members?
 - How is internal mobility regarded?
 - What does it take to switch teams?
@@ -35,17 +38,16 @@ Some additional considerations:
 
 - What tech stack are you on?
 - How has the chosen tech stack helped?
-  I have specifically been looking for Elixir roles. This question helped get a sense of their feelings for Elixir and whether they are doing Elixir-y things (i.e., deeply levearging the features of OTP) or have a more basic CRUD/API type of application.
+  I have specifically been looking for Elixir roles. This question helped get a sense of their feelings for Elixir and whether they are doing Elixir-y things (i.e., deeply leveraging the features of OTP) or have a more basic CRUD/API type of application.
 - Most exciting project you’ve worked on?
 - What are some frustrations you’ve experienced recently?
-- Do you have oncall? What’s being oncall like?
+- Do you have on-call? What’s being on-call like?
 - Overview of application architecture?
-- What are pain points team has felt?
+- What are some pain points the team has felt?
 - How do releases work? What is the process and cadence?
-- What are you thoughts on open source?
-  I have mentioned my aspirations to contributes to open source more [in](file:///2015/02/why-i-made-this-blog/) [[/2015/05/first-open-source-contribution/
+- What are your thoughts on open source?
 
-][the]] past. These questions are to identify whether a company is amenable to supporting open source efforts of their team.
+  I have mentioned my aspirations to contribute to open source in [the](/2015/02/why-i-made-this-blog/) [past](/2015/05/first-open-source-contribution/). These questions are to identify whether a company is amenable to supporting an investment in open source.
 
 - Do you support contributing to libraries used?
 - Do you have open source libraries?
@@ -80,27 +82,32 @@ Some additional considerations:
 - How fast do you plan to grow?
   Is this one of many new hires? How is scaling being handled? Is it possible they are falling into the trap of the [mythical peson-month](https://en.wikipedia.org/wiki/The_Mythical_Man-Month#The_mythical_man-month)?
 - How do you handle a remote/distributed team?
-  I am bought-in on remote work since it has been come more widely accepted post-COVID. Since this is still relatvely new for many of us, I&rsquo;m curious how they have approached it.
+
+  I am bought in on remote work since it has been come more widely accepted post-COVID. Since this is still relatively new for many of us, I&rsquo;m curious how they have approached it.
 
 ### Overview of the company and market space
 
 - Info about the market space, competition
-  - What does market look like?
+
+  - What does the market look like?
   - What does market size look like?
-  - Who are competitors?
+  - Who are the competitors?
+
     In addition to understanding the space, this can help give insights into the company&rsquo;s goals and intentions.
-  - What makes company stand out from competition?
+
+  - What makes the company stand out from the competition?
   - Do you have product-market fit?
-  - Are you known in the space?
-  - Is this a winner-take-all space is (buying each other out)?
-- Who are you target customers? How will this change over the coming years?
+  - Are you known in the competitive space?
+  - Is this a winner-take-all space (buying each other out)?
+
+- Who are your target customers? How will this change over the coming years?
 - How do you pitch your product to customers?
 - How do you describe what you do to friends and family?
   Similar to the above question, but more generally applicable.
 
 ### Funding
 
-For some of these questions, you can benefit by showing initative in doing some upfront research. Sites such as [Crunchbase](https://www.crunchbase.com/) can give you funding and competitor information. If you have done the research, find ways to phrase questions that show you&rsquo;ve done the research and are curious to learn more. For example, &ldquo;I see that you had a recent round of funding. Can you tell me more about that? How has that impacted run way? What is the goal for the next round?&rdquo;
+For some of these questions, you can benefit by showing initiative in doing some upfront research. Sites such as [Crunchbase](https://www.crunchbase.com/) can give you funding and competitor information. If you have done the research, find ways to phrase questions that show you've done the research and are curious to learn more. For example, "I see that you had a recent round of funding. Can you tell me more about that? How has that impacted runway? What is the goal for the next round?"
 
 - How does funding work?
   - V/C?
@@ -113,18 +120,20 @@ For some of these questions, you can benefit by showing initative in doing some 
 
 ### Personal Connection
 
-I strove to always make my last question one of these. Even if I only had time for one question, I would choose one of these. I wanted to try to end on a more personal high note, ideally leaving the interviewer with a &ldquo;good taste in their mouth.&rdquo;
+I strove to always make my last question one of these. Even if I only had time for one question, I would choose one of these. I wanted to try to end on a more personal high note, ideally leaving the interviewer with a good "taste" in their mouth.
 
-- Highlight of job?
+- Can you share a highlight of the job/company for you?
 - What do you do for fun? Hobbies?
 - If you could wave a magic wand and change one thing?
   A generally applicable question (feedback questions, interviews, one-on-ones), stolen from my [fantastic former co-worker](https://github.com/c-saunders).
-- What&rsquo;s something interesting you recently learned?
+- What's something interesting you recently learned?
 - What book are you reading? Show are you watching?
 
 ## By stage or interviewer
 
-As mentioned above, I&rsquo;ve found that some questions are much better equipped for different stages of the process. I haven&rsquo;t fully fleshed this out, but do have a section for the phone screen and another list of questions specific for the hiring manager.
+As mentioned above, I've found that some questions are much better equipped for different stages of the process. I haven't fully fleshed this out, but do have a section for the phone screen and another list of questions specific to the hiring manager.
+
+In writing this post, I realized I may benefit from restructuring how I am tracking my questions. I may be able to leverage tags to group questions in useful ways.
 
 ### Phone screen
 
@@ -138,9 +147,10 @@ As mentioned above, I&rsquo;ve found that some questions are much better equippe
 ### Questions for the hiring manager <code>[0/4]</code>
 
 - How will I fail?
+
   Have they thought about what this role will be doing? What success looks like?
 
-  I&rsquo;ve heard from some folks that a focus on failure and what can go wrong can come off as overly-negative. Instead you may want to asking about success.
+  I've heard from some folks that a focus on failure and what can go wrong can come off as overly negative. Instead, you may want to ask about success.
 
 - What does success look like? (In this role? At company?)
 - What will this role be doing in 3 weeks? 3 months? a year?
@@ -148,10 +158,8 @@ As mentioned above, I&rsquo;ve found that some questions are much better equippe
 
 ## Resources
 
-#### <https://github.com/readme/guides/technical-interviews>
+- People that I've worked with, been interviewed by, or have interviewed
+- https://github.com/readme/guides/technical-interviews
+- https://posthog.com/blog/what-to-ask-in-interviews
 
-#### <https://posthog.com/blog/what-to-ask-in-interviews>
-
-These questions tended to be geared more around early-stage start ups and product-market fit. I don&rsquo;t think I added many of them to my go-to list as that was not the type of company I was applying to (and I had some similar questions from other lists). However, I would want to revisit this list when applying to an early-stage company.
-
-#### People I&rsquo;ve worked with, been interviewed by, or have interviewed
+  These questions tended to be geared more around early-stage start-ups and product-market fit. I don&rsquo;t think I added many of them to my go-to list as that was not the type of company I was applying to (and I had some similar questions from other lists). However, I would want to revisit this list when applying to an early-stage company.
