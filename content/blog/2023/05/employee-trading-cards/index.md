@@ -1,5 +1,5 @@
 ---
-title: "Employee Trading Card Stats"
+title: "My Employee Trading Card"
 date: 2023-05-30 21:30:00
 categories: ["career"]
 ---
