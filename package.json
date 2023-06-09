@@ -28,7 +28,7 @@
     "Lisp": "mattn/vscode-lisp",
     "autoprefixer": "^10.4.2",
     "elixir-ls": "elixir-lsp/vscode-elixir-ls",
-    "gatsby": "^2.20.2",
+    "gatsby": "^4.25.7",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-catch-links": "^2.3.11",
     "gatsby-plugin-feed": "^3.12.0",
