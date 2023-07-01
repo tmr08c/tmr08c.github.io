@@ -1,6 +1,6 @@
 ---
 title: "Invalid PostgreSQL Indexes"
-date: 2023-06-30 20:35:02
+date: 2023-06-30 22:15:02
 categories: ["database", "postgresql", "oban"]
 ---
 
