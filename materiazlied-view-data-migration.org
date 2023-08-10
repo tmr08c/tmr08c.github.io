@@ -1,0 +1,25 @@
+#+title: Materiazlied View Data Migration
+
+When it comes to migrating and bacfkilling data, the Elixir community is extremely lucky to have a [[https://fly.io/phoenix-files/safe-ecto-migrations/][fantastic resource]] of best practices. If you haven't read the Safe Ecto Migrations series from [[http://bernheisel.com/blog][David Bernheisel]], you should stop reading this and go read that.
+
+In this post, I want to cover a slight twist I took on the [[https://fly.io/phoenix-files/backfilling-data/#batching-arbitrary-data][batching arbitrary data]] pattern. Credit goes to my amazing co-worker, [[https://mkaszubowski.com/][Maciej Kaszubowski]] for prompting this suggestion.
+
+As a part of a large-scale data migration,
+
+#+begin_src elixir
+Repo.query!(~s"""
+CREATE MATERIALIZED VIEW IF NOT EXISTS #{@view_name} AS
+    SELECT *
+    FROM table
+    -- include useful filters
+    ;
+""")
+
+—
+
+using it
+#+end_src
+
+#+begin_src elixir
+{@view_name, SchemaModule} |> where()
+#+end_src
