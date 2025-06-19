@@ -1,5 +1,6 @@
 ---
 date: '2022-08-31T18:08:13'
+slug: add-timestamps-to-org-files
 tags:
 - emacs
 - org-roam

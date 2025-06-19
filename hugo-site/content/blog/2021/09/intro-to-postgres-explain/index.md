@@ -1,5 +1,6 @@
 ---
 date: '2021-09-30T20:05:34'
+slug: intro-to-postgres-explain
 tags:
 - postgresql
 - databases

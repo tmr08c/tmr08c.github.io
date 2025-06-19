@@ -1,5 +1,6 @@
 ---
 date: '2022-04-23T14:38:02'
+slug: open-source-open-eyes
 tags:
 - open source
 - personal

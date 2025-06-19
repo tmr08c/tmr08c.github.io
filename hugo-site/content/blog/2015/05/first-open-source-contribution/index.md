@@ -1,5 +1,6 @@
 ---
 date: '2015-05-03T19:29:02'
+slug: first-open-source-contribution
 tags:
 - opensource
 title: My First Open Source Contribution

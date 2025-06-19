@@ -1,5 +1,6 @@
 ---
 date: '2015-03-15T21:55:02'
+slug: anatomy-of-ruby-class
 tags:
 - ruby
 - oop

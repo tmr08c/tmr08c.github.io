@@ -1,5 +1,6 @@
 ---
 date: '2015-11-17T22:53:02'
+slug: more-specific-factories
 tags:
 - testing
 - ruby

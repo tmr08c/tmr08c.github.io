@@ -1,5 +1,6 @@
 ---
 date: '2021-06-30T07:30:13'
+slug: more-specific-factories-with-traits
 tags:
 - testing
 - ruby

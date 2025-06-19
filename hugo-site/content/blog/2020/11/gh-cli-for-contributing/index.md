@@ -1,5 +1,6 @@
 ---
 date: '2020-11-04T05:31:13'
+slug: gh-cli-for-contributing
 tags:
 - open source
 title: Leveraging the GitHub CLI During Hacktoberfest - Contributing
