@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# Development server with drafts included
-exec "$(dirname "$0")/server" -H 0.0.0.0 -D "$@"

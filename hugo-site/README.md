@@ -11,9 +11,7 @@ This is a Hugo version of the TroyProg blog, migrated from Gatsby. It uses the [
 
 2. **Start development server**:
    ```bash
-   ./bin/dev         # Safe default (published content only)
-   ./bin/dev-drafts  # Include draft posts
-   ./bin/dev-all     # Include drafts and future-dated posts
+   ./bin/dev         # Includes drafts and future content
    ```
 
 3. **Build for production**:
@@ -58,13 +56,9 @@ hugo-site/
 
 ## Development
 
-The site runs on `localhost:1313` during development. Use the different development scripts based on what content you need to see:
+The site runs on `localhost:1313` during development. The `./bin/dev` script includes drafts and future-dated content so you can see everything while developing.
 
-- `./bin/dev` - Default safe mode (published content only)
-- `./bin/dev-drafts` - Include draft posts for writing/editing
-- `./bin/dev-all` - Include all content (drafts + future-dated posts)
-
-All development scripts bind to `0.0.0.0` to allow access from other devices on your network.
+The development server binds to `0.0.0.0` to allow access from other devices on your network.
 
 ## Theme
 
