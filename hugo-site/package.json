@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Hugo version of TroyProg blog",
   "scripts": {
-    "dev": "hugo server --bind 0.0.0.0 --port 1313 --buildDrafts",
+    "dev": "./bin/server -H 0.0.0.0 -D -F",
     "build": "hugo --minify",
     "preview": "hugo server --bind 0.0.0.0 --port 1313 --environment production"
   },
