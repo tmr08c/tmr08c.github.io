@@ -1,5 +1,6 @@
 ---
 date: '2022-03-31T06:35:02'
+slug: ecto-explain
 tags:
 - elixir
 - ecto

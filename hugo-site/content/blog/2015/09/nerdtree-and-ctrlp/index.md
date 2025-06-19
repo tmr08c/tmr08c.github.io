@@ -1,5 +1,6 @@
 ---
 date: '2015-09-19T09:43:02'
+slug: nerdtree-and-ctrlp
 tags:
 - vim
 title: Making NERDTree and CtrlP Play Nice

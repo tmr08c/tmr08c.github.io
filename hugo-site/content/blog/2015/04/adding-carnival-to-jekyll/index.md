@@ -1,5 +1,6 @@
 ---
 date: '2015-04-30T21:55:02'
+slug: adding-carnival-to-jekyll
 tags:
 - blogging
 title: Adding Carnival Comments to a Jekyll Blog

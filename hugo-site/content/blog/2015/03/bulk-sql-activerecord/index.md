@@ -1,5 +1,6 @@
 ---
 date: '2015-03-28T21:55:02'
+slug: bulk-sql-activerecord
 tags:
 - ruby
 - active record

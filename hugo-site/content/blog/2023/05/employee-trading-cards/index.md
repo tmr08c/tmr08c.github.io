@@ -1,5 +1,6 @@
 ---
 date: '2023-05-30T21:30:00'
+slug: employee-trading-cards
 tags:
 - career
 title: My Employee Trading Card

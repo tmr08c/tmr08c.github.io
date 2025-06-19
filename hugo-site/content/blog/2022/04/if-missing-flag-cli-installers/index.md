@@ -1,5 +1,6 @@
 ---
 date: '2022-04-30T08:08:13'
+slug: if-missing-flag-cli-installers
 tags:
 - phoenix
 - dependencies

@@ -1,5 +1,6 @@
 ---
 date: '2021-03-30T06:30:34'
+slug: 99-bottles-elixir
 tags:
 - elixir
 title: Singing 99 Bottles of Elixir

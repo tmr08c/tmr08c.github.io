@@ -1,5 +1,6 @@
 ---
 date: '2022-11-30T07:08:13'
+slug: livebook-desktop
 tags:
 - elixir
 - livebook

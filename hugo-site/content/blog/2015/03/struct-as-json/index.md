@@ -1,5 +1,6 @@
 ---
 date: '2015-03-01T21:11:02'
+slug: struct-as-json
 tags:
 - ruby
 title: Return Struct as JSON

@@ -1,5 +1,6 @@
 ---
 date: '2022-01-31T18:00:02'
+slug: projectile-async-command
 tags:
 - emacs
 - quick tip

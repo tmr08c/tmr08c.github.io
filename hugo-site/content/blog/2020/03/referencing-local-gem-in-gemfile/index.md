@@ -1,5 +1,6 @@
 ---
-date: '2020-04-10T10:21:22'
+date: '2020-03-10T10:21:22'
+slug: referencing-local-gem-in-gemfile
 tags:
 - ruby
 - troubleshooting

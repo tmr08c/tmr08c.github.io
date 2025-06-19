@@ -1,5 +1,6 @@
 ---
 date: '2021-07-31T18:30:34'
+slug: creating-development-migrations-with-ecto
 tags:
 - elixir
 - ecto

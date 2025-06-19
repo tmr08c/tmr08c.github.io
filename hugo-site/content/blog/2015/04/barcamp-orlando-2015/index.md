@@ -1,5 +1,6 @@
 ---
 date: '2015-04-18T20:20:02'
+slug: barcamp-orlando-2015
 tags:
 - talks
 title: 2015 BarCamp Orlando

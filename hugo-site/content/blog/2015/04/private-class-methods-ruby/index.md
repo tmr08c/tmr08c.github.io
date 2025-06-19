@@ -1,5 +1,6 @@
 ---
 date: '2015-04-09T21:03:02'
+slug: private-class-methods-ruby
 tags:
 - ruby
 title: Are Your Class Methods Actually Private?

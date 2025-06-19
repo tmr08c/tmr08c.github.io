@@ -1,5 +1,6 @@
 ---
 date: '2020-07-31T06:59:34'
+slug: splat-versus-spread
 tags:
 - ruby
 - javascript

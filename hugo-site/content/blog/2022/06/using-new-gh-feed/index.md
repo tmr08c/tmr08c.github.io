@@ -1,5 +1,6 @@
 ---
 date: '2022-06-30T18:08:13'
+slug: using-new-gh-feed
 tags:
 - github
 - tools

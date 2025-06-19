@@ -1,5 +1,6 @@
 ---
 date: '2015-10-27T12:20:02'
+slug: power-to-say-no
 tags:
 - management
 title: The Power to Say No

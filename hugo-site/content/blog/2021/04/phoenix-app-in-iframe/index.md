@@ -1,5 +1,6 @@
 ---
 date: '2021-04-26T06:31:13'
+slug: phoenix-app-in-iframe
 tags:
 - elixir
 - phoenix

@@ -1,5 +1,6 @@
 ---
 date: '2020-08-04T06:44:02'
+slug: writing-more-while-remote
 tags:
 - writing
 - remote work

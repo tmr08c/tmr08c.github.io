@@ -1,5 +1,6 @@
 ---
 date: '2020-12-04T06:01:13'
+slug: gh-cli-for-maintaining
 tags:
 - open source
 title: Leveraging the GitHub CLI During Hacktoberfest - Maintaining

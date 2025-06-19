@@ -1,5 +1,6 @@
 ---
 date: '2022-10-31T18:08:13'
+slug: alt-escape-vim
 tags:
 - vim
 - changed opinion

@@ -1,5 +1,6 @@
 ---
 date: '2022-05-27T18:08:13'
+slug: adding-psuedo-headers-with-magit
 tags:
 - magit
 - emacs

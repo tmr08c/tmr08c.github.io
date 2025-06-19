@@ -1,5 +1,6 @@
 ---
 date: '2019-04-12T21:15:02'
+slug: golang-fass
 tags:
 - golang
 - faas

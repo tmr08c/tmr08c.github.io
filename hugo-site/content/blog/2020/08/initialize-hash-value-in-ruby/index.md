@@ -1,5 +1,6 @@
 ---
 date: '2020-08-27T06:28:02'
+slug: initialize-hash-value-in-ruby
 tags:
 - ruby
 title: Initial Hash Value in Ruby

@@ -1,5 +1,6 @@
 ---
 date: '2021-11-30T17:31:13'
+slug: pattern-matching-empty-map-with-elixir
 tags:
 - elixir
 title: Pattern Matching Empty Maps with Elixir

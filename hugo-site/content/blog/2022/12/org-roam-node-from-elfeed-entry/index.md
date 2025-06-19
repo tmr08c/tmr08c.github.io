@@ -1,5 +1,6 @@
 ---
 date: '2022-12-29T11:15:02'
+slug: org-roam-node-from-elfeed-entry
 tags:
 - emacs
 - org-mode
