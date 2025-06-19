@@ -1,0 +1,13 @@
+<li>
+  <div class="post-info">
+    <div class="post-title-row">
+      <a class="link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <time>{{ .PublishDate.Format .Site.Params.dateFormat }}</time>
+    </div>
+    {{ if .Params.tags }}
+    <div class="post-tags">
+      {{ range $i, $tag := .Params.tags }}<a class="link tag" href="/tags/{{ . | urlize }}/">#{{ . }}</a>{{ end }}
+    </div>
+    {{ end }}
+  </div>
+</li>

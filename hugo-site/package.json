@@ -1,0 +1,18 @@
+{
+  "name": "troyprog-hugo",
+  "version": "1.0.0",
+  "description": "Hugo version of TroyProg blog",
+  "scripts": {
+    "dev": "hugo server --bind 0.0.0.0 --port 1313 --buildDrafts",
+    "build": "hugo --minify",
+    "preview": "hugo server --bind 0.0.0.0 --port 1313 --environment production"
+  },
+  "dependencies": {
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "autoprefixer": "^10.4.16"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

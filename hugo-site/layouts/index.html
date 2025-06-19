@@ -1,0 +1,75 @@
+{{ define "head" }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/index.css" }}
+{{ with resources.Get "sass/layouts/index.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/post-list.css" }}
+{{ with resources.Get "sass/components/post-list.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+<style>
+  .recent-posts {
+    margin-top: 2rem;
+  }
+
+  .recent-posts h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    border-left: var(--fg4) solid 1px;
+    margin-left: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  .post-list li {
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .view-all {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 768px) {
+    .post-list {
+      margin-left: 1rem;
+      padding-left: 2rem;
+    }
+  }
+</style>
+{{ end }}
+
+{{ define "main" }}
+<main class="grid-container">
+    <div id="content" class="index">
+        {{ with .Site.GetPage "_index.md" }}
+            {{ .Content }}
+        {{ end }}
+
+        <div class="recent-posts">
+            <h2>Recent Posts</h2>
+            {{ $posts := where .Site.RegularPages "Type" "posts" }}
+            {{ $recentPosts := first 5 $posts }}
+            {{ if $recentPosts }}
+            <ul class="post-list">
+                {{ range $recentPosts }}
+                {{ partial "post-list-item.html" . }}
+                {{ end }}
+            </ul>
+            <div class="view-all">
+                <a class="link" href="/posts/">View all posts →</a>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="sidebar">
+        {{ partial "tags.html" . }}
+    </div>
+</main>
+{{ end }}
