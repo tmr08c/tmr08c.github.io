@@ -22,6 +22,6 @@ Since I had such a great experience attending, when I saw BarCamp 2015 was comin
 
 I titled my talk, *Couch to 5K Your Career*. I covered how goals you create for yourself should be achievable, incremental, and measurable and that when goals are created in such a way there is a higher chance of success and follow through. I also discussed how incremental goals could be treated in an "agile" way where they are re-assessed periodically to make sure they are being worked towards and to make sure they are still goals that you **want** to achieve.
 
-You can view slides of my talk  <a href="https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing" onclick="trackOutboundlink('https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing'); return false" target="_blank">here</a> and checkout any of my other talks <a href="/talks" onclick="trackOutboundlink('/talks'); return false" target="_blank">here</a>.
+You can view slides of my talk  <a href="https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing" target="_blank">here</a>.
 
 I would like to thank everyone that worked to make BarCamp Orlando a thing, everyone who showed up, and the wonderful people that gave talks. I left inspired and excited again this year.
