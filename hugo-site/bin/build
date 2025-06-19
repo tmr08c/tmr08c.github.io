@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "🔨 Building Hugo site for production..."
+
+# Colors for output
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+print_status() {
+    echo -e "${GREEN}✓${NC} $1"
+}
+
+# Check if Hugo is available
+if ! command -v hugo &> /dev/null; then
+    echo "❌ Hugo not found! Please install Hugo first."
+    echo "  Run: ./bin/setup"
+    exit 1
+fi
+
+# Build the site
+print_status "Building with Hugo..."
+hugo --minify
+
+print_status "Build complete! 🎉"
+echo "Built files are in the 'public/' directory"

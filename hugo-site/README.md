@@ -11,16 +11,14 @@ This is a Hugo version of the TroyProg blog, migrated from Gatsby. It uses the [
 
 2. **Start development server**:
    ```bash
-   npm run dev
-   # or
-   hugo server --bind 0.0.0.0 --port 1313 --buildDrafts
+   ./bin/dev         # Safe default (published content only)
+   ./bin/dev-drafts  # Include draft posts
+   ./bin/dev-all     # Include drafts and future-dated posts
    ```
 
 3. **Build for production**:
    ```bash
-   npm run build
-   # or
-   hugo --minify
+   ./bin/build
    ```
 
 ## Dependencies
@@ -60,7 +58,13 @@ hugo-site/
 
 ## Development
 
-The site is configured to run on `localhost:1313` during development. The `--buildDrafts` flag is enabled by default in the development script to show all content.
+The site runs on `localhost:1313` during development. Use the different development scripts based on what content you need to see:
+
+- `./bin/dev` - Default safe mode (published content only)
+- `./bin/dev-drafts` - Include draft posts for writing/editing
+- `./bin/dev-all` - Include all content (drafts + future-dated posts)
+
+All development scripts bind to `0.0.0.0` to allow access from other devices on your network.
 
 ## Theme
 
