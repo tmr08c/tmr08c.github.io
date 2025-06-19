@@ -7,7 +7,7 @@
 
 {{ define "main" }}
 <main id="main" class="post">
-  {{ if ne .Section "posts"}}
+  {{ if ne .Section "blog"}}
   <article class="content {{ if .Site.Params.numberedSubtitles }}numbered-subtitles{{ end }}">
     {{ .Content }}
   </article>
@@ -92,7 +92,7 @@
     {{ else }}
     <a></a>
     {{ end }}
-    <a class="link" href="/posts/">all posts</a>
+    <a class="link" href="/blog/">all posts</a>
     {{ if .NextInSection }}
     <a class="link" href="{{ .NextInSection.Permalink }}" title="{{ .NextInSection.Title }}">next →</a>
     {{ else }}

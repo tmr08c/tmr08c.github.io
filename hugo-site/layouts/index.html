@@ -53,7 +53,7 @@
 
         <div class="recent-posts">
             <h2>Recent Posts</h2>
-            {{ $posts := where .Site.RegularPages "Type" "posts" }}
+            {{ $posts := where .Site.RegularPages "Type" "blog" }}
             {{ $recentPosts := first 5 $posts }}
             {{ if $recentPosts }}
             <ul class="post-list">
@@ -62,7 +62,7 @@
                 {{ end }}
             </ul>
             <div class="view-all">
-                <a class="link" href="/posts/">View all posts →</a>
+                <a class="link" href="/blog/">View all posts →</a>
             </div>
             {{ end }}
         </div>
