@@ -2,6 +2,13 @@
 
 The personal blog of [@tmr08c](https://github.com/tmr08c/).
 
+## Repository Structure
+
+This repository contains two versions of the blog as we transition from Gatsby to Hugo:
+
+- `gatsby-site/` - The original Gatsby-based blog
+- `hugo-site/` - The new Hugo-based blog (in development)
+
 ## Development
 
 ### Branching
@@ -17,24 +24,41 @@ From [the docs](https://help.github.com/en/articles/configuring-a-publishing-sou
 
 As a result, work is done on `develop`, and `master` is the published version of the site.
 
-### Running the Server
+### Gatsby Site
+
+The Gatsby version is the current production site. To work with it:
 
 ```bash
-# develop
-npm start
+cd gatsby-site
+npm install
+npm start  # Development server at localhost:8000
+npm run build  # Build for production
+npm run deploy  # Deploy to GitHub Pages
+```
 
-# build
-npm run build
+### Hugo Site
+
+The Hugo version is under development. To work with it:
+
+```bash
+cd hugo-site
+hugo server  # Development server at localhost:1313
+hugo  # Build for production
 ```
 
 ## Deployment
 
+Currently using Gatsby:
+
 ```bash
+cd gatsby-site
 npm run deploy
 ```
 
+Once the Hugo migration is complete, deployment will switch to the Hugo version.
+
 ## Credits
 
-Built with [Gatsby](https://www.gatsbyjs.org/) - the blazing-fast static site generator for [React](https://facebook.github.io/react/).
-
-Project started using the [gatsby-typescript-starter-blog](https://github.com/frnki/gatsby-typescript-starter-blog) starter project.
+- Gatsby site built with [Gatsby](https://www.gatsbyjs.org/) - the blazing-fast static site generator for [React](https://facebook.github.io/react/).
+- Gatsby project started using the [gatsby-typescript-starter-blog](https://github.com/frnki/gatsby-typescript-starter-blog) starter project.
+- Hugo site uses the [hugo-texify3](https://github.com/michaelneuper/hugo-texify3) theme.
