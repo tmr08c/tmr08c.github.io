@@ -137,7 +137,7 @@ Working from home was definitely a go-to entry for me, but there is some nuance 
 
 #### Morning routine
 
-An example of my categorization inconsistency, my morning routine involves items that may have their own tags, such as exercise and meditation. The basic framework suggested in [The 5AM Club](https://www.robinsharma.com/book/the-5am-club) has been a valuable starting place for me, despite not hitting the 5AM target start time. Of particular note is the suggestion to do some form of exercise first, citing it [helps reduce cortisol](https://www.healthline.com/health/depression/exercise#What-are-the-mental-health-benefits-of-exercise?), which can reduce stress and anxiety.
+An example of my categorization inconsistency, my morning routine involves items that may have their own tags, such as exercise and meditation. The basic framework suggested in [The 5AM Club](https://www.robinsharma.com/books/the-5am-club) has been a valuable starting place for me, despite not hitting the 5AM target start time. Of particular note is the suggestion to do some form of exercise first, citing it [helps reduce cortisol](https://www.healthline.com/health/depression/exercise#What-are-the-mental-health-benefits-of-exercise?), which can reduce stress and anxiety.
 
 #### Nature
 

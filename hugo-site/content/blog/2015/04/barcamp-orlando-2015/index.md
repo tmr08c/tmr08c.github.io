@@ -8,7 +8,7 @@ title: 2015 BarCamp Orlando
 
 While not on the scale of a Silicon Valley or New York City, Orlando is working to gain traction to have a booming tech scene.
 
-I think a lot of Orlando's tech scene is due to the team at [CodeSchool](www.codeschool.com) and [EnvyLabs](www.envylabs.com). They use their space to host many of the local tech meet ups, curate monthly newsletters of tech events, and host various other events, such as [BarCamp Orlando](http://barcamporlando.org/).
+I think a lot of Orlando's tech scene is due to the team at [CodeSchool](https://web.archive.org/web/20190708190646/https://www.codeschool.com/) and [EnvyLabs](https://web.archive.org/web/20191220012018/https://www.envylabs.com/). They use their space to host many of the local tech meet ups, curate monthly newsletters of tech events, and host various other events, such as [BarCamp Orlando](http://barcamporlando.org/).
 
 > BarCamp Orlando is an annual community-building event which aims to bring people from different backgrounds together for cooperative learning. Technologies such as Ruby, PHP, Java and C could be presented alongside graphic design, music, photography, and other new media
 

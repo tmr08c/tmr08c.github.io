@@ -246,7 +246,7 @@ end
 
 I prefer the `self.method_name` syntax over the `class << self` syntax. I like the ability to look at any method and know right away wether it is a class method or not.
 
-There are, however, reasons for the `class << self` syntax. For example, from [this Stackoverlow Post](http://stackoverflow.com/a/10964198):
+There are, however, reasons for the `class << self` syntax. For example, from [this Stackoverlow Post](https://stackoverflow.com/a/10964198):
 
 > `class << self` is good at keeping all of your class methods in the same block. If methods are being added in `def self.method` form then there's no guarantee (other than convention and wishful thinking) that there won't be an extra class method tucked away later in the file.
 

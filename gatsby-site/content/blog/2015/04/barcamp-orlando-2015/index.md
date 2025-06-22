@@ -6,7 +6,7 @@ categories: ['talks']
 
 While not on the scale of a Silicon Valley or New York City, Orlando is working to gain traction to have a booming tech scene.
 
-I think a lot of Orlando's tech scene is due to the team at [CodeSchool](www.codeschool.com) and [EnvyLabs](www.envylabs.com). They use their space to host many of the local tech meet ups, curate monthly newsletters of tech events, and host various other events, such as [BarCamp Orlando](http://barcamporlando.org/).
+I think a lot of Orlando's tech scene is due to the team at [CodeSchool](https://web.archive.org/web/20190708190646/https://www.codeschool.com/) and [EnvyLabs](https://web.archive.org/web/20191220012018/https://www.envylabs.com/). They use their space to host many of the local tech meet ups, curate monthly newsletters of tech events, and host various other events, such as [BarCamp Orlando](http://barcamporlando.org/).
 
 > BarCamp Orlando is an annual community-building event which aims to bring people from different backgrounds together for cooperative learning. Technologies such as Ruby, PHP, Java and C could be presented alongside graphic design, music, photography, and other new media
 
@@ -20,6 +20,6 @@ Since I had such a great experience attending, when I saw BarCamp 2015 was comin
 
 I titled my talk, *Couch to 5K Your Career*. I covered how goals you create for yourself should be achievable, incremental, and measurable and that when goals are created in such a way there is a higher chance of success and follow through. I also discussed how incremental goals could be treated in an "agile" way where they are re-assessed periodically to make sure they are being worked towards and to make sure they are still goals that you **want** to achieve.
 
-You can view slides of my talk  <a href="https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing" onclick="trackOutboundlink('https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing'); return false" target="_blank">here</a> and checkout any of my other talks <a href="/talks" onclick="trackOutboundlink('/talks'); return false" target="_blank">here</a>.
+You can view slides of my talk [here](https://docs.google.com/presentation/d/1hMABDuoPNcRz75Rt2dGHLhntjrFbG_XH2dHXUiJ8yV8/edit?usp=sharing) and checkout any of my other [talks](/talks).
 
 I would like to thank everyone that worked to make BarCamp Orlando a thing, everyone who showed up, and the wonderful people that gave talks. I left inspired and excited again this year.
