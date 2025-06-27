@@ -25,7 +25,7 @@ jobs:
 
       - name: Check links in Hugo site
         id: hugo-link-check
-        uses: tcort/markdown-link-check@v3
+        uses: tcort/github-action-markdown-link-check@v1
         continue-on-error: true
         with:
           folder-path: 'hugo-site/content'
@@ -34,7 +34,7 @@ jobs:
           
       - name: Check links in Gatsby site  
         id: gatsby-link-check
-        uses: tcort/markdown-link-check@v3
+        uses: tcort/github-action-markdown-link-check@v1
         continue-on-error: true
         with:
           folder-path: 'gatsby-site/content'
