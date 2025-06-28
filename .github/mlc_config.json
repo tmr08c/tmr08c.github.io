@@ -1,0 +1,32 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "^https://localhost"
+    },
+    {
+      "pattern": "^http://localhost"
+    },
+    {
+      "pattern": "^/talks"
+    },
+    {
+      "pattern": "^/blog"
+    },
+    {
+      "pattern": "^/20\\d\\d/"
+    }
+  ],
+  "httpHeaders": [
+    {
+      "urls": ["https://stackoverflow.com"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+      }
+    }
+  ],
+  "timeout": "20s",
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackRetryDelay": "30s",
+  "aliveStatusCodes": [200, 206]
+}

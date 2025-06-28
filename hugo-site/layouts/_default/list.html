@@ -1,0 +1,163 @@
+{{ define "head" }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/list.css" }}
+{{ with resources.Get "sass/layouts/list.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/index.css" }}
+{{ with resources.Get "sass/layouts/index.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/post-list.css" }}
+{{ with resources.Get "sass/components/post-list.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+<style>
+  /* Preserve original post list styling */
+  .post-group > ul {
+    border-left: var(--fg4) solid 1px;
+    list-style-type: none;
+    margin-left: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  .post-group > ul > li {
+    line-height: 1.6;
+    padding: 0.3rem 0;
+  }
+
+  @media screen and (min-width: 768px) {
+    .post-group > ul {
+      margin-left: 1rem;
+      padding-left: 2rem;
+    }
+  }
+
+
+  #searchbox {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .local-search {
+    position: relative;
+    display: inline-block;
+  }
+
+  .local-search input {
+    color: var(--fg1);
+    background-color: var(--bg_s);
+    font-family: sans-serif;
+    padding-left: 10px;
+    width: 200px;
+    height: 1.8rem;
+    border: 1px solid var(--fg4);
+    border-radius: 3px;
+  }
+
+  .local-search input:focus {
+    outline: 1px solid var(--fg1);
+  }
+
+  .local-search svg {
+    position: absolute;
+    aspect-ratio: 1rem;
+    right: 1em;
+    top: 5.3px;
+    fill: var(--fg1);
+  }
+
+  .post-group.hidden {
+    display: none;
+  }
+
+  .post-group li.hidden {
+    display: none;
+  }
+
+</style>
+{{ end }}
+
+{{ define "main" }}
+<main class="grid-container">
+    <div id="content" class="index">
+      <div id="searchbox">
+        <div class="local-search">
+          <input type="text" id="post-filter" placeholder="Filter posts by title or tags..." aria-label="Filter posts by title or tags"/>
+          <svg aria-hidden="true" height="1rem" viewBox="0 0 16 16" version="1.1" width="1rem" data-view-component="true" class="octicon octicon-search">
+            <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+          </svg>
+        </div>
+      </div>
+      {{ $pages := where .Data.Pages "Type" "blog" }}
+      {{ range $pages.GroupByDate "2006-01" }}
+      <div class="post-group">
+        <h3>{{ dateFormat "January 2006" (printf "%s-01" .Key) }}</h3>
+        <ul>
+          {{ range .Pages }}
+          {{ partial "post-list-item.html" . }}
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+      <div class="post-group">
+        <h3>...</h3>
+      </div>
+    </div>
+
+    <div class="sidebar">
+        {{ partial "tags.html" . }}
+    </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterInput = document.getElementById('post-filter');
+      const postGroups = document.querySelectorAll('.post-group');
+
+      filterInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+
+        postGroups.forEach(function(group) {
+          // Skip the "..." group at the end
+          if (group.querySelector('h3').textContent === '...') {
+            return;
+          }
+
+          const posts = group.querySelectorAll('li');
+          let hasVisiblePosts = false;
+
+          posts.forEach(function(post) {
+            const title = post.querySelector('a').textContent.toLowerCase();
+
+            // Get all tag text from the post
+            const tagElements = post.querySelectorAll('.post-tags a.tag');
+            const tags = Array.from(tagElements).map(tag => tag.textContent.toLowerCase()).join(' ');
+
+            // Check if search term matches title or tags
+            const isVisible = searchTerm === '' ||
+                             title.includes(searchTerm) ||
+                             tags.includes(searchTerm);
+
+            if (isVisible) {
+              post.classList.remove('hidden');
+              hasVisiblePosts = true;
+            } else {
+              post.classList.add('hidden');
+            }
+          });
+
+          // Hide the entire group if no posts are visible
+          if (hasVisiblePosts) {
+            group.classList.remove('hidden');
+          } else {
+            group.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+</main>
+{{ end }}

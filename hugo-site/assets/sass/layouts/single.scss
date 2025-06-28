@@ -1,0 +1,25 @@
+// Single blog post specific styling
+.edit-link {
+  text-align: center;
+  font-size: 0.85rem;
+  margin: 1.5rem 0;
+  color: var(--fg3);
+}
+
+#back-to-top {
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background-color: var(--bg_s);
+  color: var(--fg);
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 2rem 1rem 1rem 1rem;
+}
+
+#back-to-top:hover {
+  background-color: var(--bg_h);
+}

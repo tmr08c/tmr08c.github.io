@@ -1,0 +1,57 @@
+// Post list styling shared between homepage and posts page
+.post-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.post-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.post-info .post-title-row a,
+.post-list .post-title-row a,
+.post-group .post-title-row a {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.post-title-row time {
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.post-tags {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+
+.post-info .post-tags a.tag,
+.post-list .post-tags a.tag,
+.post-group .post-tags a.tag {
+  font-size: 0.7rem;
+  color: var(--fg3);
+  text-decoration: none;
+  border: 1px solid var(--fg4);
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+  background-color: transparent;
+}
+
+.post-info .post-tags a.tag:hover,
+.post-list .post-tags a.tag:hover,
+.post-group .post-tags a.tag:hover {
+  color: var(--fg1);
+  border-color: var(--fg2);
+  background-color: var(--bg_s);
+  text-decoration: none;
+}

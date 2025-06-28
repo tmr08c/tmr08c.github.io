@@ -1,0 +1,16 @@
+{
+  "name": "troyprog-hugo",
+  "version": "1.0.0",
+  "description": "Hugo version of TroyProg blog",
+  "scripts": {
+    "postinstall": "echo 'Dependencies installed. Use ./bin/dev to start development server.'"
+  },
+  "dependencies": {
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "autoprefixer": "^10.4.16"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
