@@ -1,0 +1,48 @@
+<!-- Service Worker Cleanup for Safari users with cached Gatsby SW -->
+<script>
+// Only run cleanup once per session to avoid reload loops
+if (!sessionStorage.getItem('sw-cleanup-done')) {
+  sessionStorage.setItem('sw-cleanup-done', 'true');
+  
+  // Check if we have any service workers or caches that need cleanup
+  if ('serviceWorker' in navigator || 'caches' in window) {
+    var needsCleanup = false;
+    
+    // Check for service workers
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        if (registrations.length > 0) {
+          needsCleanup = true;
+          for (var i = 0; i < registrations.length; i++) {
+            console.log('Unregistering SW:', registrations[i].scope);
+            registrations[i].unregister();
+          }
+        }
+        
+        // Check for caches
+        if ('caches' in window) {
+          caches.keys().then(function(cacheNames) {
+            if (cacheNames.length > 0) {
+              needsCleanup = true;
+              return Promise.all(
+                cacheNames.map(function(cacheName) {
+                  console.log('Deleting cache:', cacheName);
+                  return caches.delete(cacheName);
+                })
+              );
+            }
+          }).then(function() {
+            // Only reload if we actually cleaned something up
+            if (needsCleanup) {
+              console.log('Cleaned up old service worker and caches, reloading...');
+              window.location.reload();
+            }
+          });
+        } else if (needsCleanup) {
+          window.location.reload();
+        }
+      });
+    }
+  }
+}
+</script>
