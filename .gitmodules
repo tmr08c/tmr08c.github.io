@@ -1,3 +1,6 @@
 [submodule "vendor/vscode-elixir"]
 	path = vendor/vscode-elixir
 	url = git@github.com:fr1zle/vscode-elixir.git
+[submodule "hugo-site/themes/hugo-texify3"]
+	path = hugo-site/themes/hugo-texify3
+	url = https://github.com/michaelneuper/hugo-texify3.git
