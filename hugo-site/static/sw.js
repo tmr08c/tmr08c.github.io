@@ -1,5 +1,5 @@
-// Minimal service worker that immediately unregisters itself
-// This helps clear any cached Gatsby service worker
+// This file exists only to handle requests from cached Gatsby service workers
+// It should not be actively registered by the Hugo site
 
 self.addEventListener('install', function(event) {
   console.log('Cleanup service worker installing...');
@@ -13,6 +13,10 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(
     // Clear all caches
     caches.keys().then(function(cacheNames) {
+      if (cacheNames.length === 0) {
+        console.log('No caches to clear');
+        return Promise.resolve();
+      }
       return Promise.all(
         cacheNames.map(function(cacheName) {
           console.log('Deleting cache:', cacheName);
@@ -23,16 +27,6 @@ self.addEventListener('activate', function(event) {
       // Unregister this service worker
       console.log('Unregistering cleanup service worker...');
       return self.registration.unregister();
-    }).then(function() {
-      // Claim all clients to ensure they get the message
-      return self.clients.claim();
-    }).then(function() {
-      // Tell all clients to reload
-      return self.clients.matchAll().then(function(clients) {
-        clients.forEach(function(client) {
-          client.postMessage({ type: 'RELOAD_PAGE' });
-        });
-      });
     })
   );
 });
