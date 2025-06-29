@@ -3,10 +3,21 @@
 (function() {
   'use strict';
   
+  // Run cleanup on every page load to catch service workers
+  // that might be interfering
+  var hasServiceWorker = false;
+  var hasCache = false;
+  
+  // Check for any service workers
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    hasServiceWorker = true;
+    console.log('Detected active service worker');
+  }
+  
   // Check if we've already cleaned up in this session
-  var cleanupKey = 'hugo-sw-cleanup-v1';
-  if (sessionStorage.getItem(cleanupKey)) {
-    return; // Already cleaned up
+  var cleanupKey = 'hugo-sw-cleanup-v2';
+  if (sessionStorage.getItem(cleanupKey) && !hasServiceWorker) {
+    return; // Already cleaned up and no active SW
   }
   
   // Mark that we're attempting cleanup
