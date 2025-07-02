@@ -3,32 +3,42 @@ name: CI
 on: [push]
 
 jobs:
-  format-check:
+  hugo-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Check formatting
-        # if this gets annoying consider trying something like
-        # https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
-        # or https://github.com/creyD/prettier_action to automatically write
-        # changes
-        run: |
-          cd gatsby-site
-          yarn install --frozen-lockfile
-          yarn run format:check
-
-  # https://docs.cypress.io/guides/continuous-integration/github-actions.html#Cypress-GitHub-Action
-  cypress-run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          # Tell Cypress to use our custom test script
-          command: yarn test:e2e:ci
-          working-directory: gatsby-site
+          hugo-version: 'latest'
+          extended: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: hugo-site/package-lock.json
+      
+      - name: Install dependencies
+        run: |
+          cd hugo-site
+          npm ci
+      
+      - name: Build Hugo site
+        run: |
+          cd hugo-site
+          hugo --minify
+      
+      - name: Verify build output
+        run: |
+          cd hugo-site
+          if [ ! -d "public" ]; then
+            echo "❌ Build failed: public directory not found"
+            exit 1
+          fi
+          echo "✅ Build succeeded: public directory exists"
+          echo "Built files:"
+          ls -la public/
