@@ -24,8 +24,8 @@
 
   <!-- keywords -->
   {{ if .Keywords }}
-  <meta name="keywords" content='{{ delimit .Keywords " " }}{{ if .Site.Params.keywords }} {{ delimit .Site.Params.keywords " " }}{{ end }}'>
-  {{ else if .Site.Params.keywords }}
+  <meta name="keywords" content='{{ delimit .Keywords " " }} {{ delimit .Site.Params.keywords " " }}'>
+  {{ else }}
   <meta name="keywords" content='{{ delimit .Site.Params.keywords " " }}'>
   {{ end }}
 
