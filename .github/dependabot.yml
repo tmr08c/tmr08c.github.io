@@ -6,8 +6,8 @@
 version: 2
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/gatsby-site" # Location of package manifests
-    target-branch: "develop"
+    directory: "/hugo-site" # Location of package manifests
+    target-branch: "main"
     schedule:
       interval: "weekly"
       day: "friday"
