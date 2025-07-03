@@ -11,4 +11,3 @@ module.exports = defineConfig({
     baseUrl: "http://localhost:8000",
   },
 });
-EOF < /dev/null
