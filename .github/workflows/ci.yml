@@ -3,32 +3,39 @@ name: CI
 on: [push]
 
 jobs:
-  format-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Check formatting
-        # if this gets annoying consider trying something like
-        # https://mskelton.medium.com/auto-formatting-code-using-prettier-and-github-actions-ed458f58b7df
-        # or https://github.com/creyD/prettier_action to automatically write
-        # changes
-        run: |
-          cd gatsby-site
-          yarn install --frozen-lockfile
-          yarn run format:check
-
-  # https://docs.cypress.io/guides/continuous-integration/github-actions.html#Cypress-GitHub-Action
+  # Build Hugo site and run Cypress E2E tests
   cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: hugo-site/package-lock.json
+      
+      - name: Install Hugo dependencies
+        run: |
+          cd hugo-site
+          npm ci
+      
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
-          # Tell Cypress to use our custom test script
-          command: yarn test:e2e:ci
-          working-directory: gatsby-site
+          command: npm run test:e2e:ci
+          working-directory: hugo-site

@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "description": "Hugo version of TroyProg blog",
   "scripts": {
-    "postinstall": "echo 'Dependencies installed. Use ./bin/dev to start development server.'"
+    "postinstall": "echo 'Dependencies installed. Use ./bin/dev to start development server.'",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test 'hugo serve --port 8000' http://localhost:8000 cy:open",
+    "test:e2e:ci": "start-server-and-test 'hugo serve --port 8000' http://localhost:8000 cy:run"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
-    "postcss-cli": "^10.1.0",
-    "autoprefixer": "^10.4.16"
+    "postcss-cli": "^10.1.0"
+  },
+  "devDependencies": {
+    "cypress": "^14.5.1",
+    "start-server-and-test": "^2.0.12"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   }
 }
