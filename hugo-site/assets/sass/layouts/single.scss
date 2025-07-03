@@ -23,3 +23,46 @@
 #back-to-top:hover {
   background-color: var(--bg_h);
 }
+
+// Responsive video styles
+.responsive-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0 auto 1rem auto;
+  
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: #000;
+  }
+  
+  // Limit video size on larger screens
+  @media (min-width: 768px) {
+    max-width: 800px;
+  }
+}
+
+// Fallback styles for raw video tags
+.content video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+.content center {
+  display: block;
+  text-align: center;
+  
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
