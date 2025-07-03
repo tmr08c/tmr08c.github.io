@@ -17,9 +17,8 @@ describe("Homepage", () => {
       cy.location("pathname").should("include", "blog");
     });
 
-    it("can navigate to talks", () => {
-      cy.get("nav").contains("Talks").click();
-      cy.location("pathname").should("include", "talks");
+    it("can navigate to github", () => {
+      cy.get("nav").contains("GitHub").should("have.attr", "href").and("include", "github.com");
     });
   });
 });
