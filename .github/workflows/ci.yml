@@ -95,5 +95,5 @@ jobs:
         with:
           command: yarn test:e2e:ci
           working-directory: gatsby-site
-          start: hugo serve --source hugo-site --port 8000
+          start: hugo serve --source ../hugo-site --port 8000
           wait-on: 'http://localhost:8000'
