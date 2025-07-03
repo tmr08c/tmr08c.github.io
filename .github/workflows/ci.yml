@@ -34,11 +34,6 @@ jobs:
       - name: Install Dart Sass
         run: sudo snap install dart-sass
       
-      - name: Build Hugo site
-        run: |
-          cd hugo-site
-          hugo --minify
-      
       - name: Install Cypress dependencies
         run: |
           cd gatsby-site
