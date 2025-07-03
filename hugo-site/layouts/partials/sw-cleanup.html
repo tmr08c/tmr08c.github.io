@@ -1,0 +1,87 @@
+<!-- Service Worker Cleanup for Safari users with cached Gatsby SW -->
+<script>
+(function() {
+  'use strict';
+  
+  // Run cleanup on every page load to catch service workers
+  // that might be interfering
+  var hasServiceWorker = false;
+  var hasCache = false;
+  
+  // Check for any service workers
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    hasServiceWorker = true;
+    console.log('Detected active service worker');
+  }
+  
+  // Check if we've already cleaned up in this session
+  var cleanupKey = 'hugo-sw-cleanup-v2';
+  if (sessionStorage.getItem(cleanupKey) && !hasServiceWorker) {
+    return; // Already cleaned up and no active SW
+  }
+  
+  // Mark that we're attempting cleanup
+  sessionStorage.setItem(cleanupKey, 'true');
+    
+    var cleanupPromises = [];
+    
+    // Unregister all service workers
+    if ('serviceWorker' in navigator) {
+      var swPromise = navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        if (registrations.length > 0) {
+          console.log('Found', registrations.length, 'service workers to unregister');
+          return Promise.all(
+            registrations.map(function(registration) {
+              console.log('Unregistering SW:', registration.scope);
+              return registration.unregister();
+            })
+          );
+        }
+      });
+      cleanupPromises.push(swPromise);
+    }
+    
+    // Clear all caches
+    if ('caches' in window) {
+      var cachePromise = caches.keys().then(function(cacheNames) {
+        if (cacheNames.length > 0) {
+          console.log('Found', cacheNames.length, 'caches to delete');
+          return Promise.all(
+            cacheNames.map(function(cacheName) {
+              console.log('Deleting cache:', cacheName);
+              return caches.delete(cacheName);
+            })
+          );
+        }
+      });
+      cleanupPromises.push(cachePromise);
+    }
+    
+    // Clear localStorage items that might be Gatsby-related
+    try {
+      var keysToRemove = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && (key.indexOf('gatsby') > -1 || key.indexOf('___') > -1)) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(function(key) {
+        console.log('Removing localStorage key:', key);
+        localStorage.removeItem(key);
+      });
+    } catch (e) {
+      console.log('localStorage cleanup error:', e);
+    }
+    
+    // Wait for all cleanup to complete
+    if (cleanupPromises.length > 0) {
+      Promise.all(cleanupPromises).then(function() {
+        console.log('Service worker cleanup complete');
+        console.log('Please refresh the page to see the updated site');
+      }).catch(function(error) {
+        console.error('Cleanup error:', error);
+      });
+    }
+})();
+</script>
