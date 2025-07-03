@@ -3,53 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  hugo-build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          fetch-depth: 0
-      
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          extended: true
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: hugo-site/package-lock.json
-      
-      - name: Install dependencies
-        run: |
-          cd hugo-site
-          npm ci
-      
-      - name: Install Dart Sass
-        run: sudo snap install dart-sass
-      
-      - name: Build Hugo site
-        run: |
-          cd hugo-site
-          hugo --minify
-      
-      - name: Verify build output
-        run: |
-          cd hugo-site
-          if [ ! -d "public" ]; then
-            echo "❌ Build failed: public directory not found"
-            exit 1
-          fi
-          echo "✅ Build succeeded: public directory exists"
-          echo "Built files:"
-          ls -la public/
-
-  # Run Cypress E2E tests against the Hugo site
+  # Build Hugo site and run Cypress E2E tests
   cypress-run:
     runs-on: ubuntu-latest
     steps:
