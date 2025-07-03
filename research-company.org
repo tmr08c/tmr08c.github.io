@@ -1,0 +1,45 @@
+#+title: Pre-interview research
+
+In my last post (INSERT LINK), I shared a bank of questions to ask during the interview process. However, in the introduction I noted:
+
+#+begin_quote
+I only end up asking a small fraction of these questions. (...) I prefer to ask more topical or company-specific questions with the time that I do have.
+#+end_quote
+
+While many company-specific questions come to mind during the interview process, with some research, you should be able to form some ahead of time. Additionally, researching a company
+
+#+begin_comment
+It could be interesting to approach this like Jethro's Second Brain article and treat is as me going through the process.
+
+I can find a job posting on Elixir Forum and go through the steps I would take and what I takeaway.
+#+end_comment
+
+
+* Introduction
+- just in time research
+  Don't have to do all of this at once.
+  - a lot can wait until you acutlly hear back
+    May want the basics for a cover letter
+  - some can come as you progress
+* Research the company
+** What they do
+- homepage
+- job description
+** Culture
+- jobs page
+- Glassdoor
+- LinkedIn
+** Current events
+- LinkedIn
+-
+** Financials
+- Crunchbase
+- Stocks?
+* Research the interviewer
+- LinkedIn
+- GitHub
+- ask the recruiter?
+  - I didn't do this.
+  - sometime proactively provided information
+- https://buffer.com/resources/why-talking-about-ourselves-is-as-rewarding-as-sex-the-science-of-conversations/  ?
+* Find good and bad, know when to deploy each
