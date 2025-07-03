@@ -45,3 +45,49 @@ jobs:
           echo "✅ Build succeeded: public directory exists"
           echo "Built files:"
           ls -la public/
+
+  # Run Cypress E2E tests against the Hugo site
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: hugo-site/package-lock.json
+      
+      - name: Install Hugo dependencies
+        run: |
+          cd hugo-site
+          npm ci
+      
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      
+      - name: Build Hugo site
+        run: |
+          cd hugo-site
+          hugo --minify
+      
+      - name: Install Cypress dependencies
+        run: |
+          cd gatsby-site
+          yarn install --frozen-lockfile
+      
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          command: yarn test:e2e:ci
+          working-directory: gatsby-site
+          start: hugo serve --source hugo-site --port 8000
+          wait-on: 'http://localhost:8000'
