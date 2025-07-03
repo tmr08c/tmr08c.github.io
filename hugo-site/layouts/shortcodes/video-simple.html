@@ -1,0 +1,27 @@
+{{- $src := .Get "src" -}}
+{{- $type := .Get "type" | default "video/mp4" -}}
+{{- $poster := .Get "poster" -}}
+{{- $controls := .Get "controls" | default "true" -}}
+{{- $preload := .Get "preload" | default "none" -}}
+{{- $aspectRatio := .Get "ratio" | default "16:9" -}}
+{{- $class := .Get "class" | default "" -}}
+
+{{- $paddingBottom := 56.25 -}}
+{{- if eq $aspectRatio "4:3" -}}
+  {{- $paddingBottom = 75 -}}
+{{- else if eq $aspectRatio "21:9" -}}
+  {{- $paddingBottom = 42.86 -}}
+{{- else if eq $aspectRatio "1:1" -}}
+  {{- $paddingBottom = 100 -}}
+{{- end -}}
+
+<div class="responsive-video-wrapper" style="position: relative; padding-bottom: {{ $paddingBottom }}%; height: 0; overflow: hidden;">
+  <video 
+    {{ if eq $controls "true" }}controls{{ end }}
+    preload="{{ $preload }}"
+    {{ with $poster }}poster="{{ . }}"{{ end }}
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+    <source src="{{ $src }}" type="{{ $type }}" />
+    Your browser does not support the video tag.
+  </video>
+</div>
