@@ -27,6 +27,9 @@ jobs:
           cd hugo-site
           npm ci
       
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      
       - name: Build Hugo site
         run: |
           cd hugo-site
