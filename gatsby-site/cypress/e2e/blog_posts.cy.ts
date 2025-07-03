@@ -7,12 +7,12 @@ describe("Blog Posts", () => {
 
   describe("visiting index page", () => {
     it("lists posts", () => {
-      cy.exec("find ../hugo-site/content/blog -type f -name index.md | wc -l").then(
+      cy.exec("find content/blog -type f -name index.md | wc -l").then(
         (result) => {
           const numPosts = parseInt(result.stdout);
 
           assert.isTrue(numPosts > 0);
-          cy.get(".post-info").should("have.length", numPosts);
+          cy.get(".posts .post").should("have.length", numPosts);
         }
       );
     });
@@ -20,8 +20,8 @@ describe("Blog Posts", () => {
 
   describe("clicking on a post title", () => {
     it("takes you to the post", () => {
-      cy.get(".post-info").each(($post) => {
-        const link = $post.find("a.link").first();
+      cy.get(".posts .post").each(($post) => {
+        const link = $post.find("a").first();
         const title = link.text();
 
         // Note: For CI we needed to add `"chromeWebSecurity": false` to get
