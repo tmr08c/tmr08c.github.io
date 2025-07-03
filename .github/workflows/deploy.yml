@@ -1,4 +1,4 @@
-# https://github.com/actions/starter-workflows/blob/main/pages/gatsby.yml
+# Workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy
 
 on:
@@ -15,12 +15,11 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
-# Default to bash
 defaults:
   run:
     shell: bash
@@ -29,59 +28,55 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    env:
+      HUGO_ENVIRONMENT: production
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/gatsby-site/yarn.lock" ]; then
-            echo "::set-output name=manager::yarn"
-            echo "::set-output name=command::install"
-            exit 0
-          elif [ -f "${{ github.workspace }}/gatsby-site/package.json" ]; then
-            echo "::set-output name=manager::npm"
-            echo "::set-output name=command::ci"
-            exit 0
-          else
-            echo "Unable to determine packager manager"
-            exit 1
-          fi
-      - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
         with:
-          node-version: "16"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: gatsby-site/yarn.lock
+          submodules: recursive
+          fetch-depth: 0
+      
+      - name: Read Hugo version from .tool-versions
+        id: hugo-version
+        run: |
+          HUGO_VERSION=$(grep hugo hugo-site/.tool-versions | awk '{print $2}')
+          echo "HUGO_VERSION=${HUGO_VERSION}" >> $GITHUB_OUTPUT
+          echo "Hugo version: ${HUGO_VERSION}"
+      
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${{ steps.hugo-version.outputs.HUGO_VERSION }}/hugo_extended_${{ steps.hugo-version.outputs.HUGO_VERSION }}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v2
-        with:
-          # Automatically inject pathPrefix in your Gatsby configuration file.
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: gatsby
-      - name: Restore cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            gatsby-site/public
-            gatsby-site/.cache
-          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('gatsby-site/public') }}
-          restore-keys: |
-            ${{ runner.os }}-gatsby-build-
-      - name: Install dependencies
-        working-directory: gatsby-site
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Gatsby
-        working-directory: gatsby-site
+        uses: actions/configure-pages@v5
+      
+      - name: Install Node.js dependencies
+        run: |
+          cd hugo-site
+          [[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true
+      
+      - name: Build with Hugo
         env:
-          PREFIX_PATHS: "true"
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          cd hugo-site
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
+      
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./gatsby-site/public
+          path: ./hugo-site/public
 
   # Deployment job
   deploy:
@@ -93,4 +88,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
