@@ -26,11 +26,7 @@ My current process for creating a new `node` from an `elfeed` entry isn't partic
 5. I paste the `elfeed` link into the capture pane for the `node`.
 6. I write up any notes I want to take.
 
-<center>
-    <video controls>
-        <source src="./elfeed-flow-before.mp4" type="video/mp4" />
-    </video>
-</center>
+{{< video-simple src="./elfeed-flow-before.mp4" type="video/mp4" controls="true" ratio="16:9" preload="none" >}}
 
 This manual process requires diligence (using the correct title, remembering to include the link), window jumping, and text clean-up, but, as the video above shows, is not overly time-consuming. However, because I had some time off, I wanted to see if I could speed up the process, improving my Emacs skills along the way.
 
@@ -107,8 +103,4 @@ We then pass these variables into our call to `org-roam-capture-` (note the trai
 
 And that's it! With our new template and function, we now have everything we need to quickly create an `Org-roam` node based on the `elfeed` we are viewing. Let's see it in action:
 
-<center>
-    <video controls class="center">
-        <source src="./elfeed-flow-after.mp4" type="video/mp4" />
-    </video>
-</center>
+{{< video-simple src="./elfeed-flow-after.mp4" type="video/mp4" controls="true" ratio="16:9" preload="none" >}}

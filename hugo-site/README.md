@@ -70,3 +70,41 @@ This site uses the [hugo-texify3](https://github.com/michaelneuper/hugo-texify3)
 - Math rendering with KaTeX
 - Responsive design
 - SEO optimization
+
+## Custom Shortcodes
+
+### video-simple
+
+A responsive video shortcode that maintains proper aspect ratios and prevents layout breaking on mobile devices.
+
+**Problem it solves**: The default HTML `<video>` tag wrapped in `<center>` was causing horizontal scroll issues on mobile devices and not maintaining proper aspect ratios.
+
+**Features**:
+- Maintains aspect ratio (16:9 by default, configurable)
+- Fully responsive on all screen sizes
+- Prevents horizontal scroll overflow
+- Lazy loading support with `preload="none"`
+- Black background while video loads
+- Maximum width constraint (800px) on larger screens
+
+**Usage**:
+```markdown
+{{< video-simple src="./my-video.mp4" >}}
+
+{{< video-simple 
+    src="./demo-video.mp4" 
+    type="video/mp4" 
+    poster="./video-thumbnail.jpg"
+    controls="true" 
+    ratio="16:9" 
+    preload="none" 
+>}}
+```
+
+**Parameters**:
+- `src` (required): Path to the video file
+- `type` (optional): Video MIME type (default: "video/mp4")
+- `poster` (optional): Path to poster image
+- `controls` (optional): Show video controls (default: "true")
+- `preload` (optional): Preload behavior (default: "none")
+- `ratio` (optional): Aspect ratio - "16:9", "4:3", "21:9", or "1:1" (default: "16:9")
