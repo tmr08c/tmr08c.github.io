@@ -58,6 +58,9 @@ typings/
 hugo-site/public/
 hugo-site/resources/
 
+# Claude Code local settings
+.claude/settings.local.json
+
 # Mac files
 .DS_Store
 
