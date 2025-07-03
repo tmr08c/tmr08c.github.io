@@ -34,15 +34,8 @@ jobs:
       - name: Install Dart Sass
         run: sudo snap install dart-sass
       
-      - name: Install Cypress dependencies
-        run: |
-          cd gatsby-site
-          yarn install --frozen-lockfile
-      
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
-          command: yarn test:e2e:ci
-          working-directory: gatsby-site
-          start: hugo serve --source ../hugo-site --port 8000
-          wait-on: 'http://localhost:8000'
+          command: npm run test:e2e:ci
+          working-directory: hugo-site
