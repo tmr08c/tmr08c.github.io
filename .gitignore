@@ -54,9 +54,9 @@ typings/
 # dotenv environment variables file
 .env
 
-# gatsby files
-.cache/
-public
+# Hugo files
+hugo-site/public/
+hugo-site/resources/
 
 # Mac files
 .DS_Store
