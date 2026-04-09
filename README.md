@@ -2,10 +2,6 @@
 
 The personal blog of [@tmr08c](https://github.com/tmr08c/).
 
-## Repository Structure
-
-This repository contains the Hugo-based blog in the `hugo-site/` directory.
-
 ## Development
 
 ### Branching
@@ -17,7 +13,6 @@ This blog is leveraging GitHub Pages. Work is done on the `main` branch, and Git
 To work with the Hugo site:
 
 ```bash
-cd hugo-site
 hugo server  # Development server at localhost:1313
 hugo  # Build for production
 ```
@@ -27,7 +22,6 @@ hugo  # Build for production
 To run E2E tests:
 
 ```bash
-cd hugo-site
 npm install  # Install test dependencies
 npm run test:e2e  # Run tests with interactive UI
 npm run test:e2e:ci  # Run tests in CI mode
