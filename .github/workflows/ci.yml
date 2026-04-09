@@ -13,10 +13,16 @@ jobs:
           submodules: recursive
           fetch-depth: 0
       
+      - name: Read Hugo version from .tool-versions
+        id: hugo-version
+        run: |
+          HUGO_VERSION=$(grep hugo hugo-site/.tool-versions | awk '{print $2}')
+          echo "HUGO_VERSION=${HUGO_VERSION}" >> $GITHUB_OUTPUT
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
+          hugo-version: '${{ steps.hugo-version.outputs.HUGO_VERSION }}'
           extended: true
       
       - name: Setup Node.js
