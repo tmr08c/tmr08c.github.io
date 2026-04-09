@@ -12,30 +12,26 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
           extended: true
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: hugo-site/package-lock.json
-      
-      - name: Install Hugo dependencies
-        run: |
-          cd hugo-site
-          npm ci
-      
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install Dart Sass
         run: sudo snap install dart-sass
-      
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
           command: npm run test:e2e:ci
-          working-directory: hugo-site

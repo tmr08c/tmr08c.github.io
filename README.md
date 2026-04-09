@@ -1,64 +1,104 @@
 # TroyProg Blog
 
-The personal blog of [@tmr08c](https://github.com/tmr08c/).
+The personal blog of [@tmr08c](https://github.com/tmr08c/). Built with [Hugo](https://gohugo.io/) and the [hugo-texify3](https://github.com/michaelneuper/hugo-texify3) theme.
 
-## Repository Structure
+## Quick Start
 
-This repository contains two versions of the blog as we transition from Gatsby to Hugo:
+1. **Initial setup** (run once):
+   ```bash
+   ./bin/setup
+   ```
 
-- `gatsby-site/` - The original Gatsby-based blog
-- `hugo-site/` - The new Hugo-based blog (in development)
+2. **Start development server**:
+   ```bash
+   ./bin/dev         # Includes drafts and future content
+   ```
+
+3. **Build for production**:
+   ```bash
+   ./bin/build
+   ```
+
+## Dependencies
+
+This project requires several tools that are managed automatically by the setup script:
+
+- **Hugo** - Static site generator
+- **Dart Sass** - CSS preprocessor for the theme
+- **Node.js & npm** - For PostCSS and other build tools
+- **PostCSS** - CSS post-processing
+
+### Optional but Recommended
+
+- **asdf** - Version manager for consistent tool versions across environments
+
+## Project Structure
+
+```
+├── content/posts/       # Blog posts
+├── themes/hugo-texify3/ # Theme submodule
+├── static/              # Static assets
+├── layouts/             # Template overrides
+├── assets/              # Custom CSS/JS
+├── hugo.toml           # Hugo configuration
+├── package.json        # Node.js dependencies
+├── postcss.config.js   # PostCSS configuration
+├── Brewfile            # Homebrew dependencies
+├── .tool-versions      # asdf tool versions
+└── bin/                # Setup and dev scripts
+```
 
 ## Development
 
-### Branching
+The site runs on `localhost:1313` during development. The `./bin/dev` script includes drafts and future-dated content so you can see everything while developing.
 
-This blog is leveraging GitHub pages. Because it follows the `<username>.github.io` repo name pattern, it expects `master` to contain the published version of the site.
+The development server binds to `0.0.0.0` to allow access from other devices on your network.
 
-From [the docs](https://help.github.com/en/articles/configuring-a-publishing-source-for-github-pages):
+## Theme
 
-> If your site is a User or Organization Page that has a repository named
-> <username>.github.io or <orgname>.github.io, you cannot publish your site's
-> source files from different locations. User and Organization Pages that have
-> this type of repository name are only published from the master branch.
+This site uses the [hugo-texify3](https://github.com/michaelneuper/hugo-texify3) theme, which provides:
 
-As a result, work is done on `develop`, and `master` is the published version of the site.
+- LaTeX-style typography with Computer Modern fonts
+- Dark mode toggle
+- Gruvbox color scheme
+- Math rendering with KaTeX
+- Responsive design
+- SEO optimization
 
-### Gatsby Site
+## Custom Shortcodes
 
-The Gatsby version is the current production site. To work with it:
+### video-simple
 
-```bash
-cd gatsby-site
-npm install
-npm start  # Development server at localhost:8000
-npm run build  # Build for production
-npm run deploy  # Deploy to GitHub Pages
+A responsive video shortcode that maintains proper aspect ratios and prevents layout breaking on mobile devices.
+
+**Problem it solves**: The default HTML `<video>` tag wrapped in `<center>` was causing horizontal scroll issues on mobile devices and not maintaining proper aspect ratios.
+
+**Features**:
+- Maintains aspect ratio (16:9 by default, configurable)
+- Fully responsive on all screen sizes
+- Prevents horizontal scroll overflow
+- Lazy loading support with `preload="none"`
+- Black background while video loads
+- Maximum width constraint (800px) on larger screens
+
+**Usage**:
+```markdown
+{{< video-simple src="./my-video.mp4" >}}
+
+{{< video-simple 
+    src="./demo-video.mp4" 
+    type="video/mp4" 
+    poster="./video-thumbnail.jpg"
+    controls="true" 
+    ratio="16:9" 
+    preload="none" 
+>}}
 ```
 
-### Hugo Site
-
-The Hugo version is under development. To work with it:
-
-```bash
-cd hugo-site
-hugo server  # Development server at localhost:1313
-hugo  # Build for production
-```
-
-## Deployment
-
-Currently using Gatsby:
-
-```bash
-cd gatsby-site
-npm run deploy
-```
-
-Once the Hugo migration is complete, deployment will switch to the Hugo version.
-
-## Credits
-
-- Gatsby site built with [Gatsby](https://www.gatsbyjs.org/) - the blazing-fast static site generator for [React](https://facebook.github.io/react/).
-- Gatsby project started using the [gatsby-typescript-starter-blog](https://github.com/frnki/gatsby-typescript-starter-blog) starter project.
-- Hugo site uses the [hugo-texify3](https://github.com/michaelneuper/hugo-texify3) theme.
+**Parameters**:
+- `src` (required): Path to the video file
+- `type` (optional): Video MIME type (default: "video/mp4")
+- `poster` (optional): Path to poster image
+- `controls` (optional): Show video controls (default: "true")
+- `preload` (optional): Preload behavior (default: "none")
+- `ratio` (optional): Aspect ratio - "16:9", "4:3", "21:9", or "1:1" (default: "16:9")

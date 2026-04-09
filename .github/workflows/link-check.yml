@@ -1,12 +1,12 @@
 name: Check Markdown Links
 
 on:
-  # Run on push to main branches
+  # Run on push to main branch
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   # Run on pull requests
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
   # Allow manual runs
   workflow_dispatch:
   # Run weekly to catch links that break over time
@@ -23,21 +23,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check links in Hugo site
-        id: hugo-link-check
+      - name: Check links
+        id: link-check
         uses: tcort/github-action-markdown-link-check@v1
         continue-on-error: true
         with:
-          folder-path: 'hugo-site/content'
-          config-file: '.github/mlc_config.json'
-          use-quiet-mode: 'yes'
-          
-      - name: Check links in Gatsby site  
-        id: gatsby-link-check
-        uses: tcort/github-action-markdown-link-check@v1
-        continue-on-error: true
-        with:
-          folder-path: 'gatsby-site/content'
+          folder-path: 'content'
           config-file: '.github/mlc_config.json'
           use-quiet-mode: 'yes'
 
@@ -46,7 +37,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const title = `🔗 Broken links detected - ${new Date().toISOString().split('T')[0]}`;
+            const title = `Broken links detected - ${new Date().toISOString().split('T')[0]}`;
             const body = `## Broken Links Detected
 
             Automated link checking found broken links in the blog posts.
@@ -62,10 +53,6 @@ jobs:
             2. Fix the broken links in the affected blog posts
             3. Consider updating links to archive.org versions for dead sites
             4. Close this issue once all links are fixed
-
-            **Sites checked:**
-            - Hugo site: \`hugo-site/content\`
-            - Gatsby site: \`gatsby-site/content\`
 
             ---
             *This issue was automatically created by the link checker workflow.*`;
@@ -88,24 +75,20 @@ jobs:
                 labels: ['broken-links', 'automated'],
                 assignees: ['tmr08c']
               });
-              
+
               core.info(`Created issue #${issue.data.number}: ${title}`);
             } else {
               // Update existing issue
               const existingIssue = existingIssues.data[0];
-              const updateBody = `${existingIssue.body}
 
-              ---
-              **Update ${new Date().toISOString().split('T')[0]}:** Broken links still detected in [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
-              
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: existingIssue.number,
-                body: `🔗 Broken links still detected on ${new Date().toISOString().split('T')[0]}
+                body: `Broken links still detected on ${new Date().toISOString().split('T')[0]}
 
                 See [workflow run logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.`
               });
-              
+
               core.info(`Updated existing issue #${existingIssue.number}`);
             }
