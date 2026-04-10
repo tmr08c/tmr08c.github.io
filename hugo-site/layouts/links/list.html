@@ -67,6 +67,10 @@
 
   .links-btn .chevron {
     margin-left: auto;
+    display: flex;
+  }
+
+  .links-btn .chevron svg {
     width: 1.125rem;
     height: 1.125rem;
     fill: none;
@@ -104,11 +108,9 @@
   <div class="links-list">
     {{ range .Params.links }}
     <a href="{{ .url }}" {{ if not (strings.HasPrefix .url "/") }}target="_blank" rel="noopener noreferrer"{{ end }} class="links-btn">
-      {{ .icon | safeHTML }}
+      {{ partial "icon" .icon }}
       {{ .name }}
-      <svg class="chevron" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
+      <span class="chevron">{{ partial "icon" "chevron-right" }}</span>
     </a>
     {{ end }}
   </div>
