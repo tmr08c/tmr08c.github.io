@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" style="font-size: {{ .Site.Params.rootFontSize | default "100%" }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- author -->
+  <meta name="author" content="{{ .Site.Author.name }}">
+
+  <!-- description -->
+  {{ if .Description }}
+  <meta name="description" content="{{ .Description }}">
+  {{ else }}
+  <meta name="description" content="{{ .Site.Params.description }}">
+  {{ end }}
+
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ .Site.BaseURL }}/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}/images/favicon-16x16.png">
+
+  <!-- opengraph -->
+  {{ template "_internal/opengraph.html" . }}
+
+  <!-- permalink -->
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  <!-- schema -->
+  {{ template "_internal/schema.html" . }}
+
+  <!-- style -->
+  {{ $options := dict "transpiler" "dartsass" "targetPath" "css/common.css" }}
+  {{ with resources.Get "sass/layouts/common.scss" | toCSS $options | postCSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+  {{ end }}
+
+  <!-- title -->
+  <title>{{ .Title }} - {{ .Site.Title }}</title>
+
+  <!-- twitter -->
+  {{ template "_internal/twitter_cards.html" . }}
+
+  {{ block "head" . }}{{ end }}
+</head>
+
+<body>
+  <div id="wrapper">
+    {{ block "main" . }}{{ end }}
+  </div>
+
+  <!-- javascript -->
+  <script src='{{ "js/script.js" | absURL }}' defer></script>
+
+</body>
+
+</html>

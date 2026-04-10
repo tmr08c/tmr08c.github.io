@@ -1,0 +1,124 @@
+{{ define "head" }}
+<style>
+  .links-profile { text-align: center; margin-bottom: 2rem; }
+
+  .links-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.25rem;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .links-name { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+
+  .links-handle { color: var(--blue); font-size: 1rem; margin-bottom: 0.75rem; }
+
+  .links-bio { color: var(--fg3); font-size: 0.95rem; line-height: 1.5; }
+
+  .links-currently { margin-bottom: 0.5rem; }
+
+  .links-currently-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg4);
+    margin-bottom: 0.5rem;
+  }
+
+  .links-currently-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.375rem; }
+
+  .links-currently-detail { font-size: 0.875rem; line-height: 1.5; color: var(--fg3); }
+
+  .links-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .links-btn {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border: 1.5px solid var(--bg2);
+    border-radius: 0.75rem;
+    background: var(--bg_s);
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .links-btn:link, .links-btn:visited { color: var(--fg); }
+
+  .links-btn:hover {
+    border-color: var(--blue);
+    color: var(--fg);
+    transform: translateY(-1px);
+  }
+
+  .links-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    margin-right: 1rem;
+    fill: var(--blue);
+  }
+
+  .links-btn .chevron {
+    margin-left: auto;
+    display: flex;
+  }
+
+  .links-btn .chevron svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: none;
+    stroke: var(--fg4);
+    stroke-width: 2;
+  }
+
+  .links-footer { text-align: center; margin-top: 1.75rem; }
+
+  .links-footer a { color: var(--blue); font-size: 0.875rem; font-weight: 500; }
+</style>
+{{ end }}
+
+{{ define "main" }}
+<main id="main">
+  <div class="links-profile">
+    <img class="links-avatar" src="{{ .Params.avatar }}" alt="{{ .Params.name }}">
+    <div class="links-name">{{ .Params.name }}</div>
+    <div class="links-handle">{{ .Params.handle }}</div>
+    <div class="links-bio">{{ .Params.bio | safeHTML }}</div>
+  </div>
+
+  <hr>
+
+  {{ with .Params.currently }}
+  <div class="links-currently">
+    <div class="links-currently-label">{{ .label }}</div>
+    <div class="links-currently-title">{{ .title }}</div>
+    <div class="links-currently-detail">{{ .detail }}</div>
+  </div>
+
+  <hr>
+  {{ end }}
+
+  <div class="links-list">
+    {{ range .Params.links }}
+    <a href="{{ .url }}" {{ if not (strings.HasPrefix .url "/") }}target="_blank" rel="noopener noreferrer"{{ end }} class="links-btn">
+      {{ partial "icon" .icon }}
+      {{ .name }}
+      <span class="chevron">{{ partial "icon" "chevron-right" }}</span>
+    </a>
+    {{ end }}
+  </div>
+
+  {{ with .Params.footerUrl }}
+  <div class="links-footer">
+    <a class="link" href="{{ . }}">{{ $.Params.footer }}</a>
+  </div>
+  {{ end }}
+</main>
+{{ end }}

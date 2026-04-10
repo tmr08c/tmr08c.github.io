@@ -1,0 +1,27 @@
+---
+title: "Links"
+layout: "links"
+name: "Troy Rosenberg"
+handle: "@tmr08c"
+bio: "Software Engineer · (Recovering) Manager"
+avatar: "/images/avatar.png"
+currently:
+  label: "Currently"
+  title: "On sabbatical"
+  detail: "Taking a gap year for family, travel, and personal growth. Using AI to build a greenfield React Native app and manage an existing LiveView app."
+links:
+  - name: "Email me"
+    url: "mailto:tmr08c@gmail.com"
+    icon: "email"
+  - name: "LinkedIn"
+    url: "https://www.linkedin.com/in/troy-rosenberg-a47b6b117/"
+    icon: "linkedin"
+  - name: "GitHub"
+    url: "https://github.com/tmr08c/"
+    icon: "github"
+  - name: "Blog"
+    url: "/"
+    icon: "blog"
+footer: "tmr08c.github.io"
+footerUrl: "https://tmr08c.github.io"
+---
