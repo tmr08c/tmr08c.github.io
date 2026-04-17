@@ -10,7 +10,7 @@
     "test:e2e:ci": "start-server-and-test 'hugo serve --port 8000' http://localhost:8000 cy:run"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.27",
+    "autoprefixer": "^10.5.0",
     "postcss": "^8.5.9",
     "postcss-cli": "^11.0.1"
   },
